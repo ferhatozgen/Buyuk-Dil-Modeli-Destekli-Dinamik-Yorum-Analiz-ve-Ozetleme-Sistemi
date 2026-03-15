@@ -1,0 +1,3111 @@
+[
+    {
+        "uuid": "bbb34b72-d81e-4c0c-91a0-88eea9a637d3",
+        "createdAt": "2026-03-12T09:52:58Z",
+        "updatedAt": "2026-03-12T09:52:58Z",
+        "text": "Omlet güzeldi de be görselde mevsim salata gördüğüm için tercih etmiştim, yanında salatalık domates geldi. Bir puanı ordan kırdım. Görsele ne koyuyorsanız onu yollayın kardeşim.",
+        "isAnonymous": false,
+        "reviewerName": "...r",
+        "reviewerId": "tr0tn2pc",
+        "ratings": [
+            {
+                "topic": "overall",
+                "score": 4
+            },
+            {
+                "topic": "restaurant_food",
+                "score": 4
+            },
+            {
+                "topic": "rider",
+                "score": 5
+            }
+        ],
+        "type": "user",
+        "replies": [],
+        "commentPrettyDate": {
+            "translationKey": "NEXTGEN_REVIEWS_X_DAYS_AGO",
+            "timeDuration": "3"
+        },
+        "likeCount": 0,
+        "isLiked": false,
+        "productVariations": [
+            {
+                "id": "11593021",
+                "defaultTitle": "Light Beyaz Peynirli Omlet (187 kcal.)",
+                "title": {},
+                "unitPrice": 220,
+                "product": {
+                    "id": "3562962",
+                    "defaultTitle": "Light Beyaz Peynirli Omlet (187 kcal.)",
+                    "title": {
+                        "en_TR": "Light White Cheese Omelette (187 kcal.)",
+                        "tr_TR": "Light Beyaz Peynirli Omlet (187 kcal.)"
+                    },
+                    "description": "2 adet yumurta",
+                    "active": true,
+                    "imageUrls": [
+                        "https://images.deliveryhero.io/image/fd-tr/products/3562962.jpg"
+                    ]
+                }
+            }
+        ],
+        "topReviewerTranslationKey": ""
+    },
+    {
+        "uuid": "9061e797-fc78-4a85-a22e-8359c58c18b9",
+        "createdAt": "2026-03-11T08:40:57Z",
+        "updatedAt": "2026-03-11T08:40:57Z",
+        "text": "Ispanak yatağı değil, içinde ıspanak yüzen çok lezzetsiz bir köri çorbası içinde tavuk yedim. Gerçekten tadı kötüydü ki bu yorumu kolay kolay yapmam.",
+        "isAnonymous": false,
+        "reviewerName": "...r",
+        "reviewerId": "trkovji4",
+        "ratings": [
+            {
+                "topic": "overall",
+                "score": 2
+            },
+            {
+                "topic": "restaurant_food",
+                "score": 2
+            },
+            {
+                "topic": "rider",
+                "score": 5
+            }
+        ],
+        "type": "user",
+        "replies": [],
+        "commentPrettyDate": {
+            "translationKey": "NEXTGEN_REVIEWS_X_DAYS_AGO",
+            "timeDuration": "4"
+        },
+        "likeCount": 0,
+        "isLiked": false,
+        "productVariations": [],
+        "topReviewerTranslationKey": ""
+    },
+    {
+        "uuid": "74b092c6-1587-4c08-9d8d-b51ddceff288",
+        "createdAt": "2026-03-10T08:26:38Z",
+        "updatedAt": "2026-03-10T08:26:38Z",
+        "text": "Sebzeler ve bulgur pilavı aşırı ekşimişti, tavuk taş gibiydi, teslimat cok gecikti. Kısacası paranıza yazık, sipariş vermeyin!!!",
+        "isAnonymous": false,
+        "reviewerName": "...n",
+        "reviewerId": "trpviqz3",
+        "ratings": [
+            {
+                "topic": "overall",
+                "score": 1
+            },
+            {
+                "topic": "restaurant_food",
+                "score": 1
+            },
+            {
+                "topic": "rider",
+                "score": 1
+            }
+        ],
+        "type": "user",
+        "replies": [],
+        "commentPrettyDate": {
+            "translationKey": "NEXTGEN_REVIEWS_X_DAYS_AGO",
+            "timeDuration": "5"
+        },
+        "likeCount": 0,
+        "isLiked": false,
+        "productVariations": [],
+        "topReviewerTranslationKey": ""
+    },
+    {
+        "uuid": "303658ec-c6a8-47a9-afc8-0f66c1af727e",
+        "createdAt": "2026-03-05T20:46:58Z",
+        "updatedAt": "2026-03-05T20:46:58Z",
+        "text": "Izgara tavuk önceden pişirilmiş ve ısıtılmış gibi geldi Kupkuru ve tahta gibi Garnitür ve salata iyiydi ancak tavuk Malesef..",
+        "isAnonymous": false,
+        "reviewerName": "...y",
+        "reviewerId": "trwx0lly",
+        "ratings": [
+            {
+                "topic": "overall",
+                "score": 2
+            },
+            {
+                "topic": "restaurant_food",
+                "score": 2
+            }
+        ],
+        "type": "user",
+        "replies": [],
+        "commentPrettyDate": {
+            "translationKey": "NEXTGEN_REVIEWS_1_WEEK_AGO",
+            "timeDuration": "1"
+        },
+        "likeCount": 0,
+        "isLiked": false,
+        "productVariations": [],
+        "topReviewerTranslationKey": ""
+    },
+    {
+        "uuid": "8d352189-22db-4c41-9495-01d6e00cbb82",
+        "createdAt": "2026-02-23T22:14:32Z",
+        "updatedAt": "2026-02-23T22:14:32Z",
+        "text": "Son yorumlar neden düşük anlamadım çok hızlı sıcak ve güzel geldi teşekkürler",
+        "isAnonymous": false,
+        "reviewerName": "...ı",
+        "reviewerId": "trntb5km",
+        "ratings": [
+            {
+                "topic": "overall",
+                "score": 5
+            },
+            {
+                "topic": "restaurant_food",
+                "score": 5
+            },
+            {
+                "topic": "rider",
+                "score": 5
+            }
+        ],
+        "type": "user",
+        "replies": [],
+        "commentPrettyDate": {
+            "translationKey": "NEXTGEN_REVIEWS_X_WEEKS_AGO",
+            "timeDuration": "2"
+        },
+        "likeCount": 1,
+        "isLiked": false,
+        "productVariations": [
+            {
+                "id": "11593056",
+                "defaultTitle": "Ballı Hardallı Tavuk",
+                "title": {},
+                "unitPrice": 415,
+                "product": {
+                    "id": "3562997",
+                    "defaultTitle": "Ballı Hardallı Tavuk",
+                    "title": {
+                        "en_TR": "Honey Mustard Chicken",
+                        "tr_TR": "Ballı Hardallı Tavuk"
+                    },
+                    "description": "Ballı hardal sosunda marine edilmiş ve panelenmiş 2 adet 150 gr. kızartılmış tavuk. Seçeceğiniz 2 çeşit garnitür ile",
+                    "active": true,
+                    "imageUrls": [
+                        "https://images.deliveryhero.io/image/fd-tr/products/3562997.jpg"
+                    ]
+                }
+            }
+        ],
+        "topReviewerTranslationKey": ""
+    },
+    {
+        "uuid": "37eca04c-2073-483e-9c21-0400186d5f9e",
+        "createdAt": "2026-02-17T12:37:25Z",
+        "updatedAt": "2026-02-17T12:37:25Z",
+        "text": "Izgara köfte ortalama. Ketojenik sebzeli makarnaya krema koyulması ilginç geldi. ",
+        "isAnonymous": false,
+        "reviewerName": "...r",
+        "reviewerId": "tr7qf1fm",
+        "ratings": [
+            {
+                "topic": "overall",
+                "score": 3
+            },
+            {
+                "topic": "restaurant_food",
+                "score": 3
+            },
+            {
+                "topic": "rider",
+                "score": 5
+            }
+        ],
+        "type": "user",
+        "replies": [],
+        "commentPrettyDate": {
+            "translationKey": "NEXTGEN_REVIEWS_X_WEEKS_AGO",
+            "timeDuration": "3"
+        },
+        "likeCount": 0,
+        "isLiked": false,
+        "productVariations": [],
+        "topReviewerTranslationKey": ""
+    },
+    {
+        "uuid": "bd153a22-1008-4886-88b9-719160dc692a",
+        "createdAt": "2026-02-17T09:36:07Z",
+        "updatedAt": "2026-02-17T09:36:07Z",
+        "text": "Salata nasıl kötü olabilir sorusu evet kötü marullar acımoş yarınsında döktüm.",
+        "isAnonymous": false,
+        "reviewerName": "...r",
+        "reviewerId": "tr38ub7b",
+        "ratings": [
+            {
+                "topic": "overall",
+                "score": 1
+            },
+            {
+                "topic": "restaurant_food",
+                "score": 1
+            }
+        ],
+        "type": "user",
+        "replies": [],
+        "commentPrettyDate": {
+            "translationKey": "NEXTGEN_REVIEWS_X_WEEKS_AGO",
+            "timeDuration": "3"
+        },
+        "likeCount": 0,
+        "isLiked": false,
+        "productVariations": [],
+        "topReviewerTranslationKey": ""
+    },
+    {
+        "uuid": "6ae890b0-5441-4070-b0dd-adffa57a62ea",
+        "createdAt": "2026-02-12T16:49:34Z",
+        "updatedAt": "2026-02-12T16:49:34Z",
+        "text": "salata eksikti kalite düşmüş",
+        "isAnonymous": false,
+        "reviewerName": "...r",
+        "reviewerId": "tr749gwe",
+        "ratings": [
+            {
+                "topic": "overall",
+                "score": 1
+            },
+            {
+                "topic": "restaurant_food",
+                "score": 1
+            },
+            {
+                "topic": "rider",
+                "score": 5
+            }
+        ],
+        "type": "user",
+        "replies": [],
+        "commentPrettyDate": {
+            "translationKey": "NEXTGEN_REVIEWS_1_MONTH_AGO",
+            "timeDuration": "1"
+        },
+        "likeCount": 0,
+        "isLiked": false,
+        "productVariations": [
+            {
+                "id": "11593035",
+                "defaultTitle": "Mercimek Çorbası",
+                "title": {},
+                "unitPrice": 180,
+                "product": {
+                    "id": "3562976",
+                    "defaultTitle": "Mercimek Çorbası",
+                    "title": {
+                        "en_TR": "Lentil Soup",
+                        "tr_TR": "Mercimek Çorbası"
+                    },
+                    "description": "Kırmızı mercimek, sebzeler ve baharatlarla hazırlanan bir çorbadır.",
+                    "active": true,
+                    "imageUrls": [
+                        "https://images.deliveryhero.io/image/fd-tr/products/3562976.jpg"
+                    ]
+                }
+            }
+        ],
+        "topReviewerTranslationKey": ""
+    },
+    {
+        "uuid": "9ba0c8a3-3ee8-4fd5-b901-65a1cb87c855",
+        "createdAt": "2026-02-10T09:10:43Z",
+        "updatedAt": "2026-02-10T09:10:43Z",
+        "text": "Görsel yanıltıcı. Sulu tavuk haşlama gelecek sanırken marul yatağında servis edilen haşlanmış tavuk göğüs geldi. Yemek çok sıcaktı ve lezzetliydi. Ancak pilav yağ içindeydi, diyete uygun değil.",
+        "isAnonymous": false,
+        "reviewerName": "...z",
+        "reviewerId": "trz77jvm",
+        "ratings": [
+            {
+                "topic": "overall",
+                "score": 3
+            },
+            {
+                "topic": "restaurant_food",
+                "score": 3
+            },
+            {
+                "topic": "rider",
+                "score": 5
+            }
+        ],
+        "type": "user",
+        "replies": [],
+        "commentPrettyDate": {
+            "translationKey": "NEXTGEN_REVIEWS_1_MONTH_AGO",
+            "timeDuration": "1"
+        },
+        "likeCount": 0,
+        "isLiked": false,
+        "productVariations": [],
+        "topReviewerTranslationKey": ""
+    },
+    {
+        "uuid": "4297f3b9-2639-4d5c-8dc8-d8f8001c34d5",
+        "createdAt": "2026-02-02T12:17:09Z",
+        "updatedAt": "2026-02-02T12:17:09Z",
+        "text": "Gerek tavuğun gerekse yanında gelen kepekli makarnanın lezzeti oldukça vasattı. ",
+        "isAnonymous": false,
+        "reviewerName": "...n",
+        "reviewerId": "trqjggg1",
+        "ratings": [
+            {
+                "topic": "overall",
+                "score": 2
+            },
+            {
+                "topic": "restaurant_food",
+                "score": 2
+            }
+        ],
+        "type": "user",
+        "replies": [],
+        "commentPrettyDate": {
+            "translationKey": "NEXTGEN_REVIEWS_1_MONTH_AGO",
+            "timeDuration": "1"
+        },
+        "likeCount": 0,
+        "isLiked": false,
+        "productVariations": [],
+        "topReviewerTranslationKey": ""
+    },
+    {
+        "uuid": "8bec4f3c-3119-432b-af93-fa778c8153fb",
+        "createdAt": "2026-01-30T10:46:14Z",
+        "updatedAt": "2026-01-30T10:46:14Z",
+        "text": "1,5 saatte geldi sipariş. Servis istememe rağmen serviste yoktu içinde. ",
+        "isAnonymous": false,
+        "reviewerName": "...l",
+        "reviewerId": "trzhocwc",
+        "ratings": [
+            {
+                "topic": "overall",
+                "score": 1
+            },
+            {
+                "topic": "restaurant_food",
+                "score": 1
+            },
+            {
+                "topic": "rider",
+                "score": 1
+            }
+        ],
+        "type": "user",
+        "replies": [],
+        "commentPrettyDate": {
+            "translationKey": "NEXTGEN_REVIEWS_1_MONTH_AGO",
+            "timeDuration": "1"
+        },
+        "likeCount": 0,
+        "isLiked": false,
+        "productVariations": [],
+        "topReviewerTranslationKey": ""
+    },
+    {
+        "uuid": "169c14b4-96f0-497c-a635-3c2c8f8cebb9",
+        "createdAt": "2026-01-18T15:43:35Z",
+        "updatedAt": "2026-01-18T15:43:35Z",
+        "text": "Insan bu corbayi gondermeye utanir",
+        "isAnonymous": false,
+        "reviewerName": "...l",
+        "reviewerId": "trw1m7ig",
+        "ratings": [
+            {
+                "topic": "overall",
+                "score": 2
+            },
+            {
+                "topic": "restaurant_food",
+                "score": 2
+            },
+            {
+                "topic": "rider",
+                "score": 5
+            }
+        ],
+        "type": "user",
+        "replies": [],
+        "commentPrettyDate": {
+            "translationKey": "NEXTGEN_REVIEWS_1_MONTH_AGO",
+            "timeDuration": "1"
+        },
+        "likeCount": 0,
+        "isLiked": false,
+        "productVariations": [],
+        "topReviewerTranslationKey": ""
+    },
+    {
+        "uuid": "dc72f15f-e405-4130-840f-385498f839fb",
+        "createdAt": "2026-01-16T10:29:11Z",
+        "updatedAt": "2026-01-16T10:29:11Z",
+        "text": "tavuklu wrap 10/10",
+        "isAnonymous": false,
+        "reviewerName": "...z",
+        "reviewerId": "trh80z32",
+        "ratings": [
+            {
+                "topic": "overall",
+                "score": 5
+            },
+            {
+                "topic": "restaurant_food",
+                "score": 5
+            }
+        ],
+        "type": "user",
+        "replies": [],
+        "commentPrettyDate": {
+            "translationKey": "NEXTGEN_REVIEWS_1_MONTH_AGO",
+            "timeDuration": "1"
+        },
+        "likeCount": 0,
+        "isLiked": false,
+        "productVariations": [],
+        "topReviewerTranslationKey": ""
+    },
+    {
+        "uuid": "73334076-16e5-4b26-9ffa-f726951a8f6b",
+        "createdAt": "2026-01-16T10:28:54Z",
+        "updatedAt": "2026-01-16T10:28:54Z",
+        "text": "muhteşemdi wrap",
+        "isAnonymous": false,
+        "reviewerName": "...z",
+        "reviewerId": "trh80z32",
+        "ratings": [
+            {
+                "topic": "overall",
+                "score": 5
+            },
+            {
+                "topic": "restaurant_food",
+                "score": 5
+            }
+        ],
+        "type": "user",
+        "replies": [],
+        "commentPrettyDate": {
+            "translationKey": "NEXTGEN_REVIEWS_1_MONTH_AGO",
+            "timeDuration": "1"
+        },
+        "likeCount": 0,
+        "isLiked": false,
+        "productVariations": [],
+        "topReviewerTranslationKey": ""
+    },
+    {
+        "uuid": "eb00496d-3394-4d0c-9ba3-e415e6f9636b",
+        "createdAt": "2026-01-10T09:23:27Z",
+        "updatedAt": "2026-01-10T09:23:27Z",
+        "text": "Yemek 1 buçuk saatte geldi. Aşırı geçti restoranı her aradığımızda 5kya geliyor diyip sürekli ertelediler. Yemeğim ayrıca aşırı kuru ve soğuktu. Berbat bir deneyimdi asla önermiyorum kimseye",
+        "isAnonymous": false,
+        "reviewerName": "....",
+        "reviewerId": "tr51c0mz",
+        "ratings": [
+            {
+                "topic": "overall",
+                "score": 1
+            },
+            {
+                "topic": "restaurant_food",
+                "score": 1
+            },
+            {
+                "topic": "rider",
+                "score": 1
+            }
+        ],
+        "type": "user",
+        "replies": [],
+        "commentPrettyDate": {
+            "translationKey": "NEXTGEN_REVIEWS_X_MONTHS_AGO",
+            "timeDuration": "2"
+        },
+        "likeCount": 0,
+        "isLiked": false,
+        "productVariations": [],
+        "topReviewerTranslationKey": ""
+    },
+    {
+        "uuid": "b89d6e67-805d-4851-b2a5-22c08da88ada",
+        "createdAt": "2026-01-08T15:58:54Z",
+        "updatedAt": "2026-01-08T15:58:54Z",
+        "text": "Hayatımda bu kadar kötü bir makarna yemedim. Bolognese sostaki kıyma resmen bozuktu. Hem paranıza hem de çöpe atılan yemeklere yazık. Kesinlikle tavsiye etmem.",
+        "isAnonymous": false,
+        "reviewerName": "...y",
+        "reviewerId": "tr3itg0i",
+        "ratings": [
+            {
+                "topic": "overall",
+                "score": 1
+            },
+            {
+                "topic": "restaurant_food",
+                "score": 1
+            },
+            {
+                "topic": "rider",
+                "score": 1
+            }
+        ],
+        "type": "user",
+        "replies": [],
+        "commentPrettyDate": {
+            "translationKey": "NEXTGEN_REVIEWS_X_MONTHS_AGO",
+            "timeDuration": "2"
+        },
+        "likeCount": 0,
+        "isLiked": false,
+        "productVariations": [],
+        "topReviewerTranslationKey": ""
+    },
+    {
+        "uuid": "969ba147-4dd4-4b74-8228-ea15ce8ff1b1",
+        "createdAt": "2025-12-25T16:45:15Z",
+        "updatedAt": "2025-12-25T16:45:15Z",
+        "text": "Fiyat bir tık pahalı ama diyetteyken kurtarıcı",
+        "isAnonymous": false,
+        "reviewerName": "...n",
+        "reviewerId": "trcpejid",
+        "ratings": [
+            {
+                "topic": "overall",
+                "score": 4
+            },
+            {
+                "topic": "restaurant_food",
+                "score": 4
+            }
+        ],
+        "type": "user",
+        "replies": [],
+        "commentPrettyDate": {
+            "translationKey": "NEXTGEN_REVIEWS_X_MONTHS_AGO",
+            "timeDuration": "2"
+        },
+        "likeCount": 0,
+        "isLiked": false,
+        "productVariations": [],
+        "topReviewerTranslationKey": ""
+    },
+    {
+        "uuid": "5e182824-16d1-427c-947b-96ccc952fb78",
+        "createdAt": "2025-12-17T16:45:42Z",
+        "updatedAt": "2025-12-17T16:45:42Z",
+        "text": "Mercimek çorbası güzeldi ancak geriye kalan hiçbir şeyi beğenmedik. Tavuklar çok kuru basmatide ise su tadı vardı. Memnun kalmadık",
+        "isAnonymous": false,
+        "reviewerName": "...n",
+        "reviewerId": "trs4x1r7",
+        "ratings": [
+            {
+                "topic": "overall",
+                "score": 2
+            },
+            {
+                "topic": "restaurant_food",
+                "score": 2
+            }
+        ],
+        "type": "user",
+        "replies": [],
+        "commentPrettyDate": {
+            "translationKey": "NEXTGEN_REVIEWS_X_MONTHS_AGO",
+            "timeDuration": "2"
+        },
+        "likeCount": 0,
+        "isLiked": false,
+        "productVariations": [
+            {
+                "id": "11593035",
+                "defaultTitle": "Mercimek Çorbası",
+                "title": {},
+                "unitPrice": 180,
+                "product": {
+                    "id": "3562976",
+                    "defaultTitle": "Mercimek Çorbası",
+                    "title": {
+                        "en_TR": "Lentil Soup",
+                        "tr_TR": "Mercimek Çorbası"
+                    },
+                    "description": "Kırmızı mercimek, sebzeler ve baharatlarla hazırlanan bir çorbadır.",
+                    "active": true,
+                    "imageUrls": [
+                        "https://images.deliveryhero.io/image/fd-tr/products/3562976.jpg"
+                    ]
+                }
+            }
+        ],
+        "topReviewerTranslationKey": ""
+    },
+    {
+        "uuid": "dc30a5d9-a3af-4e98-a3f7-03664fa7ebb4",
+        "createdAt": "2025-12-17T08:30:15Z",
+        "updatedAt": "2025-12-17T08:30:15Z",
+        "text": "Yesterday order was a joke! Not only you didn't bring me any yogurt but for 180 tl you gave me rice without anything!!! And on photo in your menu it has vegetables and nuts! DISGRACE!!! ",
+        "isAnonymous": false,
+        "reviewerName": "...a",
+        "reviewerId": "tryt1vt7",
+        "ratings": [
+            {
+                "topic": "overall",
+                "score": 1
+            },
+            {
+                "topic": "restaurant_food",
+                "score": 1
+            }
+        ],
+        "type": "user",
+        "replies": [],
+        "commentPrettyDate": {
+            "translationKey": "NEXTGEN_REVIEWS_X_MONTHS_AGO",
+            "timeDuration": "2"
+        },
+        "likeCount": 0,
+        "isLiked": false,
+        "productVariations": [],
+        "topReviewerTranslationKey": "NEXTGEN_KEY_REVIEWS_LABEL"
+    },
+    {
+        "uuid": "c8ce2705-3831-44e7-a1bb-268357fabf58",
+        "createdAt": "2025-11-26T09:10:05Z",
+        "updatedAt": "2025-11-26T09:10:05Z",
+        "text": "Yediğim en kuru tavuk olabilir. Normalde iyi pişirirler ama bu kez üzdü.",
+        "isAnonymous": false,
+        "reviewerName": "...y",
+        "reviewerId": "trlxrb1q",
+        "ratings": [
+            {
+                "topic": "overall",
+                "score": 2
+            },
+            {
+                "topic": "restaurant_food",
+                "score": 2
+            }
+        ],
+        "type": "user",
+        "replies": [],
+        "commentPrettyDate": {
+            "translationKey": "NEXTGEN_REVIEWS_X_MONTHS_AGO",
+            "timeDuration": "3"
+        },
+        "likeCount": 0,
+        "isLiked": false,
+        "productVariations": [],
+        "topReviewerTranslationKey": ""
+    },
+    {
+        "uuid": "038153dd-57ca-4d1d-9c72-68d81ff563ad",
+        "createdAt": "2025-11-19T10:03:18Z",
+        "updatedAt": "2025-11-19T10:03:18Z",
+        "text": "kuru bir tavuktu çok pişmiş ve sertti",
+        "isAnonymous": false,
+        "reviewerName": "...k",
+        "reviewerId": "tr19b2pl",
+        "ratings": [
+            {
+                "topic": "overall",
+                "score": 1
+            },
+            {
+                "topic": "restaurant_food",
+                "score": 1
+            }
+        ],
+        "type": "user",
+        "replies": [],
+        "commentPrettyDate": {
+            "translationKey": "NEXTGEN_REVIEWS_X_MONTHS_AGO",
+            "timeDuration": "3"
+        },
+        "likeCount": 0,
+        "isLiked": false,
+        "productVariations": [],
+        "topReviewerTranslationKey": ""
+    },
+    {
+        "uuid": "0528827a-aad4-4dff-a215-3728a6bd7b03",
+        "createdAt": "2025-11-14T17:23:25Z",
+        "updatedAt": "2025-11-14T17:23:25Z",
+        "text": "Mercimek corbası corba degil bildigin suydu, yemekler de cok kotu bozuk gibiydi",
+        "isAnonymous": false,
+        "reviewerName": "...i",
+        "reviewerId": "tr9m0y7j",
+        "ratings": [
+            {
+                "topic": "overall",
+                "score": 1
+            },
+            {
+                "topic": "restaurant_food",
+                "score": 1
+            }
+        ],
+        "type": "user",
+        "replies": [],
+        "commentPrettyDate": {
+            "translationKey": "NEXTGEN_REVIEWS_X_MONTHS_AGO",
+            "timeDuration": "4"
+        },
+        "likeCount": 0,
+        "isLiked": false,
+        "productVariations": [],
+        "topReviewerTranslationKey": ""
+    },
+    {
+        "uuid": "8336f856-f7ea-4772-b67c-91c890d6d060",
+        "createdAt": "2025-11-09T15:20:13Z",
+        "updatedAt": "2025-11-09T15:20:13Z",
+        "text": "Yedigim en güzel cajun salata.Tazeliği lezzeti harika.Tebrikler.",
+        "isAnonymous": false,
+        "reviewerName": "...r",
+        "reviewerId": "tr7vd0tr",
+        "ratings": [
+            {
+                "topic": "overall",
+                "score": 5
+            },
+            {
+                "topic": "restaurant_food",
+                "score": 5
+            }
+        ],
+        "type": "user",
+        "replies": [],
+        "commentPrettyDate": {
+            "translationKey": "NEXTGEN_REVIEWS_X_MONTHS_AGO",
+            "timeDuration": "4"
+        },
+        "likeCount": 0,
+        "isLiked": false,
+        "productVariations": [],
+        "topReviewerTranslationKey": ""
+    },
+    {
+        "uuid": "ffa36161-93f0-44e8-a6fb-69ddb8b43e59",
+        "createdAt": "2025-11-05T09:02:13Z",
+        "updatedAt": "2025-11-05T09:02:13Z",
+        "text": "Bugün az pişmişti Tavuk yiyemedim",
+        "isAnonymous": false,
+        "reviewerName": "...n",
+        "reviewerId": "trbeuu6i",
+        "ratings": [
+            {
+                "topic": "overall",
+                "score": 2
+            },
+            {
+                "topic": "restaurant_food",
+                "score": 2
+            },
+            {
+                "topic": "rider",
+                "score": 5
+            }
+        ],
+        "type": "user",
+        "replies": [],
+        "commentPrettyDate": {
+            "translationKey": "NEXTGEN_REVIEWS_X_MONTHS_AGO",
+            "timeDuration": "4"
+        },
+        "likeCount": 0,
+        "isLiked": false,
+        "productVariations": [
+            {
+                "id": "11593110",
+                "defaultTitle": "Izgara Tavuklu Salata",
+                "title": {},
+                "unitPrice": 410,
+                "product": {
+                    "id": "3563051",
+                    "defaultTitle": "Izgara Tavuklu Salata",
+                    "title": {
+                        "en_TR": "Grilled Chicken Salad",
+                        "tr_TR": "Izgara Tavuklu Salata"
+                    },
+                    "description": "(310 kcal.) Akdeniz yeşillikleri, tane süt mısır, kırmızılahana, havuç, ızgara tavuk dilimleri, cherry domates, seçeceğiniz 3 adet sos",
+                    "active": true,
+                    "imageUrls": [
+                        "https://images.deliveryhero.io/image/fd-tr/products/3563051.jpg"
+                    ]
+                }
+            }
+        ],
+        "topReviewerTranslationKey": ""
+    },
+    {
+        "uuid": "64167ed4-e139-4fe5-80d3-974533c5e445",
+        "createdAt": "2025-11-04T23:27:22Z",
+        "updatedAt": "2025-11-04T23:27:22Z",
+        "text": "tavuk kupkuruydu bulgur pilavını da beğenmedim",
+        "isAnonymous": false,
+        "reviewerName": "...y",
+        "reviewerId": "trtnkbfq",
+        "ratings": [
+            {
+                "topic": "overall",
+                "score": 2
+            },
+            {
+                "topic": "restaurant_food",
+                "score": 2
+            }
+        ],
+        "type": "user",
+        "replies": [],
+        "commentPrettyDate": {
+            "translationKey": "NEXTGEN_REVIEWS_X_MONTHS_AGO",
+            "timeDuration": "4"
+        },
+        "likeCount": 0,
+        "isLiked": false,
+        "productVariations": [],
+        "topReviewerTranslationKey": "NEXTGEN_KEY_REVIEWS_LABEL"
+    },
+    {
+        "uuid": "c0cdf959-cbf9-44c7-9020-173079cd6f4d",
+        "createdAt": "2025-11-04T10:25:30Z",
+        "updatedAt": "2025-11-04T10:25:30Z",
+        "text": "Hergün yiyorum niye demekki çok beğeniyorum,\nsadece 2 kere pişmemiş geldi tavuk onun dışında Tavuklu salata güzel,",
+        "isAnonymous": false,
+        "reviewerName": "...n",
+        "reviewerId": "trbeuu6i",
+        "ratings": [
+            {
+                "topic": "overall",
+                "score": 5
+            },
+            {
+                "topic": "restaurant_food",
+                "score": 5
+            },
+            {
+                "topic": "rider",
+                "score": 5
+            }
+        ],
+        "type": "user",
+        "replies": [],
+        "commentPrettyDate": {
+            "translationKey": "NEXTGEN_REVIEWS_X_MONTHS_AGO",
+            "timeDuration": "4"
+        },
+        "likeCount": 0,
+        "isLiked": false,
+        "productVariations": [
+            {
+                "id": "11593110",
+                "defaultTitle": "Izgara Tavuklu Salata",
+                "title": {},
+                "unitPrice": 410,
+                "product": {
+                    "id": "3563051",
+                    "defaultTitle": "Izgara Tavuklu Salata",
+                    "title": {
+                        "en_TR": "Grilled Chicken Salad",
+                        "tr_TR": "Izgara Tavuklu Salata"
+                    },
+                    "description": "(310 kcal.) Akdeniz yeşillikleri, tane süt mısır, kırmızılahana, havuç, ızgara tavuk dilimleri, cherry domates, seçeceğiniz 3 adet sos",
+                    "active": true,
+                    "imageUrls": [
+                        "https://images.deliveryhero.io/image/fd-tr/products/3563051.jpg"
+                    ]
+                }
+            }
+        ],
+        "topReviewerTranslationKey": ""
+    },
+    {
+        "uuid": "aec4a321-441c-4391-9226-b1d04f8774d8",
+        "createdAt": "2025-11-03T19:50:08Z",
+        "updatedAt": "2025-11-03T19:50:08Z",
+        "text": "Çok lezzetliydi ilkkez sipariş verdim ama çok beğendim ellerinize sağlık",
+        "isAnonymous": false,
+        "reviewerName": "...n",
+        "reviewerId": "tr2tte41",
+        "ratings": [
+            {
+                "topic": "overall",
+                "score": 5
+            },
+            {
+                "topic": "restaurant_food",
+                "score": 5
+            },
+            {
+                "topic": "rider",
+                "score": 5
+            }
+        ],
+        "type": "user",
+        "replies": [],
+        "commentPrettyDate": {
+            "translationKey": "NEXTGEN_REVIEWS_X_MONTHS_AGO",
+            "timeDuration": "4"
+        },
+        "likeCount": 0,
+        "isLiked": false,
+        "productVariations": [
+            {
+                "id": "11593110",
+                "defaultTitle": "Izgara Tavuklu Salata",
+                "title": {},
+                "unitPrice": 410,
+                "product": {
+                    "id": "3563051",
+                    "defaultTitle": "Izgara Tavuklu Salata",
+                    "title": {
+                        "en_TR": "Grilled Chicken Salad",
+                        "tr_TR": "Izgara Tavuklu Salata"
+                    },
+                    "description": "(310 kcal.) Akdeniz yeşillikleri, tane süt mısır, kırmızılahana, havuç, ızgara tavuk dilimleri, cherry domates, seçeceğiniz 3 adet sos",
+                    "active": true,
+                    "imageUrls": [
+                        "https://images.deliveryhero.io/image/fd-tr/products/3563051.jpg"
+                    ]
+                }
+            }
+        ],
+        "topReviewerTranslationKey": "NEXTGEN_KEY_REVIEWS_LABEL"
+    },
+    {
+        "uuid": "245398ce-1de1-4860-b8c7-97b60ecefd22",
+        "createdAt": "2025-11-03T09:30:17Z",
+        "updatedAt": "2025-11-03T09:30:17Z",
+        "text": "Harika",
+        "isAnonymous": false,
+        "reviewerName": "...k",
+        "reviewerId": "trtmhm2j",
+        "ratings": [
+            {
+                "topic": "overall",
+                "score": 5
+            },
+            {
+                "topic": "restaurant_food",
+                "score": 5
+            },
+            {
+                "topic": "rider",
+                "score": 5
+            }
+        ],
+        "type": "user",
+        "replies": [],
+        "commentPrettyDate": {
+            "translationKey": "NEXTGEN_REVIEWS_X_MONTHS_AGO",
+            "timeDuration": "4"
+        },
+        "likeCount": 0,
+        "isLiked": false,
+        "productVariations": [
+            {
+                "id": "11593110",
+                "defaultTitle": "Izgara Tavuklu Salata",
+                "title": {},
+                "unitPrice": 410,
+                "product": {
+                    "id": "3563051",
+                    "defaultTitle": "Izgara Tavuklu Salata",
+                    "title": {
+                        "en_TR": "Grilled Chicken Salad",
+                        "tr_TR": "Izgara Tavuklu Salata"
+                    },
+                    "description": "(310 kcal.) Akdeniz yeşillikleri, tane süt mısır, kırmızılahana, havuç, ızgara tavuk dilimleri, cherry domates, seçeceğiniz 3 adet sos",
+                    "active": true,
+                    "imageUrls": [
+                        "https://images.deliveryhero.io/image/fd-tr/products/3563051.jpg"
+                    ]
+                }
+            }
+        ],
+        "topReviewerTranslationKey": ""
+    },
+    {
+        "uuid": "7cae47f4-0d3e-476a-b84d-22f159491a6e",
+        "createdAt": "2025-11-01T14:40:32Z",
+        "updatedAt": "2025-11-01T14:40:32Z",
+        "text": "tavuk gayet güzeldi ama pilavını sevemedim bana fazla kuru ve tatsız geldi",
+        "isAnonymous": false,
+        "reviewerName": "...k",
+        "reviewerId": "tr2hnfke",
+        "ratings": [
+            {
+                "topic": "overall",
+                "score": 4
+            },
+            {
+                "topic": "restaurant_food",
+                "score": 4
+            }
+        ],
+        "type": "user",
+        "replies": [],
+        "commentPrettyDate": {
+            "translationKey": "NEXTGEN_REVIEWS_X_MONTHS_AGO",
+            "timeDuration": "4"
+        },
+        "likeCount": 0,
+        "isLiked": false,
+        "productVariations": [
+            {
+                "id": "11593055",
+                "defaultTitle": "Ispanak Yatağında Köri Soslu Izgara Tavuk",
+                "title": {},
+                "unitPrice": 410,
+                "product": {
+                    "id": "3562996",
+                    "defaultTitle": "Ispanak Yatağında Köri Soslu Izgara Tavuk",
+                    "title": {
+                        "en_TR": "Grilled Chicken with Curry Sauce on a Bed of Spinach",
+                        "tr_TR": "Ispanak Yatağında Köri Soslu Izgara Tavuk"
+                    },
+                    "description": "(412 kcal.) 150 gr. ızgara tavuk, tahin. Seçeceğiniz 2 çeşit garnitür ile",
+                    "active": true,
+                    "imageUrls": [
+                        "https://images.deliveryhero.io/image/fd-tr/products/3562996.jpg"
+                    ]
+                }
+            }
+        ],
+        "topReviewerTranslationKey": ""
+    },
+    {
+        "uuid": "25cabcc7-301a-4e73-b108-1a281debe7b3",
+        "createdAt": "2025-10-30T13:30:59Z",
+        "updatedAt": "2025-10-30T13:30:59Z",
+        "text": "Wrap çok küçüktü keşke atıştırmalık olduğu belirtilseydi bu kadar para vermezdim küçücük wrape.",
+        "isAnonymous": false,
+        "reviewerName": "...ç",
+        "reviewerId": "trb2223s",
+        "ratings": [
+            {
+                "topic": "overall",
+                "score": 1
+            },
+            {
+                "topic": "restaurant_food",
+                "score": 1
+            }
+        ],
+        "type": "user",
+        "replies": [],
+        "commentPrettyDate": {
+            "translationKey": "NEXTGEN_REVIEWS_X_MONTHS_AGO",
+            "timeDuration": "4"
+        },
+        "likeCount": 0,
+        "isLiked": false,
+        "productVariations": [],
+        "topReviewerTranslationKey": ""
+    },
+    {
+        "uuid": "fa02fc52-4413-406c-aa6d-da970e35910a",
+        "createdAt": "2025-10-24T14:30:37Z",
+        "updatedAt": "2025-10-24T14:30:37Z",
+        "text": "Çok teşekkür ederiz gürhan beye iyi çalışmalar ",
+        "isAnonymous": false,
+        "reviewerName": "...n",
+        "reviewerId": "trb45x5c",
+        "ratings": [
+            {
+                "topic": "overall",
+                "score": 5
+            },
+            {
+                "topic": "restaurant_food",
+                "score": 5
+            },
+            {
+                "topic": "rider",
+                "score": 5
+            }
+        ],
+        "type": "user",
+        "replies": [],
+        "commentPrettyDate": {
+            "translationKey": "NEXTGEN_REVIEWS_X_MONTHS_AGO",
+            "timeDuration": "4"
+        },
+        "likeCount": 0,
+        "isLiked": false,
+        "productVariations": [
+            {
+                "id": "11593057",
+                "defaultTitle": "Izgara Tavuk",
+                "title": {},
+                "unitPrice": 385,
+                "product": {
+                    "id": "3562998",
+                    "defaultTitle": "Izgara Tavuk",
+                    "title": {
+                        "en_TR": "Grilled Chicken",
+                        "tr_TR": "Izgara Tavuk"
+                    },
+                    "description": "(195 kcal.) 150 gr. ızgara tavuk göğüs. Seçeceğiniz 2 çeşit garnitür ile",
+                    "active": true,
+                    "imageUrls": [
+                        "https://images.deliveryhero.io/image/fd-tr/products/3562998.jpg"
+                    ]
+                }
+            }
+        ],
+        "topReviewerTranslationKey": "NEXTGEN_KEY_REVIEWS_LABEL"
+    },
+    {
+        "uuid": "00b8397a-d732-44aa-a5e4-8f74baf965c9",
+        "createdAt": "2025-10-24T12:08:31Z",
+        "updatedAt": "2025-10-24T12:08:31Z",
+        "text": "Diyet yapan birisi olarak söylüyorum.. MÜKEMMEL ❤ Hem kahvaltı hem atıştırmalık her ogunu karsılıycak ögün var burada siddetle tavsiye ediyorum.. Lezzetleri gerçekten çok güzel iyi calısmalar 🙏",
+        "isAnonymous": false,
+        "reviewerName": "...u",
+        "reviewerId": "trqg6z56",
+        "ratings": [
+            {
+                "topic": "overall",
+                "score": 5
+            },
+            {
+                "topic": "restaurant_food",
+                "score": 5
+            },
+            {
+                "topic": "rider",
+                "score": 5
+            }
+        ],
+        "type": "user",
+        "replies": [],
+        "commentPrettyDate": {
+            "translationKey": "NEXTGEN_REVIEWS_X_MONTHS_AGO",
+            "timeDuration": "4"
+        },
+        "likeCount": 0,
+        "isLiked": false,
+        "productVariations": [
+            {
+                "id": "11593018",
+                "defaultTitle": "Ispanaklı Omlet (147 kcal.)",
+                "title": {},
+                "unitPrice": 220,
+                "product": {
+                    "id": "3562959",
+                    "defaultTitle": "Ispanaklı Omlet (147 kcal.)",
+                    "title": {
+                        "en_TR": "Spinach Omelette (147 kcal.)",
+                        "tr_TR": "Ispanaklı Omlet (147 kcal.)"
+                    },
+                    "description": "2 adet yumurta",
+                    "active": true,
+                    "imageUrls": [
+                        "https://images.deliveryhero.io/image/fd-tr/products/3562959.jpg"
+                    ]
+                }
+            }
+        ],
+        "topReviewerTranslationKey": ""
+    },
+    {
+        "uuid": "5f430377-89a4-4bbb-926d-8e8b8eb72314",
+        "createdAt": "2025-10-19T17:06:47Z",
+        "updatedAt": "2025-10-19T17:06:47Z",
+        "text": "her zamanki gibi cok lezzetli",
+        "isAnonymous": false,
+        "reviewerName": "...a",
+        "reviewerId": "tr3hvn31",
+        "ratings": [
+            {
+                "topic": "overall",
+                "score": 5
+            },
+            {
+                "topic": "restaurant_food",
+                "score": 5
+            }
+        ],
+        "type": "user",
+        "replies": [],
+        "commentPrettyDate": {
+            "translationKey": "NEXTGEN_REVIEWS_X_MONTHS_AGO",
+            "timeDuration": "4"
+        },
+        "likeCount": 0,
+        "isLiked": false,
+        "productVariations": [],
+        "topReviewerTranslationKey": ""
+    },
+    {
+        "uuid": "d6e4d90c-25df-4814-bc41-c733af4d18f9",
+        "createdAt": "2025-10-19T14:19:31Z",
+        "updatedAt": "2025-10-19T14:19:31Z",
+        "text": "Çok iyi",
+        "isAnonymous": false,
+        "reviewerName": "...s",
+        "reviewerId": "tr6awz4w",
+        "ratings": [
+            {
+                "topic": "overall",
+                "score": 5
+            },
+            {
+                "topic": "restaurant_food",
+                "score": 5
+            }
+        ],
+        "type": "user",
+        "replies": [],
+        "commentPrettyDate": {
+            "translationKey": "NEXTGEN_REVIEWS_X_MONTHS_AGO",
+            "timeDuration": "4"
+        },
+        "likeCount": 0,
+        "isLiked": false,
+        "productVariations": [],
+        "topReviewerTranslationKey": "NEXTGEN_KEY_REVIEWS_LABEL"
+    },
+    {
+        "uuid": "4f7ce452-37eb-4c5e-858e-31c0809dcf93",
+        "createdAt": "2025-10-12T19:09:39Z",
+        "updatedAt": "2025-10-12T19:09:39Z",
+        "text": "Diyete uygun mudur çıtır tavuk bilmiyorum ama gayet lezzetli ve doyurucuydu",
+        "isAnonymous": false,
+        "reviewerName": "...e",
+        "reviewerId": "tr3sllbq",
+        "ratings": [
+            {
+                "topic": "overall",
+                "score": 5
+            },
+            {
+                "topic": "restaurant_food",
+                "score": 5
+            },
+            {
+                "topic": "rider",
+                "score": 5
+            }
+        ],
+        "type": "user",
+        "replies": [],
+        "commentPrettyDate": {
+            "translationKey": "NEXTGEN_REVIEWS_X_MONTHS_AGO",
+            "timeDuration": "5"
+        },
+        "likeCount": 0,
+        "isLiked": false,
+        "productVariations": [
+            {
+                "id": "11593056",
+                "defaultTitle": "Ballı Hardallı Tavuk",
+                "title": {},
+                "unitPrice": 415,
+                "product": {
+                    "id": "3562997",
+                    "defaultTitle": "Ballı Hardallı Tavuk",
+                    "title": {
+                        "en_TR": "Honey Mustard Chicken",
+                        "tr_TR": "Ballı Hardallı Tavuk"
+                    },
+                    "description": "Ballı hardal sosunda marine edilmiş ve panelenmiş 2 adet 150 gr. kızartılmış tavuk. Seçeceğiniz 2 çeşit garnitür ile",
+                    "active": true,
+                    "imageUrls": [
+                        "https://images.deliveryhero.io/image/fd-tr/products/3562997.jpg"
+                    ]
+                }
+            }
+        ],
+        "topReviewerTranslationKey": "NEXTGEN_KEY_REVIEWS_LABEL"
+    },
+    {
+        "uuid": "5f037f83-89cb-4b30-8558-536dfc226af1",
+        "createdAt": "2025-10-10T09:14:30Z",
+        "updatedAt": "2025-10-10T09:14:30Z",
+        "text": "Süper lezzetli, süper hızlı... Ellerinize sağlık...",
+        "isAnonymous": false,
+        "reviewerName": "...n",
+        "reviewerId": "trrt0bzm",
+        "ratings": [
+            {
+                "topic": "overall",
+                "score": 5
+            },
+            {
+                "topic": "restaurant_food",
+                "score": 5
+            },
+            {
+                "topic": "rider",
+                "score": 5
+            }
+        ],
+        "type": "user",
+        "replies": [],
+        "commentPrettyDate": {
+            "translationKey": "NEXTGEN_REVIEWS_X_MONTHS_AGO",
+            "timeDuration": "5"
+        },
+        "likeCount": 0,
+        "isLiked": false,
+        "productVariations": [
+            {
+                "id": "11593094",
+                "defaultTitle": "Tavuklu Wrap",
+                "title": {},
+                "unitPrice": 365,
+                "product": {
+                    "id": "3563035",
+                    "defaultTitle": "Tavuklu Wrap",
+                    "title": {
+                        "en_TR": "Chicken Wrap",
+                        "tr_TR": "Tavuklu Wrap"
+                    },
+                    "description": "(400 kcal.) Kepekli tortilla ekmeğine; yeşillik, domates, küp turşu, kabak, kapya biberi, havuç, jülyen tavuk dilimleri",
+                    "active": true,
+                    "imageUrls": [
+                        "https://images.deliveryhero.io/image/fd-tr/products/3563035.jpg"
+                    ]
+                }
+            }
+        ],
+        "topReviewerTranslationKey": ""
+    },
+    {
+        "uuid": "c7755a58-b80f-48b6-91ea-7fcc2f6e455c",
+        "createdAt": "2025-10-04T09:16:07Z",
+        "updatedAt": "2025-10-04T09:16:07Z",
+        "text": "Mükemmel ",
+        "isAnonymous": false,
+        "reviewerName": "...s",
+        "reviewerId": "tr6awz4w",
+        "ratings": [
+            {
+                "topic": "overall",
+                "score": 5
+            },
+            {
+                "topic": "restaurant_food",
+                "score": 5
+            }
+        ],
+        "type": "user",
+        "replies": [],
+        "commentPrettyDate": {
+            "translationKey": "NEXTGEN_REVIEWS_X_MONTHS_AGO",
+            "timeDuration": "5"
+        },
+        "likeCount": 0,
+        "isLiked": false,
+        "productVariations": [],
+        "topReviewerTranslationKey": "NEXTGEN_KEY_REVIEWS_LABEL"
+    },
+    {
+        "uuid": "44869cd5-e9b7-4835-80ad-a17060283ba0",
+        "createdAt": "2025-09-03T19:25:44Z",
+        "updatedAt": "2025-09-03T19:25:44Z",
+        "text": "Güzel yenilir 10/8.5",
+        "isAnonymous": false,
+        "reviewerName": "...r",
+        "reviewerId": "trxaw5nw",
+        "ratings": [
+            {
+                "topic": "overall",
+                "score": 4
+            },
+            {
+                "topic": "restaurant_food",
+                "score": 4
+            }
+        ],
+        "type": "user",
+        "replies": [],
+        "commentPrettyDate": {
+            "translationKey": "NEXTGEN_REVIEWS_X_MONTHS_AGO",
+            "timeDuration": "6"
+        },
+        "likeCount": 1,
+        "isLiked": false,
+        "productVariations": [
+            {
+                "id": "11593060",
+                "defaultTitle": "Diyet'te Special Tavuk",
+                "title": {},
+                "unitPrice": 405,
+                "product": {
+                    "id": "3563001",
+                    "defaultTitle": "Diyet'te Special Tavuk",
+                    "title": {
+                        "en_TR": "Special Chicken in Diet",
+                        "tr_TR": "Diyet'te Special Tavuk"
+                    },
+                    "description": "Sotelenmiş jülyen sebze, tavuk dilimleri. Seçeceğiniz 2 çeşit garnitür ile",
+                    "active": true,
+                    "imageUrls": [
+                        "https://images.deliveryhero.io/image/fd-tr/products/3563001.jpg"
+                    ]
+                }
+            }
+        ],
+        "topReviewerTranslationKey": "NEXTGEN_KEY_REVIEWS_LABEL"
+    },
+    {
+        "uuid": "36f4a6c1-f48e-425f-a16c-32de6491e9db",
+        "createdAt": "2025-09-01T16:26:20Z",
+        "updatedAt": "2025-09-01T16:26:20Z",
+        "text": "her zaman aynı lezzette süpersiniz",
+        "isAnonymous": false,
+        "reviewerName": "...r",
+        "reviewerId": "tr56gwr1",
+        "ratings": [
+            {
+                "topic": "overall",
+                "score": 5
+            },
+            {
+                "topic": "restaurant_food",
+                "score": 5
+            }
+        ],
+        "type": "user",
+        "replies": [],
+        "commentPrettyDate": {
+            "translationKey": "NEXTGEN_REVIEWS_X_MONTHS_AGO",
+            "timeDuration": "6"
+        },
+        "likeCount": 0,
+        "isLiked": false,
+        "productVariations": [],
+        "topReviewerTranslationKey": ""
+    },
+    {
+        "uuid": "7a8830e1-4f7d-4387-83ad-1b147024dfa5",
+        "createdAt": "2025-09-01T12:31:40Z",
+        "updatedAt": "2025-09-01T12:31:40Z",
+        "text": "Lezzet guzel ancak kac gr tavuk ve pirinc olduğu, kalori miktarida eklenirse çok daha iyi olur. Emeginize saglik. ",
+        "isAnonymous": false,
+        "reviewerName": "...n",
+        "reviewerId": "tr6f0g1h",
+        "ratings": [
+            {
+                "topic": "overall",
+                "score": 5
+            },
+            {
+                "topic": "restaurant_food",
+                "score": 5
+            },
+            {
+                "topic": "rider",
+                "score": 5
+            }
+        ],
+        "type": "user",
+        "replies": [],
+        "commentPrettyDate": {
+            "translationKey": "NEXTGEN_REVIEWS_X_MONTHS_AGO",
+            "timeDuration": "6"
+        },
+        "likeCount": 1,
+        "isLiked": false,
+        "productVariations": [
+            {
+                "id": "76421319",
+                "defaultTitle": "Basmati Pilav Üstü Haşlanmış Tavuk",
+                "title": {},
+                "unitPrice": 390,
+                "product": {
+                    "id": "68017149",
+                    "defaultTitle": "Basmati Pilav Üstü Haşlanmış Tavuk",
+                    "title": {
+                        "en_TR": "Boiled Chicken Over Basmati Rice",
+                        "tr_TR": "Basmati Pilav Üstü Haşlanmış Tavuk"
+                    },
+                    "description": "1 kişilik",
+                    "active": true,
+                    "imageUrls": [
+                        "https://images.deliveryhero.io/image/fd-tr/Products/68017149.jpg"
+                    ]
+                }
+            }
+        ],
+        "topReviewerTranslationKey": ""
+    },
+    {
+        "uuid": "b5173ef0-b32f-43d8-a569-28bd9098a79b",
+        "createdAt": "2025-08-27T09:35:38Z",
+        "updatedAt": "2025-08-27T09:35:38Z",
+        "text": "Tavuk kebap gibi çok aşırı uslu ve baharatlıydı.  Zor yedim. ",
+        "isAnonymous": false,
+        "reviewerName": "...r",
+        "reviewerId": "trkflmp9",
+        "ratings": [
+            {
+                "topic": "overall",
+                "score": 2
+            },
+            {
+                "topic": "restaurant_food",
+                "score": 2
+            }
+        ],
+        "type": "user",
+        "replies": [],
+        "commentPrettyDate": {
+            "translationKey": "NEXTGEN_REVIEWS_X_MONTHS_AGO",
+            "timeDuration": "6"
+        },
+        "likeCount": 0,
+        "isLiked": false,
+        "productVariations": [],
+        "topReviewerTranslationKey": ""
+    },
+    {
+        "uuid": "2af94bf6-85b0-4db9-a662-c0b4255a9960",
+        "createdAt": "2025-08-23T14:20:38Z",
+        "updatedAt": "2025-08-23T14:20:38Z",
+        "text": "Gerçekten çok tatsız tuzsuz olması bir yana bir de servis koymamışlar iş yerine söylemiştim çatal kaşık ve tuz  bulmak için o kadar çabaladım ki yemek boğazıma dizildi bidaha asla sipariş vermeyeceğim",
+        "isAnonymous": false,
+        "reviewerName": "...k",
+        "reviewerId": "tr85eexx",
+        "ratings": [
+            {
+                "topic": "overall",
+                "score": 1
+            },
+            {
+                "topic": "restaurant_food",
+                "score": 1
+            }
+        ],
+        "type": "user",
+        "replies": [],
+        "commentPrettyDate": {
+            "translationKey": "NEXTGEN_REVIEWS_X_MONTHS_AGO",
+            "timeDuration": "6"
+        },
+        "likeCount": 0,
+        "isLiked": false,
+        "productVariations": [],
+        "topReviewerTranslationKey": ""
+    },
+    {
+        "uuid": "7afb3774-e21b-4a95-8f3e-e4aea30a32cb",
+        "createdAt": "2025-08-18T14:31:48Z",
+        "updatedAt": "2025-08-18T14:31:48Z",
+        "text": "diyet tipi yemeklerdeki tatsızlık asla yok. kalite çok iyi",
+        "isAnonymous": false,
+        "reviewerName": "...n",
+        "reviewerId": "tr4e6i8e",
+        "ratings": [
+            {
+                "topic": "overall",
+                "score": 5
+            },
+            {
+                "topic": "restaurant_food",
+                "score": 5
+            },
+            {
+                "topic": "rider",
+                "score": 5
+            }
+        ],
+        "type": "user",
+        "replies": [],
+        "commentPrettyDate": {
+            "translationKey": "NEXTGEN_REVIEWS_X_MONTHS_AGO",
+            "timeDuration": "6"
+        },
+        "likeCount": 0,
+        "isLiked": false,
+        "productVariations": [
+            {
+                "id": "11593051",
+                "defaultTitle": "Cevizli Naneli Kabak Soslu Tavuk",
+                "title": {},
+                "unitPrice": 405,
+                "product": {
+                    "id": "3562992",
+                    "defaultTitle": "Cevizli Naneli Kabak Soslu Tavuk",
+                    "title": {
+                        "en_TR": "Chicken with Walnut-Mint Zucchini Sauce",
+                        "tr_TR": "Cevizli Naneli Kabak Soslu Tavuk"
+                    },
+                    "description": "(315 kcal.) 150 gr. ızgara tavuk göğüs, özel cevizli naneli kabak sos. Seçeceğiniz 2 çeşit garnitür ile",
+                    "active": true,
+                    "imageUrls": [
+                        "https://images.deliveryhero.io/image/fd-tr/products/3562992.jpg"
+                    ]
+                }
+            }
+        ],
+        "topReviewerTranslationKey": ""
+    },
+    {
+        "uuid": "c618a67b-dd8e-4d37-9740-de302b85948e",
+        "createdAt": "2025-08-18T14:30:27Z",
+        "updatedAt": "2025-08-18T14:30:27Z",
+        "text": "soru işaretsiz işletme",
+        "isAnonymous": false,
+        "reviewerName": "...n",
+        "reviewerId": "tr4e6i8e",
+        "ratings": [
+            {
+                "topic": "overall",
+                "score": 5
+            },
+            {
+                "topic": "restaurant_food",
+                "score": 5
+            },
+            {
+                "topic": "rider",
+                "score": 5
+            }
+        ],
+        "type": "user",
+        "replies": [],
+        "commentPrettyDate": {
+            "translationKey": "NEXTGEN_REVIEWS_X_MONTHS_AGO",
+            "timeDuration": "6"
+        },
+        "likeCount": 0,
+        "isLiked": false,
+        "productVariations": [
+            {
+                "id": "11593057",
+                "defaultTitle": "Izgara Tavuk",
+                "title": {},
+                "unitPrice": 385,
+                "product": {
+                    "id": "3562998",
+                    "defaultTitle": "Izgara Tavuk",
+                    "title": {
+                        "en_TR": "Grilled Chicken",
+                        "tr_TR": "Izgara Tavuk"
+                    },
+                    "description": "(195 kcal.) 150 gr. ızgara tavuk göğüs. Seçeceğiniz 2 çeşit garnitür ile",
+                    "active": true,
+                    "imageUrls": [
+                        "https://images.deliveryhero.io/image/fd-tr/products/3562998.jpg"
+                    ]
+                }
+            },
+            {
+                "id": "11593072",
+                "defaultTitle": "Köfteli Penne",
+                "title": {},
+                "unitPrice": 360,
+                "product": {
+                    "id": "3563013",
+                    "defaultTitle": "Köfteli Penne",
+                    "title": {
+                        "en_TR": "Penne with Meatballs",
+                        "tr_TR": "Köfteli Penne"
+                    },
+                    "description": "(272 kcal.) Kepekli penne, 3 adet (40 gr.) yağsız köfte dilimleri",
+                    "active": true,
+                    "imageUrls": [
+                        "https://images.deliveryhero.io/image/fd-tr/products/3563013.jpg"
+                    ]
+                }
+            },
+            {
+                "id": "11593121",
+                "defaultTitle": "Yeşil Salata",
+                "title": {},
+                "unitPrice": 225,
+                "product": {
+                    "id": "3563062",
+                    "defaultTitle": "Yeşil Salata",
+                    "title": {
+                        "en_TR": "Green salad",
+                        "tr_TR": "Yeşil Salata"
+                    },
+                    "description": "(89 kcal.) Akdeniz yeşillikleri, tane süt mısır, kırmızılahana, havuç, domates, seçeceğiniz 3 adet sos ile",
+                    "active": true,
+                    "imageUrls": [
+                        "https://images.deliveryhero.io/image/fd-tr/products/3563062.jpg"
+                    ]
+                }
+            }
+        ],
+        "topReviewerTranslationKey": ""
+    },
+    {
+        "uuid": "22384d4a-9d85-49d6-9788-836a569468b1",
+        "createdAt": "2025-08-07T15:12:03Z",
+        "updatedAt": "2025-08-07T15:12:03Z",
+        "text": "Çorba sudan farksızdı tavuk buzzzzzz gibi",
+        "isAnonymous": false,
+        "reviewerName": "...n",
+        "reviewerId": "trox60xv",
+        "ratings": [
+            {
+                "topic": "overall",
+                "score": 1
+            },
+            {
+                "topic": "restaurant_food",
+                "score": 1
+            },
+            {
+                "topic": "rider",
+                "score": 5
+            }
+        ],
+        "type": "user",
+        "replies": [],
+        "commentPrettyDate": {
+            "translationKey": "NEXTGEN_REVIEWS_X_MONTHS_AGO",
+            "timeDuration": "7"
+        },
+        "likeCount": 0,
+        "isLiked": false,
+        "productVariations": [],
+        "topReviewerTranslationKey": ""
+    },
+    {
+        "uuid": "c1af64ec-39af-4128-a290-288ee5c74007",
+        "createdAt": "2025-07-25T11:02:16Z",
+        "updatedAt": "2025-07-25T11:02:16Z",
+        "text": "Tekrar sipariş verdim hüsrana uğradım yemek söyledim servis hiç gelmedi sanırsam elle yemeği yemem bekleniyor.",
+        "isAnonymous": false,
+        "reviewerName": "...n",
+        "reviewerId": "trz0yy7e",
+        "ratings": [
+            {
+                "topic": "overall",
+                "score": 1
+            },
+            {
+                "topic": "restaurant_food",
+                "score": 1
+            }
+        ],
+        "type": "user",
+        "replies": [],
+        "commentPrettyDate": {
+            "translationKey": "NEXTGEN_REVIEWS_X_MONTHS_AGO",
+            "timeDuration": "7"
+        },
+        "likeCount": 0,
+        "isLiked": false,
+        "productVariations": [],
+        "topReviewerTranslationKey": ""
+    },
+    {
+        "uuid": "ba433110-f087-4e1a-a7d2-fffcae48fc01",
+        "createdAt": "2025-07-18T08:10:39Z",
+        "updatedAt": "2025-07-18T08:10:39Z",
+        "text": "kepekli makarnanız pişmemiş ve soğuktu haşlanmış sebzeler haşlanmamıştı ",
+        "isAnonymous": false,
+        "reviewerName": "...y",
+        "reviewerId": "trcufftm",
+        "ratings": [
+            {
+                "topic": "overall",
+                "score": 2
+            },
+            {
+                "topic": "restaurant_food",
+                "score": 2
+            },
+            {
+                "topic": "rider",
+                "score": 5
+            }
+        ],
+        "type": "user",
+        "replies": [],
+        "commentPrettyDate": {
+            "translationKey": "NEXTGEN_REVIEWS_X_MONTHS_AGO",
+            "timeDuration": "8"
+        },
+        "likeCount": 0,
+        "isLiked": false,
+        "productVariations": [],
+        "topReviewerTranslationKey": "NEXTGEN_KEY_REVIEWS_LABEL"
+    },
+    {
+        "uuid": "17badf78-e4dc-4916-8b1a-ef725ebbd77c",
+        "createdAt": "2025-07-18T08:09:45Z",
+        "updatedAt": "2025-07-18T08:09:45Z",
+        "text": "Haşlanmış sebze ve kepek makarnanızı beğenmemiştim ama çoban salata bulgur pilavı ve ızgara tavuk 3lüsü harikaydı ızgara tavuğunuzaa bayılıyorum",
+        "isAnonymous": false,
+        "reviewerName": "...y",
+        "reviewerId": "trcufftm",
+        "ratings": [
+            {
+                "topic": "overall",
+                "score": 5
+            },
+            {
+                "topic": "restaurant_food",
+                "score": 5
+            },
+            {
+                "topic": "rider",
+                "score": 5
+            }
+        ],
+        "type": "user",
+        "replies": [],
+        "commentPrettyDate": {
+            "translationKey": "NEXTGEN_REVIEWS_X_MONTHS_AGO",
+            "timeDuration": "8"
+        },
+        "likeCount": 0,
+        "isLiked": false,
+        "productVariations": [
+            {
+                "id": "11593057",
+                "defaultTitle": "Izgara Tavuk",
+                "title": {},
+                "unitPrice": 385,
+                "product": {
+                    "id": "3562998",
+                    "defaultTitle": "Izgara Tavuk",
+                    "title": {
+                        "en_TR": "Grilled Chicken",
+                        "tr_TR": "Izgara Tavuk"
+                    },
+                    "description": "(195 kcal.) 150 gr. ızgara tavuk göğüs. Seçeceğiniz 2 çeşit garnitür ile",
+                    "active": true,
+                    "imageUrls": [
+                        "https://images.deliveryhero.io/image/fd-tr/products/3562998.jpg"
+                    ]
+                }
+            }
+        ],
+        "topReviewerTranslationKey": "NEXTGEN_KEY_REVIEWS_LABEL"
+    },
+    {
+        "uuid": "ba738b1c-16d3-431f-8bed-4abcb97a2e50",
+        "createdAt": "2025-07-09T18:48:20Z",
+        "updatedAt": "2025-07-09T18:48:20Z",
+        "text": "Tavuklu Salata Efsaneydi acı sosunuz la super bir Lezzet katiyo Tonbalikli Salatinizida Çok beğendik Elinize Sağlık Artık Hepp Diyette  Sayenizde Forma girdik  *****",
+        "isAnonymous": false,
+        "reviewerName": "...n",
+        "reviewerId": "trjyqetp",
+        "ratings": [
+            {
+                "topic": "overall",
+                "score": 5
+            },
+            {
+                "topic": "restaurant_food",
+                "score": 5
+            },
+            {
+                "topic": "rider",
+                "score": 5
+            }
+        ],
+        "type": "user",
+        "replies": [],
+        "commentPrettyDate": {
+            "translationKey": "NEXTGEN_REVIEWS_X_MONTHS_AGO",
+            "timeDuration": "8"
+        },
+        "likeCount": 0,
+        "isLiked": false,
+        "productVariations": [
+            {
+                "id": "11593110",
+                "defaultTitle": "Izgara Tavuklu Salata",
+                "title": {},
+                "unitPrice": 410,
+                "product": {
+                    "id": "3563051",
+                    "defaultTitle": "Izgara Tavuklu Salata",
+                    "title": {
+                        "en_TR": "Grilled Chicken Salad",
+                        "tr_TR": "Izgara Tavuklu Salata"
+                    },
+                    "description": "(310 kcal.) Akdeniz yeşillikleri, tane süt mısır, kırmızılahana, havuç, ızgara tavuk dilimleri, cherry domates, seçeceğiniz 3 adet sos",
+                    "active": true,
+                    "imageUrls": [
+                        "https://images.deliveryhero.io/image/fd-tr/products/3563051.jpg"
+                    ]
+                }
+            },
+            {
+                "id": "11593120",
+                "defaultTitle": "Ton Balıklı Salata",
+                "title": {},
+                "unitPrice": 400,
+                "product": {
+                    "id": "3563061",
+                    "defaultTitle": "Ton Balıklı Salata",
+                    "title": {
+                        "en_TR": "Tuna Salad",
+                        "tr_TR": "Ton Balıklı Salata"
+                    },
+                    "description": "(150 kcal.) Akdeniz yeşillikleri, tane süt mısır, kırmızılahana, havuç, 80 gr. diyet ton balığı, cherry domates, seçeceğiniz 3 adet sos",
+                    "active": true,
+                    "imageUrls": [
+                        "https://images.deliveryhero.io/image/fd-tr/products/3563061.jpg"
+                    ]
+                }
+            }
+        ],
+        "topReviewerTranslationKey": ""
+    },
+    {
+        "uuid": "60e51ffe-032b-447e-b1a6-bc4a44c7ce7f",
+        "createdAt": "2025-07-01T20:00:36Z",
+        "updatedAt": "2025-07-01T20:00:36Z",
+        "text": "Yanlış sipariş gelmiş ve çok geç gelmiş ",
+        "isAnonymous": false,
+        "reviewerName": "...i",
+        "reviewerId": "treszw90",
+        "ratings": [
+            {
+                "topic": "overall",
+                "score": 1
+            },
+            {
+                "topic": "restaurant_food",
+                "score": 1
+            }
+        ],
+        "type": "user",
+        "replies": [],
+        "commentPrettyDate": {
+            "translationKey": "NEXTGEN_REVIEWS_X_MONTHS_AGO",
+            "timeDuration": "8"
+        },
+        "likeCount": 0,
+        "isLiked": false,
+        "productVariations": [],
+        "topReviewerTranslationKey": ""
+    },
+    {
+        "uuid": "a9f3279a-50d0-4ebf-9679-77b04c127e57",
+        "createdAt": "2025-07-01T04:46:06Z",
+        "updatedAt": "2025-07-01T04:46:06Z",
+        "text": "Her zaman sevdigim gibi sicak ve cok guzel",
+        "isAnonymous": false,
+        "reviewerName": "...l",
+        "reviewerId": "trebqkou",
+        "ratings": [
+            {
+                "topic": "overall",
+                "score": 5
+            },
+            {
+                "topic": "restaurant_food",
+                "score": 5
+            },
+            {
+                "topic": "rider",
+                "score": 5
+            }
+        ],
+        "type": "user",
+        "replies": [],
+        "commentPrettyDate": {
+            "translationKey": "NEXTGEN_REVIEWS_X_MONTHS_AGO",
+            "timeDuration": "8"
+        },
+        "likeCount": 0,
+        "isLiked": false,
+        "productVariations": [
+            {
+                "id": "11593056",
+                "defaultTitle": "Ballı Hardallı Tavuk",
+                "title": {},
+                "unitPrice": 415,
+                "product": {
+                    "id": "3562997",
+                    "defaultTitle": "Ballı Hardallı Tavuk",
+                    "title": {
+                        "en_TR": "Honey Mustard Chicken",
+                        "tr_TR": "Ballı Hardallı Tavuk"
+                    },
+                    "description": "Ballı hardal sosunda marine edilmiş ve panelenmiş 2 adet 150 gr. kızartılmış tavuk. Seçeceğiniz 2 çeşit garnitür ile",
+                    "active": true,
+                    "imageUrls": [
+                        "https://images.deliveryhero.io/image/fd-tr/products/3562997.jpg"
+                    ]
+                }
+            }
+        ],
+        "topReviewerTranslationKey": ""
+    },
+    {
+        "uuid": "bb53179f-243c-4d9e-a5e6-0cb20d9783ff",
+        "createdAt": "2025-06-30T20:02:07Z",
+        "updatedAt": "2025-06-30T20:02:07Z",
+        "text": "soya soslu tavuğu sipariş vermeyin aşırı pişmiş neredeyse yanıp kupkuru olmuş",
+        "isAnonymous": false,
+        "reviewerName": "...r",
+        "reviewerId": "trq8uhy9",
+        "ratings": [
+            {
+                "topic": "overall",
+                "score": 2
+            },
+            {
+                "topic": "restaurant_food",
+                "score": 2
+            }
+        ],
+        "type": "user",
+        "replies": [],
+        "commentPrettyDate": {
+            "translationKey": "NEXTGEN_REVIEWS_X_MONTHS_AGO",
+            "timeDuration": "8"
+        },
+        "likeCount": 0,
+        "isLiked": false,
+        "productVariations": [],
+        "topReviewerTranslationKey": ""
+    },
+    {
+        "uuid": "d62c132a-dcf9-49c6-8baf-0db899d23153",
+        "createdAt": "2025-06-30T12:11:45Z",
+        "updatedAt": "2025-06-30T12:11:45Z",
+        "text": "Ton balığı çok kuruydu ve salata malzemeleri güzel değildi ",
+        "isAnonymous": false,
+        "reviewerName": "...l",
+        "reviewerId": "trydgovg",
+        "ratings": [
+            {
+                "topic": "overall",
+                "score": 1
+            },
+            {
+                "topic": "restaurant_food",
+                "score": 1
+            }
+        ],
+        "type": "user",
+        "replies": [],
+        "commentPrettyDate": {
+            "translationKey": "NEXTGEN_REVIEWS_X_MONTHS_AGO",
+            "timeDuration": "8"
+        },
+        "likeCount": 0,
+        "isLiked": false,
+        "productVariations": [],
+        "topReviewerTranslationKey": ""
+    },
+    {
+        "uuid": "89c31d01-aaee-4bc8-b92a-abf1f5cdb405",
+        "createdAt": "2025-06-24T12:53:27Z",
+        "updatedAt": "2025-06-24T12:53:27Z",
+        "text": "Tavuklar fazla kuruydu. ",
+        "isAnonymous": false,
+        "reviewerName": "...n",
+        "reviewerId": "tra33ut6",
+        "ratings": [
+            {
+                "topic": "overall",
+                "score": 4
+            },
+            {
+                "topic": "restaurant_food",
+                "score": 4
+            },
+            {
+                "topic": "rider",
+                "score": 5
+            }
+        ],
+        "type": "user",
+        "replies": [],
+        "commentPrettyDate": {
+            "translationKey": "NEXTGEN_REVIEWS_X_MONTHS_AGO",
+            "timeDuration": "8"
+        },
+        "likeCount": 0,
+        "isLiked": false,
+        "productVariations": [
+            {
+                "id": "11593057",
+                "defaultTitle": "Izgara Tavuk",
+                "title": {},
+                "unitPrice": 385,
+                "product": {
+                    "id": "3562998",
+                    "defaultTitle": "Izgara Tavuk",
+                    "title": {
+                        "en_TR": "Grilled Chicken",
+                        "tr_TR": "Izgara Tavuk"
+                    },
+                    "description": "(195 kcal.) 150 gr. ızgara tavuk göğüs. Seçeceğiniz 2 çeşit garnitür ile",
+                    "active": true,
+                    "imageUrls": [
+                        "https://images.deliveryhero.io/image/fd-tr/products/3562998.jpg"
+                    ]
+                }
+            }
+        ],
+        "topReviewerTranslationKey": ""
+    },
+    {
+        "uuid": "9e674d36-4c5c-4e48-ab0f-6fcd7a2370e3",
+        "createdAt": "2025-06-22T16:27:10Z",
+        "updatedAt": "2025-06-22T16:27:10Z",
+        "text": "salata eskimişti maalesef tavuk güzeldi ama",
+        "isAnonymous": false,
+        "reviewerName": "...m",
+        "reviewerId": "trv6642r",
+        "ratings": [
+            {
+                "topic": "overall",
+                "score": 2
+            },
+            {
+                "topic": "restaurant_food",
+                "score": 2
+            }
+        ],
+        "type": "user",
+        "replies": [],
+        "commentPrettyDate": {
+            "translationKey": "NEXTGEN_REVIEWS_X_MONTHS_AGO",
+            "timeDuration": "8"
+        },
+        "likeCount": 0,
+        "isLiked": false,
+        "productVariations": [],
+        "topReviewerTranslationKey": "NEXTGEN_KEY_REVIEWS_LABEL"
+    },
+    {
+        "uuid": "e9b0c43e-a11b-48f3-9324-f383be188d7b",
+        "createdAt": "2025-06-21T16:11:10Z",
+        "updatedAt": "2025-06-21T16:11:10Z",
+        "text": "10 üzerinden 8 gibi mükemmel diyemiyorum ama kötüde değil 👍🏻",
+        "isAnonymous": false,
+        "reviewerName": "...n",
+        "reviewerId": "trzg46xy",
+        "ratings": [
+            {
+                "topic": "overall",
+                "score": 3
+            },
+            {
+                "topic": "restaurant_food",
+                "score": 3
+            }
+        ],
+        "type": "user",
+        "replies": [],
+        "commentPrettyDate": {
+            "translationKey": "NEXTGEN_REVIEWS_X_MONTHS_AGO",
+            "timeDuration": "8"
+        },
+        "likeCount": 0,
+        "isLiked": false,
+        "productVariations": [],
+        "topReviewerTranslationKey": ""
+    },
+    {
+        "uuid": "f3c65f3f-5efe-4ed7-9512-39afedff0e61",
+        "createdAt": "2025-06-11T10:47:05Z",
+        "updatedAt": "2025-06-11T10:47:05Z",
+        "text": "Görüntüdeki tavuk ile gelen tavuk arasında uçurum vardı ve güzel değildi.",
+        "isAnonymous": false,
+        "reviewerName": "...r",
+        "reviewerId": "trk6xjfj",
+        "ratings": [
+            {
+                "topic": "overall",
+                "score": 2
+            },
+            {
+                "topic": "restaurant_food",
+                "score": 2
+            },
+            {
+                "topic": "rider",
+                "score": 5
+            }
+        ],
+        "type": "user",
+        "replies": [],
+        "commentPrettyDate": {
+            "translationKey": "NEXTGEN_REVIEWS_X_MONTHS_AGO",
+            "timeDuration": "9"
+        },
+        "likeCount": 0,
+        "isLiked": false,
+        "productVariations": [],
+        "topReviewerTranslationKey": "NEXTGEN_KEY_REVIEWS_LABEL"
+    },
+    {
+        "uuid": "a27481e3-d243-4e13-aa0b-d69f791d1f7e",
+        "createdAt": "2025-05-30T15:56:22Z",
+        "updatedAt": "2025-05-30T15:56:22Z",
+        "text": "Hayatimda yedigim en kotu yemegi yemeye calistim.Tavuklar yanmis buz gibiydi m.siparis verdigim saatten 1,5 saat sonra teslim edildi. Restoranti her aradigimda 2 dk dediler tam 1 saat gecti.berbat",
+        "isAnonymous": false,
+        "reviewerName": "...a",
+        "reviewerId": "tr2b20sa",
+        "ratings": [
+            {
+                "topic": "overall",
+                "score": 1
+            },
+            {
+                "topic": "restaurant_food",
+                "score": 1
+            }
+        ],
+        "type": "user",
+        "replies": [],
+        "commentPrettyDate": {
+            "translationKey": "NEXTGEN_REVIEWS_X_MONTHS_AGO",
+            "timeDuration": "9"
+        },
+        "likeCount": 0,
+        "isLiked": false,
+        "productVariations": [],
+        "topReviewerTranslationKey": ""
+    },
+    {
+        "uuid": "1061be11-e6fd-4366-ada3-5fe3f4583431",
+        "createdAt": "2025-05-26T14:32:27Z",
+        "updatedAt": "2025-05-26T14:32:27Z",
+        "text": "Öncelikle yemeğimizi getiren beyefendiye çok teşekkür ederiz, apartmanın önünde biri parasını düşürmüş onu teslim etti çok sağolsun. Yemek de her zamanki gibi güzel ve sağlıklıydı ",
+        "isAnonymous": false,
+        "reviewerName": "...ç",
+        "reviewerId": "trh3x93z",
+        "ratings": [
+            {
+                "topic": "overall",
+                "score": 5
+            },
+            {
+                "topic": "restaurant_food",
+                "score": 5
+            },
+            {
+                "topic": "rider",
+                "score": 5
+            }
+        ],
+        "type": "user",
+        "replies": [],
+        "commentPrettyDate": {
+            "translationKey": "NEXTGEN_REVIEWS_X_MONTHS_AGO",
+            "timeDuration": "9"
+        },
+        "likeCount": 0,
+        "isLiked": false,
+        "productVariations": [
+            {
+                "id": "11593057",
+                "defaultTitle": "Izgara Tavuk",
+                "title": {},
+                "unitPrice": 385,
+                "product": {
+                    "id": "3562998",
+                    "defaultTitle": "Izgara Tavuk",
+                    "title": {
+                        "en_TR": "Grilled Chicken",
+                        "tr_TR": "Izgara Tavuk"
+                    },
+                    "description": "(195 kcal.) 150 gr. ızgara tavuk göğüs. Seçeceğiniz 2 çeşit garnitür ile",
+                    "active": true,
+                    "imageUrls": [
+                        "https://images.deliveryhero.io/image/fd-tr/products/3562998.jpg"
+                    ]
+                }
+            }
+        ],
+        "topReviewerTranslationKey": ""
+    },
+    {
+        "uuid": "e941fbf6-8936-4ade-91b4-9e3d3d4d4e3a",
+        "createdAt": "2025-05-21T13:55:12Z",
+        "updatedAt": "2025-05-21T13:55:12Z",
+        "text": "Güzel lezzetli doyurucu",
+        "isAnonymous": false,
+        "reviewerName": "...l",
+        "reviewerId": "trr7jxke",
+        "ratings": [
+            {
+                "topic": "overall",
+                "score": 5
+            },
+            {
+                "topic": "restaurant_food",
+                "score": 5
+            },
+            {
+                "topic": "rider",
+                "score": 5
+            }
+        ],
+        "type": "user",
+        "replies": [],
+        "commentPrettyDate": {
+            "translationKey": "NEXTGEN_REVIEWS_X_MONTHS_AGO",
+            "timeDuration": "9"
+        },
+        "likeCount": 1,
+        "isLiked": false,
+        "productVariations": [
+            {
+                "id": "11593037",
+                "defaultTitle": "Detoks Çorbası",
+                "title": {},
+                "unitPrice": 200,
+                "product": {
+                    "id": "3562978",
+                    "defaultTitle": "Detoks Çorbası",
+                    "title": {
+                        "en_TR": "Detox Soup",
+                        "tr_TR": "Detoks Çorbası"
+                    },
+                    "description": "Tek kişilik",
+                    "active": true,
+                    "imageUrls": [
+                        "https://images.deliveryhero.io/image/fd-tr/products/3562978.jpg"
+                    ]
+                }
+            },
+            {
+                "id": "76426415",
+                "defaultTitle": "Basmati Pirinç Pilavı",
+                "title": {},
+                "unitPrice": 220,
+                "product": {
+                    "id": "68022092",
+                    "defaultTitle": "Basmati Pirinç Pilavı",
+                    "title": {
+                        "en_TR": "Basmati Rice Pilaf",
+                        "tr_TR": "Basmati Pirinç Pilavı"
+                    },
+                    "description": "Tek kişilik",
+                    "active": true,
+                    "imageUrls": [
+                        "https://images.deliveryhero.io/image/fd-tr/Products/68022092.jpg"
+                    ]
+                }
+            }
+        ],
+        "topReviewerTranslationKey": ""
+    },
+    {
+        "uuid": "7bf6589b-14a3-47e4-acd3-c982063822a9",
+        "createdAt": "2025-05-15T15:31:57Z",
+        "updatedAt": "2025-05-15T15:31:57Z",
+        "text": "Sipariş 80 dk sonra geldi soğuk geldi. Kabul edilebilir değildi",
+        "isAnonymous": false,
+        "reviewerName": "...r",
+        "reviewerId": "trg316tm",
+        "ratings": [
+            {
+                "topic": "overall",
+                "score": 1
+            },
+            {
+                "topic": "restaurant_food",
+                "score": 1
+            }
+        ],
+        "type": "user",
+        "replies": [],
+        "commentPrettyDate": {
+            "translationKey": "NEXTGEN_REVIEWS_X_MONTHS_AGO",
+            "timeDuration": "10"
+        },
+        "likeCount": 0,
+        "isLiked": false,
+        "productVariations": [],
+        "topReviewerTranslationKey": ""
+    },
+    {
+        "uuid": "214580c0-1ff8-4959-833c-0d294c64482b",
+        "createdAt": "2025-05-13T10:29:33Z",
+        "updatedAt": "2025-05-13T10:29:33Z",
+        "text": "salata iki kaşıktı resmen.. sebzeler fazla diriydi sadece köfteyi begendim ama porsiyonlama kötüydü",
+        "isAnonymous": false,
+        "reviewerName": "...n",
+        "reviewerId": "trzsvu5b",
+        "ratings": [
+            {
+                "topic": "overall",
+                "score": 3
+            },
+            {
+                "topic": "restaurant_food",
+                "score": 3
+            }
+        ],
+        "type": "user",
+        "replies": [],
+        "commentPrettyDate": {
+            "translationKey": "NEXTGEN_REVIEWS_X_MONTHS_AGO",
+            "timeDuration": "10"
+        },
+        "likeCount": 1,
+        "isLiked": false,
+        "productVariations": [],
+        "topReviewerTranslationKey": ""
+    },
+    {
+        "uuid": "4b323b5b-df94-4ae9-94a0-25983bc2e942",
+        "createdAt": "2025-05-12T14:09:47Z",
+        "updatedAt": "2025-05-12T14:09:47Z",
+        "text": "Sakın denemeyin tahtadan farkı yoktu. Son iki sipariş rezaletti. Usta mı değişti ne oldu bilmiyorum ama bir daha sipariş vermem.",
+        "isAnonymous": false,
+        "reviewerName": "...l",
+        "reviewerId": "treb7q8u",
+        "ratings": [
+            {
+                "topic": "overall",
+                "score": 1
+            },
+            {
+                "topic": "restaurant_food",
+                "score": 1
+            },
+            {
+                "topic": "rider",
+                "score": 1
+            }
+        ],
+        "type": "user",
+        "replies": [],
+        "commentPrettyDate": {
+            "translationKey": "NEXTGEN_REVIEWS_X_MONTHS_AGO",
+            "timeDuration": "10"
+        },
+        "likeCount": 0,
+        "isLiked": false,
+        "productVariations": [],
+        "topReviewerTranslationKey": ""
+    },
+    {
+        "uuid": "72ca9d88-3b17-4c1d-81b3-de78c2976c4a",
+        "createdAt": "2025-05-12T12:17:25Z",
+        "updatedAt": "2025-05-12T12:17:25Z",
+        "text": "Kötüydü ",
+        "isAnonymous": false,
+        "reviewerName": "...l",
+        "reviewerId": "treb7q8u",
+        "ratings": [
+            {
+                "topic": "overall",
+                "score": 2
+            },
+            {
+                "topic": "restaurant_food",
+                "score": 2
+            }
+        ],
+        "type": "user",
+        "replies": [],
+        "commentPrettyDate": {
+            "translationKey": "NEXTGEN_REVIEWS_X_MONTHS_AGO",
+            "timeDuration": "10"
+        },
+        "likeCount": 0,
+        "isLiked": false,
+        "productVariations": [],
+        "topReviewerTranslationKey": ""
+    },
+    {
+        "uuid": "b7cf06da-1318-4617-a7fe-99d614b5535c",
+        "createdAt": "2025-05-12T11:53:51Z",
+        "updatedAt": "2025-05-12T11:53:51Z",
+        "text": "tavuk kupkuru, sos fazla sulu, makarna direkt haşlanmış tuzu bile yok, salatanın sosu yok o da kuru. yani 3 yemek, 3 ü de birbirinden tıkaç ve kuru. tavuğu çatala batırmaya çalışırken çatal kırıldı.",
+        "isAnonymous": false,
+        "reviewerName": "...ş",
+        "reviewerId": "trr2aq79",
+        "ratings": [
+            {
+                "topic": "overall",
+                "score": 1
+            },
+            {
+                "topic": "restaurant_food",
+                "score": 1
+            },
+            {
+                "topic": "rider",
+                "score": 5
+            }
+        ],
+        "type": "user",
+        "replies": [],
+        "commentPrettyDate": {
+            "translationKey": "NEXTGEN_REVIEWS_X_MONTHS_AGO",
+            "timeDuration": "10"
+        },
+        "likeCount": 0,
+        "isLiked": false,
+        "productVariations": [],
+        "topReviewerTranslationKey": ""
+    },
+    {
+        "uuid": "c2a580fc-e1b2-4b4d-ad3a-a8944638f696",
+        "createdAt": "2025-05-11T13:51:06Z",
+        "updatedAt": "2025-05-11T13:51:06Z",
+        "text": "gec gelmesi urunun yari gramaj olmasi,telafi edilen urunun ilk gelen urunden daha gec gelmesi,profesyonellikten uzak bir isletme malesef",
+        "isAnonymous": false,
+        "reviewerName": "...r",
+        "reviewerId": "tr7pj4wg",
+        "ratings": [
+            {
+                "topic": "overall",
+                "score": 1
+            },
+            {
+                "topic": "restaurant_food",
+                "score": 1
+            }
+        ],
+        "type": "user",
+        "replies": [],
+        "commentPrettyDate": {
+            "translationKey": "NEXTGEN_REVIEWS_X_MONTHS_AGO",
+            "timeDuration": "10"
+        },
+        "likeCount": 1,
+        "isLiked": false,
+        "productVariations": [],
+        "topReviewerTranslationKey": ""
+    },
+    {
+        "uuid": "d72f71fa-5d57-4975-8905-6badc55760d8",
+        "createdAt": "2025-05-09T11:24:07Z",
+        "updatedAt": "2025-05-09T11:24:07Z",
+        "text": "Tavuk beklemiş taş gibi geldi ciğnenmiyor ve kokuyordu aradığımda taze pistigini söylediler dalga geçer gibi sanki biz anlamiyormuşuz gibi beklenmis oldugunu.utanmiyorsunuzda o tavuğu salataya koymaya",
+        "isAnonymous": false,
+        "reviewerName": "...a",
+        "reviewerId": "trcohnzc",
+        "ratings": [
+            {
+                "topic": "overall",
+                "score": 1
+            },
+            {
+                "topic": "restaurant_food",
+                "score": 1
+            }
+        ],
+        "type": "user",
+        "replies": [],
+        "commentPrettyDate": {
+            "translationKey": "NEXTGEN_REVIEWS_X_MONTHS_AGO",
+            "timeDuration": "10"
+        },
+        "likeCount": 0,
+        "isLiked": false,
+        "productVariations": [],
+        "topReviewerTranslationKey": ""
+    },
+    {
+        "uuid": "9b1ffc1b-0b9a-4c0a-ad28-76a04f298ac7",
+        "createdAt": "2025-05-08T09:44:29Z",
+        "updatedAt": "2025-05-08T09:44:29Z",
+        "text": "harikaydı",
+        "isAnonymous": false,
+        "reviewerName": "...n",
+        "reviewerId": "trzsvu5b",
+        "ratings": [
+            {
+                "topic": "overall",
+                "score": 5
+            },
+            {
+                "topic": "restaurant_food",
+                "score": 5
+            },
+            {
+                "topic": "rider",
+                "score": 5
+            }
+        ],
+        "type": "user",
+        "replies": [],
+        "commentPrettyDate": {
+            "translationKey": "NEXTGEN_REVIEWS_X_MONTHS_AGO",
+            "timeDuration": "10"
+        },
+        "likeCount": 1,
+        "isLiked": false,
+        "productVariations": [
+            {
+                "id": "11593106",
+                "defaultTitle": "Cajun Salata",
+                "title": {},
+                "unitPrice": 405,
+                "product": {
+                    "id": "3563047",
+                    "defaultTitle": "Cajun Salata",
+                    "title": {
+                        "en_TR": "Cajun Salad",
+                        "tr_TR": "Cajun Salata"
+                    },
+                    "description": "(310 kcal.) Akdeniz yeşillikleri, tane süt mısır, kırmızılahana, havuç, ballı hardallı ve cajun baharatlı panelenmiş tavuk parçaları, cherry domates, seçeceğiniz 3 adet sos",
+                    "active": true,
+                    "imageUrls": [
+                        "https://images.deliveryhero.io/image/fd-tr/products/3563047.jpg"
+                    ]
+                }
+            }
+        ],
+        "topReviewerTranslationKey": ""
+    },
+    {
+        "uuid": "1405bb81-e14b-4cfa-89f7-a39a1e26a1a3",
+        "createdAt": "2025-05-04T17:55:51Z",
+        "updatedAt": "2025-05-04T17:55:51Z",
+        "text": "Haşlanmış sebzeler bozulmuştu, turşu gibi ekşilerdi. Tavuk ve pilav güzeldi. ",
+        "isAnonymous": false,
+        "reviewerName": "...e",
+        "reviewerId": "tr1ldypi",
+        "ratings": [
+            {
+                "topic": "overall",
+                "score": 3
+            },
+            {
+                "topic": "restaurant_food",
+                "score": 3
+            }
+        ],
+        "type": "user",
+        "replies": [],
+        "commentPrettyDate": {
+            "translationKey": "NEXTGEN_REVIEWS_X_MONTHS_AGO",
+            "timeDuration": "10"
+        },
+        "likeCount": 0,
+        "isLiked": false,
+        "productVariations": [],
+        "topReviewerTranslationKey": ""
+    },
+    {
+        "uuid": "c608a155-cf7e-400b-9f6a-1f50c22f82e7",
+        "createdAt": "2025-05-03T15:51:36Z",
+        "updatedAt": "2025-05-03T15:51:36Z",
+        "text": "buz gibi geldi ürünler.\naşırı lezzetsiz olunca da çöpe gitti. yazık günah.\n",
+        "isAnonymous": false,
+        "reviewerName": "...a",
+        "reviewerId": "tripi5g9",
+        "ratings": [
+            {
+                "topic": "overall",
+                "score": 1
+            },
+            {
+                "topic": "restaurant_food",
+                "score": 1
+            },
+            {
+                "topic": "rider",
+                "score": 1
+            }
+        ],
+        "type": "user",
+        "replies": [],
+        "commentPrettyDate": {
+            "translationKey": "NEXTGEN_REVIEWS_X_MONTHS_AGO",
+            "timeDuration": "10"
+        },
+        "likeCount": 0,
+        "isLiked": false,
+        "productVariations": [],
+        "topReviewerTranslationKey": ""
+    },
+    {
+        "uuid": "959232db-fbfa-4b0d-b471-c13b3d74fb4e",
+        "createdAt": "2025-04-29T17:16:15Z",
+        "updatedAt": "2025-04-29T17:16:15Z",
+        "text": "Zamandan sonra, temiz ve hafif bir yemek yedim; porsiyonlarda gayet diyete uygun. Bol protein!",
+        "isAnonymous": false,
+        "reviewerName": "...s",
+        "reviewerId": "trm2hl6g",
+        "ratings": [
+            {
+                "topic": "overall",
+                "score": 5
+            },
+            {
+                "topic": "restaurant_food",
+                "score": 5
+            }
+        ],
+        "type": "user",
+        "replies": [],
+        "commentPrettyDate": {
+            "translationKey": "NEXTGEN_REVIEWS_X_MONTHS_AGO",
+            "timeDuration": "10"
+        },
+        "likeCount": 1,
+        "isLiked": false,
+        "productVariations": [],
+        "topReviewerTranslationKey": ""
+    },
+    {
+        "uuid": "d03cf459-3f8a-41fc-9267-16a776a4877e",
+        "createdAt": "2025-04-18T09:25:04Z",
+        "updatedAt": "2025-04-18T09:25:04Z",
+        "text": "detox corbasının görselle alakası yok. inanılmaz kötü tadı var",
+        "isAnonymous": false,
+        "reviewerName": "...r",
+        "reviewerId": "trj1jaq0",
+        "ratings": [
+            {
+                "topic": "overall",
+                "score": 5
+            },
+            {
+                "topic": "restaurant_food",
+                "score": 5
+            },
+            {
+                "topic": "rider",
+                "score": 5
+            }
+        ],
+        "type": "user",
+        "replies": [],
+        "commentPrettyDate": {
+            "translationKey": "NEXTGEN_REVIEWS_X_MONTHS_AGO",
+            "timeDuration": "11"
+        },
+        "likeCount": 0,
+        "isLiked": false,
+        "productVariations": [
+            {
+                "id": "11593055",
+                "defaultTitle": "Ispanak Yatağında Köri Soslu Izgara Tavuk",
+                "title": {},
+                "unitPrice": 410,
+                "product": {
+                    "id": "3562996",
+                    "defaultTitle": "Ispanak Yatağında Köri Soslu Izgara Tavuk",
+                    "title": {
+                        "en_TR": "Grilled Chicken with Curry Sauce on a Bed of Spinach",
+                        "tr_TR": "Ispanak Yatağında Köri Soslu Izgara Tavuk"
+                    },
+                    "description": "(412 kcal.) 150 gr. ızgara tavuk, tahin. Seçeceğiniz 2 çeşit garnitür ile",
+                    "active": true,
+                    "imageUrls": [
+                        "https://images.deliveryhero.io/image/fd-tr/products/3562996.jpg"
+                    ]
+                }
+            }
+        ],
+        "topReviewerTranslationKey": ""
+    },
+    {
+        "uuid": "58ff028e-ac2f-4553-a1e7-ea58c73b452a",
+        "createdAt": "2025-04-17T08:50:52Z",
+        "updatedAt": "2025-04-17T08:50:52Z",
+        "text": "Kuruydu",
+        "isAnonymous": false,
+        "reviewerName": "...u",
+        "reviewerId": "trolvsn4",
+        "ratings": [
+            {
+                "topic": "overall",
+                "score": 4
+            },
+            {
+                "topic": "restaurant_food",
+                "score": 4
+            },
+            {
+                "topic": "rider",
+                "score": 5
+            }
+        ],
+        "type": "user",
+        "replies": [],
+        "commentPrettyDate": {
+            "translationKey": "NEXTGEN_REVIEWS_X_MONTHS_AGO",
+            "timeDuration": "11"
+        },
+        "likeCount": 0,
+        "isLiked": false,
+        "productVariations": [],
+        "topReviewerTranslationKey": ""
+    },
+    {
+        "uuid": "b836ce54-6ddb-40b3-9956-179643a51fd0",
+        "createdAt": "2025-04-11T22:21:22Z",
+        "updatedAt": "2025-04-11T22:21:22Z",
+        "text": "Mercimek çorbası başarısız. köfteler yanık. 600 tl karşılığı mide ekşimesi satın aldım. Teşekkürler. ",
+        "isAnonymous": false,
+        "reviewerName": "...l",
+        "reviewerId": "trln9spi",
+        "ratings": [
+            {
+                "topic": "overall",
+                "score": 1
+            },
+            {
+                "topic": "restaurant_food",
+                "score": 1
+            },
+            {
+                "topic": "rider",
+                "score": 5
+            }
+        ],
+        "type": "user",
+        "replies": [],
+        "commentPrettyDate": {
+            "translationKey": "NEXTGEN_REVIEWS_X_MONTHS_AGO",
+            "timeDuration": "11"
+        },
+        "likeCount": 1,
+        "isLiked": false,
+        "productVariations": [],
+        "topReviewerTranslationKey": ""
+    },
+    {
+        "uuid": "6a2b62ea-2564-407e-bcda-36238ab9c651",
+        "createdAt": "2025-04-09T10:59:59Z",
+        "updatedAt": "2025-04-09T10:59:59Z",
+        "text": "Çok geç geldi sipariş. Yaklaşık 1.5 saat geç geldi. Özür olarak da çok yoğunluk var dediler ama siparişin geç geleceği ile alakalı önceden hiç bir bildirimde bulunmadılar. ",
+        "isAnonymous": false,
+        "reviewerName": "...n",
+        "reviewerId": "tr2ozeg9",
+        "ratings": [
+            {
+                "topic": "overall",
+                "score": 1
+            },
+            {
+                "topic": "restaurant_food",
+                "score": 1
+            }
+        ],
+        "type": "user",
+        "replies": [],
+        "commentPrettyDate": {
+            "translationKey": "NEXTGEN_REVIEWS_X_MONTHS_AGO",
+            "timeDuration": "11"
+        },
+        "likeCount": 0,
+        "isLiked": false,
+        "productVariations": [],
+        "topReviewerTranslationKey": ""
+    },
+    {
+        "uuid": "73eed0c0-c3ab-41aa-b62e-73d944bfade5",
+        "createdAt": "2025-04-08T18:57:00Z",
+        "updatedAt": "2025-04-08T18:57:00Z",
+        "text": "Çok beğendim ",
+        "isAnonymous": false,
+        "reviewerName": "...n",
+        "reviewerId": "tro6lhap",
+        "ratings": [
+            {
+                "topic": "overall",
+                "score": 5
+            },
+            {
+                "topic": "restaurant_food",
+                "score": 5
+            },
+            {
+                "topic": "rider",
+                "score": 5
+            }
+        ],
+        "type": "user",
+        "replies": [],
+        "commentPrettyDate": {
+            "translationKey": "NEXTGEN_REVIEWS_X_MONTHS_AGO",
+            "timeDuration": "11"
+        },
+        "likeCount": 1,
+        "isLiked": false,
+        "productVariations": [
+            {
+                "id": "11593106",
+                "defaultTitle": "Cajun Salata",
+                "title": {},
+                "unitPrice": 405,
+                "product": {
+                    "id": "3563047",
+                    "defaultTitle": "Cajun Salata",
+                    "title": {
+                        "en_TR": "Cajun Salad",
+                        "tr_TR": "Cajun Salata"
+                    },
+                    "description": "(310 kcal.) Akdeniz yeşillikleri, tane süt mısır, kırmızılahana, havuç, ballı hardallı ve cajun baharatlı panelenmiş tavuk parçaları, cherry domates, seçeceğiniz 3 adet sos",
+                    "active": true,
+                    "imageUrls": [
+                        "https://images.deliveryhero.io/image/fd-tr/products/3563047.jpg"
+                    ]
+                }
+            }
+        ],
+        "topReviewerTranslationKey": ""
+    },
+    {
+        "uuid": "7a3f3e03-80a0-4984-824d-a76e6f65dfe6",
+        "createdAt": "2025-03-31T11:33:15Z",
+        "updatedAt": "2025-03-31T11:33:15Z",
+        "text": "tadı çok kötüydü çöpe atmak zorunda kaldım",
+        "isAnonymous": false,
+        "reviewerName": "...ş",
+        "reviewerId": "tr82muxd",
+        "ratings": [
+            {
+                "topic": "overall",
+                "score": 1
+            },
+            {
+                "topic": "restaurant_food",
+                "score": 1
+            },
+            {
+                "topic": "rider",
+                "score": 5
+            }
+        ],
+        "type": "user",
+        "replies": [],
+        "commentPrettyDate": {
+            "translationKey": "NEXTGEN_REVIEWS_X_MONTHS_AGO",
+            "timeDuration": "11"
+        },
+        "likeCount": 0,
+        "isLiked": false,
+        "productVariations": [],
+        "topReviewerTranslationKey": "NEXTGEN_KEY_REVIEWS_LABEL"
+    },
+    {
+        "uuid": "ab6570d4-e9dc-4a7c-ae16-e3f23b606f79",
+        "createdAt": "2025-03-29T10:54:05Z",
+        "updatedAt": "2025-03-29T10:54:05Z",
+        "text": "Tavukarlinizin soslarini ayri getirince coook daha iyi oldu",
+        "isAnonymous": false,
+        "reviewerName": "...n",
+        "reviewerId": "trp83gy2",
+        "ratings": [
+            {
+                "topic": "overall",
+                "score": 5
+            },
+            {
+                "topic": "restaurant_food",
+                "score": 5
+            }
+        ],
+        "type": "user",
+        "replies": [],
+        "commentPrettyDate": {
+            "translationKey": "NEXTGEN_REVIEWS_X_MONTHS_AGO",
+            "timeDuration": "11"
+        },
+        "likeCount": 1,
+        "isLiked": false,
+        "productVariations": [],
+        "topReviewerTranslationKey": ""
+    },
+    {
+        "uuid": "d1ba0b70-7119-439b-91fa-75b2b9451170",
+        "createdAt": "2025-03-25T19:01:59Z",
+        "updatedAt": "2025-03-25T19:01:59Z",
+        "text": "1-İçine çatal kaşık koyun kardeş elimizle mi yiyelim hastaneye söyledim görüyorsunuz 2-porsiyonunuz çok küçük ve salatanın içinde çürük domates ve marul vardı ",
+        "isAnonymous": false,
+        "reviewerName": "...ş",
+        "reviewerId": "tr70ffaf",
+        "ratings": [
+            {
+                "topic": "overall",
+                "score": 1
+            },
+            {
+                "topic": "restaurant_food",
+                "score": 1
+            }
+        ],
+        "type": "user",
+        "replies": [],
+        "commentPrettyDate": {
+            "translationKey": "NEXTGEN_REVIEWS_X_MONTHS_AGO",
+            "timeDuration": "11"
+        },
+        "likeCount": 0,
+        "isLiked": false,
+        "productVariations": [],
+        "topReviewerTranslationKey": ""
+    },
+    {
+        "uuid": "0a2e2e1b-c5c3-4932-9a93-ea785dbc3b86",
+        "createdAt": "2025-03-24T14:35:32Z",
+        "updatedAt": "2025-03-24T14:35:32Z",
+        "text": "Yani güzel ve doyurucu. Fakat koca porsiyon için verdiğiniz sos çok ufak ve yetersiz. Sossuz yemiş gibi oldum. Haliyle lezzet eksikliği oldu. Ayrıca Salatanın genel yağ ve limonu da yoktu. ",
+        "isAnonymous": false,
+        "reviewerName": "...r",
+        "reviewerId": "tre2rl04",
+        "ratings": [
+            {
+                "topic": "overall",
+                "score": 3
+            },
+            {
+                "topic": "restaurant_food",
+                "score": 3
+            },
+            {
+                "topic": "rider",
+                "score": 5
+            }
+        ],
+        "type": "user",
+        "replies": [],
+        "commentPrettyDate": {
+            "translationKey": "NEXTGEN_REVIEWS_X_MONTHS_AGO",
+            "timeDuration": "11"
+        },
+        "likeCount": 0,
+        "isLiked": false,
+        "productVariations": [],
+        "topReviewerTranslationKey": ""
+    },
+    {
+        "uuid": "9b800bcb-2483-4e82-a133-f8834d2adb2b",
+        "createdAt": "2025-03-20T12:06:23Z",
+        "updatedAt": "2025-03-20T12:06:23Z",
+        "text": "sipariş yanlış gelmişti ama yedim vaktim yoktu kızarmış tavuğun içi pişmemişti",
+        "isAnonymous": false,
+        "reviewerName": "...p",
+        "reviewerId": "trd8xa34",
+        "ratings": [
+            {
+                "topic": "overall",
+                "score": 3
+            },
+            {
+                "topic": "restaurant_food",
+                "score": 3
+            }
+        ],
+        "type": "user",
+        "replies": [],
+        "commentPrettyDate": {
+            "translationKey": "NEXTGEN_REVIEWS_1_YEAR_AGO",
+            "timeDuration": "1"
+        },
+        "likeCount": 0,
+        "isLiked": false,
+        "productVariations": [],
+        "topReviewerTranslationKey": ""
+    }
+]
