@@ -1,3 +1,4 @@
+from bs4 import BeautifulSoup
 from curl_cffi import requests
 from playwright.sync_api import sync_playwright
 import urllib.request
@@ -328,6 +329,108 @@ def airbnb_api_cek(oda_linki, max_sayfa):
         with open(dosya_yolu, "w", encoding="utf-8") as f: json.dump(tum_yorumlar, f, ensure_ascii=False, indent=4)
         print(f"🎉 Kaydedildi: '{dosya_yolu}' ({len(tum_yorumlar)} yorum)\n")
 
+def ciceksepeti_api_cek(urun_linki, max_sayfa):
+    # 1. Linkten dosya ismi için görünür ürün kodunu (örn: at4255) alıyoruz
+    match_code = re.search(r'-([a-zA-Z0-9]+)(?:\?|/|$)', urun_linki)
+    urun_kodu = match_code.group(1).lower() if match_code else str(int(time.time()))
+
+    klasor = os.path.join(ANA_KLASOR, "ciceksepeti")
+    os.makedirs(klasor, exist_ok=True)
+    dosya_yolu = os.path.join(klasor, f"ciceksepeti_veri_{urun_kodu}.json")
+
+    if os.path.exists(dosya_yolu):
+        print(f"⚠️ Atlandı: {urun_kodu} zaten mevcut.")
+        return
+
+    print(f"🔍 Çiçeksepeti sayfası analiz ediliyor ({urun_kodu})...")
+
+    # 2. Ana sayfaya gidip gizli (sayısal) productId'yi buluyoruz
+    headers_main = {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/120.0.0.0 Safari/537.36",
+        "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8"
+    }
+
+    try:
+        res = requests.get(urun_linki, headers=headers_main, impersonate="chrome120", timeout=15, verify=False)
+        if res.status_code != 200:
+            print(f"❌ Hata: Ürün sayfası açılamadı (Kod: {res.status_code})")
+            return
+
+        # Sayfa kodları içinden gerçek sayısal ID'yi arıyoruz
+        # (data-productid="12345" veya "productId": 12345 formatlarında olabilir)
+        id_match = re.search(r'data-productid=["\'](\d+)["\']', res.text, re.IGNORECASE)
+        if not id_match:
+            id_match = re.search(r'"productId"\s*:\s*(\d+)', res.text, re.IGNORECASE)
+        if not id_match:
+            id_match = re.search(r'data-id=["\'](\d+)["\']', res.text, re.IGNORECASE)
+
+        if not id_match:
+            print("❌ Hata: Çiçeksepeti iç ürün ID'si (sayısal) sayfadan bulunamadı.")
+            return
+
+        gercek_urun_id = id_match.group(1)
+        print(f"✅ Gizli Ürün ID Yakalandı: {gercek_urun_id}")
+
+    except Exception as e:
+        print(f"❌ Ana sayfa analizinde hata: {e}")
+        return
+
+    # 3. Gerçek ID ile API'den yorumları çekiyoruz
+    tum_yorumlar = []
+    api_headers = {
+        "Accept": "*/*",
+        "X-Requested-With": "XMLHttpRequest", # Çiçeksepeti bunun API isteği olduğunu anlasın diye
+        "User-Agent": headers_main["User-Agent"],
+        "Referer": urun_linki
+    }
+
+    for sayfa in range(1, max_sayfa + 1):
+        api_url = f"https://www.ciceksepeti.com/Review/GetReviews?productId={gercek_urun_id}&page={sayfa}"
+
+        try:
+            response = requests.get(api_url, headers=api_headers, impersonate="chrome120", timeout=15, verify=False)
+            if response.status_code != 200: break
+
+            # Gelen HTML yanıtını parçalıyoruz
+            soup = BeautifulSoup(response.text, 'html.parser')
+            yorum_kutulari = soup.find_all("div", class_="ns-reviews--item-wrapper")
+
+            if not yorum_kutulari:
+                print("ℹ️ Bu sayfada (veya sonrasında) başka yorum bulunamadı.")
+                break
+
+            for kutu in yorum_kutulari:
+                metin_span = kutu.find("span", class_="js-review-detail")
+                metin = metin_span.get("data-value", "").strip() if metin_span else ""
+                if len(metin) < 10: continue
+
+                isim_p = kutu.find("p", class_="js-review-name")
+                isim = isim_p.text.strip() if isim_p else "Bilinmiyor"
+
+                tarih_p = kutu.find("p", class_="js-review-date")
+                tarih = tarih_p.text.strip() if tarih_p else "Bilinmiyor"
+
+                puan = "Bilinmiyor"
+                yildiz_alani = kutu.find("div", class_="js-review-stars")
+                if yildiz_alani:
+                    dolu_yildizlar = [y for y in yildiz_alani.find_all("span", class_="products-stars__icon") if "is-passive" not in y.get("class", [])]
+                    puan = f"{len(dolu_yildizlar)} Yıldız"
+
+                tum_yorumlar.append({"isim": isim, "puan": puan, "tarih": tarih, "metin": metin})
+
+            print(f"   -> Sayfa {sayfa} çekildi. (+{len(yorum_kutulari)} yorum)")
+            time.sleep(0.5)
+
+        except Exception as e:
+            print(f"❌ İstek sırasında hata oluştu: {e}")
+            break
+
+    if len(tum_yorumlar) > 0:
+        with open(dosya_yolu, "w", encoding="utf-8") as f:
+            json.dump(tum_yorumlar, f, ensure_ascii=False, indent=4)
+        print(f"🎉 Kaydedildi: '{dosya_yolu}' ({len(tum_yorumlar)} yorum)\n")
+    else:
+        print("⚠️ Yorum bulunamadı.\n")
 # ==========================================
 # 4. GOOGLE MAPS FONKSİYONLARI (PLAYWRIGHT)
 # ==========================================
@@ -441,6 +544,10 @@ def link_analiz_et_ve_cek(url, sayfa_veya_kaydirma_sayisi=5):
         # Google Maps için sayfa sayısını scroll sayısına dönüştürüyoruz (Örn: 5 sayfa = 5 kaydırma)
         maps_playwright_cek(url, hedef_kaydirma_sayisi=sayfa_veya_kaydirma_sayisi)
 
+    elif "ciceksepeti.com" in url_lower:
+        print("💐 Platform: ÇİÇEKSEPETİ")
+        ciceksepeti_api_cek(url, sayfa_veya_kaydirma_sayisi)
+
     else:
         print("❌ Hata: Tanınmayan platform! Lütfen desteklenen bir link giriniz.\n")
 
@@ -449,7 +556,7 @@ def link_analiz_et_ve_cek(url, sayfa_veya_kaydirma_sayisi=5):
 # ==========================================
 if __name__ == "__main__":
     test_linkleri = [
-        "https://store.steampowered.com/app/3764200/Resident_Evil_Requiem/"
+        "https://www.ciceksepeti.com/kraft-tasimali-bukette-papatyalar-ve-lavantalar-at5847?OM.zn=ProductViewDyno&OM.zpc=at5847&sitesource=4"
 
 
 
