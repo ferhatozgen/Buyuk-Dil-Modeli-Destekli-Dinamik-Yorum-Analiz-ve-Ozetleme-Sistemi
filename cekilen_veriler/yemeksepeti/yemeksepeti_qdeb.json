@@ -1,0 +1,1156 @@
+{
+    "platform": "yemeksepeti",
+    "urun_id": "qdeb",
+    "gorsel_url": "Görsel Bulunamadı",
+    "yorumlar": [
+        {
+            "uuid": "8aed9593-a38e-4609-a105-b27e3a7d3b37",
+            "createdAt": "2026-03-22T10:39:05Z",
+            "updatedAt": "2026-03-22T10:39:05Z",
+            "text": "Herşey iyiydi siparişte bulunmamasına rağmen ekstra kola geldi sağolun elinize sağlık ",
+            "isAnonymous": false,
+            "reviewerName": "...s",
+            "reviewerId": "tr811xyv",
+            "ratings": [
+                {
+                    "topic": "overall",
+                    "score": 5
+                },
+                {
+                    "topic": "restaurant_food",
+                    "score": 5
+                },
+                {
+                    "topic": "rider",
+                    "score": 5
+                }
+            ],
+            "type": "user",
+            "replies": [],
+            "commentPrettyDate": {
+                "translationKey": "NEXTGEN_REVIEWS_X_DAYS_AGO",
+                "timeDuration": "3"
+            },
+            "likeCount": 0,
+            "isLiked": false,
+            "productVariations": [
+                {
+                    "id": "30361130",
+                    "defaultTitle": "Tekim İkiz Hamburger",
+                    "title": {},
+                    "unitPrice": 1000,
+                    "product": {
+                        "id": "4738439",
+                        "defaultTitle": "Tekim İkiz Hamburger",
+                        "title": {
+                            "tr_TR": "Tekim İkiz Hamburger"
+                        },
+                        "description": "Cheddar peyniri, Karamelize soğan, özel chef sos, kahvaltılık sos, turşu, mevsim yeşillik, domates. Patates kızartması ile",
+                        "active": true,
+                        "imageUrls": [
+                            "https://images.deliveryhero.io/image/global-menu-service/YS_TR/vendor/qdeb/product/30361130/9a95a567-6dc7-43b6-b05b-e6c80778172b.jpg"
+                        ]
+                    }
+                },
+                {
+                    "id": "87876444",
+                    "defaultTitle": "Köfte Pitta Ekmek",
+                    "title": {},
+                    "unitPrice": 650,
+                    "product": {
+                        "id": "79011208",
+                        "defaultTitle": "Köfte Pitta Ekmek",
+                        "title": {
+                            "tr_TR": "Köfte Pitta Ekmek"
+                        },
+                        "description": "Özel Formülle hazırladığımız Kasap Köfte , Kendi Taş Fırınımızda Pişirdiğimiz Pitta Ekmek , Özel Chef Sos , Burger Turşusu, Domates Yeşillik İle Servis Edilir",
+                        "active": true,
+                        "imageUrls": [
+                            "https://images.deliveryhero.io/image/global-menu-service/YS_TR/vendor/qdeb/product/86f2f910-1c1c-4dc9-9696-621c8eb5214e.jpg"
+                        ]
+                    }
+                },
+                {
+                    "id": "87876446",
+                    "defaultTitle": "Dana Sosisli Pitta Ekmek (Taş Fırından)",
+                    "title": {},
+                    "unitPrice": 650,
+                    "product": {
+                        "id": "79011210",
+                        "defaultTitle": "Dana Sosisli Pitta Ekmek (Taş Fırından)",
+                        "title": {
+                            "tr_TR": "Dana Sosisli Pitta Ekmek (Taş Fırından)"
+                        },
+                        "description": "Pitta ekmek i̇çine; özel chef sos, domates, sosis. Burger turşusu, yeşillik i̇le",
+                        "active": true,
+                        "imageUrls": [
+                            "https://images.deliveryhero.io/image/global-menu-service/YS_TR/vendor/qdeb/product/8fd90a70-ac55-4ff8-9fc0-7228017e0697.jpg"
+                        ]
+                    }
+                }
+            ],
+            "topReviewerTranslationKey": "",
+            "temiz_metin": "her şey iyiydi siparişte bulunmamasına rağmen kola geldi sağolun elinize sağlık"
+        },
+        {
+            "uuid": "76659250-0e93-41c1-9683-e25c4f33b423",
+            "createdAt": "2026-03-06T09:25:35Z",
+            "updatedAt": "2026-03-06T09:25:35Z",
+            "text": "Başarılı bir işletme.",
+            "isAnonymous": false,
+            "reviewerName": "...n",
+            "reviewerId": "trnusjlx",
+            "ratings": [
+                {
+                    "topic": "overall",
+                    "score": 5
+                },
+                {
+                    "topic": "restaurant_food",
+                    "score": 5
+                },
+                {
+                    "topic": "rider",
+                    "score": 5
+                }
+            ],
+            "type": "user",
+            "replies": [],
+            "commentPrettyDate": {
+                "translationKey": "NEXTGEN_REVIEWS_X_WEEKS_AGO",
+                "timeDuration": "2"
+            },
+            "likeCount": 0,
+            "isLiked": false,
+            "productVariations": [
+                {
+                    "id": "75301965",
+                    "defaultTitle": "Fettuccine ( Tavuk - Mantarlı)",
+                    "title": {},
+                    "unitPrice": 650,
+                    "product": {
+                        "id": "66935422",
+                        "defaultTitle": "Fettuccine ( Tavuk - Mantarlı)",
+                        "title": {
+                            "tr_TR": "Fettuccine ( Tavuk - Mantarlı)"
+                        },
+                        "description": "Özel chef sos, krema, mantar tavuk Fettucini makarna",
+                        "active": true,
+                        "imageUrls": [
+                            "https://images.deliveryhero.io/image/global-menu-service/YS_TR/vendor/qdeb/product/75301965/68fe756b-197e-4f12-ac16-725af7a67bbf.jpg"
+                        ]
+                    }
+                }
+            ],
+            "topReviewerTranslationKey": "",
+            "temiz_metin": "başarılı bir işletme"
+        },
+        {
+            "uuid": "e7d280da-5b02-4ac5-82b6-c625f7c994cd",
+            "createdAt": "2026-03-06T09:25:06Z",
+            "updatedAt": "2026-03-06T09:25:06Z",
+            "text": "Şefe teşekkürler",
+            "isAnonymous": false,
+            "reviewerName": "...n",
+            "reviewerId": "trnusjlx",
+            "ratings": [
+                {
+                    "topic": "overall",
+                    "score": 5
+                },
+                {
+                    "topic": "restaurant_food",
+                    "score": 5
+                },
+                {
+                    "topic": "rider",
+                    "score": 5
+                }
+            ],
+            "type": "user",
+            "replies": [],
+            "commentPrettyDate": {
+                "translationKey": "NEXTGEN_REVIEWS_X_WEEKS_AGO",
+                "timeDuration": "2"
+            },
+            "likeCount": 0,
+            "isLiked": false,
+            "productVariations": [
+                {
+                    "id": "75301965",
+                    "defaultTitle": "Fettuccine ( Tavuk - Mantarlı)",
+                    "title": {},
+                    "unitPrice": 650,
+                    "product": {
+                        "id": "66935422",
+                        "defaultTitle": "Fettuccine ( Tavuk - Mantarlı)",
+                        "title": {
+                            "tr_TR": "Fettuccine ( Tavuk - Mantarlı)"
+                        },
+                        "description": "Özel chef sos, krema, mantar tavuk Fettucini makarna",
+                        "active": true,
+                        "imageUrls": [
+                            "https://images.deliveryhero.io/image/global-menu-service/YS_TR/vendor/qdeb/product/75301965/68fe756b-197e-4f12-ac16-725af7a67bbf.jpg"
+                        ]
+                    }
+                }
+            ],
+            "topReviewerTranslationKey": "",
+            "temiz_metin": "şefe teşekkürler"
+        },
+        {
+            "uuid": "73365acb-0a85-46eb-acb9-f1d001a22b54",
+            "createdAt": "2026-03-06T09:24:45Z",
+            "updatedAt": "2026-03-06T09:24:45Z",
+            "text": "Krema konusu her siparişte farklı oluyor bol kremalı olursa daha enfes.",
+            "isAnonymous": false,
+            "reviewerName": "...n",
+            "reviewerId": "trnusjlx",
+            "ratings": [
+                {
+                    "topic": "overall",
+                    "score": 5
+                },
+                {
+                    "topic": "restaurant_food",
+                    "score": 5
+                },
+                {
+                    "topic": "rider",
+                    "score": 5
+                }
+            ],
+            "type": "user",
+            "replies": [],
+            "commentPrettyDate": {
+                "translationKey": "NEXTGEN_REVIEWS_X_WEEKS_AGO",
+                "timeDuration": "2"
+            },
+            "likeCount": 0,
+            "isLiked": false,
+            "productVariations": [
+                {
+                    "id": "75301965",
+                    "defaultTitle": "Fettuccine ( Tavuk - Mantarlı)",
+                    "title": {},
+                    "unitPrice": 650,
+                    "product": {
+                        "id": "66935422",
+                        "defaultTitle": "Fettuccine ( Tavuk - Mantarlı)",
+                        "title": {
+                            "tr_TR": "Fettuccine ( Tavuk - Mantarlı)"
+                        },
+                        "description": "Özel chef sos, krema, mantar tavuk Fettucini makarna",
+                        "active": true,
+                        "imageUrls": [
+                            "https://images.deliveryhero.io/image/global-menu-service/YS_TR/vendor/qdeb/product/75301965/68fe756b-197e-4f12-ac16-725af7a67bbf.jpg"
+                        ]
+                    }
+                }
+            ],
+            "topReviewerTranslationKey": "",
+            "temiz_metin": "krema konusu her siparişte farklı oluyor bol kremalı olursa daha enfes"
+        },
+        {
+            "uuid": "b26d9245-b589-4d35-ac24-1a4e00a34906",
+            "createdAt": "2026-03-06T09:23:28Z",
+            "updatedAt": "2026-03-06T09:23:28Z",
+            "text": "lezizo",
+            "isAnonymous": false,
+            "reviewerName": "...n",
+            "reviewerId": "trnusjlx",
+            "ratings": [
+                {
+                    "topic": "overall",
+                    "score": 5
+                },
+                {
+                    "topic": "restaurant_food",
+                    "score": 5
+                },
+                {
+                    "topic": "rider",
+                    "score": 5
+                }
+            ],
+            "type": "user",
+            "replies": [],
+            "commentPrettyDate": {
+                "translationKey": "NEXTGEN_REVIEWS_X_WEEKS_AGO",
+                "timeDuration": "2"
+            },
+            "likeCount": 0,
+            "isLiked": false,
+            "productVariations": [
+                {
+                    "id": "75301965",
+                    "defaultTitle": "Fettuccine ( Tavuk - Mantarlı)",
+                    "title": {},
+                    "unitPrice": 650,
+                    "product": {
+                        "id": "66935422",
+                        "defaultTitle": "Fettuccine ( Tavuk - Mantarlı)",
+                        "title": {
+                            "tr_TR": "Fettuccine ( Tavuk - Mantarlı)"
+                        },
+                        "description": "Özel chef sos, krema, mantar tavuk Fettucini makarna",
+                        "active": true,
+                        "imageUrls": [
+                            "https://images.deliveryhero.io/image/global-menu-service/YS_TR/vendor/qdeb/product/75301965/68fe756b-197e-4f12-ac16-725af7a67bbf.jpg"
+                        ]
+                    }
+                }
+            ],
+            "topReviewerTranslationKey": "",
+            "temiz_metin": "lezizo"
+        },
+        {
+            "uuid": "a8d33511-d4ab-4b83-a8cd-aa74c3bf140a",
+            "createdAt": "2026-02-18T16:14:53Z",
+            "updatedAt": "2026-02-18T16:14:53Z",
+            "text": "porsiyon oldukça yeterli. Mantarlı tavuk çok lezzetliydi.patates de tavuk da sıcacık geldi valla herşey çok iyi elinize sağlık",
+            "isAnonymous": false,
+            "reviewerName": "...r",
+            "reviewerId": "trj4sdun",
+            "ratings": [
+                {
+                    "topic": "overall",
+                    "score": 5
+                },
+                {
+                    "topic": "restaurant_food",
+                    "score": 5
+                },
+                {
+                    "topic": "rider",
+                    "score": 5
+                }
+            ],
+            "type": "user",
+            "replies": [],
+            "commentPrettyDate": {
+                "translationKey": "NEXTGEN_REVIEWS_1_MONTH_AGO",
+                "timeDuration": "1"
+            },
+            "likeCount": 0,
+            "isLiked": false,
+            "productVariations": [
+                {
+                    "id": "30361152",
+                    "defaultTitle": "Mantarlı Tavuk",
+                    "title": {},
+                    "unitPrice": 650,
+                    "product": {
+                        "id": "4738461",
+                        "defaultTitle": "Mantarlı Tavuk",
+                        "title": {
+                            "tr_TR": "Mantarlı Tavuk"
+                        },
+                        "description": "Mantar, tavuk parçaları, jülyen biber parçaları, krema sosu. Patates kızartması ile",
+                        "active": true,
+                        "imageUrls": [
+                            "https://images.deliveryhero.io/image/global-menu-service/YS_TR/vendor/qdeb/product/30361152/34e42d3f-9774-40c0-993d-0112c23b9460.jpg"
+                        ]
+                    }
+                }
+            ],
+            "topReviewerTranslationKey": "",
+            "temiz_metin": "porsiyon oldukça yeterli mantarlı tavuk çok lezzetliydi patates de tavuk da sıcacık geldi valla her şey çok iyi elinize sağlık"
+        },
+        {
+            "uuid": "5a5533cd-8be4-4da5-b8aa-b8ecb161aca2",
+            "createdAt": "2026-02-17T12:03:14Z",
+            "updatedAt": "2026-02-17T12:03:14Z",
+            "text": "110gr değildi et baya küçük. Kıkırdak da çıktı. Soğuk geldi ayrıca. ",
+            "isAnonymous": false,
+            "reviewerName": "...ı",
+            "reviewerId": "tr9r5m9z",
+            "ratings": [
+                {
+                    "topic": "overall",
+                    "score": 1
+                },
+                {
+                    "topic": "restaurant_food",
+                    "score": 1
+                },
+                {
+                    "topic": "rider",
+                    "score": 1
+                }
+            ],
+            "type": "user",
+            "replies": [
+                {
+                    "id": "5a5533cd-8be4-4da5-b8aa-b8ecb161aca2",
+                    "text": "Merhaba etlerimizin gramaj sapması imkansız , 10 senedir çevrede günlük taze et kullanıp hazır ve donuk ürün kullanmadan hizmet veriyoruz, kendi etimizi hazırlayıp kıyma haline getiriyoruz",
+                    "createdAt": "2026-03-02T17:17:37Z",
+                    "updatedAt": "2026-03-02T17:17:37Z",
+                    "commentPrettyDate": {
+                        "translationKey": "NEXTGEN_REVIEWS_X_WEEKS_AGO",
+                        "timeDuration": "3"
+                    }
+                }
+            ],
+            "commentPrettyDate": {
+                "translationKey": "NEXTGEN_REVIEWS_1_MONTH_AGO",
+                "timeDuration": "1"
+            },
+            "likeCount": 0,
+            "isLiked": false,
+            "productVariations": [],
+            "topReviewerTranslationKey": "",
+            "temiz_metin": "110gr değildi et bayağı küçük kıkırdak da çıktı soğuk geldi ayrıca"
+        },
+        {
+            "uuid": "95937bdd-e5df-4542-9259-1f93700f7829",
+            "createdAt": "2026-02-12T20:10:27Z",
+            "updatedAt": "2026-02-12T20:10:27Z",
+            "text": "Çok lezzetliydi ayrıca rica ettiğim için menümde olmamasına rağmen patates yolladılar çok teşekkür ederim ♥️♥️♥️",
+            "isAnonymous": false,
+            "reviewerName": "...l",
+            "reviewerId": "trgukyrg",
+            "ratings": [
+                {
+                    "topic": "overall",
+                    "score": 5
+                },
+                {
+                    "topic": "restaurant_food",
+                    "score": 5
+                },
+                {
+                    "topic": "rider",
+                    "score": 5
+                }
+            ],
+            "type": "user",
+            "replies": [
+                {
+                    "id": "95937bdd-e5df-4542-9259-1f93700f7829",
+                    "text": "teşekkür ediriz Afiyet Olsun",
+                    "createdAt": "2026-03-02T17:18:26Z",
+                    "updatedAt": "2026-03-02T17:18:26Z",
+                    "commentPrettyDate": {
+                        "translationKey": "NEXTGEN_REVIEWS_X_WEEKS_AGO",
+                        "timeDuration": "3"
+                    }
+                }
+            ],
+            "commentPrettyDate": {
+                "translationKey": "NEXTGEN_REVIEWS_1_MONTH_AGO",
+                "timeDuration": "1"
+            },
+            "likeCount": 0,
+            "isLiked": false,
+            "productVariations": [
+                {
+                    "id": "75303809",
+                    "defaultTitle": "Margarita Pizza",
+                    "title": {},
+                    "unitPrice": 600,
+                    "product": {
+                        "id": "66937136",
+                        "defaultTitle": "Margarita Pizza",
+                        "title": {
+                            "tr_TR": "Margarita Pizza"
+                        },
+                        "description": "Domates sos, mozzarella peyniri, kaşar peyniri, çeri domates, fesleğen",
+                        "active": true,
+                        "imageUrls": [
+                            "https://images.deliveryhero.io/image/global-menu-service/YS_TR/vendor/qdeb/product/75303809/b624f06c-9585-4dfd-aa1a-09ed89abccea.jpg"
+                        ]
+                    }
+                }
+            ],
+            "topReviewerTranslationKey": "",
+            "temiz_metin": "çok lezzetliydi ayrıca rica ettiğim için menümde olmamasına rağmen patates yolladılar çok teşekkür ederim"
+        },
+        {
+            "uuid": "a50e2c4e-6575-4a42-981f-6d1469bde87a",
+            "createdAt": "2026-02-03T17:35:28Z",
+            "updatedAt": "2026-02-03T17:35:28Z",
+            "text": "Baya güzeldi elinize sağlık",
+            "isAnonymous": false,
+            "reviewerName": "...i",
+            "reviewerId": "tr532v5j",
+            "ratings": [
+                {
+                    "topic": "overall",
+                    "score": 5
+                },
+                {
+                    "topic": "restaurant_food",
+                    "score": 5
+                }
+            ],
+            "type": "user",
+            "replies": [
+                {
+                    "id": "a50e2c4e-6575-4a42-981f-6d1469bde87a",
+                    "text": "teşekkür ederiz , afiyet olsun...Raifbey’de burger köftesi hazır gelmez, etin en özel yerleri günlük taze olarak mutfağımızda çekilir, özel şef reçetesiyle her gün taze hazırlanır, dondurulmuş, hazır ürün kullanılmaz",
+                    "createdAt": "2026-02-04T21:47:11Z",
+                    "updatedAt": "2026-02-04T21:47:11Z",
+                    "commentPrettyDate": {
+                        "translationKey": "NEXTGEN_REVIEWS_1_MONTH_AGO",
+                        "timeDuration": "1"
+                    }
+                }
+            ],
+            "commentPrettyDate": {
+                "translationKey": "NEXTGEN_REVIEWS_1_MONTH_AGO",
+                "timeDuration": "1"
+            },
+            "likeCount": 0,
+            "isLiked": false,
+            "productVariations": [
+                {
+                    "id": "75302090",
+                    "defaultTitle": "Ev Yapımı Çıtır Özbek Mantı (200 gr.)",
+                    "title": {},
+                    "unitPrice": 680,
+                    "product": {
+                        "id": "66935538",
+                        "defaultTitle": "Ev Yapımı Çıtır Özbek Mantı (200 gr.)",
+                        "title": {
+                            "tr_TR": "Ev Yapımı Çıtır Özbek Mantı (200 gr.)"
+                        },
+                        "description": "Yoğurt, turşu, sos ile",
+                        "active": true,
+                        "imageUrls": [
+                            "https://images.deliveryhero.io/image/global-menu-service/YS_TR/vendor/qdeb/product/75302090/fcd8e900-2015-4c0b-b975-f5fc575da5f1.jpg"
+                        ]
+                    }
+                }
+            ],
+            "topReviewerTranslationKey": "",
+            "temiz_metin": "bayağı güzeldi elinize sağlık"
+        },
+        {
+            "uuid": "36663ef4-4ad2-4486-98d6-590efe7e4996",
+            "createdAt": "2026-02-03T07:08:16Z",
+            "updatedAt": "2026-02-03T07:08:16Z",
+            "text": "içindeki domatesten mi bilmiyorum ama çok ekşimişti. patatesler pörsümüştü. Fiş istiyorum diye belirtmeme rağmne fişi de göndermediler.",
+            "isAnonymous": false,
+            "reviewerName": "...r",
+            "reviewerId": "tr53pt2l",
+            "ratings": [
+                {
+                    "topic": "overall",
+                    "score": 2
+                },
+                {
+                    "topic": "restaurant_food",
+                    "score": 2
+                },
+                {
+                    "topic": "rider",
+                    "score": 5
+                }
+            ],
+            "type": "user",
+            "replies": [
+                {
+                    "id": "36663ef4-4ad2-4486-98d6-590efe7e4996",
+                    "text": "sizi üzdüysek kusura bakmayın , her kullanılan malzeme günlük olarak mutfağımıza gelir , burger turşusu özel yapılmakta, tatlı ekşi tat turşuda mevcut.. bunun dışında ekşi alabileceğiniz tad yoktur. yinede kusura bakmayın",
+                    "createdAt": "2026-02-04T21:50:41Z",
+                    "updatedAt": "2026-02-04T21:50:41Z",
+                    "commentPrettyDate": {
+                        "translationKey": "NEXTGEN_REVIEWS_1_MONTH_AGO",
+                        "timeDuration": "1"
+                    }
+                }
+            ],
+            "commentPrettyDate": {
+                "translationKey": "NEXTGEN_REVIEWS_1_MONTH_AGO",
+                "timeDuration": "1"
+            },
+            "likeCount": 0,
+            "isLiked": false,
+            "productVariations": [],
+            "topReviewerTranslationKey": "",
+            "temiz_metin": "içindeki domatesten mi bilmiyorum ama çok ekşimişti patatesler pörsümüştü fiş istiyorum diye belirtmeme rağmne fişi de göndermediler"
+        },
+        {
+            "uuid": "760775ca-6396-44c3-8985-21f459e1c688",
+            "createdAt": "2026-02-02T21:53:50Z",
+            "updatedAt": "2026-02-02T21:53:50Z",
+            "text": "Berbatt",
+            "isAnonymous": false,
+            "reviewerName": "...l",
+            "reviewerId": "tr0hr90t",
+            "ratings": [
+                {
+                    "topic": "overall",
+                    "score": 1
+                },
+                {
+                    "topic": "restaurant_food",
+                    "score": 1
+                }
+            ],
+            "type": "user",
+            "replies": [],
+            "commentPrettyDate": {
+                "translationKey": "NEXTGEN_REVIEWS_1_MONTH_AGO",
+                "timeDuration": "1"
+            },
+            "likeCount": 0,
+            "isLiked": false,
+            "productVariations": [],
+            "topReviewerTranslationKey": "",
+            "temiz_metin": "berbatt"
+        },
+        {
+            "uuid": "6d9439af-624d-4497-b22c-fdae39ef34a3",
+            "createdAt": "2026-02-02T08:54:00Z",
+            "updatedAt": "2026-02-02T08:54:00Z",
+            "text": "Fiyat performans yeri",
+            "isAnonymous": false,
+            "reviewerName": "...N",
+            "reviewerId": "tr2vpm8a",
+            "ratings": [
+                {
+                    "topic": "overall",
+                    "score": 4
+                },
+                {
+                    "topic": "restaurant_food",
+                    "score": 4
+                }
+            ],
+            "type": "user",
+            "replies": [
+                {
+                    "id": "6d9439af-624d-4497-b22c-fdae39ef34a3",
+                    "text": "teşekkür ederiz afiyet olsun",
+                    "createdAt": "2026-02-02T10:26:42Z",
+                    "updatedAt": "2026-02-02T10:26:42Z",
+                    "commentPrettyDate": {
+                        "translationKey": "NEXTGEN_REVIEWS_1_MONTH_AGO",
+                        "timeDuration": "1"
+                    }
+                }
+            ],
+            "commentPrettyDate": {
+                "translationKey": "NEXTGEN_REVIEWS_1_MONTH_AGO",
+                "timeDuration": "1"
+            },
+            "likeCount": 0,
+            "isLiked": false,
+            "productVariations": [],
+            "topReviewerTranslationKey": "",
+            "temiz_metin": "fiyat performans yeri"
+        },
+        {
+            "uuid": "a860aabb-e914-42ce-ae42-1f5550121b59",
+            "createdAt": "2026-02-01T18:40:16Z",
+            "updatedAt": "2026-02-01T18:40:16Z",
+            "text": "Çok temiz çok lezzetli . Sıcak ve kusursuz geldi herşey . ",
+            "isAnonymous": false,
+            "reviewerName": "...ç",
+            "reviewerId": "trr5il39",
+            "ratings": [
+                {
+                    "topic": "overall",
+                    "score": 5
+                },
+                {
+                    "topic": "restaurant_food",
+                    "score": 5
+                },
+                {
+                    "topic": "rider",
+                    "score": 5
+                }
+            ],
+            "type": "user",
+            "replies": [],
+            "commentPrettyDate": {
+                "translationKey": "NEXTGEN_REVIEWS_1_MONTH_AGO",
+                "timeDuration": "1"
+            },
+            "likeCount": 0,
+            "isLiked": false,
+            "productVariations": [
+                {
+                    "id": "30361126",
+                    "defaultTitle": "Tekim Cheeseburger (110 gr.)",
+                    "title": {},
+                    "unitPrice": 680,
+                    "product": {
+                        "id": "4738435",
+                        "defaultTitle": "Tekim Cheeseburger (110 gr.)",
+                        "title": {
+                            "tr_TR": "Tekim Cheeseburger (110 gr.)"
+                        },
+                        "description": "Cheddar peyniri, Karamelize soğan, chef sos, turşu, mevsim yeşillik. Patates kızartması, kahvaltılık sos ile.",
+                        "active": true,
+                        "imageUrls": [
+                            "https://images.deliveryhero.io/image/global-menu-service/YS_TR/vendor/qdeb/product/30361126/6b27bb1e-decd-4d10-90d9-441f23034822.jpg"
+                        ]
+                    }
+                }
+            ],
+            "topReviewerTranslationKey": "",
+            "temiz_metin": "çok temiz çok lezzetli sıcak ve kusursuz geldi her şey"
+        },
+        {
+            "uuid": "8f34e86b-ae33-4181-bd72-b37980261a0e",
+            "createdAt": "2026-02-01T17:45:26Z",
+            "updatedAt": "2026-02-01T17:45:26Z",
+            "text": "İçine bir kola koyamayacak kadar acizseniz yapmayın bu işi. ",
+            "isAnonymous": false,
+            "reviewerName": "...k",
+            "reviewerId": "tr7sxe6t",
+            "ratings": [
+                {
+                    "topic": "overall",
+                    "score": 1
+                },
+                {
+                    "topic": "restaurant_food",
+                    "score": 1
+                },
+                {
+                    "topic": "rider",
+                    "score": 5
+                }
+            ],
+            "type": "user",
+            "replies": [
+                {
+                    "id": "8f34e86b-ae33-4181-bd72-b37980261a0e",
+                    "text": "bu kadar ağır eleştiri yerine , bizi veya yemek sepetini ararsanız durum çözülür , karda kışta kapınıza gelen kuryenin bir anlık pakedin kolasını unutma ihtimalini biraz düşünün , 15 senedir işimizi severek yapıyoruz bir acizlik durumu yok",
+                    "createdAt": "2026-02-02T10:21:48Z",
+                    "updatedAt": "2026-02-02T10:21:48Z",
+                    "commentPrettyDate": {
+                        "translationKey": "NEXTGEN_REVIEWS_1_MONTH_AGO",
+                        "timeDuration": "1"
+                    }
+                }
+            ],
+            "commentPrettyDate": {
+                "translationKey": "NEXTGEN_REVIEWS_1_MONTH_AGO",
+                "timeDuration": "1"
+            },
+            "likeCount": 0,
+            "isLiked": false,
+            "productVariations": [
+                {
+                    "id": "30361139",
+                    "defaultTitle": "Sucuklu Pide",
+                    "title": {},
+                    "unitPrice": 630,
+                    "product": {
+                        "id": "4738448",
+                        "defaultTitle": "Sucuklu Pide",
+                        "title": {
+                            "tr_TR": "Sucuklu Pide"
+                        },
+                        "description": "Günlük ince taze hamura; özel kasap sucuk, kaşar peyniri (Taş fırında pişirilir.)",
+                        "active": true,
+                        "imageUrls": [
+                            "https://images.deliveryhero.io/image/global-menu-service/YS_TR/vendor/qdeb/product/30361139/c78cb398-a920-4f74-bf8f-a3c159f3aa3b.jpg"
+                        ]
+                    }
+                }
+            ],
+            "topReviewerTranslationKey": "",
+            "temiz_metin": "içine bir kola koyamayacak kadar acizseniz yapmayın bu işi"
+        },
+        {
+            "uuid": "a6981a10-74cc-42a7-b154-f55bbb1742d8",
+            "createdAt": "2026-01-31T13:15:41Z",
+            "updatedAt": "2026-01-31T13:15:41Z",
+            "text": "hamburger köftesinden çok fazla kıkırdak çıktı. ",
+            "isAnonymous": false,
+            "reviewerName": "...z",
+            "reviewerId": "tr2ivpix",
+            "ratings": [
+                {
+                    "topic": "overall",
+                    "score": 1
+                },
+                {
+                    "topic": "restaurant_food",
+                    "score": 1
+                },
+                {
+                    "topic": "rider",
+                    "score": 5
+                }
+            ],
+            "type": "user",
+            "replies": [
+                {
+                    "id": "a6981a10-74cc-42a7-b154-f55bbb1742d8",
+                    "text": "Raifbey’de burger köftesi hazır gelmez, etin en özel yerleri günlük taze olarak mutfağımızda çekilir, dondurulmuş, hazır ürün kullanılmaz. Kemikli yerler etin en lezzetli bölümü olduğu için , Kusura bakmayın ",
+                    "createdAt": "2026-01-31T17:49:41Z",
+                    "updatedAt": "2026-01-31T17:49:41Z",
+                    "commentPrettyDate": {
+                        "translationKey": "NEXTGEN_REVIEWS_1_MONTH_AGO",
+                        "timeDuration": "1"
+                    }
+                }
+            ],
+            "commentPrettyDate": {
+                "translationKey": "NEXTGEN_REVIEWS_1_MONTH_AGO",
+                "timeDuration": "1"
+            },
+            "likeCount": 0,
+            "isLiked": false,
+            "productVariations": [],
+            "topReviewerTranslationKey": "",
+            "temiz_metin": "hamburger köftesinden çok fazla kıkırdak çıktı"
+        },
+        {
+            "uuid": "90dc6a5e-f227-4fa6-a249-201c22016c77",
+            "createdAt": "2026-01-30T19:43:26Z",
+            "updatedAt": "2026-01-30T19:43:26Z",
+            "text": "Teşekkürler!!!",
+            "isAnonymous": false,
+            "reviewerName": "...v",
+            "reviewerId": "trlrgaik",
+            "ratings": [
+                {
+                    "topic": "overall",
+                    "score": 5
+                },
+                {
+                    "topic": "restaurant_food",
+                    "score": 5
+                },
+                {
+                    "topic": "rider",
+                    "score": 5
+                }
+            ],
+            "type": "user",
+            "replies": [],
+            "commentPrettyDate": {
+                "translationKey": "NEXTGEN_REVIEWS_1_MONTH_AGO",
+                "timeDuration": "1"
+            },
+            "likeCount": 0,
+            "isLiked": false,
+            "productVariations": [
+                {
+                    "id": "82913322",
+                    "defaultTitle": "İkiz Burger (220 gr.) & Coca-Cola (20 cl.) Menü",
+                    "title": {},
+                    "unitPrice": 1340,
+                    "product": {
+                        "id": "74218173",
+                        "defaultTitle": "İkiz Burger (220 gr.) & Coca-Cola (20 cl.) Menü",
+                        "title": {
+                            "tr_TR": "İkiz Burger (220 gr.) & Coca-Cola (20 cl.) Menü"
+                        },
+                        "description": "İkiz Burger (220 gr.) + Coca-Cola (20 cl.)",
+                        "active": true,
+                        "imageUrls": []
+                    }
+                }
+            ],
+            "topReviewerTranslationKey": "",
+            "temiz_metin": "teşekkürler"
+        },
+        {
+            "uuid": "ae883306-65d8-44c1-ba68-ad05d9feb123",
+            "createdAt": "2026-01-29T13:26:23Z",
+            "updatedAt": "2026-01-29T13:26:23Z",
+            "text": "İlk söylediğim gibi gelmedi patatesler yumuşamıştı.ekmekte çok ıslanmıştı iç malzemesinden.köftesi biraz sert geldi",
+            "isAnonymous": false,
+            "reviewerName": "...ş",
+            "reviewerId": "trynpb6l",
+            "ratings": [
+                {
+                    "topic": "overall",
+                    "score": 3
+                },
+                {
+                    "topic": "restaurant_food",
+                    "score": 3
+                },
+                {
+                    "topic": "rider",
+                    "score": 5
+                }
+            ],
+            "type": "user",
+            "replies": [],
+            "commentPrettyDate": {
+                "translationKey": "NEXTGEN_REVIEWS_1_MONTH_AGO",
+                "timeDuration": "1"
+            },
+            "likeCount": 0,
+            "isLiked": false,
+            "productVariations": [],
+            "topReviewerTranslationKey": "NEXTGEN_KEY_REVIEWS_LABEL",
+            "temiz_metin": "ilk söylediğim gibi gelmedi patatesler yumuşamıştı ekmekte çok ıslanmıştı iç malzemesinden köftesi biraz sert geldi"
+        },
+        {
+            "uuid": "049fdc28-fcf1-4bb4-b781-577073067772",
+            "createdAt": "2026-01-28T11:47:35Z",
+            "updatedAt": "2026-01-28T11:47:35Z",
+            "text": "Hem tadı mükemmeldi, hem de diyabetimden dolayı not yazmıştım ona bile özenle geri dönüş yapmışlar. Elinize sağlıkkk",
+            "isAnonymous": false,
+            "reviewerName": "...a",
+            "reviewerId": "trdneivq",
+            "ratings": [
+                {
+                    "topic": "overall",
+                    "score": 5
+                },
+                {
+                    "topic": "restaurant_food",
+                    "score": 5
+                },
+                {
+                    "topic": "rider",
+                    "score": 5
+                }
+            ],
+            "type": "user",
+            "replies": [
+                {
+                    "id": "049fdc28-fcf1-4bb4-b781-577073067772",
+                    "text": "teşekkür ederiz afiyet olsun",
+                    "createdAt": "2026-02-02T10:24:47Z",
+                    "updatedAt": "2026-02-02T10:24:47Z",
+                    "commentPrettyDate": {
+                        "translationKey": "NEXTGEN_REVIEWS_1_MONTH_AGO",
+                        "timeDuration": "1"
+                    }
+                }
+            ],
+            "commentPrettyDate": {
+                "translationKey": "NEXTGEN_REVIEWS_1_MONTH_AGO",
+                "timeDuration": "1"
+            },
+            "likeCount": 0,
+            "isLiked": false,
+            "productVariations": [
+                {
+                    "id": "30361127",
+                    "defaultTitle": "Tekim  Double Burger (220 gr.)",
+                    "title": {},
+                    "unitPrice": 870,
+                    "product": {
+                        "id": "4738436",
+                        "defaultTitle": "Tekim  Double Burger (220 gr.)",
+                        "title": {
+                            "tr_TR": "Tekim  Double Burger (220 gr.)"
+                        },
+                        "description": "Cheddar peyniri, Karamalize soğan, chef sos, kahvaltılık sos, turşu, mevsim yeşillik, domates. Patates kızartması ile",
+                        "active": true,
+                        "imageUrls": [
+                            "https://images.deliveryhero.io/image/global-menu-service/YS_TR/vendor/qdeb/product/30361127/766fb89f-f6a5-41bd-a2c4-fe8671334d91.jpg"
+                        ]
+                    }
+                }
+            ],
+            "topReviewerTranslationKey": "",
+            "temiz_metin": "hem tadı mükemmeldi hem de diyabetimden dolayı not yazmıştım ona bile özenle geri dönüş yapmışlar elinize sağlık"
+        },
+        {
+            "uuid": "e31beaff-2b9e-42fb-a4e5-c6bed9c62075",
+            "createdAt": "2026-01-27T18:38:45Z",
+            "updatedAt": "2026-01-27T18:38:45Z",
+            "text": "Beklentinin çok altında ve görsellerle hiç alakası yok hazır şeyleri ısıtıp göndermişler ",
+            "isAnonymous": false,
+            "reviewerName": "...ş",
+            "reviewerId": "tr0p8pld",
+            "ratings": [
+                {
+                    "topic": "overall",
+                    "score": 1
+                },
+                {
+                    "topic": "restaurant_food",
+                    "score": 1
+                },
+                {
+                    "topic": "rider",
+                    "score": 5
+                }
+            ],
+            "type": "user",
+            "replies": [
+                {
+                    "id": "e31beaff-2b9e-42fb-a4e5-c6bed9c62075",
+                    "text": "lezzet damağınıza uymadığı için kusura bakmayın , Raifbey burger köftesi hazır veya dondurulmuş ürün kullanılmaz 14 senedir bölgede lezzet severlerin sadece bu yüzden tercih ettiği markadır, hazır ürün kesinlikle kullanılmaz",
+                    "createdAt": "2026-01-27T23:26:29Z",
+                    "updatedAt": "2026-01-27T23:26:29Z",
+                    "commentPrettyDate": {
+                        "translationKey": "NEXTGEN_REVIEWS_1_MONTH_AGO",
+                        "timeDuration": "1"
+                    }
+                }
+            ],
+            "commentPrettyDate": {
+                "translationKey": "NEXTGEN_REVIEWS_1_MONTH_AGO",
+                "timeDuration": "1"
+            },
+            "likeCount": 0,
+            "isLiked": false,
+            "productVariations": [],
+            "topReviewerTranslationKey": "",
+            "temiz_metin": "beklentinin çok altında ve görsellerle hiç alakası yok hazır şeyleri ısıtıp göndermişler"
+        },
+        {
+            "uuid": "de2dc332-1abe-4b1f-bf3c-5e64a4aff24a",
+            "createdAt": "2026-01-26T10:23:27Z",
+            "updatedAt": "2026-01-26T10:23:27Z",
+            "text": "Çok doyurucu ve lezzetliydi.Patatesler sıcak ve yumuşamamıştı ve gayet bol koymuşlardı.Tekrar sipariş verdim",
+            "isAnonymous": false,
+            "reviewerName": "...ş",
+            "reviewerId": "trynpb6l",
+            "ratings": [
+                {
+                    "topic": "overall",
+                    "score": 5
+                },
+                {
+                    "topic": "restaurant_food",
+                    "score": 5
+                },
+                {
+                    "topic": "rider",
+                    "score": 5
+                }
+            ],
+            "type": "user",
+            "replies": [],
+            "commentPrettyDate": {
+                "translationKey": "NEXTGEN_REVIEWS_1_MONTH_AGO",
+                "timeDuration": "1"
+            },
+            "likeCount": 1,
+            "isLiked": false,
+            "productVariations": [
+                {
+                    "id": "30361127",
+                    "defaultTitle": "Tekim  Double Burger (220 gr.)",
+                    "title": {},
+                    "unitPrice": 870,
+                    "product": {
+                        "id": "4738436",
+                        "defaultTitle": "Tekim  Double Burger (220 gr.)",
+                        "title": {
+                            "tr_TR": "Tekim  Double Burger (220 gr.)"
+                        },
+                        "description": "Cheddar peyniri, Karamalize soğan, chef sos, kahvaltılık sos, turşu, mevsim yeşillik, domates. Patates kızartması ile",
+                        "active": true,
+                        "imageUrls": [
+                            "https://images.deliveryhero.io/image/global-menu-service/YS_TR/vendor/qdeb/product/30361127/766fb89f-f6a5-41bd-a2c4-fe8671334d91.jpg"
+                        ]
+                    }
+                }
+            ],
+            "topReviewerTranslationKey": "NEXTGEN_KEY_REVIEWS_LABEL",
+            "temiz_metin": "çok doyurucu ve lezzetliydi patatesler sıcak ve yumuşamamıştı ve gayet bol koymuşlardı tekrar sipariş verdim"
+        },
+        {
+            "uuid": "3cee8289-b169-46af-9f20-1d1492273c77",
+            "createdAt": "2026-01-22T19:03:09Z",
+            "updatedAt": "2026-01-22T19:03:09Z",
+            "text": "Bir an önce yorum yapmak için can attım ,böyle bir yere ortalama bile yorum yapan karşısında beni bulur :) favori listeme ekledim artık başınızın belasıyım😍❤️ kurye arkadaş çok samimi",
+            "isAnonymous": false,
+            "reviewerName": "...r",
+            "reviewerId": "trm43bm2",
+            "ratings": [
+                {
+                    "topic": "overall",
+                    "score": 5
+                },
+                {
+                    "topic": "restaurant_food",
+                    "score": 5
+                },
+                {
+                    "topic": "rider",
+                    "score": 5
+                }
+            ],
+            "type": "user",
+            "replies": [],
+            "commentPrettyDate": {
+                "translationKey": "NEXTGEN_REVIEWS_X_MONTHS_AGO",
+                "timeDuration": "2"
+            },
+            "likeCount": 0,
+            "isLiked": false,
+            "productVariations": [
+                {
+                    "id": "30361141",
+                    "defaultTitle": "Kavurmalı Pide",
+                    "title": {},
+                    "unitPrice": 780,
+                    "product": {
+                        "id": "4738450",
+                        "defaultTitle": "Kavurmalı Pide",
+                        "title": {
+                            "tr_TR": "Kavurmalı Pide"
+                        },
+                        "description": "Taze hamura; kavurma, kaşar peyniri",
+                        "active": true,
+                        "imageUrls": [
+                            "https://images.deliveryhero.io/image/global-menu-service/YS_TR/vendor/qdeb/product/30361141/3d3887f5-d5b8-4b7d-8a4d-91f82eae2ecd.jpg"
+                        ]
+                    }
+                },
+                {
+                    "id": "75302090",
+                    "defaultTitle": "Ev Yapımı Çıtır Özbek Mantı (200 gr.)",
+                    "title": {},
+                    "unitPrice": 680,
+                    "product": {
+                        "id": "66935538",
+                        "defaultTitle": "Ev Yapımı Çıtır Özbek Mantı (200 gr.)",
+                        "title": {
+                            "tr_TR": "Ev Yapımı Çıtır Özbek Mantı (200 gr.)"
+                        },
+                        "description": "Yoğurt, turşu, sos ile",
+                        "active": true,
+                        "imageUrls": [
+                            "https://images.deliveryhero.io/image/global-menu-service/YS_TR/vendor/qdeb/product/75302090/fcd8e900-2015-4c0b-b975-f5fc575da5f1.jpg"
+                        ]
+                    }
+                }
+            ],
+            "topReviewerTranslationKey": "",
+            "temiz_metin": "bir an önce yorum yapmak için can attım böyle bir yere ortalama bile yorum yapan karşısında beni bulur favori listeme ekledim artık başınızın belasıyım kurye arkadaş çok samimi"
+        },
+        {
+            "uuid": "59ead36f-7140-4e9a-9832-d8f1a9d71e2f",
+            "createdAt": "2025-10-21T18:25:26Z",
+            "updatedAt": "2025-10-21T18:25:26Z",
+            "text": "buz gibi ve lezzetsiz",
+            "isAnonymous": false,
+            "reviewerName": "...y",
+            "reviewerId": "tr2yd5ki",
+            "ratings": [
+                {
+                    "topic": "overall",
+                    "score": 1
+                },
+                {
+                    "topic": "restaurant_food",
+                    "score": 1
+                }
+            ],
+            "type": "user",
+            "replies": [],
+            "commentPrettyDate": {
+                "translationKey": "NEXTGEN_REVIEWS_X_MONTHS_AGO",
+                "timeDuration": "5"
+            },
+            "likeCount": 3,
+            "isLiked": false,
+            "productVariations": [],
+            "topReviewerTranslationKey": "",
+            "temiz_metin": "buz gibi ve lezzetsiz"
+        }
+    ]
+}

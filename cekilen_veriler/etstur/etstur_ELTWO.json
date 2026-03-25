@@ -1,0 +1,821 @@
+{
+    "platform": "etstur",
+    "urun_id": "ELTWO",
+    "gorsel_url": "https://images.etstur.com/imgproxy/files/images/hotelImages/TR/212255/l/Elite-World-Sapanca-Convention-Wellness-Resort-Genel-297053.jpg",
+    "yorumlar": [
+        {
+            "name": "H*****",
+            "surname": "T*****",
+            "reviewText": "30 yıllık bir otelcilik deneyimine sahip, dünyanın önde gelen uluslararası otel markalarında görev almış biri olarak şunu gönül rahatlığıyla söyleyebilirim ki; burada sunulan hizmet sadece profesyonel değil, aynı zamanda gerçekten içten ve özenle düşünülmüş. Ailemin karşılanmasından itibaren hissettikleri sıcaklık ve samimiyet bizleri çok etkiledi. Ekibin her bir üyesi işini sadece görev olarak değil, içten bir istek ve tutkuyla yapıyor. Bu da misafir olarak kendinizi gerçekten değerli ve güvende hissetmenizi sağlıyor. Misafir ilişkilerinden tuğçe hanım, zehra hanım ve fatma hanım'ın yaklaşımı son derece zarif, doğal ve samimiydi. Her biri bu deneyime ayrı bir anlam kattı. F&b ekibi yoğunluğa rağmen son derece organize, akıcı ve profesyonel bir hizmet sundu; yemeklerin kalitesi ve sunumu da aynı özeni yansıtıyordu. Ön büro ekibinin çözüm odaklı ve nazik yaklaşımı, odaların ve genel alanların temizliğindeki titizlik ise dikkat çekiciydi. Ancak tüm bunların ötesinde burada hissedilen şey; güçlü bir ekip ruhu ve işini gerçekten seven insanların yarattığı bir atmosfer. Çünkü bir oteli özel kılan yalnızca fiziksel güzelliği değil, onu yaşatan insanların enerjisi, isteği ve samimiyetidir. Siz bunu çok güzel başarmışsınız. Bu değerli atmosferi korumanızı ve daha da ileriye taşımanızı içtenlikle dilerim. Emeği geçen herkese gönülden teşekkür ederim.",
+            "date": "2026 Mart",
+            "recommendation": "RECOMMEND",
+            "score": 100.0,
+            "guestType": "Çift",
+            "scoreText": "Mükemmel",
+            "roomName": "Konaklanan Oda: Deluxe Biyolojik Golet Ve Orman Manzarali",
+            "hotelReview": null,
+            "ratingTypes": [
+                {
+                    "name": "Oda",
+                    "score": 10.0
+                },
+                {
+                    "name": "Hizmet",
+                    "score": 10.0
+                },
+                {
+                    "name": "Yemek",
+                    "score": 10.0
+                },
+                {
+                    "name": "Fiyat Performans",
+                    "score": 10.0
+                }
+            ],
+            "images": null,
+            "temiz_metin": "30 yıllık bir otelcilik deneyimine sahip dünyanın önde gelen uluslararası otel markalarında görev almış biri olarak şunu gönül rahatlığıyla söyleyebilirim ki burada sunulan hizmet sadece profesyonel değil aynı zamanda gerçekten içten ve özenle düşünülmüş ailemin karşılanmasından itibaren hissettikleri sıcaklık ve samimiyet bizleri çok etkiledi ekibin her bir üyesi işini sadece görev olarak değil içten bir istek ve tutkuyla yapıyor bu da misafir olarak kendinizi gerçekten değerli ve güvende hissetmenizi sağlıyor misafir ilişkilerinden tuğçe hanım zehra hanım ve fatma hanım ın yaklaşımı son derece zarif doğal ve samimiydi her biri bu deneyime ayrı bir anlam kattı f b ekibi yoğunluğa rağmen son derece organize akıcı ve profesyonel bir hizmet sundu yemeklerin kalitesi ve sunumu da aynı özeni yansıtıyordu ön büro ekibinin çözüm odaklı ve nazik yaklaşımı odaların ve genel alanların temizliğindeki titizlik ise dikkat çekiciydi ancak tüm bunların ötesinde burada hissedilen şey güçlü bir ekip ruhu ve işini gerçekten seven insanların yarattığı bir atmosfer çünkü bir oteli özel kılan yalnızca fiziksel güzelliği değil onu yaşatan insanların enerjisi isteği ve samimiyetidir siz bunu çok güzel başarmışsınız bu değerli atmosferi korumanızı ve daha da ileriye taşımanızı içtenlikle dilerim emeği geçen herkese gönülden teşekkür ederim"
+        },
+        {
+            "name": "N*****",
+            "surname": "S*****",
+            "reviewText": "Eksik olarak odalarda havalandırma yetersiz tuvalet fırçasi yok yoğun olduğunda yönetme az.",
+            "date": "2026 Mart",
+            "recommendation": "NOT_RECOMMEND",
+            "score": 60.0,
+            "guestType": "Aile",
+            "scoreText": "",
+            "roomName": "Konaklanan Oda: Deluxe Avlu Manzarali",
+            "hotelReview": null,
+            "ratingTypes": [
+                {
+                    "name": "Oda",
+                    "score": 6.0
+                },
+                {
+                    "name": "Hizmet",
+                    "score": 6.0
+                },
+                {
+                    "name": "Yemek",
+                    "score": 6.0
+                },
+                {
+                    "name": "Fiyat Performans",
+                    "score": 4.0
+                }
+            ],
+            "images": null,
+            "temiz_metin": "eksik olarak odalarda havalandırma yetersiz tuvalet fırçasi yok yoğun olduğunda yönetme az"
+        },
+        {
+            "name": "C*****",
+            "surname": "A*****",
+            "reviewText": "Genel herşey güzeldi. Bayram tatil döneminde havanın çok yağmurlu olması dolayıysa etrafımı gözlediğimde ki bende dahil lobi de telefon baktık. Etkinlik olmaması ya da az olması biraz can sıkıntısı biraz fazla oldu. Onun dışında herşey güzeldi.",
+            "date": "2026 Mart",
+            "recommendation": "RECOMMEND",
+            "score": 87.0,
+            "guestType": "Aile",
+            "scoreText": "Çok iyi",
+            "roomName": "Konaklanan Oda: Deluxe Avlu Manzarali",
+            "hotelReview": null,
+            "ratingTypes": [
+                {
+                    "name": "Oda",
+                    "score": 8.0
+                },
+                {
+                    "name": "Hizmet",
+                    "score": 8.0
+                },
+                {
+                    "name": "Yemek",
+                    "score": 10.0
+                },
+                {
+                    "name": "Fiyat Performans",
+                    "score": 6.0
+                }
+            ],
+            "images": null,
+            "temiz_metin": "genel her şey güzeldi bayram tatil döneminde havanın çok yağmurlu olması dolayıysa etrafımı gözlediğimde ki bende dahil lobi de telefon baktık etkinlik olmaması ya da az olması biraz can sıkıntısı biraz fazla oldu onun dışında her şey güzeldi"
+        },
+        {
+            "name": "E*****",
+            "surname": "G*****",
+            "reviewText": "19. 03. 2026 - 22. 03. 2026 tarihleri arasında elite world grand sapanca oteli için, çağrı merkeziniz üzerinden bir rezervasyon gerçekleştirdik. 19. 03. 2026 tarihinde 19. 30 da otele giriş yaptık. Odaya eşyalarımızı bırakmak için gittiğimizde odada ağır bir rutubet kokusu olduğunu farkettik. Lobiye ve sosyal alana indiğimizde. Lobi katında oturma alanı ve masaların olmadığını farkedince terasa çıktık. Orda bulunan masa sandalyelerin hepsi kirliydi ve hijyenik değildi. Yerlerde çöp atıkları vardı. Buna rağmen garsonlardan sıcak içecek talebinde bulunduğumuzda sıcak içecek servislerinin bulunmadığını eğer istersek lobi de bulunan semaverden kendimizin alması gerektiğini dile getirdiler. Tekrardan lobi katına inebilmek için merdivenleri kullanmamız gerektiği halde merdivenleri misafirlerin kullanımına kapatmışlar. Asansör sırası bekleyerek çay almak için lobiye indiğimizde karton bardaklarla karşılaştık. Porselen bardak ya da cam bardak vermeye aciz bir otelde kalmama kararı aldık. Ets turun oteldeki rehberi ile iletişime geçip durumu yüz yüze kendisine ifade ettik. Otelin müşteri ilişkileri ile de görüşüp durumu anlattık. Bu olanların farkında olduklarını ve özür dilemekten başka bir şey yapamayacaklarını ifade ettiler. Bunun üzerine otelden ayrılma kararı alarak saat 22. 00 da otelden ayrıldık. Ets tur güvencesi ile  bu rezervasyonu gerçekleştirdik sizden de markanıza yakışır şekilde geri dönüşünüzü bekliyoruz. Mağduriyetimizin giderilmesi için ödeme yaptığımız karta ücret iadesinin yapılmasını talep ediyoruz.",
+            "date": "2026 Mart",
+            "recommendation": "NOT_RECOMMEND",
+            "score": 20.0,
+            "guestType": "Aile",
+            "scoreText": "",
+            "roomName": "Konaklanan Oda: Deluxe Orman Manzarali",
+            "hotelReview": null,
+            "ratingTypes": [
+                {
+                    "name": "Oda",
+                    "score": 2.0
+                },
+                {
+                    "name": "Hizmet",
+                    "score": 2.0
+                },
+                {
+                    "name": "Yemek",
+                    "score": 2.0
+                },
+                {
+                    "name": "Fiyat Performans",
+                    "score": 2.0
+                }
+            ],
+            "images": [
+                {
+                    "id": 838833,
+                    "smallPath": "https://images.otelpuan.com/files/images/mobilanket/2026/03/22/21036253/a81a6b9753a2.jpeg",
+                    "mediumPath": "https://images.otelpuan.com/files/images/mobilanket/2026/03/22/21036253/a81a6b9753a2.jpeg",
+                    "largePath": "https://images.otelpuan.com/files/images/mobilanket/2026/03/22/21036253/a81a6b9753a2.jpeg"
+                }
+            ],
+            "temiz_metin": "19 03 2026 22 03 2026 tarihleri arasında elite world grand sapanca oteli için çağrı merkeziniz üzerinden bir rezervasyon gerçekleştirdik 19 03 2026 tarihinde 19 30 da otele giriş yaptık odaya eşyalarımızı bırakmak için gittiğimizde odada ağır bir rutubet kokusu olduğunu farkettik lobiye ve sosyal alana indiğimizde lobi katında oturma alanı ve masaların olmadığını farkedince terasa çıktık orda bulunan masa sandalyelerin hepsi kirliydi ve hijyenik değildi yerlerde çöp atıkları vardı buna rağmen garsonlardan sıcak içecek talebinde bulunduğumuzda sıcak içecek servislerinin bulunmadığını eğer istersek lobi de bulunan semaverden kendimizin alması gerektiğini dile getirdiler tekrardan lobi katına inebilmek için merdivenleri kullanmamız gerektiği halde merdivenleri misafirlerin kullanımına kapatmışlar asansör sırası bekleyerek çay almak için lobiye indiğimizde karton bardaklarla karşılaştık porselen bardak ya da cam bardak vermeye aciz bir otelde kalmama kararı aldık ets turun oteldeki rehberi ile iletişime geçip durumu yüz yüze kendisine ifade ettik otelin müşteri ilişkileri ile de görüşüp durumu anlattık bu olanların farkında olduklarını ve özür dilemekten başka bir şey yapamayacaklarını ifade ettiler bunun üzerine otelden ayrılma kararı alarak saat 22 00 da otelden ayrıldık ets tur güvencesi ile bu rezervasyonu gerçekleştirdik sizden de markanıza yakışır şekilde geri dönüşünüzü bekliyoruz mağduriyetimizin giderilmesi için ödeme yaptığımız karta ücret iadesinin yapılmasını talep ediyoruz"
+        },
+        {
+            "name": "A*****",
+            "surname": "A*****",
+            "reviewText": "O kadar para ödeniyor mini bar ücretli çay vs üctetli bence herşey dahil olmalı.",
+            "date": "2026 Mart",
+            "recommendation": "RECOMMEND",
+            "score": 93.0,
+            "guestType": "Çift",
+            "scoreText": "Mükemmel",
+            "roomName": "Konaklanan Oda: Deluxe Avlu Manzarali",
+            "hotelReview": null,
+            "ratingTypes": [
+                {
+                    "name": "Oda",
+                    "score": 10.0
+                },
+                {
+                    "name": "Hizmet",
+                    "score": 8.0
+                },
+                {
+                    "name": "Yemek",
+                    "score": 10.0
+                },
+                {
+                    "name": "Fiyat Performans",
+                    "score": 10.0
+                }
+            ],
+            "images": null,
+            "temiz_metin": "o kadar para ödeniyor mini bar ücretli çay vs üctetli bence her şey dahil olmalı"
+        },
+        {
+            "name": "S*****",
+            "surname": "O*****",
+            "reviewText": "Personel gayet iyidi odalar temiz otel temiz yemeklerde çok iyidi herkese tavsiye ederim en güzelide hayvan dostu lobiye giren hiç bir kediyi dışarı çıkartmadılar bu soğuk havada çok mutlu olduk teşekkür ederiz.",
+            "date": "2026 Mart",
+            "recommendation": "RECOMMEND",
+            "score": 87.0,
+            "guestType": "Arkadaş",
+            "scoreText": "Çok iyi",
+            "roomName": "Konaklanan Oda: Deluxe Avlu Manzarali",
+            "hotelReview": null,
+            "ratingTypes": [
+                {
+                    "name": "Oda",
+                    "score": 6.0
+                },
+                {
+                    "name": "Hizmet",
+                    "score": 10.0
+                },
+                {
+                    "name": "Yemek",
+                    "score": 10.0
+                },
+                {
+                    "name": "Fiyat Performans",
+                    "score": 6.0
+                }
+            ],
+            "images": null,
+            "temiz_metin": "personel gayet iyidi odalar temiz otel temiz yemeklerde çok iyidi herkese tavsiye ederim en güzelide hayvan dostu lobiye giren hiç bir kediyi dışarı çıkartmadılar bu soğuk havada çok mutlu olduk teşekkür ederiz"
+        },
+        {
+            "name": "F*****",
+            "surname": "S*****",
+            "reviewText": "Odamız göl manzaralı olacaktı fakat avlu manzaralıydı. 4035 nolu oda; 2000 tl farkın iadesini talep ediyorum.",
+            "date": "2026 Mart",
+            "recommendation": "RECOMMEND",
+            "score": 100.0,
+            "guestType": "Aile",
+            "scoreText": "Mükemmel",
+            "roomName": "Konaklanan Oda: Deluxe Biyolojik Golet Ve Orman Manzarali",
+            "hotelReview": null,
+            "ratingTypes": [
+                {
+                    "name": "Oda",
+                    "score": 10.0
+                },
+                {
+                    "name": "Hizmet",
+                    "score": 10.0
+                },
+                {
+                    "name": "Yemek",
+                    "score": 10.0
+                },
+                {
+                    "name": "Fiyat Performans",
+                    "score": 10.0
+                }
+            ],
+            "images": null,
+            "temiz_metin": "odamız göl manzaralı olacaktı fakat avlu manzaralıydı 4035 nolu oda 2000 tl farkın iadesini talep ediyorum"
+        },
+        {
+            "name": "M*****",
+            "surname": "S*****",
+            "reviewText": "Otel çok ii.",
+            "date": "2026 Mart",
+            "recommendation": "RECOMMEND",
+            "score": 100.0,
+            "guestType": "Aile",
+            "scoreText": "Mükemmel",
+            "roomName": "Konaklanan Oda: Deluxe Avlu Manzarali",
+            "hotelReview": null,
+            "ratingTypes": [
+                {
+                    "name": "Oda",
+                    "score": 10.0
+                },
+                {
+                    "name": "Hizmet",
+                    "score": 10.0
+                },
+                {
+                    "name": "Yemek",
+                    "score": 10.0
+                },
+                {
+                    "name": "Fiyat Performans",
+                    "score": 6.0
+                }
+            ],
+            "images": null,
+            "temiz_metin": "otel çok iyi"
+        },
+        {
+            "name": "K*****",
+            "surname": "I*****",
+            "reviewText": ".Personelin genel tutumundan oda temizliğine havuzun aşırı soğukluğundan  tutun servis hizmetlerine kadar bugüne kadar yaşadığımız tatillerin en kötüsü olarak hafızamızda yer edinecek bir deneyim. Yemekleri hariç her şeyi çok kötüydü.",
+            "date": "2026 Mart",
+            "recommendation": "NOT_RECOMMEND",
+            "score": 40.0,
+            "guestType": "Aile",
+            "scoreText": "",
+            "roomName": "Konaklanan Oda: Deluxe Orman Manzarali",
+            "hotelReview": null,
+            "ratingTypes": [
+                {
+                    "name": "Oda",
+                    "score": 2.0
+                },
+                {
+                    "name": "Hizmet",
+                    "score": 2.0
+                },
+                {
+                    "name": "Yemek",
+                    "score": 8.0
+                },
+                {
+                    "name": "Fiyat Performans",
+                    "score": 2.0
+                }
+            ],
+            "images": null,
+            "temiz_metin": "personelin genel tutumundan oda temizliğine havuzun aşırı soğukluğundan tutun servis hizmetlerine kadar bugüne kadar yaşadığımız tatillerin en kötüsü olarak hafızamızda yer edinecek bir deneyim yemekleri hariç her şeyi çok kötüydü"
+        },
+        {
+            "name": "K******",
+            "surname": "h********",
+            "reviewText": "Dış havuza çıkan koridor çok soğuk orası ısıtılmalımisafir ilişkileri zehra hanım çok ilgilendi özellikle çok memnun kaldığımızı belirtirim.",
+            "date": "2026 Mart",
+            "recommendation": "RECOMMEND",
+            "score": 87.0,
+            "guestType": "Çift",
+            "scoreText": "Çok iyi",
+            "roomName": "Konaklanan Oda: Deluxe Avlu Manzarali",
+            "hotelReview": null,
+            "ratingTypes": [
+                {
+                    "name": "Oda",
+                    "score": 8.0
+                },
+                {
+                    "name": "Hizmet",
+                    "score": 10.0
+                },
+                {
+                    "name": "Yemek",
+                    "score": 8.0
+                },
+                {
+                    "name": "Fiyat Performans",
+                    "score": 8.0
+                }
+            ],
+            "images": null,
+            "temiz_metin": "dış havuza çıkan koridor çok soğuk orası ısıtılmalımisafir ilişkileri zehra hanım çok ilgilendi özellikle çok memnun kaldığımızı belirtirim"
+        },
+        {
+            "name": "M*****",
+            "surname": "A*****",
+            "reviewText": "Tesisin konumu iyi, personel güler yüzlü ve çok ilgili, yemeklerini de çok beğendik kesinlikle tavsiye ederim. Açık lagün havuzu, kapalı havuzları, türk hamamından da çok memnun kaldık. Çocuk eğlence alanı gayet güzeldi. Otel çevresinde orman içi gezinti parkurunda olması kuş ve doğa sesleriyle yürüyüş yapmak iyi hissettirdi. Çok beğendiğimiz bir otel oldu eşe, dosta herkese tavsiye edilir.",
+            "date": "2026 Mart",
+            "recommendation": "RECOMMEND",
+            "score": 100.0,
+            "guestType": "Aile",
+            "scoreText": "Mükemmel",
+            "roomName": "Konaklanan Oda: Deluxe Avlu Manzarali",
+            "hotelReview": null,
+            "ratingTypes": [
+                {
+                    "name": "Oda",
+                    "score": 10.0
+                },
+                {
+                    "name": "Hizmet",
+                    "score": 10.0
+                },
+                {
+                    "name": "Yemek",
+                    "score": 10.0
+                },
+                {
+                    "name": "Fiyat Performans",
+                    "score": 10.0
+                }
+            ],
+            "images": [
+                {
+                    "id": 838505,
+                    "smallPath": "https://images.otelpuan.com/files/images/mobilanket/2026/03/21/21023539/63978574a6ef.jpeg",
+                    "mediumPath": "https://images.otelpuan.com/files/images/mobilanket/2026/03/21/21023539/63978574a6ef.jpeg",
+                    "largePath": "https://images.otelpuan.com/files/images/mobilanket/2026/03/21/21023539/63978574a6ef.jpeg"
+                }
+            ],
+            "temiz_metin": "tesisin konumu iyi personel güler yüzlü ve çok ilgili yemeklerini de çok beğendik kesinlikle tavsiye ederim açık lagün havuzu kapalı havuzları türk hamamından da çok memnun kaldık çocuk eğlence alanı gayet güzeldi otel çevresinde orman içi gezinti parkurunda olması kuş ve doğa sesleriyle yürüyüş yapmak iyi hissettirdi çok beğendiğimiz bir otel oldu eşe dosta herkese tavsiye edilir"
+        },
+        {
+            "name": "O*****",
+            "surname": "Ö*****",
+            "reviewText": "Tesis genel olarak güzel ramazan bayramında oldukça yoğundu ama beklediğimiz bir durumda otel yemekleri ve personeli ile iyiydi ancak tek sıkıntılı durum odanızda diğer oda ile bağlantılı bir kapı  varsa ses yalıtımı probleminiz var demektir kapı aralarından felaket derecede ses geçiriyor bize denk gelen komşu odadaki vatandaş malesef sabaha kadar müzik dinledi ve artık dayanamayarak sabah 5 te resepsiyon yardımı talep ettik ve o şekilde susturuldu bu olumsuz durum dışında başka bir olumsuz durum görmedik.",
+            "date": "2026 Mart",
+            "recommendation": "RECOMMEND",
+            "score": 73.0,
+            "guestType": "Aile",
+            "scoreText": "İyi",
+            "roomName": "Konaklanan Oda: Deluxe Avlu Manzarali",
+            "hotelReview": null,
+            "ratingTypes": [
+                {
+                    "name": "Oda",
+                    "score": 4.0
+                },
+                {
+                    "name": "Hizmet",
+                    "score": 10.0
+                },
+                {
+                    "name": "Yemek",
+                    "score": 8.0
+                },
+                {
+                    "name": "Fiyat Performans",
+                    "score": 10.0
+                }
+            ],
+            "images": null,
+            "temiz_metin": "tesis genel olarak güzel ramazan bayramında oldukça yoğundu ama beklediğimiz bir durumda otel yemekleri ve personeli ile iyiydi ancak tek sıkıntılı durum odanızda diğer oda ile bağlantılı bir kapı varsa ses yalıtımı probleminiz var demektir kapı aralarından felaket derecede ses geçiriyor bize denk gelen komşu odadaki vatandaş malesef sabaha kadar müzik dinledi ve artık dayanamayarak sabah 5 te resepsiyon yardımı talep ettik ve o şekilde susturuldu bu olumsuz durum dışında başka bir olumsuz durum görmedik"
+        },
+        {
+            "name": "A*****",
+            "surname": "I*****",
+            "reviewText": "Çok kötü bir yemek dağıtım ve oturum planı var. Çalışanlar elinden gelenin fazlasını yapıyorlar fakat otel tam dolu olduğunda yetersiz kalıyor.",
+            "date": "2026 Mart",
+            "recommendation": "NOT_RECOMMEND",
+            "score": 60.0,
+            "guestType": "Aile",
+            "scoreText": "",
+            "roomName": "Konaklanan Oda: Deluxe Avlu Manzarali",
+            "hotelReview": null,
+            "ratingTypes": [
+                {
+                    "name": "Oda",
+                    "score": 8.0
+                },
+                {
+                    "name": "Hizmet",
+                    "score": 8.0
+                },
+                {
+                    "name": "Yemek",
+                    "score": 2.0
+                },
+                {
+                    "name": "Fiyat Performans",
+                    "score": 6.0
+                }
+            ],
+            "images": null,
+            "temiz_metin": "çok kötü bir yemek dağıtım ve oturum planı var çalışanlar elinden gelenin fazlasını yapıyorlar fakat otel tam dolu olduğunda yetersiz kalıyor"
+        },
+        {
+            "name": "E*****",
+            "surname": "K*****",
+            "reviewText": "Her şey çok çok güzeldi, umarım en kısa zamanda tekrar geliriz.",
+            "date": "2026 Mart",
+            "recommendation": "RECOMMEND",
+            "score": 100.0,
+            "guestType": "Aile",
+            "scoreText": "Mükemmel",
+            "roomName": "Konaklanan Oda: Deluxe Biyolojik Golet Ve Orman Manzarali",
+            "hotelReview": null,
+            "ratingTypes": [
+                {
+                    "name": "Oda",
+                    "score": 10.0
+                },
+                {
+                    "name": "Hizmet",
+                    "score": 10.0
+                },
+                {
+                    "name": "Yemek",
+                    "score": 10.0
+                },
+                {
+                    "name": "Fiyat Performans",
+                    "score": 10.0
+                }
+            ],
+            "images": null,
+            "temiz_metin": "her şey çok çok güzeldi umarım en kısa zamanda tekrar geliriz"
+        },
+        {
+            "name": "A*****",
+            "surname": "Ö*****",
+            "reviewText": "Personel ve sunulan hizmet çok çok iyi. Otel temiz ancak duş kapısı kapanmadığından her duş alışta banyoyu su basıyordu.",
+            "date": "2026 Mart",
+            "recommendation": "RECOMMEND",
+            "score": 87.0,
+            "guestType": "Çift",
+            "scoreText": "Çok iyi",
+            "roomName": "Konaklanan Oda: Deluxe Avlu Manzarali",
+            "hotelReview": null,
+            "ratingTypes": [
+                {
+                    "name": "Oda",
+                    "score": 6.0
+                },
+                {
+                    "name": "Hizmet",
+                    "score": 10.0
+                },
+                {
+                    "name": "Yemek",
+                    "score": 10.0
+                },
+                {
+                    "name": "Fiyat Performans",
+                    "score": 8.0
+                }
+            ],
+            "images": null,
+            "temiz_metin": "personel ve sunulan hizmet çok çok iyi otel temiz ancak duş kapısı kapanmadığından her duş alışta banyoyu su basıyordu"
+        },
+        {
+            "name": "F*****",
+            "surname": "A*****",
+            "reviewText": "Konum güzel , havuzlar biraz soğuk.",
+            "date": "2026 Mart",
+            "recommendation": "RECOMMEND",
+            "score": 87.0,
+            "guestType": "Aile",
+            "scoreText": "Çok iyi",
+            "roomName": "Konaklanan Oda: Deluxe Avlu Manzarali",
+            "hotelReview": null,
+            "ratingTypes": [
+                {
+                    "name": "Oda",
+                    "score": 8.0
+                },
+                {
+                    "name": "Hizmet",
+                    "score": 10.0
+                },
+                {
+                    "name": "Yemek",
+                    "score": 8.0
+                },
+                {
+                    "name": "Fiyat Performans",
+                    "score": 8.0
+                }
+            ],
+            "images": null,
+            "temiz_metin": "konum güzel havuzlar biraz soğuk"
+        },
+        {
+            "name": "Y*****",
+            "surname": "Ş*****",
+            "reviewText": "Odalar küçük, personel ilgili, temizlik iyi,çocuk etkinlikleri alt kat hergün aynı etkinlikler vardı ama masal kahramanları çok özveriliydi. Kids clup öğretmenler gayet ilgili etkinlikler çeşitli. En rahatsız olduğum şey otelin ve odaların kokusu son derece kötü oda kokusunu lütfen değiştirin.",
+            "date": "2026 Mart",
+            "recommendation": "UNDECIDED",
+            "score": 67.0,
+            "guestType": "Aile",
+            "scoreText": "Ortalama",
+            "roomName": "Konaklanan Oda: Deluxe Avlu Manzarali",
+            "hotelReview": null,
+            "ratingTypes": [
+                {
+                    "name": "Oda",
+                    "score": 4.0
+                },
+                {
+                    "name": "Hizmet",
+                    "score": 8.0
+                },
+                {
+                    "name": "Yemek",
+                    "score": 8.0
+                },
+                {
+                    "name": "Fiyat Performans",
+                    "score": 6.0
+                }
+            ],
+            "images": null,
+            "temiz_metin": "odalar küçük personel ilgili temizlik iyi çocuk etkinlikleri alt kat hergün aynı etkinlikler vardı ama masal kahramanları çok özveriliydi kids clup öğretmenler gayet ilgili etkinlikler çeşitli en rahatsız olduğum şey otelin ve odaların kokusu son derece kötü oda kokusunu lütfen değiştirin"
+        },
+        {
+            "name": "O***",
+            "surname": "G*****",
+            "reviewText": "Huzurlu değil garip bir kargaşa hissi veriyor.",
+            "date": "2026 Mart",
+            "recommendation": "UNDECIDED",
+            "score": 73.0,
+            "guestType": "Çift",
+            "scoreText": "İyi",
+            "roomName": "Konaklanan Oda: Deluxe Avlu Manzarali",
+            "hotelReview": null,
+            "ratingTypes": [
+                {
+                    "name": "Oda",
+                    "score": 10.0
+                },
+                {
+                    "name": "Hizmet",
+                    "score": 6.0
+                },
+                {
+                    "name": "Yemek",
+                    "score": 6.0
+                },
+                {
+                    "name": "Fiyat Performans",
+                    "score": 6.0
+                }
+            ],
+            "images": null,
+            "temiz_metin": "huzurlu değil garip bir kargaşa hissi veriyor"
+        },
+        {
+            "name": "A*****",
+            "surname": "E*****",
+            "reviewText": "On numara hizmet.",
+            "date": "2026 Mart",
+            "recommendation": "RECOMMEND",
+            "score": 93.0,
+            "guestType": "Aile",
+            "scoreText": "Mükemmel",
+            "roomName": "Konaklanan Oda: Deluxe Biyolojik Golet Ve Orman Manzarali",
+            "hotelReview": null,
+            "ratingTypes": [
+                {
+                    "name": "Oda",
+                    "score": 10.0
+                },
+                {
+                    "name": "Hizmet",
+                    "score": 10.0
+                },
+                {
+                    "name": "Yemek",
+                    "score": 8.0
+                },
+                {
+                    "name": "Fiyat Performans",
+                    "score": 10.0
+                }
+            ],
+            "images": null,
+            "temiz_metin": "on numara hizmet"
+        },
+        {
+            "name": "Ü*** C**",
+            "surname": "G*******",
+            "reviewText": "Tek kelimeyle mükemmel.",
+            "date": "2026 Mart",
+            "recommendation": "RECOMMEND",
+            "score": 100.0,
+            "guestType": "Arkadaş",
+            "scoreText": "Mükemmel",
+            "roomName": "Konaklanan Oda: Deluxe Biyolojik Golet Ve Orman Manzarali",
+            "hotelReview": null,
+            "ratingTypes": [
+                {
+                    "name": "Oda",
+                    "score": 10.0
+                },
+                {
+                    "name": "Hizmet",
+                    "score": 10.0
+                },
+                {
+                    "name": "Yemek",
+                    "score": 10.0
+                },
+                {
+                    "name": "Fiyat Performans",
+                    "score": 10.0
+                }
+            ],
+            "images": null,
+            "temiz_metin": "tek kelimeyle mükemmel"
+        },
+        {
+            "name": "E***",
+            "surname": "Y*******",
+            "reviewText": "Otel çalışanları gayretleri ve hizmeti gayet iyiydi. Temizlik olarak da beğendiğim kompakt bir otel oldu. Islak alan kullanımlarımızdan memnun kaldık. Lagun havuz keyifli. Akşam yapılan kamp ateşi ve dj aktivitesi güzel düşünülmüştü. Çocuklar için etkinlikler daha özenle geliştirilmeli, kids club belli bir yaş sonrası için bence yetersiz kalıyor. Teşekkürler.",
+            "date": "2026 Mart",
+            "recommendation": "RECOMMEND",
+            "score": 95.0,
+            "guestType": "Aile",
+            "scoreText": "Mükemmel",
+            "roomName": "Konaklanan Oda: Deluxe Orman Manzarali",
+            "hotelReview": null,
+            "ratingTypes": [
+                {
+                    "name": "Oda",
+                    "score": 9.0
+                },
+                {
+                    "name": "Hizmet",
+                    "score": 10.0
+                },
+                {
+                    "name": "Yemek",
+                    "score": 9.800000190734863
+                },
+                {
+                    "name": "Fiyat Performans",
+                    "score": 8.600000381469727
+                }
+            ],
+            "images": null,
+            "temiz_metin": "otel çalışanları gayretleri ve hizmeti gayet iyiydi temizlik olarak da beğendiğim kompakt bir otel oldu ıslak alan kullanımlarımızdan memnun kaldık lagun havuz keyifli akşam yapılan kamp ateşi ve dj aktivitesi güzel düşünülmüştü çocuklar için etkinlikler daha özenle geliştirilmeli kids club belli bir yaş sonrası için bence yetersiz kalıyor teşekkürler"
+        },
+        {
+            "name": "E*****",
+            "surname": "P*****",
+            "reviewText": "Gayet keyifli ve temiz bir tesisti.",
+            "date": "2026 Mart",
+            "recommendation": "RECOMMEND",
+            "score": 100.0,
+            "guestType": "Aile",
+            "scoreText": "Mükemmel",
+            "roomName": "Konaklanan Oda: Deluxe Avlu Manzarali",
+            "hotelReview": null,
+            "ratingTypes": [
+                {
+                    "name": "Oda",
+                    "score": 10.0
+                },
+                {
+                    "name": "Hizmet",
+                    "score": 10.0
+                },
+                {
+                    "name": "Yemek",
+                    "score": 10.0
+                },
+                {
+                    "name": "Fiyat Performans",
+                    "score": 10.0
+                }
+            ],
+            "images": null,
+            "temiz_metin": "gayet keyifli ve temiz bir tesisti"
+        },
+        {
+            "name": "D*****",
+            "surname": "U*****",
+            "reviewText": "Berbat bir tesis , yoneticileri daha da berbat ‼️.",
+            "date": "2026 Mart",
+            "recommendation": "NOT_RECOMMEND",
+            "score": 27.0,
+            "guestType": "Arkadaş",
+            "scoreText": "",
+            "roomName": "Konaklanan Oda: Deluxe Avlu Manzarali",
+            "hotelReview": null,
+            "ratingTypes": [
+                {
+                    "name": "Oda",
+                    "score": 2.0
+                },
+                {
+                    "name": "Hizmet",
+                    "score": 2.0
+                },
+                {
+                    "name": "Yemek",
+                    "score": 4.0
+                },
+                {
+                    "name": "Fiyat Performans",
+                    "score": 2.0
+                }
+            ],
+            "images": null,
+            "temiz_metin": "berbat bir tesis yoneticileri daha da berbat"
+        },
+        {
+            "name": "M*****",
+            "surname": "K*****",
+            "reviewText": "Daha önceden tesiste birkaç defa konaklama olmuştu daha kaliteli hizmet sunuyorlardı diye düşünüyorum fakat bu son gelişimde gerek karşılama gerek loca alanında dinlenme bölümlerindeki olmayan garsonlar gerek alakart restorant kısmındaki asık suratlı gülmeyen hiçbir şekilde yaptığı işten memnun olmadığını müşteriye yansıtan personellerle dolu olduğunu gördüm ve bu benim enerjimi inanılmaz düşürdü kesinlikle memnun kalmadım bundan sonraki konaklamalarımı yine aynı şekilde başka otelde devam ettirmem gerekeceğini bir daha netleştirmiş oldum ödenen para ile verilen hizmetin asla örtüşmediği düşünüyorum çok yol kat edilmesi gerekiyor.",
+            "date": "2026 Mart",
+            "recommendation": "NOT_RECOMMEND",
+            "score": 47.0,
+            "guestType": "Arkadaş",
+            "scoreText": "",
+            "roomName": "Konaklanan Oda: Deluxe Biyolojik Golet Ve Orman Manzarali",
+            "hotelReview": null,
+            "ratingTypes": [
+                {
+                    "name": "Oda",
+                    "score": 6.0
+                },
+                {
+                    "name": "Hizmet",
+                    "score": 2.0
+                },
+                {
+                    "name": "Yemek",
+                    "score": 6.0
+                },
+                {
+                    "name": "Fiyat Performans",
+                    "score": 2.0
+                }
+            ],
+            "images": null,
+            "temiz_metin": "daha önceden tesiste birkaç defa konaklama olmuştu daha kaliteli hizmet sunuyorlardı diye düşünüyorum fakat bu son gelişimde gerek karşılama gerek loca alanında dinlenme bölümlerindeki olmayan garsonlar gerek alakart restorant kısmındaki asık suratlı gülmeyen hiçbir şekilde yaptığı işten memnun olmadığını müşteriye yansıtan personellerle dolu olduğunu gördüm ve bu benim enerjimi inanılmaz düşürdü kesinlikle memnun kalmadım bundan sonraki konaklamalarımı yine aynı şekilde başka otelde devam ettirmem gerekeceğini bir daha netleştirmiş oldum ödenen para ile verilen hizmetin asla örtüşmediği düşünüyorum çok yol kat edilmesi gerekiyor"
+        },
+        {
+            "name": "E*****",
+            "surname": "G*****",
+            "reviewText": "Her şey çok güzeldi, bizi karşılayan ets rehberimiz de çok ilgiliydi, teşekkür ediyoruz.",
+            "date": "2026 Mart",
+            "recommendation": "RECOMMEND",
+            "score": 100.0,
+            "guestType": "Aile",
+            "scoreText": "Mükemmel",
+            "roomName": "Konaklanan Oda: Deluxe Avlu Manzarali",
+            "hotelReview": null,
+            "ratingTypes": [
+                {
+                    "name": "Oda",
+                    "score": 10.0
+                },
+                {
+                    "name": "Hizmet",
+                    "score": 10.0
+                },
+                {
+                    "name": "Yemek",
+                    "score": 10.0
+                },
+                {
+                    "name": "Fiyat Performans",
+                    "score": 10.0
+                }
+            ],
+            "images": null,
+            "temiz_metin": "her şey çok güzeldi bizi karşılayan ets rehberimiz de çok ilgiliydi teşekkür ediyoruz"
+        }
+    ]
+}
