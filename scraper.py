@@ -170,6 +170,8 @@ def trendyol_veri_cek(urun_linki, max_sayfa):
     match = re.search(r'-p-(\d+)', urun_linki)
     if not match: return
     urun_id = match.group(1)
+    isim_match = re.search(r'/([^/]+)-p-\d+', urun_linki)
+    urun_adi = isim_match.group(1).replace('-', ' ').title() if isim_match else "Trendyol Ürünü"
 
     dosya_yolu = f"cekilen_veriler/trendyol/trendyol_{urun_id}.json"
     if os.path.exists(dosya_yolu): print("   ⏭️ Veri zaten mevcut, atlanıyor..."); return
@@ -200,7 +202,7 @@ def trendyol_veri_cek(urun_linki, max_sayfa):
         except Exception: break
 
     if tum_yorumlar:
-        veri_seti = {"platform": "trendyol", "urun_id": urun_id, "gorsel_url": gorsel_url, "yorumlar": tum_yorumlar}
+        veri_seti = {"platform": "trendyol", "baslik": urun_adi, "urun_id": urun_id, "gorsel_url": gorsel_url, "yorumlar": tum_yorumlar}
 
         # 1. Platforma özel alt klasörü oluştur
         hedef_klasor = "cekilen_veriler/trendyol"
@@ -216,6 +218,8 @@ def hepsiburada_veri_cek(urun_linki, max_sayfa):
     match = re.search(r'-p[m]?-([A-Za-z0-9]+)', urun_linki)
     if not match: return
     urun_sku = match.group(1).upper()
+    isim_match = re.search(r'/([^/]+)-p[m]?-', urun_linki)
+    urun_adi = isim_match.group(1).replace('-', ' ').title() if isim_match else "Hepsiburada Ürünü"
 
     dosya_yolu = f"cekilen_veriler/hepsiburada/hepsiburada_{urun_sku}.json"
     if os.path.exists(dosya_yolu): print("   ⏭️ Veri zaten mevcut, atlanıyor..."); return
@@ -258,7 +262,7 @@ def hepsiburada_veri_cek(urun_linki, max_sayfa):
         except Exception: break
 
     if tum_yorumlar:
-        veri_seti = {"platform": "hepsiburada", "urun_id": urun_sku, "gorsel_url": gorsel_url, "yorumlar": tum_yorumlar}
+        veri_seti = {"platform": "hepsiburada", "baslik": urun_adi, "urun_id": urun_sku, "gorsel_url": gorsel_url, "yorumlar": tum_yorumlar}
 
         # 1. Platforma özel alt klasörü oluştur
         hedef_klasor = "cekilen_veriler/hepsiburada"
@@ -273,6 +277,8 @@ def hepsiburada_veri_cek(urun_linki, max_sayfa):
 def ciceksepeti_veri_cek(urun_linki, max_sayfa):
     match_code = re.search(r'-([a-zA-Z0-9]+)(?:\?|/|$)', urun_linki)
     urun_kodu = match_code.group(1).lower() if match_code else str(int(time.time()))
+    isim_match = re.search(r'/([^/]+)-[a-zA-Z0-9]+(?:\?|/|$)', urun_linki)
+    urun_adi = isim_match.group(1).replace('-', ' ').title() if isim_match else "Çiçeksepeti Ürünü"
 
     dosya_yolu = f"cekilen_veriler/ciceksepeti/ciceksepeti_{urun_kodu}.json"
     if os.path.exists(dosya_yolu): print("   ⏭️ Veri zaten mevcut, atlanıyor..."); return
@@ -329,7 +335,7 @@ def ciceksepeti_veri_cek(urun_linki, max_sayfa):
         except Exception: break
 
     if tum_yorumlar:
-        veri_seti = {"platform": "ciceksepeti", "urun_id": urun_kodu, "gorsel_url": gorsel_url, "yorumlar": tum_yorumlar}
+        veri_seti = {"platform": "ciceksepeti", "baslik": urun_adi, "urun_id": urun_kodu, "gorsel_url": gorsel_url, "yorumlar": tum_yorumlar}
 
         # 1. Platforma özel alt klasörü oluştur
         hedef_klasor = "cekilen_veriler/ciceksepeti"
@@ -345,6 +351,8 @@ def steam_veri_cek(oyun_linki, max_sayfa):
     match = re.search(r'/app/(\d+)', oyun_linki)
     if not match: return
     app_id = match.group(1)
+    isim_match = re.search(r'/app/\d+/([^/?]+)', oyun_linki)
+    urun_adi = isim_match.group(1).replace('_', ' ').title() if isim_match else "Steam Oyunu"
 
     dosya_yolu = f"cekilen_veriler/steam/steam_{app_id}.json"
     if os.path.exists(dosya_yolu): print("   ⏭️ Veri zaten mevcut, atlanıyor..."); return
@@ -381,7 +389,7 @@ def steam_veri_cek(oyun_linki, max_sayfa):
         except Exception: break
 
     if tum_yorumlar:
-        veri_seti = {"platform": "steam", "urun_id": app_id, "gorsel_url": gorsel_url, "yorumlar": tum_yorumlar}
+        veri_seti = {"platform": "steam", "baslik": urun_adi, "urun_id": app_id, "gorsel_url": gorsel_url, "yorumlar": tum_yorumlar}
 
         # 1. Platforma özel alt klasörü oluştur
         hedef_klasor = "cekilen_veriler/steam"
@@ -405,6 +413,8 @@ def etstur_veri_cek(otel_linki, max_sayfa):
         hotel_code = hotel_code_match.group(1)
         hotel_id = hotel_id_match.group(1)
     except Exception: return
+    isim_match = re.search(r'etstur\.com/([^/?]+)', otel_linki)
+    urun_adi = isim_match.group(1).replace('-', ' ').title() if isim_match else "Etstur Oteli"
 
     dosya_yolu = f"cekilen_veriler/etstur/etstur_{hotel_code}.json"
     if os.path.exists(dosya_yolu): print("   ⏭️ Veri zaten mevcut, atlanıyor..."); return
@@ -440,7 +450,7 @@ def etstur_veri_cek(otel_linki, max_sayfa):
         except Exception: break
 
     if tum_yorumlar:
-        veri_seti = {"platform": "etstur", "urun_id": hotel_code, "gorsel_url": gorsel_url, "yorumlar": tum_yorumlar}
+        veri_seti = {"platform": "etstur", "baslik": urun_adi, "urun_id": hotel_code, "gorsel_url": gorsel_url, "yorumlar": tum_yorumlar}
 
         # 1. Platforma özel alt klasörü oluştur
         hedef_klasor = "cekilen_veriler/etstur"
@@ -466,20 +476,25 @@ def airbnb_veri_cek(oda_linki, max_sayfa):
     headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) Chrome/120.0.0.0 Safari/537.36", "Accept-Language": "tr-TR,tr;q=0.9"}
     try:
         html_res = requests.get(oda_linki, headers=headers, impersonate="chrome120", timeout=15, verify=False)
-
-        # SİHİR 1: Kaçış karakterlerini düzelt
         temiz_html = html_res.text.replace('\\u002F', '/')
 
+        # --- YENİ EKLENEN KISIM: İSİM ÇIKARMA ---
+        isim_match = re.search(r'<meta\s+(?:property|name)=["\']og:title["\']\s+content=["\']([^"\']+)["\']', temiz_html, re.IGNORECASE)
+        if isim_match:
+            urun_adi = isim_match.group(1).split(' - ')[0].strip()
+        else:
+            urun_adi = "Airbnb Evi"
+        # ----------------------------------------
+
+        # İŞTE BURASI SİLİNMİŞTİ! API Key'i HTML'den çıkarıp değişkene atıyoruz:
         api_key_match = re.search(r'"api_config"\s*:\s*{[^}]*"key"\s*:\s*"([^"]+)"', temiz_html)
         if not api_key_match: return
         api_key = api_key_match.group(1)
 
         # TAKTİK 1: OG Tag TAMAMEN İPTAL! Botlara sahte çadır resmi veriyor.
-        # Doğrudan HTML içindeki gizli "gerçek ev" linklerini arıyoruz.
         pic_match = re.findall(r'(https://a0\.muscache\.com/im/pictures/[^"\'\?\\]+\.(?:jpg|jpeg|png|webp))', temiz_html)
 
         for pic in pic_match:
-            # Sadece içinde "hosting" veya "miso" geçen linkler GERÇEK ev fotoğraflarıdır
             if any(x in pic for x in ["/hosting/", "/miso/", "/pro/", "/prohost/"]):
                 gorsel_url = pic
                 print(f"🖼️ Airbnb Ev Görseli Nokta Atışı Çekildi: {gorsel_url}")
@@ -520,7 +535,7 @@ def airbnb_veri_cek(oda_linki, max_sayfa):
         except Exception: break
 
     if tum_yorumlar:
-        veri_seti = {"platform": "airbnb", "urun_id": oda_id, "gorsel_url": gorsel_url, "yorumlar": tum_yorumlar}
+        veri_seti = {"platform": "airbnb", "baslik": urun_adi, "urun_id": oda_id, "gorsel_url": gorsel_url, "yorumlar": tum_yorumlar}
 
         # 1. Platforma özel alt klasörü oluştur
         hedef_klasor = "cekilen_veriler/airbnb"
@@ -537,6 +552,13 @@ def yemeksepeti_veri_cek(restoran_linki, max_sayfa):
     match = re.search(r'/restaurant/([a-zA-Z0-9]+)', restoran_linki)
     if not match: return
     vendor_id = match.group(1)
+    isim_match = re.search(r'/restaurant/[^/]+/([^/?]+)', restoran_linki)
+    if isim_match:
+        ham_isim = isim_match.group(1).replace('-', ' ').title()
+        # İsmin sonundaki satıcı ID'sini temizle
+        urun_adi = ham_isim.replace(f" {vendor_id.title()}", "").strip()
+    else:
+        urun_adi = "Yemeksepeti Restoranı"
 
     dosya_yolu = f"cekilen_veriler/yemeksepeti/yemeksepeti_{vendor_id}.json"
     if os.path.exists(dosya_yolu): print("   ⏭️ Veri zaten mevcut, atlanıyor..."); return
@@ -648,7 +670,7 @@ def yemeksepeti_veri_cek(restoran_linki, max_sayfa):
     # SİHİR 3: BİRLEŞTİR VE KAYDET
     # ==========================================
     if tum_yorumlar:
-        veri_seti = {"platform": "yemeksepeti", "urun_id": vendor_id, "gorsel_url": gorsel_url, "yorumlar": tum_yorumlar}
+        veri_seti = {"platform": "yemeksepeti", "baslik": urun_adi, "urun_id": vendor_id, "gorsel_url": gorsel_url, "yorumlar": tum_yorumlar}
 
         # 1. Platforma özel alt klasörü oluştur
         hedef_klasor = "cekilen_veriler/yemeksepeti"
@@ -673,15 +695,26 @@ def trendyol_go_veri_cek(restoran_linki, max_sayfa):
     headers_main = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) Chrome/120.0.0.0 Safari/537.36"}
 
     # SİHİR 2: HTML Regex Avcılığı (Trendyol Go CDN Linklerini Bulma)
+    # SİHİR 2: HTML Regex Avcılığı (Görsel ve İsim Bulma)
     try:
         html_res = requests.get(restoran_linki, headers=headers_main, impersonate="chrome120", timeout=10, verify=False)
-        # cdn.tgoapps.com ile başlayan jpg, jpeg, png, webp linklerini ara
+
+        # --- YENİ EKLENEN KISIM: İSİM ÇIKARMA ---
+        isim_match = re.search(r'<title>([^<]+)</title>', html_res.text, re.IGNORECASE)
+        if isim_match:
+            # İsim genelde "KFC Sipariş | Trendyol Go" gibi gelir. Ekstra kelimeleri temizleyelim:
+            urun_adi = isim_match.group(1).split('|')[0].replace('Sipariş', '').strip()
+        else:
+            urun_adi = "Trendyol Go Restoranı"
+        # ----------------------------------------
+
+        # Görseli Bulma (Eski kodun aynısı)
         cdn_match = re.search(r'(https://cdn\.tgoapps\.com/[^"\']+\.(?:jpeg|jpg|png|webp))', html_res.text, re.IGNORECASE)
         if cdn_match:
             gorsel_url = cdn_match.group(1)
             print(f"🖼️ Trendyol Go Görseli Bulundu: {gorsel_url}")
-    except Exception: pass
-
+    except Exception:
+        urun_adi = "Trendyol Go Restoranı" # Hata olursa varsayılan isim
     preprocessor = ReviewPreprocessor()
     tum_yorumlar = []
     headers = {"Accept": "application/json", "Origin": "https://www.trendyol.com", "Referer": restoran_linki}
@@ -707,7 +740,7 @@ def trendyol_go_veri_cek(restoran_linki, max_sayfa):
         except Exception: break
 
     if tum_yorumlar:
-        veri_seti = {"platform": "trendyol-go", "urun_id": vendor_id, "gorsel_url": gorsel_url, "yorumlar": tum_yorumlar}
+        veri_seti = {"platform": "tygo", "baslik": urun_adi, "urun_id": vendor_id, "gorsel_url": gorsel_url, "yorumlar": tum_yorumlar}
 
         # 1. Platforma özel alt klasörü oluştur
         hedef_klasor = "cekilen_veriler/tygo"
@@ -721,8 +754,12 @@ def trendyol_go_veri_cek(restoran_linki, max_sayfa):
 
 def google_maps_veri_cek(mekan_linki, max_kaydirma):
     match = re.search(r'/place/([^/]+)/', mekan_linki)
-    mekan_adi = match.group(1).replace('+', '_') if match else str(int(time.time()))
-    urun_id = urllib.parse.unquote(mekan_adi)[:30]
+    if match:
+        urun_adi = urllib.parse.unquote(match.group(1)).replace('+', ' ').title()
+        urun_id = urun_adi[:30].replace(' ', '_')
+    else:
+        urun_adi = "Google Maps Mekanı"
+        urun_id = str(int(time.time()))
 
     dosya_yolu = f"cekilen_veriler/maps/maps_{urun_id}.json"
     if os.path.exists(dosya_yolu): print("   ⏭️ Veri zaten mevcut, atlanıyor..."); return
@@ -891,7 +928,7 @@ def google_maps_veri_cek(mekan_linki, max_kaydirma):
         print(f"⚠️ Playwright Maps'te bir engele takıldı: {e}")
 
     if tum_yorumlar:
-        veri_seti = {"platform": "maps", "urun_id": urun_id, "gorsel_url": gorsel_url, "yorumlar": tum_yorumlar}
+        veri_seti = {"platform": "google_maps", "baslik": urun_adi, "urun_id": urun_id, "gorsel_url": gorsel_url, "yorumlar": tum_yorumlar}
 
         # 1. Platforma özel alt klasörü oluştur
         hedef_klasor = "cekilen_veriler/maps"
