@@ -1,0 +1,3608 @@
+{
+    "platform": "yemeksepeti",
+    "urun_id": "xtwl",
+    "gorsel_url": "https://images.deliveryhero.io/image/fd-tr/tr-logos/cp2ei-logo.jpg",
+    "yorumlar": [
+        {
+            "uuid": "1c5cd583-8a20-43ea-a182-4810afe1ca2f",
+            "createdAt": "2026-03-23T18:54:22Z",
+            "updatedAt": "2026-03-23T18:54:22Z",
+            "text": "yemek buz gib gec geldi yanlis sipariş  geldi",
+            "isAnonymous": false,
+            "reviewerName": "...n",
+            "reviewerId": "tr3jbu5j",
+            "ratings": [
+                {
+                    "topic": "overall",
+                    "score": 1
+                },
+                {
+                    "topic": "restaurant_food",
+                    "score": 1
+                },
+                {
+                    "topic": "rider",
+                    "score": 1
+                }
+            ],
+            "type": "user",
+            "replies": [],
+            "commentPrettyDate": {
+                "translationKey": "NEXTGEN_REVIEWS_X_DAYS_AGO",
+                "timeDuration": "3"
+            },
+            "likeCount": 0,
+            "isLiked": false,
+            "productVariations": [],
+            "topReviewerTranslationKey": "",
+            "temiz_metin": "yemek buz gib geç geldi yanlış sipariş geldi"
+        },
+        {
+            "uuid": "9d4ce57e-cd64-44eb-a0cf-618543266af6",
+            "createdAt": "2026-03-21T19:31:13Z",
+            "updatedAt": "2026-03-21T19:31:13Z",
+            "text": "elinize sağlık ",
+            "isAnonymous": false,
+            "reviewerName": "...n",
+            "reviewerId": "trvpffrr",
+            "ratings": [
+                {
+                    "topic": "overall",
+                    "score": 5
+                },
+                {
+                    "topic": "restaurant_food",
+                    "score": 5
+                },
+                {
+                    "topic": "rider",
+                    "score": 5
+                }
+            ],
+            "type": "user",
+            "replies": [],
+            "commentPrettyDate": {
+                "translationKey": "NEXTGEN_REVIEWS_X_DAYS_AGO",
+                "timeDuration": "5"
+            },
+            "likeCount": 0,
+            "isLiked": false,
+            "productVariations": [
+                {
+                    "id": "30861003",
+                    "defaultTitle": "Ekstra Patates Kızartması",
+                    "title": {},
+                    "unitPrice": 90,
+                    "product": {
+                        "id": "23127256",
+                        "defaultTitle": "Ekstra Patates Kızartması",
+                        "title": {
+                            "en_TR": "Patates Kızartması",
+                            "tr_TR": "Ekstra Patates Kızartması"
+                        },
+                        "description": "Patates kızartması",
+                        "active": true,
+                        "imageUrls": [
+                            "https://images.deliveryhero.io/image/fd-tr/Products/27424683.jpg"
+                        ]
+                    }
+                },
+                {
+                    "id": "30861005",
+                    "defaultTitle": "Çıtır Tavuk",
+                    "title": {},
+                    "unitPrice": 200,
+                    "product": {
+                        "id": "23127258",
+                        "defaultTitle": "Çıtır Tavuk",
+                        "title": {
+                            "en_TR": "Çıtır Tavuk",
+                            "tr_TR": "Çıtır Tavuk"
+                        },
+                        "description": "Porsiyon",
+                        "active": true,
+                        "imageUrls": [
+                            "https://images.deliveryhero.io/image/fd-tr/Products/27424685.jpg"
+                        ]
+                    }
+                },
+                {
+                    "id": "83313914",
+                    "defaultTitle": "Joker Cheeseburger Menü",
+                    "title": {},
+                    "unitPrice": 435,
+                    "product": {
+                        "id": "74604535",
+                        "defaultTitle": "Joker Cheeseburger Menü",
+                        "title": {
+                            "tr_TR": "Joker Cheeseburger Menü"
+                        },
+                        "description": "Joker Cheeseburge (85 gr.) + Patates Kızartması +  İçecek (33 cl.)",
+                        "active": true,
+                        "imageUrls": [
+                            "https://images.deliveryhero.io/image/fd-tr/Products/74597645.jpg"
+                        ]
+                    }
+                }
+            ],
+            "topReviewerTranslationKey": "",
+            "temiz_metin": "elinize sağlık"
+        },
+        {
+            "uuid": "b965b675-084e-4210-a13a-6b94de6e2efc",
+            "createdAt": "2026-03-20T19:19:48Z",
+            "updatedAt": "2026-03-20T19:19:48Z",
+            "text": "Kola Zero istememe rağmen normal göndermişler patateslerde menüye göre çok azdı 15 tane ya var ya yoktu koydukları et ekmeğin içinde gözükmüyordu ve çok soğuk geldi",
+            "isAnonymous": false,
+            "reviewerName": "...n",
+            "reviewerId": "trts2616",
+            "ratings": [
+                {
+                    "topic": "overall",
+                    "score": 1
+                },
+                {
+                    "topic": "restaurant_food",
+                    "score": 1
+                }
+            ],
+            "type": "user",
+            "replies": [],
+            "commentPrettyDate": {
+                "translationKey": "NEXTGEN_REVIEWS_X_DAYS_AGO",
+                "timeDuration": "6"
+            },
+            "likeCount": 0,
+            "isLiked": false,
+            "productVariations": [],
+            "topReviewerTranslationKey": "",
+            "temiz_metin": "kola zero istememe rağmen normal göndermişler patateslerde menüye göre çok azdı 15 tane ya var ya yoktu koydukları et ekmeğin içinde gözükmüyordu ve çok soğuk geldi"
+        },
+        {
+            "uuid": "e48e4085-546c-493d-87b8-b7ebf3f3f172",
+            "createdAt": "2026-03-20T18:36:40Z",
+            "updatedAt": "2026-03-20T18:36:40Z",
+            "text": "Her seferinde çok lezzetli ve çok hızlılar ",
+            "isAnonymous": false,
+            "reviewerName": "...e",
+            "reviewerId": "tryf2v4a",
+            "ratings": [
+                {
+                    "topic": "overall",
+                    "score": 5
+                },
+                {
+                    "topic": "restaurant_food",
+                    "score": 5
+                },
+                {
+                    "topic": "rider",
+                    "score": 5
+                }
+            ],
+            "type": "user",
+            "replies": [],
+            "commentPrettyDate": {
+                "translationKey": "NEXTGEN_REVIEWS_X_DAYS_AGO",
+                "timeDuration": "6"
+            },
+            "likeCount": 0,
+            "isLiked": false,
+            "productVariations": [
+                {
+                    "id": "83313914",
+                    "defaultTitle": "Joker Cheeseburger Menü",
+                    "title": {},
+                    "unitPrice": 435,
+                    "product": {
+                        "id": "74604535",
+                        "defaultTitle": "Joker Cheeseburger Menü",
+                        "title": {
+                            "tr_TR": "Joker Cheeseburger Menü"
+                        },
+                        "description": "Joker Cheeseburge (85 gr.) + Patates Kızartması +  İçecek (33 cl.)",
+                        "active": true,
+                        "imageUrls": [
+                            "https://images.deliveryhero.io/image/fd-tr/Products/74597645.jpg"
+                        ]
+                    }
+                }
+            ],
+            "topReviewerTranslationKey": "",
+            "temiz_metin": "her seferinde çok lezzetli ve çok hızlılar"
+        },
+        {
+            "uuid": "dc3082fc-d103-4667-845d-1a04e7d8dea8",
+            "createdAt": "2026-03-18T11:13:28Z",
+            "updatedAt": "2026-03-18T11:13:28Z",
+            "text": "Mantarla birlikte Efsane bir tat oluşmuş ",
+            "isAnonymous": false,
+            "reviewerName": "...n",
+            "reviewerId": "trhp48cd",
+            "ratings": [
+                {
+                    "topic": "overall",
+                    "score": 5
+                },
+                {
+                    "topic": "restaurant_food",
+                    "score": 5
+                },
+                {
+                    "topic": "rider",
+                    "score": 5
+                }
+            ],
+            "type": "user",
+            "replies": [],
+            "commentPrettyDate": {
+                "translationKey": "NEXTGEN_REVIEWS_1_WEEK_AGO",
+                "timeDuration": "1"
+            },
+            "likeCount": 0,
+            "isLiked": false,
+            "productVariations": [
+                {
+                    "id": "73026996",
+                    "defaultTitle": "Supper Mushroom Burger Menü",
+                    "title": {},
+                    "unitPrice": 515,
+                    "product": {
+                        "id": "64734634",
+                        "defaultTitle": "Supper Mushroom Burger Menü",
+                        "title": {
+                            "tr_TR": "Supper Mushroom Burger Menü"
+                        },
+                        "description": "Supper Mushroom Burger (120 gr.) + Patates Kızartması + İçecek (33 cl.)",
+                        "active": true,
+                        "imageUrls": [
+                            "https://images.deliveryhero.io/image/fd-tr/Products/64651940.jpg"
+                        ]
+                    }
+                }
+            ],
+            "topReviewerTranslationKey": "",
+            "temiz_metin": "mantarla birlikte efsane bir tat oluşmuş"
+        },
+        {
+            "uuid": "bbf6923a-3e13-4f6c-9eed-0708a0f436c6",
+            "createdAt": "2026-03-14T15:49:14Z",
+            "updatedAt": "2026-03-14T15:49:14Z",
+            "text": "Sıcak ve zamanında geldi lezzetliydi Ercan burger lezzeti minik çikolata da hoştu ",
+            "isAnonymous": false,
+            "reviewerName": "...z",
+            "reviewerId": "tr80owoc",
+            "ratings": [
+                {
+                    "topic": "overall",
+                    "score": 5
+                },
+                {
+                    "topic": "restaurant_food",
+                    "score": 5
+                }
+            ],
+            "type": "user",
+            "replies": [],
+            "commentPrettyDate": {
+                "translationKey": "NEXTGEN_REVIEWS_1_WEEK_AGO",
+                "timeDuration": "1"
+            },
+            "likeCount": 0,
+            "isLiked": false,
+            "productVariations": [],
+            "topReviewerTranslationKey": "",
+            "temiz_metin": "sıcak ve zamanında geldi lezzetliydi ercan burger lezzeti minik çikolata da hoştu"
+        },
+        {
+            "uuid": "3b2ea0b5-2963-4b12-94fa-aee0c02943f9",
+            "createdAt": "2026-03-08T11:48:42Z",
+            "updatedAt": "2026-03-08T11:48:42Z",
+            "text": "Yediğim en berbat burger . Böyle fiyata bu kadar kötü bir burger olamaz ama yapmışsınız. Yazıklar olsun gerçekten",
+            "isAnonymous": false,
+            "reviewerName": "...a",
+            "reviewerId": "tri8akq9",
+            "ratings": [
+                {
+                    "topic": "overall",
+                    "score": 1
+                },
+                {
+                    "topic": "restaurant_food",
+                    "score": 1
+                }
+            ],
+            "type": "user",
+            "replies": [],
+            "commentPrettyDate": {
+                "translationKey": "NEXTGEN_REVIEWS_X_WEEKS_AGO",
+                "timeDuration": "2"
+            },
+            "likeCount": 0,
+            "isLiked": false,
+            "productVariations": [],
+            "topReviewerTranslationKey": "",
+            "temiz_metin": "yediğim en berbat burger böyle fiyata bu kadar kötü bir burger olamaz ama yapmışsınız yazıklar olsun gerçekten"
+        },
+        {
+            "uuid": "d428143c-047a-433d-bf8e-6c6890d16b11",
+            "createdAt": "2026-02-28T12:33:07Z",
+            "updatedAt": "2026-02-28T12:33:07Z",
+            "text": "Süper di ",
+            "isAnonymous": false,
+            "reviewerName": "...r",
+            "reviewerId": "trzgho6h",
+            "ratings": [
+                {
+                    "topic": "overall",
+                    "score": 5
+                },
+                {
+                    "topic": "restaurant_food",
+                    "score": 5
+                }
+            ],
+            "type": "user",
+            "replies": [],
+            "commentPrettyDate": {
+                "translationKey": "NEXTGEN_REVIEWS_X_WEEKS_AGO",
+                "timeDuration": "3"
+            },
+            "likeCount": 0,
+            "isLiked": false,
+            "productVariations": [],
+            "topReviewerTranslationKey": "",
+            "temiz_metin": "süper di"
+        },
+        {
+            "uuid": "22137de9-5e94-4777-953d-4fef382d3729",
+            "createdAt": "2026-02-27T22:13:26Z",
+            "updatedAt": "2026-02-27T22:13:26Z",
+            "text": "Çok geç geldi soğuktu sos felan yoktu almayın  ",
+            "isAnonymous": false,
+            "reviewerName": "...u",
+            "reviewerId": "tr4e048f",
+            "ratings": [
+                {
+                    "topic": "overall",
+                    "score": 1
+                },
+                {
+                    "topic": "restaurant_food",
+                    "score": 1
+                }
+            ],
+            "type": "user",
+            "replies": [],
+            "commentPrettyDate": {
+                "translationKey": "NEXTGEN_REVIEWS_X_WEEKS_AGO",
+                "timeDuration": "3"
+            },
+            "likeCount": 0,
+            "isLiked": false,
+            "productVariations": [],
+            "topReviewerTranslationKey": "",
+            "temiz_metin": "çok geç geldi soğuktu sos falan yoktu almayın"
+        },
+        {
+            "uuid": "5bdb00df-0bdc-4a46-9c3e-0a4c6f6be793",
+            "createdAt": "2026-02-18T11:44:17Z",
+            "updatedAt": "2026-02-18T11:44:17Z",
+            "text": "Fanta istedim kola geldi.:/",
+            "isAnonymous": false,
+            "reviewerName": "...u",
+            "reviewerId": "trkwddrb",
+            "ratings": [
+                {
+                    "topic": "overall",
+                    "score": 3
+                },
+                {
+                    "topic": "restaurant_food",
+                    "score": 3
+                }
+            ],
+            "type": "user",
+            "replies": [],
+            "commentPrettyDate": {
+                "translationKey": "NEXTGEN_REVIEWS_1_MONTH_AGO",
+                "timeDuration": "1"
+            },
+            "likeCount": 0,
+            "isLiked": false,
+            "productVariations": [],
+            "topReviewerTranslationKey": "",
+            "temiz_metin": "fanta istedim kola geldi"
+        },
+        {
+            "uuid": "2a97ce24-0648-4320-be39-3cf2d3ecf3df",
+            "createdAt": "2026-02-16T21:05:19Z",
+            "updatedAt": "2026-02-16T21:05:19Z",
+            "text": "smoky burger gerçekten lezzetli, özenli şekilde hazırlanmıştı. elinize sağlık. sadece hamburgerin yanından gelen patates miktarı azalmış, tek eksi yanı buydu",
+            "isAnonymous": false,
+            "reviewerName": "...u",
+            "reviewerId": "trk23dlt",
+            "ratings": [
+                {
+                    "topic": "overall",
+                    "score": 5
+                },
+                {
+                    "topic": "restaurant_food",
+                    "score": 5
+                },
+                {
+                    "topic": "rider",
+                    "score": 5
+                }
+            ],
+            "type": "user",
+            "replies": [],
+            "commentPrettyDate": {
+                "translationKey": "NEXTGEN_REVIEWS_1_MONTH_AGO",
+                "timeDuration": "1"
+            },
+            "likeCount": 0,
+            "isLiked": false,
+            "productVariations": [
+                {
+                    "id": "77669891",
+                    "defaultTitle": "Joker Smoky BBQ Burger",
+                    "title": {},
+                    "unitPrice": 495,
+                    "product": {
+                        "id": "69203915",
+                        "defaultTitle": "Joker Smoky BBQ Burger",
+                        "title": {
+                            "en_TR": "Joker Smoky BBQ Burger",
+                            "tr_TR": "Joker Smoky BBQ Burger"
+                        },
+                        "description": "Burger köftesi (85 gr.), patates kızartması, dana füme, cheddar peyniri, BBQ Sos, çıtır soğan",
+                        "active": true,
+                        "imageUrls": [
+                            "https://images.deliveryhero.io/image/fd-tr/Products/69050080.jpg"
+                        ]
+                    }
+                }
+            ],
+            "topReviewerTranslationKey": "",
+            "temiz_metin": "smoky burger gerçekten lezzetli özenli şekilde hazırlanmıştı elinize sağlık sadece hamburgerin yanından gelen patates miktarı azalmış tek eksi yanı buydu"
+        },
+        {
+            "uuid": "02a47a28-7778-4b49-a455-04b7c154708b",
+            "createdAt": "2026-02-15T17:31:35Z",
+            "updatedAt": "2026-02-15T17:31:35Z",
+            "text": "Köfteler simsiyah dı fazla pişmişdi ne ıslak mendil ne selpak geldi ",
+            "isAnonymous": false,
+            "reviewerName": "...n",
+            "reviewerId": "trklw2kl",
+            "ratings": [
+                {
+                    "topic": "overall",
+                    "score": 1
+                },
+                {
+                    "topic": "restaurant_food",
+                    "score": 1
+                }
+            ],
+            "type": "user",
+            "replies": [],
+            "commentPrettyDate": {
+                "translationKey": "NEXTGEN_REVIEWS_1_MONTH_AGO",
+                "timeDuration": "1"
+            },
+            "likeCount": 0,
+            "isLiked": false,
+            "productVariations": [],
+            "topReviewerTranslationKey": "",
+            "temiz_metin": "köfteler simsiyah dı fazla pişmişdi ne ıslak mendil ne selpak geldi"
+        },
+        {
+            "uuid": "223ee3ae-63a6-46f7-a8c1-b87dcbbc5965",
+            "createdAt": "2026-02-14T16:28:39Z",
+            "updatedAt": "2026-02-14T16:28:39Z",
+            "text": "Yemek çok hızlı geldi hamburger ekmeği bayattı daha özenli gönderilmeli",
+            "isAnonymous": false,
+            "reviewerName": "...n",
+            "reviewerId": "trpzqcwd",
+            "ratings": [
+                {
+                    "topic": "overall",
+                    "score": 1
+                },
+                {
+                    "topic": "restaurant_food",
+                    "score": 1
+                },
+                {
+                    "topic": "rider",
+                    "score": 5
+                }
+            ],
+            "type": "user",
+            "replies": [],
+            "commentPrettyDate": {
+                "translationKey": "NEXTGEN_REVIEWS_1_MONTH_AGO",
+                "timeDuration": "1"
+            },
+            "likeCount": 0,
+            "isLiked": false,
+            "productVariations": [],
+            "topReviewerTranslationKey": "",
+            "temiz_metin": "yemek çok hızlı geldi hamburger ekmeği bayattı daha özenli gönderilmeli"
+        },
+        {
+            "uuid": "90181459-e322-4a0d-a18a-7bd8a951ecde",
+            "createdAt": "2026-02-14T00:30:02Z",
+            "updatedAt": "2026-02-14T00:30:02Z",
+            "text": "Hamburgerin tadı güzeldi ama patates kızartması maalesef kötü. Sosuda yanlış göndermişsiniz :( ",
+            "isAnonymous": false,
+            "reviewerName": "...a",
+            "reviewerId": "trobra7l",
+            "ratings": [
+                {
+                    "topic": "overall",
+                    "score": 4
+                },
+                {
+                    "topic": "restaurant_food",
+                    "score": 4
+                },
+                {
+                    "topic": "rider",
+                    "score": 5
+                }
+            ],
+            "type": "user",
+            "replies": [],
+            "commentPrettyDate": {
+                "translationKey": "NEXTGEN_REVIEWS_1_MONTH_AGO",
+                "timeDuration": "1"
+            },
+            "likeCount": 0,
+            "isLiked": false,
+            "productVariations": [
+                {
+                    "id": "30861047",
+                    "defaultTitle": "Barbekü (BBQ) Sos",
+                    "title": {},
+                    "unitPrice": 40,
+                    "product": {
+                        "id": "23127300",
+                        "defaultTitle": "Barbekü (BBQ) Sos",
+                        "title": {
+                            "en_TR": "Barbekü (BBQ) Sos",
+                            "tr_TR": "Barbekü (BBQ) Sos"
+                        },
+                        "description": "Paket olarak servis edilmektedir.",
+                        "active": false,
+                        "imageUrls": [
+                            "https://images.deliveryhero.io/image/fd-tr/Products/5014984.jpg"
+                        ]
+                    }
+                },
+                {
+                    "id": "83313914",
+                    "defaultTitle": "Joker Cheeseburger Menü",
+                    "title": {},
+                    "unitPrice": 435,
+                    "product": {
+                        "id": "74604535",
+                        "defaultTitle": "Joker Cheeseburger Menü",
+                        "title": {
+                            "tr_TR": "Joker Cheeseburger Menü"
+                        },
+                        "description": "Joker Cheeseburge (85 gr.) + Patates Kızartması +  İçecek (33 cl.)",
+                        "active": true,
+                        "imageUrls": [
+                            "https://images.deliveryhero.io/image/fd-tr/Products/74597645.jpg"
+                        ]
+                    }
+                }
+            ],
+            "topReviewerTranslationKey": "",
+            "temiz_metin": "hamburgerin tadı güzeldi ama patates kızartması maalesef kötü sosuda yanlış göndermişsiniz"
+        },
+        {
+            "uuid": "aa8f3842-b4d5-4a7f-8e10-1b169fe92aad",
+            "createdAt": "2026-02-13T13:33:04Z",
+            "updatedAt": "2026-02-13T13:33:04Z",
+            "text": "Anadolu yakasından misafirliğe geldim ve çocugum için sipariş verdim harika bir şekilde teslim edildi özenle hazırlanmıştı teşekkür ediyorum. Aynı özen umarım sancaktepe şubesindede olur.",
+            "isAnonymous": false,
+            "reviewerName": "...ı",
+            "reviewerId": "trs6a2ua",
+            "ratings": [
+                {
+                    "topic": "overall",
+                    "score": 5
+                },
+                {
+                    "topic": "restaurant_food",
+                    "score": 5
+                },
+                {
+                    "topic": "rider",
+                    "score": 5
+                }
+            ],
+            "type": "user",
+            "replies": [],
+            "commentPrettyDate": {
+                "translationKey": "NEXTGEN_REVIEWS_1_MONTH_AGO",
+                "timeDuration": "1"
+            },
+            "likeCount": 0,
+            "isLiked": false,
+            "productVariations": [
+                {
+                    "id": "85792979",
+                    "defaultTitle": "Junior Et Burger Menü",
+                    "title": {},
+                    "unitPrice": 305,
+                    "product": {
+                        "id": "76996452",
+                        "defaultTitle": "Junior Et Burger Menü",
+                        "title": {
+                            "tr_TR": "Junior Et Burger Menü"
+                        },
+                        "description": "Junior Et Burger (50 gr.), patates kızartması, ayran (28 cl.), oyuncak",
+                        "active": true,
+                        "imageUrls": []
+                    }
+                }
+            ],
+            "topReviewerTranslationKey": "",
+            "temiz_metin": "anadolu yakasından misafirliğe geldim ve çocugum için sipariş verdim harika bir şekilde teslim edildi özenle hazırlanmıştı teşekkür ediyorum aynı özen umarım sancaktepe şubesindede olur"
+        },
+        {
+            "uuid": "83f1897d-3924-4bed-bc21-c90d25a6be9e",
+            "createdAt": "2026-02-10T10:50:39Z",
+            "updatedAt": "2026-02-10T10:50:39Z",
+            "text": "Fiyat performans güzel",
+            "isAnonymous": false,
+            "reviewerName": "...n",
+            "reviewerId": "trxaw5nw",
+            "ratings": [
+                {
+                    "topic": "overall",
+                    "score": 5
+                },
+                {
+                    "topic": "restaurant_food",
+                    "score": 5
+                }
+            ],
+            "type": "user",
+            "replies": [],
+            "commentPrettyDate": {
+                "translationKey": "NEXTGEN_REVIEWS_1_MONTH_AGO",
+                "timeDuration": "1"
+            },
+            "likeCount": 0,
+            "isLiked": false,
+            "productVariations": [],
+            "topReviewerTranslationKey": "",
+            "temiz_metin": "fiyat performans güzel"
+        },
+        {
+            "uuid": "4babf66a-44c9-45bc-aeb3-4cd6dfaeee76",
+            "createdAt": "2026-02-04T20:06:24Z",
+            "updatedAt": "2026-02-04T20:06:24Z",
+            "text": "Çok iyi ",
+            "isAnonymous": false,
+            "reviewerName": "...k",
+            "reviewerId": "trr0a8dz",
+            "ratings": [
+                {
+                    "topic": "overall",
+                    "score": 5
+                },
+                {
+                    "topic": "restaurant_food",
+                    "score": 5
+                }
+            ],
+            "type": "user",
+            "replies": [
+                {
+                    "id": "4babf66a-44c9-45bc-aeb3-4cd6dfaeee76",
+                    "text": "Bizi tercih ettiğiniz için teşekkür ederiz. Afiyet olsun.",
+                    "createdAt": "2026-02-05T07:01:15Z",
+                    "updatedAt": "2026-02-05T07:01:15Z",
+                    "commentPrettyDate": {
+                        "translationKey": "NEXTGEN_REVIEWS_1_MONTH_AGO",
+                        "timeDuration": "1"
+                    }
+                }
+            ],
+            "commentPrettyDate": {
+                "translationKey": "NEXTGEN_REVIEWS_1_MONTH_AGO",
+                "timeDuration": "1"
+            },
+            "likeCount": 0,
+            "isLiked": false,
+            "productVariations": [],
+            "topReviewerTranslationKey": "",
+            "temiz_metin": "çok iyi"
+        },
+        {
+            "uuid": "75fcf9db-a584-4cb4-8a5d-fa70378216a4",
+            "createdAt": "2026-01-27T12:59:33Z",
+            "updatedAt": "2026-01-27T12:59:33Z",
+            "text": "hızlı ve lezzetli ",
+            "isAnonymous": false,
+            "reviewerName": "...ı",
+            "reviewerId": "trcuip6b",
+            "ratings": [
+                {
+                    "topic": "overall",
+                    "score": 5
+                },
+                {
+                    "topic": "restaurant_food",
+                    "score": 5
+                },
+                {
+                    "topic": "rider",
+                    "score": 5
+                }
+            ],
+            "type": "user",
+            "replies": [
+                {
+                    "id": "75fcf9db-a584-4cb4-8a5d-fa70378216a4",
+                    "text": "Bizi tercih ettiğiniz için teşekkür ederiz. Afiyet olsun.",
+                    "createdAt": "2026-01-27T14:12:05Z",
+                    "updatedAt": "2026-01-27T14:12:05Z",
+                    "commentPrettyDate": {
+                        "translationKey": "NEXTGEN_REVIEWS_1_MONTH_AGO",
+                        "timeDuration": "1"
+                    }
+                }
+            ],
+            "commentPrettyDate": {
+                "translationKey": "NEXTGEN_REVIEWS_1_MONTH_AGO",
+                "timeDuration": "1"
+            },
+            "likeCount": 0,
+            "isLiked": false,
+            "productVariations": [
+                {
+                    "id": "83313906",
+                    "defaultTitle": "2'li Joker Cheeseburger Menü",
+                    "title": {},
+                    "unitPrice": 826,
+                    "product": {
+                        "id": "74604527",
+                        "defaultTitle": "2'li Joker Cheeseburger Menü",
+                        "title": {
+                            "tr_TR": "2'li Joker Cheeseburger Menü"
+                        },
+                        "description": "2 Adet Joker Cheeseburger (85 gr.) + 2 Adet Patates Kızartması + 2 Adet İçecek (33 cl.)",
+                        "active": true,
+                        "imageUrls": [
+                            "https://images.deliveryhero.io/image/fd-tr/Products/74578746.jpg"
+                        ]
+                    }
+                }
+            ],
+            "topReviewerTranslationKey": "",
+            "temiz_metin": "hızlı ve lezzetli"
+        },
+        {
+            "uuid": "4e3c0e01-6a5d-4a2e-98f4-cc551ed13a34",
+            "createdAt": "2026-01-25T15:37:58Z",
+            "updatedAt": "2026-01-25T15:37:58Z",
+            "text": "Her şey çok güzel lezzetli geldi ama maalesef ekstra para verip istediğim füme gelmedi",
+            "isAnonymous": false,
+            "reviewerName": "...n",
+            "reviewerId": "tru0x6w6",
+            "ratings": [
+                {
+                    "topic": "overall",
+                    "score": 3
+                },
+                {
+                    "topic": "restaurant_food",
+                    "score": 3
+                },
+                {
+                    "topic": "rider",
+                    "score": 5
+                }
+            ],
+            "type": "user",
+            "replies": [
+                {
+                    "id": "4e3c0e01-6a5d-4a2e-98f4-cc551ed13a34",
+                    "text": "Kendimizi geliştirmeye devam edeceğiz. Bizi tercih ettiğiniz için teşekkür ederiz. Afiyet olsun.",
+                    "createdAt": "2026-01-26T13:04:01Z",
+                    "updatedAt": "2026-01-26T13:04:01Z",
+                    "commentPrettyDate": {
+                        "translationKey": "NEXTGEN_REVIEWS_1_MONTH_AGO",
+                        "timeDuration": "1"
+                    }
+                }
+            ],
+            "commentPrettyDate": {
+                "translationKey": "NEXTGEN_REVIEWS_X_MONTHS_AGO",
+                "timeDuration": "2"
+            },
+            "likeCount": 0,
+            "isLiked": false,
+            "productVariations": [],
+            "topReviewerTranslationKey": "",
+            "temiz_metin": "her şey çok güzel lezzetli geldi ama maalesef para verip istediğim füme gelmedi"
+        },
+        {
+            "uuid": "37efd370-9047-4110-8896-6e461b2e76ac",
+            "createdAt": "2026-01-23T10:54:18Z",
+            "updatedAt": "2026-01-23T10:54:18Z",
+            "text": "Biraz daha sıcak gelseydi daha iyi olurdu ama yine de harikaydı ellerinize sağlık",
+            "isAnonymous": false,
+            "reviewerName": "...k",
+            "reviewerId": "trl1es1t",
+            "ratings": [
+                {
+                    "topic": "overall",
+                    "score": 4
+                },
+                {
+                    "topic": "restaurant_food",
+                    "score": 4
+                }
+            ],
+            "type": "user",
+            "replies": [
+                {
+                    "id": "37efd370-9047-4110-8896-6e461b2e76ac",
+                    "text": "Kendimizi geliştirmeye devam edeceğiz. Bizi tercih ettiğiniz için teşekkür ederiz. Afiyet olsun.",
+                    "createdAt": "2026-01-24T08:37:38Z",
+                    "updatedAt": "2026-01-24T08:37:38Z",
+                    "commentPrettyDate": {
+                        "translationKey": "NEXTGEN_REVIEWS_X_MONTHS_AGO",
+                        "timeDuration": "2"
+                    }
+                }
+            ],
+            "commentPrettyDate": {
+                "translationKey": "NEXTGEN_REVIEWS_X_MONTHS_AGO",
+                "timeDuration": "2"
+            },
+            "likeCount": 0,
+            "isLiked": false,
+            "productVariations": [],
+            "topReviewerTranslationKey": "",
+            "temiz_metin": "biraz daha sıcak gelseydi daha iyi olurdu ama yine de harikaydı ellerinize sağlık"
+        },
+        {
+            "uuid": "f2ecef99-ad8d-4074-802a-1ea38283d1c4",
+            "createdAt": "2026-01-21T14:46:15Z",
+            "updatedAt": "2026-01-21T14:46:15Z",
+            "text": "Yemek oldukça lezzetli ve malzemesi bol geldi patatesler sıcaktı ama hamburger biraz soğuktu ama genel olarak güzel yemekti ",
+            "isAnonymous": false,
+            "reviewerName": "...i",
+            "reviewerId": "tr0n7myo",
+            "ratings": [
+                {
+                    "topic": "overall",
+                    "score": 5
+                },
+                {
+                    "topic": "restaurant_food",
+                    "score": 5
+                },
+                {
+                    "topic": "rider",
+                    "score": 5
+                }
+            ],
+            "type": "user",
+            "replies": [
+                {
+                    "id": "f2ecef99-ad8d-4074-802a-1ea38283d1c4",
+                    "text": "Bizi tercih ettiğiniz için teşekkür ederiz. Afiyet olsun.",
+                    "createdAt": "2026-01-24T08:37:07Z",
+                    "updatedAt": "2026-01-24T08:37:07Z",
+                    "commentPrettyDate": {
+                        "translationKey": "NEXTGEN_REVIEWS_X_MONTHS_AGO",
+                        "timeDuration": "2"
+                    }
+                }
+            ],
+            "commentPrettyDate": {
+                "translationKey": "NEXTGEN_REVIEWS_X_MONTHS_AGO",
+                "timeDuration": "2"
+            },
+            "likeCount": 0,
+            "isLiked": false,
+            "productVariations": [
+                {
+                    "id": "30861031",
+                    "defaultTitle": "Coca-Cola (33 cl.)",
+                    "title": {},
+                    "unitPrice": 95,
+                    "product": {
+                        "id": "23127284",
+                        "defaultTitle": "Coca-Cola (33 cl.)",
+                        "title": {
+                            "en_TR": "Coca-Cola (33 cl.)",
+                            "tr_TR": "Coca-Cola (33 cl.)"
+                        },
+                        "description": "Kutu içecek",
+                        "active": true,
+                        "imageUrls": [
+                            "https://images.deliveryhero.io/image/fd-tr/Products/27424713.jpg"
+                        ]
+                    }
+                },
+                {
+                    "id": "40809433",
+                    "defaultTitle": "Joker Classic Burger",
+                    "title": {},
+                    "unitPrice": 350,
+                    "product": {
+                        "id": "32958432",
+                        "defaultTitle": "Joker Classic Burger",
+                        "title": {
+                            "tr_TR": "Joker Classic Burger"
+                        },
+                        "description": "Burger köftesi (85 gr.), patates kızartması, burger sos, yeşillik, karamelize soğan, turşu",
+                        "active": true,
+                        "imageUrls": [
+                            "https://images.deliveryhero.io/image/fd-tr/Products/32958368.jpg"
+                        ]
+                    }
+                },
+                {
+                    "id": "43029421",
+                    "defaultTitle": "6'lı Soğan Halkası",
+                    "title": {},
+                    "unitPrice": 95,
+                    "product": {
+                        "id": "35155558",
+                        "defaultTitle": "6'lı Soğan Halkası",
+                        "title": {
+                            "en_TR": "6'lı Soğan Halkası",
+                            "tr_TR": "6'lı Soğan Halkası"
+                        },
+                        "description": "6 adet",
+                        "active": true,
+                        "imageUrls": [
+                            "https://images.deliveryhero.io/image/fd-tr/Products/35098638.jpg"
+                        ]
+                    }
+                }
+            ],
+            "topReviewerTranslationKey": "",
+            "temiz_metin": "yemek oldukça lezzetli ve malzemesi bol geldi patatesler sıcaktı ama hamburger biraz soğuktu ama genel olarak güzel yemekti"
+        },
+        {
+            "uuid": "79de4672-6f2d-4c49-8373-0e1509164a65",
+            "createdAt": "2026-01-16T08:41:59Z",
+            "updatedAt": "2026-01-16T08:41:59Z",
+            "text": "hiç lezzetli ve düzenli değildi dağılmış Bir sipariş tatsız ",
+            "isAnonymous": false,
+            "reviewerName": "...k",
+            "reviewerId": "tr7zf57u",
+            "ratings": [
+                {
+                    "topic": "overall",
+                    "score": 1
+                },
+                {
+                    "topic": "restaurant_food",
+                    "score": 1
+                }
+            ],
+            "type": "user",
+            "replies": [],
+            "commentPrettyDate": {
+                "translationKey": "NEXTGEN_REVIEWS_X_MONTHS_AGO",
+                "timeDuration": "2"
+            },
+            "likeCount": 0,
+            "isLiked": false,
+            "productVariations": [],
+            "topReviewerTranslationKey": "",
+            "temiz_metin": "hiç lezzetli ve düzenli değildi dağılmış bir sipariş tatsız"
+        },
+        {
+            "uuid": "9280cdd1-3981-4335-a334-9f1e62eacb7e",
+            "createdAt": "2026-01-09T18:28:55Z",
+            "updatedAt": "2026-01-09T18:28:55Z",
+            "text": "Ekstra patates söyledim 42 lira para aldılar ama patates gelmedi bu ne adam kandırmamamı ",
+            "isAnonymous": false,
+            "reviewerName": "...n",
+            "reviewerId": "trla8pky",
+            "ratings": [
+                {
+                    "topic": "overall",
+                    "score": 1
+                },
+                {
+                    "topic": "restaurant_food",
+                    "score": 1
+                }
+            ],
+            "type": "user",
+            "replies": [],
+            "commentPrettyDate": {
+                "translationKey": "NEXTGEN_REVIEWS_X_MONTHS_AGO",
+                "timeDuration": "2"
+            },
+            "likeCount": 0,
+            "isLiked": false,
+            "productVariations": [],
+            "topReviewerTranslationKey": "",
+            "temiz_metin": "patates söyledim 42 lira para aldılar ama patates gelmedi bu ne adam kandırmamamı"
+        },
+        {
+            "uuid": "4a0a100b-aff8-4fe7-9b23-cd593c051a30",
+            "createdAt": "2026-01-05T19:06:57Z",
+            "updatedAt": "2026-01-05T19:06:57Z",
+            "text": "içecekler unutulmuş müşteri hizmetleri yardımcı olmuyor",
+            "isAnonymous": false,
+            "reviewerName": "...a",
+            "reviewerId": "trahlb1f",
+            "ratings": [
+                {
+                    "topic": "overall",
+                    "score": 1
+                },
+                {
+                    "topic": "restaurant_food",
+                    "score": 1
+                },
+                {
+                    "topic": "rider",
+                    "score": 5
+                }
+            ],
+            "type": "user",
+            "replies": [],
+            "commentPrettyDate": {
+                "translationKey": "NEXTGEN_REVIEWS_X_MONTHS_AGO",
+                "timeDuration": "2"
+            },
+            "likeCount": 0,
+            "isLiked": false,
+            "productVariations": [],
+            "topReviewerTranslationKey": "",
+            "temiz_metin": "içecekler unutulmuş müşteri hizmetleri yardımcı olmuyor"
+        },
+        {
+            "uuid": "bf63ac74-b5ea-4b43-9ff5-33b146c8d950",
+            "createdAt": "2026-01-04T15:15:27Z",
+            "updatedAt": "2026-01-04T15:15:27Z",
+            "text": "Güzel",
+            "isAnonymous": false,
+            "reviewerName": "...n",
+            "reviewerId": "trkawiao",
+            "ratings": [
+                {
+                    "topic": "overall",
+                    "score": 5
+                },
+                {
+                    "topic": "restaurant_food",
+                    "score": 5
+                },
+                {
+                    "topic": "rider",
+                    "score": 5
+                }
+            ],
+            "type": "user",
+            "replies": [],
+            "commentPrettyDate": {
+                "translationKey": "NEXTGEN_REVIEWS_X_MONTHS_AGO",
+                "timeDuration": "2"
+            },
+            "likeCount": 0,
+            "isLiked": false,
+            "productVariations": [
+                {
+                    "id": "30861033",
+                    "defaultTitle": "Fanta (33 cl.)",
+                    "title": {},
+                    "unitPrice": 95,
+                    "product": {
+                        "id": "23127286",
+                        "defaultTitle": "Fanta (33 cl.)",
+                        "title": {
+                            "en_TR": "Fanta (33 cl.)",
+                            "tr_TR": "Fanta (33 cl.)"
+                        },
+                        "description": "Kutu içecek",
+                        "active": false,
+                        "imageUrls": [
+                            "https://images.deliveryhero.io/image/fd-tr/Products/5014970.jpg"
+                        ]
+                    }
+                },
+                {
+                    "id": "40809434",
+                    "defaultTitle": "Joker Cheeseburger",
+                    "title": {},
+                    "unitPrice": 365,
+                    "product": {
+                        "id": "32958433",
+                        "defaultTitle": "Joker Cheeseburger",
+                        "title": {
+                            "tr_TR": "Joker Cheeseburger"
+                        },
+                        "description": "Burger köftesi (85 gr.), patates kızartması, burger sos, karamelize soğan, yeşillik, turşu ",
+                        "active": true,
+                        "imageUrls": [
+                            "https://images.deliveryhero.io/image/fd-tr/Products/32958369.jpg"
+                        ]
+                    }
+                }
+            ],
+            "topReviewerTranslationKey": "",
+            "temiz_metin": "güzel"
+        },
+        {
+            "uuid": "a8508e61-67ff-45a8-9956-b498d5694f53",
+            "createdAt": "2025-12-31T14:09:06Z",
+            "updatedAt": "2025-12-31T14:09:06Z",
+            "text": "Emeğinize sağlık ",
+            "isAnonymous": false,
+            "reviewerName": "...n",
+            "reviewerId": "trpzqcwd",
+            "ratings": [
+                {
+                    "topic": "overall",
+                    "score": 5
+                },
+                {
+                    "topic": "restaurant_food",
+                    "score": 5
+                }
+            ],
+            "type": "user",
+            "replies": [],
+            "commentPrettyDate": {
+                "translationKey": "NEXTGEN_REVIEWS_X_MONTHS_AGO",
+                "timeDuration": "2"
+            },
+            "likeCount": 0,
+            "isLiked": false,
+            "productVariations": [],
+            "topReviewerTranslationKey": "",
+            "temiz_metin": "emeğinize sağlık"
+        },
+        {
+            "uuid": "219ec93f-0145-4627-9411-b7a0a98202e7",
+            "createdAt": "2025-12-29T17:43:10Z",
+            "updatedAt": "2025-12-29T17:43:10Z",
+            "text": "Joker double burger menü söyledim tek köfteli geldi sebebini anlamadım gramaj olarak mı double diye düşündüm ama köfte standart büyüklükteydi ama yine de çok güzeldi elinize sağlık",
+            "isAnonymous": false,
+            "reviewerName": "...k",
+            "reviewerId": "tr2iz82z",
+            "ratings": [
+                {
+                    "topic": "overall",
+                    "score": 4
+                },
+                {
+                    "topic": "restaurant_food",
+                    "score": 4
+                }
+            ],
+            "type": "user",
+            "replies": [],
+            "commentPrettyDate": {
+                "translationKey": "NEXTGEN_REVIEWS_X_MONTHS_AGO",
+                "timeDuration": "2"
+            },
+            "likeCount": 0,
+            "isLiked": false,
+            "productVariations": [],
+            "topReviewerTranslationKey": "",
+            "temiz_metin": "joker double burger menü söyledim tek köfteli geldi sebebini anlamadım gramaj olarak mı double diye düşündüm ama köfte standart büyüklükteydi ama yine de çok güzeldi elinize sağlık"
+        },
+        {
+            "uuid": "aa14637b-9416-491d-abfe-2daf50012a85",
+            "createdAt": "2025-12-27T18:01:45Z",
+            "updatedAt": "2025-12-27T18:01:45Z",
+            "text": "Burger bğz gibi gelmiş",
+            "isAnonymous": false,
+            "reviewerName": "...i",
+            "reviewerId": "tr79aw7x",
+            "ratings": [
+                {
+                    "topic": "overall",
+                    "score": 1
+                },
+                {
+                    "topic": "restaurant_food",
+                    "score": 1
+                },
+                {
+                    "topic": "rider",
+                    "score": 5
+                }
+            ],
+            "type": "user",
+            "replies": [],
+            "commentPrettyDate": {
+                "translationKey": "NEXTGEN_REVIEWS_X_MONTHS_AGO",
+                "timeDuration": "2"
+            },
+            "likeCount": 0,
+            "isLiked": false,
+            "productVariations": [
+                {
+                    "id": "30861005",
+                    "defaultTitle": "Çıtır Tavuk",
+                    "title": {},
+                    "unitPrice": 200,
+                    "product": {
+                        "id": "23127258",
+                        "defaultTitle": "Çıtır Tavuk",
+                        "title": {
+                            "en_TR": "Çıtır Tavuk",
+                            "tr_TR": "Çıtır Tavuk"
+                        },
+                        "description": "Porsiyon",
+                        "active": true,
+                        "imageUrls": [
+                            "https://images.deliveryhero.io/image/fd-tr/Products/27424685.jpg"
+                        ]
+                    }
+                }
+            ],
+            "topReviewerTranslationKey": "",
+            "temiz_metin": "burger bğz gibi gelmiş"
+        },
+        {
+            "uuid": "06f85b60-184a-4b7e-b776-b4c1b5a7b098",
+            "createdAt": "2025-12-26T18:38:46Z",
+            "updatedAt": "2025-12-26T18:38:46Z",
+            "text": "hızlı geldi sicakti",
+            "isAnonymous": false,
+            "reviewerName": "...n",
+            "reviewerId": "trxy4pc7",
+            "ratings": [
+                {
+                    "topic": "overall",
+                    "score": 5
+                },
+                {
+                    "topic": "restaurant_food",
+                    "score": 5
+                }
+            ],
+            "type": "user",
+            "replies": [],
+            "commentPrettyDate": {
+                "translationKey": "NEXTGEN_REVIEWS_X_MONTHS_AGO",
+                "timeDuration": "3"
+            },
+            "likeCount": 0,
+            "isLiked": false,
+            "productVariations": [],
+            "topReviewerTranslationKey": "",
+            "temiz_metin": "hızlı geldi sicakti"
+        },
+        {
+            "uuid": "bc21e47b-292a-466a-9dc7-3d91a6aa4408",
+            "createdAt": "2025-12-09T17:06:44Z",
+            "updatedAt": "2025-12-09T17:06:44Z",
+            "text": "Hamburger harika ama fiş göndermemişsiniz bu puanı düşük verme sebebim fiş göndermediğiniz için",
+            "isAnonymous": false,
+            "reviewerName": "...r",
+            "reviewerId": "trrwgbti",
+            "ratings": [
+                {
+                    "topic": "overall",
+                    "score": 1
+                },
+                {
+                    "topic": "restaurant_food",
+                    "score": 1
+                }
+            ],
+            "type": "user",
+            "replies": [],
+            "commentPrettyDate": {
+                "translationKey": "NEXTGEN_REVIEWS_X_MONTHS_AGO",
+                "timeDuration": "3"
+            },
+            "likeCount": 0,
+            "isLiked": false,
+            "productVariations": [
+                {
+                    "id": "83313906",
+                    "defaultTitle": "2'li Joker Cheeseburger Menü",
+                    "title": {},
+                    "unitPrice": 826,
+                    "product": {
+                        "id": "74604527",
+                        "defaultTitle": "2'li Joker Cheeseburger Menü",
+                        "title": {
+                            "tr_TR": "2'li Joker Cheeseburger Menü"
+                        },
+                        "description": "2 Adet Joker Cheeseburger (85 gr.) + 2 Adet Patates Kızartması + 2 Adet İçecek (33 cl.)",
+                        "active": true,
+                        "imageUrls": [
+                            "https://images.deliveryhero.io/image/fd-tr/Products/74578746.jpg"
+                        ]
+                    }
+                }
+            ],
+            "topReviewerTranslationKey": "",
+            "temiz_metin": "hamburger harika ama fiş göndermemişsiniz bu puanı düşük verme sebebim fiş göndermediğiniz için"
+        },
+        {
+            "uuid": "0308af00-a536-4a9d-ac3b-98718cb990de",
+            "createdAt": "2025-12-07T14:55:19Z",
+            "updatedAt": "2025-12-07T14:55:19Z",
+            "text": "siparişin verildiği şube restorant ile iletime geçmedim onun dışında bir sorun yok neden gecemedigim hakkında Bilgi verebilir deniz memnun olurum ",
+            "isAnonymous": false,
+            "reviewerName": "...t",
+            "reviewerId": "trh7l2ou",
+            "ratings": [
+                {
+                    "topic": "overall",
+                    "score": 5
+                },
+                {
+                    "topic": "restaurant_food",
+                    "score": 5
+                }
+            ],
+            "type": "user",
+            "replies": [],
+            "commentPrettyDate": {
+                "translationKey": "NEXTGEN_REVIEWS_X_MONTHS_AGO",
+                "timeDuration": "3"
+            },
+            "likeCount": 0,
+            "isLiked": false,
+            "productVariations": [
+                {
+                    "id": "42131629",
+                    "defaultTitle": "Joker Double Burger Menü",
+                    "title": {},
+                    "unitPrice": 575,
+                    "product": {
+                        "id": "34268159",
+                        "defaultTitle": "Joker Double Burger Menü",
+                        "title": {
+                            "tr_TR": "Joker Double Burger Menü"
+                        },
+                        "description": "Joker Double Burger (85 gr.) + Patates Kızartması + İçecek (33 cl.)",
+                        "active": true,
+                        "imageUrls": [
+                            "https://images.deliveryhero.io/image/fd-tr/Products/34217511.jpg"
+                        ]
+                    }
+                }
+            ],
+            "topReviewerTranslationKey": "",
+            "temiz_metin": "siparişin verildiği şube restorant ile iletime geçmedim onun dışında bir sorun yok neden gecemedigim hakkında bilgi verebilir deniz memnun olurum"
+        },
+        {
+            "uuid": "89c0b06e-09cb-491c-b05a-f91ec588756f",
+            "createdAt": "2025-12-05T14:57:19Z",
+            "updatedAt": "2025-12-05T14:57:19Z",
+            "text": "Yazdığım notu dikkate aldığınız için teşekkürler",
+            "isAnonymous": false,
+            "reviewerName": "...k",
+            "reviewerId": "trvgo0it",
+            "ratings": [
+                {
+                    "topic": "overall",
+                    "score": 5
+                },
+                {
+                    "topic": "restaurant_food",
+                    "score": 5
+                }
+            ],
+            "type": "user",
+            "replies": [],
+            "commentPrettyDate": {
+                "translationKey": "NEXTGEN_REVIEWS_X_MONTHS_AGO",
+                "timeDuration": "3"
+            },
+            "likeCount": 0,
+            "isLiked": false,
+            "productVariations": [],
+            "topReviewerTranslationKey": "",
+            "temiz_metin": "yazdığım notu dikkate aldığınız için teşekkürler"
+        },
+        {
+            "uuid": "27d37e8e-77b1-4941-9ceb-b26287a369f1",
+            "createdAt": "2025-12-04T19:50:07Z",
+            "updatedAt": "2025-12-04T19:50:07Z",
+            "text": "Çok kötüydu Burger patatesi güzeldi ",
+            "isAnonymous": false,
+            "reviewerName": "...a",
+            "reviewerId": "trpuflrw",
+            "ratings": [
+                {
+                    "topic": "overall",
+                    "score": 1
+                },
+                {
+                    "topic": "restaurant_food",
+                    "score": 1
+                }
+            ],
+            "type": "user",
+            "replies": [],
+            "commentPrettyDate": {
+                "translationKey": "NEXTGEN_REVIEWS_X_MONTHS_AGO",
+                "timeDuration": "3"
+            },
+            "likeCount": 0,
+            "isLiked": false,
+            "productVariations": [],
+            "topReviewerTranslationKey": "NEXTGEN_KEY_REVIEWS_LABEL",
+            "temiz_metin": "çok kötüydu burger patatesi güzeldi"
+        },
+        {
+            "uuid": "0e79b475-3d6e-4374-9459-beda6993f11d",
+            "createdAt": "2025-12-03T04:01:36Z",
+            "updatedAt": "2025-12-03T04:01:36Z",
+            "text": "kuriye yemeye getirince soğumuştu ",
+            "isAnonymous": false,
+            "reviewerName": "...i",
+            "reviewerId": "tri379oo",
+            "ratings": [
+                {
+                    "topic": "overall",
+                    "score": 4
+                },
+                {
+                    "topic": "restaurant_food",
+                    "score": 4
+                },
+                {
+                    "topic": "rider",
+                    "score": 1
+                }
+            ],
+            "type": "user",
+            "replies": [],
+            "commentPrettyDate": {
+                "translationKey": "NEXTGEN_REVIEWS_X_MONTHS_AGO",
+                "timeDuration": "3"
+            },
+            "likeCount": 0,
+            "isLiked": false,
+            "productVariations": [],
+            "topReviewerTranslationKey": "",
+            "temiz_metin": "kuriye yemeye getirince soğumuştu"
+        },
+        {
+            "uuid": "24fc2ecf-8473-428a-90d1-1a159fc503ad",
+            "createdAt": "2025-11-28T09:03:07Z",
+            "updatedAt": "2025-11-28T09:03:07Z",
+            "text": "Eskiden daha iyiydi sanki ama yine de iyi belki şubeden şubeye değişiyordur",
+            "isAnonymous": false,
+            "reviewerName": "...r",
+            "reviewerId": "trxaw5nw",
+            "ratings": [
+                {
+                    "topic": "overall",
+                    "score": 5
+                },
+                {
+                    "topic": "restaurant_food",
+                    "score": 5
+                }
+            ],
+            "type": "user",
+            "replies": [],
+            "commentPrettyDate": {
+                "translationKey": "NEXTGEN_REVIEWS_X_MONTHS_AGO",
+                "timeDuration": "3"
+            },
+            "likeCount": 0,
+            "isLiked": false,
+            "productVariations": [],
+            "topReviewerTranslationKey": "",
+            "temiz_metin": "eskiden daha iyiydi sanki ama yine de iyi belki şubeden şubeye değişiyordur"
+        },
+        {
+            "uuid": "fa2a3615-61fe-4907-b276-971b65531237",
+            "createdAt": "2025-11-25T16:28:49Z",
+            "updatedAt": "2025-11-25T16:28:49Z",
+            "text": "iptal edemedim",
+            "isAnonymous": false,
+            "reviewerName": "...4",
+            "reviewerId": "trjynw1t",
+            "ratings": [
+                {
+                    "topic": "overall",
+                    "score": 1
+                },
+                {
+                    "topic": "restaurant_food",
+                    "score": 1
+                },
+                {
+                    "topic": "rider",
+                    "score": 5
+                }
+            ],
+            "type": "user",
+            "replies": [],
+            "commentPrettyDate": {
+                "translationKey": "NEXTGEN_REVIEWS_X_MONTHS_AGO",
+                "timeDuration": "4"
+            },
+            "likeCount": 0,
+            "isLiked": false,
+            "productVariations": [],
+            "topReviewerTranslationKey": "",
+            "temiz_metin": "iptal edemedim"
+        },
+        {
+            "uuid": "6b54ce7f-8f89-400b-86cd-0022097ca37a",
+            "createdAt": "2025-11-22T10:43:35Z",
+            "updatedAt": "2025-11-22T10:43:35Z",
+            "text": "her zamanki gibi efsane",
+            "isAnonymous": false,
+            "reviewerName": "...r",
+            "reviewerId": "trp2f8ln",
+            "ratings": [
+                {
+                    "topic": "overall",
+                    "score": 5
+                },
+                {
+                    "topic": "restaurant_food",
+                    "score": 5
+                },
+                {
+                    "topic": "rider",
+                    "score": 5
+                }
+            ],
+            "type": "user",
+            "replies": [],
+            "commentPrettyDate": {
+                "translationKey": "NEXTGEN_REVIEWS_X_MONTHS_AGO",
+                "timeDuration": "4"
+            },
+            "likeCount": 0,
+            "isLiked": false,
+            "productVariations": [
+                {
+                    "id": "36440497",
+                    "defaultTitle": "Supper Double Burger",
+                    "title": {},
+                    "unitPrice": 610,
+                    "product": {
+                        "id": "28642349",
+                        "defaultTitle": "Supper Double Burger",
+                        "title": {
+                            "en_TR": "Süpper Double Burger",
+                            "tr_TR": "Supper Double Burger"
+                        },
+                        "description": "Burger köftesi (120 gr.), patates kızartması, köfte, burger sos, karamelize soğan, yeşillik, turşu, cheddar peyniri, ",
+                        "active": true,
+                        "imageUrls": [
+                            "https://images.deliveryhero.io/image/fd-tr/Products/28642383.jpg"
+                        ]
+                    }
+                }
+            ],
+            "topReviewerTranslationKey": "NEXTGEN_KEY_REVIEWS_LABEL",
+            "temiz_metin": "her zamanki gibi efsane"
+        },
+        {
+            "uuid": "e0c69cd2-42b3-4f60-9d49-cfdc08153c39",
+            "createdAt": "2025-11-18T09:27:07Z",
+            "updatedAt": "2025-11-18T09:27:07Z",
+            "text": "genel olarak güzeldi ama yanına ne bir peçete ne ıslak mendil ne de ketçap mayonez koymamışsınız.",
+            "isAnonymous": false,
+            "reviewerName": "...r",
+            "reviewerId": "trbyufbt",
+            "ratings": [
+                {
+                    "topic": "overall",
+                    "score": 2
+                },
+                {
+                    "topic": "restaurant_food",
+                    "score": 2
+                },
+                {
+                    "topic": "rider",
+                    "score": 5
+                }
+            ],
+            "type": "user",
+            "replies": [],
+            "commentPrettyDate": {
+                "translationKey": "NEXTGEN_REVIEWS_X_MONTHS_AGO",
+                "timeDuration": "4"
+            },
+            "likeCount": 0,
+            "isLiked": false,
+            "productVariations": [
+                {
+                    "id": "83313906",
+                    "defaultTitle": "2'li Joker Cheeseburger Menü",
+                    "title": {},
+                    "unitPrice": 826,
+                    "product": {
+                        "id": "74604527",
+                        "defaultTitle": "2'li Joker Cheeseburger Menü",
+                        "title": {
+                            "tr_TR": "2'li Joker Cheeseburger Menü"
+                        },
+                        "description": "2 Adet Joker Cheeseburger (85 gr.) + 2 Adet Patates Kızartması + 2 Adet İçecek (33 cl.)",
+                        "active": true,
+                        "imageUrls": [
+                            "https://images.deliveryhero.io/image/fd-tr/Products/74578746.jpg"
+                        ]
+                    }
+                }
+            ],
+            "topReviewerTranslationKey": "",
+            "temiz_metin": "genel olarak güzeldi ama yanına ne bir peçete ne ıslak mendil ne de ketçap mayonez koymamışsınız"
+        },
+        {
+            "uuid": "b2dcba08-308b-43ac-818a-e984dac95f5e",
+            "createdAt": "2025-11-17T08:59:08Z",
+            "updatedAt": "2025-11-17T08:59:08Z",
+            "text": "Muhtesem",
+            "isAnonymous": false,
+            "reviewerName": "...i",
+            "reviewerId": "trv4wsew",
+            "ratings": [
+                {
+                    "topic": "overall",
+                    "score": 5
+                },
+                {
+                    "topic": "restaurant_food",
+                    "score": 5
+                }
+            ],
+            "type": "user",
+            "replies": [],
+            "commentPrettyDate": {
+                "translationKey": "NEXTGEN_REVIEWS_X_MONTHS_AGO",
+                "timeDuration": "4"
+            },
+            "likeCount": 0,
+            "isLiked": false,
+            "productVariations": [],
+            "topReviewerTranslationKey": "",
+            "temiz_metin": "muhteşem"
+        },
+        {
+            "uuid": "752656d0-e8b0-4107-bb2f-4e0a57e1d037",
+            "createdAt": "2025-11-14T14:26:55Z",
+            "updatedAt": "2025-11-14T14:26:55Z",
+            "text": "Aşırı lezzetliydi ve sıcak geldi sadece patatesler biraz soğuktu ama sorun değil ",
+            "isAnonymous": false,
+            "reviewerName": "...i",
+            "reviewerId": "tr0n7myo",
+            "ratings": [
+                {
+                    "topic": "overall",
+                    "score": 5
+                },
+                {
+                    "topic": "restaurant_food",
+                    "score": 5
+                },
+                {
+                    "topic": "rider",
+                    "score": 5
+                }
+            ],
+            "type": "user",
+            "replies": [],
+            "commentPrettyDate": {
+                "translationKey": "NEXTGEN_REVIEWS_X_MONTHS_AGO",
+                "timeDuration": "4"
+            },
+            "likeCount": 0,
+            "isLiked": false,
+            "productVariations": [
+                {
+                    "id": "30861031",
+                    "defaultTitle": "Coca-Cola (33 cl.)",
+                    "title": {},
+                    "unitPrice": 95,
+                    "product": {
+                        "id": "23127284",
+                        "defaultTitle": "Coca-Cola (33 cl.)",
+                        "title": {
+                            "en_TR": "Coca-Cola (33 cl.)",
+                            "tr_TR": "Coca-Cola (33 cl.)"
+                        },
+                        "description": "Kutu içecek",
+                        "active": true,
+                        "imageUrls": [
+                            "https://images.deliveryhero.io/image/fd-tr/Products/27424713.jpg"
+                        ]
+                    }
+                },
+                {
+                    "id": "40809433",
+                    "defaultTitle": "Joker Classic Burger",
+                    "title": {},
+                    "unitPrice": 350,
+                    "product": {
+                        "id": "32958432",
+                        "defaultTitle": "Joker Classic Burger",
+                        "title": {
+                            "tr_TR": "Joker Classic Burger"
+                        },
+                        "description": "Burger köftesi (85 gr.), patates kızartması, burger sos, yeşillik, karamelize soğan, turşu",
+                        "active": true,
+                        "imageUrls": [
+                            "https://images.deliveryhero.io/image/fd-tr/Products/32958368.jpg"
+                        ]
+                    }
+                },
+                {
+                    "id": "43029421",
+                    "defaultTitle": "6'lı Soğan Halkası",
+                    "title": {},
+                    "unitPrice": 95,
+                    "product": {
+                        "id": "35155558",
+                        "defaultTitle": "6'lı Soğan Halkası",
+                        "title": {
+                            "en_TR": "6'lı Soğan Halkası",
+                            "tr_TR": "6'lı Soğan Halkası"
+                        },
+                        "description": "6 adet",
+                        "active": true,
+                        "imageUrls": [
+                            "https://images.deliveryhero.io/image/fd-tr/Products/35098638.jpg"
+                        ]
+                    }
+                }
+            ],
+            "topReviewerTranslationKey": "",
+            "temiz_metin": "aşırı lezzetliydi ve sıcak geldi sadece patatesler biraz soğuktu ama sorun değil"
+        },
+        {
+            "uuid": "68975cd1-d504-48fe-b624-a090115939e1",
+            "createdAt": "2025-11-13T16:19:31Z",
+            "updatedAt": "2025-11-13T16:19:31Z",
+            "text": "Gelen siparişim sıcak ve lezzetliydi. Ercan Burgere ve getiren kurye arkadaşa teşekkür ediyor. Çizginizi bozmadan devam.  🙂",
+            "isAnonymous": false,
+            "reviewerName": "...N",
+            "reviewerId": "tr9wq3ks",
+            "ratings": [
+                {
+                    "topic": "overall",
+                    "score": 5
+                },
+                {
+                    "topic": "restaurant_food",
+                    "score": 5
+                },
+                {
+                    "topic": "rider",
+                    "score": 5
+                }
+            ],
+            "type": "user",
+            "replies": [],
+            "commentPrettyDate": {
+                "translationKey": "NEXTGEN_REVIEWS_X_MONTHS_AGO",
+                "timeDuration": "4"
+            },
+            "likeCount": 0,
+            "isLiked": false,
+            "productVariations": [
+                {
+                    "id": "30861051",
+                    "defaultTitle": "Ranch Sos",
+                    "title": {},
+                    "unitPrice": 40,
+                    "product": {
+                        "id": "23127304",
+                        "defaultTitle": "Ranch Sos",
+                        "title": {
+                            "en_TR": "Ranch Sos",
+                            "tr_TR": "Ranch Sos"
+                        },
+                        "description": "Paket olarak servis edilmektedir.",
+                        "active": false,
+                        "imageUrls": [
+                            "https://images.deliveryhero.io/image/fd-tr/Products/5014988.jpg"
+                        ]
+                    }
+                },
+                {
+                    "id": "40809434",
+                    "defaultTitle": "Joker Cheeseburger",
+                    "title": {},
+                    "unitPrice": 365,
+                    "product": {
+                        "id": "32958433",
+                        "defaultTitle": "Joker Cheeseburger",
+                        "title": {
+                            "tr_TR": "Joker Cheeseburger"
+                        },
+                        "description": "Burger köftesi (85 gr.), patates kızartması, burger sos, karamelize soğan, yeşillik, turşu ",
+                        "active": true,
+                        "imageUrls": [
+                            "https://images.deliveryhero.io/image/fd-tr/Products/32958369.jpg"
+                        ]
+                    }
+                }
+            ],
+            "topReviewerTranslationKey": "",
+            "temiz_metin": "gelen siparişim sıcak ve lezzetliydi ercan burgere ve getiren kurye arkadaşa teşekkür ediyor çizginizi bozmadan devam"
+        },
+        {
+            "uuid": "41232e41-5dd9-4d0b-8869-6613f1e4681a",
+            "createdAt": "2025-11-13T12:43:01Z",
+            "updatedAt": "2025-11-13T12:43:01Z",
+            "text": "Ekmeği bayat hamburgerin hiç tadı yok",
+            "isAnonymous": false,
+            "reviewerName": "...a",
+            "reviewerId": "trgn7whv",
+            "ratings": [
+                {
+                    "topic": "overall",
+                    "score": 1
+                },
+                {
+                    "topic": "restaurant_food",
+                    "score": 1
+                }
+            ],
+            "type": "user",
+            "replies": [],
+            "commentPrettyDate": {
+                "translationKey": "NEXTGEN_REVIEWS_X_MONTHS_AGO",
+                "timeDuration": "4"
+            },
+            "likeCount": 0,
+            "isLiked": false,
+            "productVariations": [],
+            "topReviewerTranslationKey": "",
+            "temiz_metin": "ekmeği bayat hamburgerin hiç tadı yok"
+        },
+        {
+            "uuid": "4ebc8b9a-b374-4142-adf5-fd6978ab7c99",
+            "createdAt": "2025-11-10T18:21:56Z",
+            "updatedAt": "2025-11-10T18:21:56Z",
+            "text": "uzun zamandır sizden söylüyorum ama ilk defa bu kadar soğuk geldi",
+            "isAnonymous": false,
+            "reviewerName": "...n",
+            "reviewerId": "trh0zlut",
+            "ratings": [
+                {
+                    "topic": "overall",
+                    "score": 2
+                },
+                {
+                    "topic": "restaurant_food",
+                    "score": 2
+                }
+            ],
+            "type": "user",
+            "replies": [],
+            "commentPrettyDate": {
+                "translationKey": "NEXTGEN_REVIEWS_X_MONTHS_AGO",
+                "timeDuration": "4"
+            },
+            "likeCount": 0,
+            "isLiked": false,
+            "productVariations": [],
+            "topReviewerTranslationKey": "",
+            "temiz_metin": "uzun zamandır sizden söylüyorum ama ilk defa bu kadar soğuk geldi"
+        },
+        {
+            "uuid": "40bd7c83-2013-4896-8c53-4be745aa7452",
+            "createdAt": "2025-11-06T15:18:57Z",
+            "updatedAt": "2025-11-06T15:18:57Z",
+            "text": "ercan burger de yediğim burger çok farklı buradan gelen çok farklı alakası yok diyebilirim ",
+            "isAnonymous": false,
+            "reviewerName": "...u",
+            "reviewerId": "tr89irxh",
+            "ratings": [
+                {
+                    "topic": "overall",
+                    "score": 1
+                },
+                {
+                    "topic": "restaurant_food",
+                    "score": 1
+                }
+            ],
+            "type": "user",
+            "replies": [
+                {
+                    "id": "40bd7c83-2013-4896-8c53-4be745aa7452",
+                    "text": "Merhaba, beklentinizi karşılayamamış olmak bizi üzdü. Restoran lezzetiyle aynı standartta göndermek için daha sıkı kontrol yapıyoruz. Yorumunuzu ekiple paylaştık. Tekrar denemenizi çok isteriz. 💛",
+                    "createdAt": "2025-11-08T11:11:07Z",
+                    "updatedAt": "2025-11-08T11:11:07Z",
+                    "commentPrettyDate": {
+                        "translationKey": "NEXTGEN_REVIEWS_X_MONTHS_AGO",
+                        "timeDuration": "4"
+                    }
+                }
+            ],
+            "commentPrettyDate": {
+                "translationKey": "NEXTGEN_REVIEWS_X_MONTHS_AGO",
+                "timeDuration": "4"
+            },
+            "likeCount": 0,
+            "isLiked": false,
+            "productVariations": [],
+            "topReviewerTranslationKey": "",
+            "temiz_metin": "ercan burger de yediğim burger çok farklı buradan gelen çok farklı alakası yok diyebilirim"
+        },
+        {
+            "uuid": "94f6c3db-d601-47ce-9959-feaa1b497817",
+            "createdAt": "2025-11-02T14:06:09Z",
+            "updatedAt": "2025-11-02T14:06:09Z",
+            "text": "Evime çok yakın olmasına rağmen buz gıbı geldı , önceden Ercan burger den çok memnunduk. Son sıparıs ustelık midemi çok bozdu , tavuklar yanık derecesinde pişmişti . Birdaha sipariş vermeyi dusunmyrm ",
+            "isAnonymous": false,
+            "reviewerName": "...z",
+            "reviewerId": "trmbkkbi",
+            "ratings": [
+                {
+                    "topic": "overall",
+                    "score": 1
+                },
+                {
+                    "topic": "restaurant_food",
+                    "score": 1
+                }
+            ],
+            "type": "user",
+            "replies": [
+                {
+                    "id": "94f6c3db-d601-47ce-9959-feaa1b497817",
+                    "text": "Yaşadığınız bu kötü deneyim için çok üzgünüz. Sıcaklık ve pişirme kontrolünde ciddi bir hata olmuş. Ekip bilgilendirildi ve gerekli uyarılar yapıldı. Bize yeniden şans verirseniz telafi etmeyi çok isteriz. 💛",
+                    "createdAt": "2025-11-08T11:11:37Z",
+                    "updatedAt": "2025-11-08T11:11:37Z",
+                    "commentPrettyDate": {
+                        "translationKey": "NEXTGEN_REVIEWS_X_MONTHS_AGO",
+                        "timeDuration": "4"
+                    }
+                }
+            ],
+            "commentPrettyDate": {
+                "translationKey": "NEXTGEN_REVIEWS_X_MONTHS_AGO",
+                "timeDuration": "4"
+            },
+            "likeCount": 0,
+            "isLiked": false,
+            "productVariations": [],
+            "topReviewerTranslationKey": "",
+            "temiz_metin": "evime çok yakın olmasına rağmen buz gıbı geldı önceden ercan burger den çok memnunduk son sıparıs ustelık midemi çok bozdu tavuklar yanık derecesinde pişmişti bir daha sipariş vermeyi"
+        },
+        {
+            "uuid": "712de1da-48cc-414c-af88-39a85c711e6b",
+            "createdAt": "2025-11-01T08:32:58Z",
+            "updatedAt": "2025-11-01T08:32:58Z",
+            "text": "kıtır kıtır taze sıcacik ve harikaydı teşekkürler ",
+            "isAnonymous": false,
+            "reviewerName": "...r",
+            "reviewerId": "trpcsjqr",
+            "ratings": [
+                {
+                    "topic": "overall",
+                    "score": 5
+                },
+                {
+                    "topic": "restaurant_food",
+                    "score": 5
+                },
+                {
+                    "topic": "rider",
+                    "score": 5
+                }
+            ],
+            "type": "user",
+            "replies": [
+                {
+                    "id": "712de1da-48cc-414c-af88-39a85c711e6b",
+                    "text": "Bu güzel yorum günümüzü güzelleştirdi, çok teşekkür ederiz! Her siparişi aynı özenle hazırlamaya çalışıyoruz. Afiyet olsun, yine bekleriz. 💛",
+                    "createdAt": "2025-11-08T11:11:52Z",
+                    "updatedAt": "2025-11-08T11:11:52Z",
+                    "commentPrettyDate": {
+                        "translationKey": "NEXTGEN_REVIEWS_X_MONTHS_AGO",
+                        "timeDuration": "4"
+                    }
+                }
+            ],
+            "commentPrettyDate": {
+                "translationKey": "NEXTGEN_REVIEWS_X_MONTHS_AGO",
+                "timeDuration": "4"
+            },
+            "likeCount": 0,
+            "isLiked": false,
+            "productVariations": [
+                {
+                    "id": "30861003",
+                    "defaultTitle": "Ekstra Patates Kızartması",
+                    "title": {},
+                    "unitPrice": 90,
+                    "product": {
+                        "id": "23127256",
+                        "defaultTitle": "Ekstra Patates Kızartması",
+                        "title": {
+                            "en_TR": "Patates Kızartması",
+                            "tr_TR": "Ekstra Patates Kızartması"
+                        },
+                        "description": "Patates kızartması",
+                        "active": true,
+                        "imageUrls": [
+                            "https://images.deliveryhero.io/image/fd-tr/Products/27424683.jpg"
+                        ]
+                    }
+                },
+                {
+                    "id": "30861005",
+                    "defaultTitle": "Çıtır Tavuk",
+                    "title": {},
+                    "unitPrice": 200,
+                    "product": {
+                        "id": "23127258",
+                        "defaultTitle": "Çıtır Tavuk",
+                        "title": {
+                            "en_TR": "Çıtır Tavuk",
+                            "tr_TR": "Çıtır Tavuk"
+                        },
+                        "description": "Porsiyon",
+                        "active": true,
+                        "imageUrls": [
+                            "https://images.deliveryhero.io/image/fd-tr/Products/27424685.jpg"
+                        ]
+                    }
+                }
+            ],
+            "topReviewerTranslationKey": "",
+            "temiz_metin": "kıtır kıtır taze sıcacik ve harikaydı teşekkürler"
+        },
+        {
+            "uuid": "53286508-80bf-4113-880a-03d7fec48188",
+            "createdAt": "2025-10-27T15:07:40Z",
+            "updatedAt": "2025-10-27T15:07:40Z",
+            "text": "Marketteki hazır köfte ve tavuktan yapılmış burger. Ayrıca köftesi yazıldığı gibi 120gr değil asla. Nasıl bu kadar yüksek puan almış aklım almıyor. ",
+            "isAnonymous": false,
+            "reviewerName": "...n",
+            "reviewerId": "tr5gq57i",
+            "ratings": [
+                {
+                    "topic": "overall",
+                    "score": 1
+                },
+                {
+                    "topic": "restaurant_food",
+                    "score": 1
+                },
+                {
+                    "topic": "rider",
+                    "score": 5
+                }
+            ],
+            "type": "user",
+            "replies": [
+                {
+                    "id": "53286508-80bf-4113-880a-03d7fec48188",
+                    "text": "Yorumunuzu dikkate aldık. Köftelerimiz market ürünü değil, özel reçetedir. Gramaj kontrolü için ekiple tekrar konuştuk. Görüşünüz bizim için değerli, umarız daha iyi bir deneyim yaşatırız. 💛 ",
+                    "createdAt": "2025-11-08T11:12:40Z",
+                    "updatedAt": "2025-11-08T11:12:40Z",
+                    "commentPrettyDate": {
+                        "translationKey": "NEXTGEN_REVIEWS_X_MONTHS_AGO",
+                        "timeDuration": "4"
+                    }
+                }
+            ],
+            "commentPrettyDate": {
+                "translationKey": "NEXTGEN_REVIEWS_X_MONTHS_AGO",
+                "timeDuration": "5"
+            },
+            "likeCount": 0,
+            "isLiked": false,
+            "productVariations": [],
+            "topReviewerTranslationKey": "",
+            "temiz_metin": "marketteki hazır köfte ve tavuktan yapılmış burger ayrıca köftesi yazıldığı gibi 120gr değil asla nasıl bu kadar yüksek puan almış aklım almıyor"
+        },
+        {
+            "uuid": "1115e6df-52dd-4b12-b930-2017e1a5dd91",
+            "createdAt": "2025-10-21T07:45:28Z",
+            "updatedAt": "2025-10-21T07:45:28Z",
+            "text": "Ne zaman sipariş versem sıcak geliyor. Lezzeti güzel, lütfen bozmayın kendinizi. Teşekkürler.",
+            "isAnonymous": false,
+            "reviewerName": "...m",
+            "reviewerId": "tr03q18w",
+            "ratings": [
+                {
+                    "topic": "overall",
+                    "score": 5
+                },
+                {
+                    "topic": "restaurant_food",
+                    "score": 5
+                },
+                {
+                    "topic": "rider",
+                    "score": 5
+                }
+            ],
+            "type": "user",
+            "replies": [
+                {
+                    "id": "1115e6df-52dd-4b12-b930-2017e1a5dd91",
+                    "text": "Ne güzel bir geri bildirim, çok teşekkür ederiz! Standartı hep korumak için uğraşıyoruz, böyle yorumlar bizi motive ediyor. Afiyet olsun, tekrar görüşmek üzere! 💛",
+                    "createdAt": "2025-11-08T11:12:57Z",
+                    "updatedAt": "2025-11-08T11:12:57Z",
+                    "commentPrettyDate": {
+                        "translationKey": "NEXTGEN_REVIEWS_X_MONTHS_AGO",
+                        "timeDuration": "4"
+                    }
+                }
+            ],
+            "commentPrettyDate": {
+                "translationKey": "NEXTGEN_REVIEWS_X_MONTHS_AGO",
+                "timeDuration": "5"
+            },
+            "likeCount": 0,
+            "isLiked": false,
+            "productVariations": [
+                {
+                    "id": "42131629",
+                    "defaultTitle": "Joker Double Burger Menü",
+                    "title": {},
+                    "unitPrice": 575,
+                    "product": {
+                        "id": "34268159",
+                        "defaultTitle": "Joker Double Burger Menü",
+                        "title": {
+                            "tr_TR": "Joker Double Burger Menü"
+                        },
+                        "description": "Joker Double Burger (85 gr.) + Patates Kızartması + İçecek (33 cl.)",
+                        "active": true,
+                        "imageUrls": [
+                            "https://images.deliveryhero.io/image/fd-tr/Products/34217511.jpg"
+                        ]
+                    }
+                }
+            ],
+            "topReviewerTranslationKey": "",
+            "temiz_metin": "ne zaman sipariş versem sıcak geliyor lezzeti güzel lütfen bozmayın kendinizi teşekkürler"
+        },
+        {
+            "uuid": "cb51bb6a-8ba0-4cc4-a11c-6176089b14ae",
+            "createdAt": "2025-10-17T10:32:55Z",
+            "updatedAt": "2025-10-17T10:32:55Z",
+            "text": "ÖZELLİKLE ACIKLAMAYA YAZILDI TURŞU VE KARAMERİZE SOĞAN İSTEMEMİYORUZ\n\n NOTLARINIZA BAKINIZ LÜTFEN \n",
+            "isAnonymous": false,
+            "reviewerName": "...k",
+            "reviewerId": "trip5g0k",
+            "ratings": [
+                {
+                    "topic": "overall",
+                    "score": 4
+                },
+                {
+                    "topic": "restaurant_food",
+                    "score": 4
+                }
+            ],
+            "type": "user",
+            "replies": [],
+            "commentPrettyDate": {
+                "translationKey": "NEXTGEN_REVIEWS_X_MONTHS_AGO",
+                "timeDuration": "5"
+            },
+            "likeCount": 0,
+            "isLiked": false,
+            "productVariations": [],
+            "topReviewerTranslationKey": "",
+            "temiz_metin": "özellikle acıklamaya yazıldı turşu ve karamerize soğan istememiyoruz notlarınıza bakınız lütfen"
+        },
+        {
+            "uuid": "0a8f6224-3756-4612-a161-769cc96d4d64",
+            "createdAt": "2025-10-16T14:26:40Z",
+            "updatedAt": "2025-10-16T14:26:40Z",
+            "text": "Soğuktu o yüzden tadı kaçııktı biraz, patatesleri değiştirmeliler.",
+            "isAnonymous": false,
+            "reviewerName": "...u",
+            "reviewerId": "trk7yr6b",
+            "ratings": [
+                {
+                    "topic": "overall",
+                    "score": 3
+                },
+                {
+                    "topic": "restaurant_food",
+                    "score": 3
+                },
+                {
+                    "topic": "rider",
+                    "score": 5
+                }
+            ],
+            "type": "user",
+            "replies": [],
+            "commentPrettyDate": {
+                "translationKey": "NEXTGEN_REVIEWS_X_MONTHS_AGO",
+                "timeDuration": "5"
+            },
+            "likeCount": 0,
+            "isLiked": false,
+            "productVariations": [
+                {
+                    "id": "30861006",
+                    "defaultTitle": "Mix Atıştırma",
+                    "title": {},
+                    "unitPrice": 160,
+                    "product": {
+                        "id": "23127259",
+                        "defaultTitle": "Mix Atıştırma",
+                        "title": {
+                            "en_TR": "Mix Atıştırma",
+                            "tr_TR": "Mix Atıştırma"
+                        },
+                        "description": "Stick peynir (2 adet), çıtır tavuk (2 adet), misket tavuk (4 adet), soğan halkası, (2 adet), patates kızartması",
+                        "active": true,
+                        "imageUrls": [
+                            "https://images.deliveryhero.io/image/fd-tr/products/27424686.jpg"
+                        ]
+                    }
+                },
+                {
+                    "id": "83313914",
+                    "defaultTitle": "Joker Cheeseburger Menü",
+                    "title": {},
+                    "unitPrice": 435,
+                    "product": {
+                        "id": "74604535",
+                        "defaultTitle": "Joker Cheeseburger Menü",
+                        "title": {
+                            "tr_TR": "Joker Cheeseburger Menü"
+                        },
+                        "description": "Joker Cheeseburge (85 gr.) + Patates Kızartması +  İçecek (33 cl.)",
+                        "active": true,
+                        "imageUrls": [
+                            "https://images.deliveryhero.io/image/fd-tr/Products/74597645.jpg"
+                        ]
+                    }
+                }
+            ],
+            "topReviewerTranslationKey": "",
+            "temiz_metin": "soğuktu o yüzden tadı kaçııktı biraz patatesleri değiştirmeliler"
+        },
+        {
+            "uuid": "4c32b821-2984-4931-bfb0-d24e9b7e507b",
+            "createdAt": "2025-06-20T16:33:15Z",
+            "updatedAt": "2025-06-20T16:33:15Z",
+            "text": "ücretli soslar gelmedi. ve 3 hamburger de aynıydı çok aç olduğum için yedim. yanlışlıkla birini farklı yapabilirdiniz bayat ekmekler ile mükemmel gitti ",
+            "isAnonymous": false,
+            "reviewerName": "...k",
+            "reviewerId": "trfl7gtj",
+            "ratings": [
+                {
+                    "topic": "overall",
+                    "score": 1
+                },
+                {
+                    "topic": "restaurant_food",
+                    "score": 1
+                }
+            ],
+            "type": "user",
+            "replies": [],
+            "commentPrettyDate": {
+                "translationKey": "NEXTGEN_REVIEWS_X_MONTHS_AGO",
+                "timeDuration": "9"
+            },
+            "likeCount": 0,
+            "isLiked": false,
+            "productVariations": [],
+            "topReviewerTranslationKey": "",
+            "temiz_metin": "ücretli soslar gelmedi ve 3 hamburger de aynıydı çok aç olduğum için yedim yanlışlıkla birini farklı yapabilirdiniz bayat ekmekler ile mükemmel gitti"
+        },
+        {
+            "uuid": "9ab973cb-0bea-4327-ad76-8e14bc070023",
+            "createdAt": "2025-06-16T11:58:45Z",
+            "updatedAt": "2025-06-16T11:58:45Z",
+            "text": "hızlı ve sıcak süper ",
+            "isAnonymous": false,
+            "reviewerName": "...p",
+            "reviewerId": "tro7t4mr",
+            "ratings": [
+                {
+                    "topic": "overall",
+                    "score": 5
+                },
+                {
+                    "topic": "restaurant_food",
+                    "score": 5
+                },
+                {
+                    "topic": "rider",
+                    "score": 5
+                }
+            ],
+            "type": "user",
+            "replies": [],
+            "commentPrettyDate": {
+                "translationKey": "NEXTGEN_REVIEWS_X_MONTHS_AGO",
+                "timeDuration": "9"
+            },
+            "likeCount": 0,
+            "isLiked": false,
+            "productVariations": [],
+            "topReviewerTranslationKey": "",
+            "temiz_metin": "hızlı ve sıcak süper"
+        },
+        {
+            "uuid": "7eb0ab3f-14be-4ab5-953d-8aede0c77b54",
+            "createdAt": "2025-06-14T12:23:34Z",
+            "updatedAt": "2025-06-14T12:23:34Z",
+            "text": "Sıcak soğuk ortası geldi çok doyurucu değildi patateslerde ılıktı ekstra barbekü sos ödedim gelmedi ",
+            "isAnonymous": false,
+            "reviewerName": "...k",
+            "reviewerId": "trdcjbmb",
+            "ratings": [
+                {
+                    "topic": "overall",
+                    "score": 3
+                },
+                {
+                    "topic": "restaurant_food",
+                    "score": 3
+                },
+                {
+                    "topic": "rider",
+                    "score": 5
+                }
+            ],
+            "type": "user",
+            "replies": [],
+            "commentPrettyDate": {
+                "translationKey": "NEXTGEN_REVIEWS_X_MONTHS_AGO",
+                "timeDuration": "9"
+            },
+            "likeCount": 0,
+            "isLiked": false,
+            "productVariations": [],
+            "topReviewerTranslationKey": "",
+            "temiz_metin": "sıcak soğuk ortası geldi çok doyurucu değildi patateslerde ılıktı barbekü sos ödedim gelmedi"
+        },
+        {
+            "uuid": "ba77a7a3-d9e5-4b19-83f8-11464f3fd690",
+            "createdAt": "2025-06-14T12:07:20Z",
+            "updatedAt": "2025-06-14T12:07:20Z",
+            "text": "cheddar koymayı unutmayın sürekli unutuyorsunuz dediğim halde yine koymamışlar",
+            "isAnonymous": false,
+            "reviewerName": "...k",
+            "reviewerId": "trqfernx",
+            "ratings": [
+                {
+                    "topic": "overall",
+                    "score": 1
+                },
+                {
+                    "topic": "restaurant_food",
+                    "score": 1
+                },
+                {
+                    "topic": "rider",
+                    "score": 5
+                }
+            ],
+            "type": "user",
+            "replies": [],
+            "commentPrettyDate": {
+                "translationKey": "NEXTGEN_REVIEWS_X_MONTHS_AGO",
+                "timeDuration": "9"
+            },
+            "likeCount": 0,
+            "isLiked": false,
+            "productVariations": [],
+            "topReviewerTranslationKey": "",
+            "temiz_metin": "cheddar koymayı unutmayın sürekli unutuyorsunuz dediğim halde yine koymamışlar"
+        },
+        {
+            "uuid": "d84c754d-45ba-4d65-8bb8-a684d29b2f88",
+            "createdAt": "2025-06-09T15:10:02Z",
+            "updatedAt": "2025-06-09T15:10:02Z",
+            "text": "Patatesleri bayat göndermişler ıslak mendil yok buz gibi geldi önlem almamışlar yazık yazık çalışanlarına söyledim önemsemiyorlar iade edin diyorlar ayıp ayıp ……….!",
+            "isAnonymous": false,
+            "reviewerName": "...n",
+            "reviewerId": "trd4ztn1",
+            "ratings": [
+                {
+                    "topic": "overall",
+                    "score": 1
+                },
+                {
+                    "topic": "restaurant_food",
+                    "score": 1
+                },
+                {
+                    "topic": "rider",
+                    "score": 5
+                }
+            ],
+            "type": "user",
+            "replies": [],
+            "commentPrettyDate": {
+                "translationKey": "NEXTGEN_REVIEWS_X_MONTHS_AGO",
+                "timeDuration": "9"
+            },
+            "likeCount": 0,
+            "isLiked": false,
+            "productVariations": [],
+            "topReviewerTranslationKey": "",
+            "temiz_metin": "patatesleri bayat göndermişler ıslak mendil yok buz gibi geldi önlem almamışlar yazık yazık çalışanlarına söyledim önemsemiyorlar iade edin diyorlar ayıp ayıp"
+        },
+        {
+            "uuid": "04718f48-e1c3-43a2-9f59-48bd9392d49e",
+            "createdAt": "2025-06-08T11:04:40Z",
+            "updatedAt": "2025-06-08T11:04:40Z",
+            "text": "Trüflü mayonez yoktu kremalı mantar yoktu denecek kadar azdı. Solmuş yeşillikler vs. ",
+            "isAnonymous": false,
+            "reviewerName": "...a",
+            "reviewerId": "trsa7zsi",
+            "ratings": [
+                {
+                    "topic": "overall",
+                    "score": 2
+                },
+                {
+                    "topic": "restaurant_food",
+                    "score": 2
+                },
+                {
+                    "topic": "rider",
+                    "score": 5
+                }
+            ],
+            "type": "user",
+            "replies": [],
+            "commentPrettyDate": {
+                "translationKey": "NEXTGEN_REVIEWS_X_MONTHS_AGO",
+                "timeDuration": "9"
+            },
+            "likeCount": 0,
+            "isLiked": false,
+            "productVariations": [],
+            "topReviewerTranslationKey": "",
+            "temiz_metin": "trüflü mayonez yoktu kremalı mantar yoktu denecek kadar azdı solmuş yeşillikler vs"
+        },
+        {
+            "uuid": "f92f35ec-be96-4ec1-a10c-ef8265f6973e",
+            "createdAt": "2025-06-06T19:30:36Z",
+            "updatedAt": "2025-06-06T19:30:36Z",
+            "text": "2 saat sonra siparişimi götürdünüz . Soğuk ve lezzetsiz  ",
+            "isAnonymous": false,
+            "reviewerName": "...a",
+            "reviewerId": "trb7gq0u",
+            "ratings": [
+                {
+                    "topic": "overall",
+                    "score": 1
+                },
+                {
+                    "topic": "restaurant_food",
+                    "score": 1
+                }
+            ],
+            "type": "user",
+            "replies": [],
+            "commentPrettyDate": {
+                "translationKey": "NEXTGEN_REVIEWS_X_MONTHS_AGO",
+                "timeDuration": "9"
+            },
+            "likeCount": 0,
+            "isLiked": false,
+            "productVariations": [],
+            "topReviewerTranslationKey": "",
+            "temiz_metin": "2 saat sonra siparişimi götürdünüz soğuk ve lezzetsiz"
+        },
+        {
+            "uuid": "f3d0e189-4bf2-4331-b110-7a365420e529",
+            "createdAt": "2025-06-03T18:26:11Z",
+            "updatedAt": "2025-06-03T18:26:11Z",
+            "text": "çok iyiydi aga👍🤝",
+            "isAnonymous": false,
+            "reviewerName": "...a",
+            "reviewerId": "trpm3a2t",
+            "ratings": [
+                {
+                    "topic": "overall",
+                    "score": 5
+                },
+                {
+                    "topic": "restaurant_food",
+                    "score": 5
+                }
+            ],
+            "type": "user",
+            "replies": [
+                {
+                    "id": "f3d0e189-4bf2-4331-b110-7a365420e529",
+                    "text": "bizi tercih ettiginiz için teşekürler =)",
+                    "createdAt": "2025-06-09T16:43:47Z",
+                    "updatedAt": "2025-06-09T16:43:47Z",
+                    "commentPrettyDate": {
+                        "translationKey": "NEXTGEN_REVIEWS_X_MONTHS_AGO",
+                        "timeDuration": "9"
+                    }
+                }
+            ],
+            "commentPrettyDate": {
+                "translationKey": "NEXTGEN_REVIEWS_X_MONTHS_AGO",
+                "timeDuration": "9"
+            },
+            "likeCount": 0,
+            "isLiked": false,
+            "productVariations": [],
+            "topReviewerTranslationKey": "",
+            "temiz_metin": "çok iyiydi aga"
+        },
+        {
+            "uuid": "1a82d528-042a-4605-a0c4-be01bd2241b4",
+            "createdAt": "2025-05-28T15:25:20Z",
+            "updatedAt": "2025-05-28T15:25:20Z",
+            "text": "Harika bir işletme teşekkür ediyorum vermiş olduğu hizmetten dolayı ",
+            "isAnonymous": false,
+            "reviewerName": "...n",
+            "reviewerId": "trx6ln58",
+            "ratings": [
+                {
+                    "topic": "overall",
+                    "score": 5
+                },
+                {
+                    "topic": "restaurant_food",
+                    "score": 5
+                },
+                {
+                    "topic": "rider",
+                    "score": 5
+                }
+            ],
+            "type": "user",
+            "replies": [],
+            "commentPrettyDate": {
+                "translationKey": "NEXTGEN_REVIEWS_X_MONTHS_AGO",
+                "timeDuration": "10"
+            },
+            "likeCount": 0,
+            "isLiked": false,
+            "productVariations": [
+                {
+                    "id": "77669890",
+                    "defaultTitle": "Algida Menüsü (Joker Smoky BBQ Burger Menü)",
+                    "title": {},
+                    "unitPrice": 559,
+                    "product": {
+                        "id": "69203914",
+                        "defaultTitle": "Algida Menüsü (Joker Smoky BBQ Burger Menü)",
+                        "title": {
+                            "en_TR": "Smoky BBQ Burger Menü",
+                            "tr_TR": "Algida Menüsü (Joker Smoky BBQ Burger Menü)"
+                        },
+                        "description": "Joker Smoky BBQ Burger (85 gr.) + Patates Kızartması + Algida Maraş Usulü Cup (100 ml.) + Coca-Cola (33 cl.)",
+                        "active": false,
+                        "imageUrls": [
+                            "https://images.deliveryhero.io/image/fd-tr/Products/69050099.jpg"
+                        ]
+                    }
+                }
+            ],
+            "topReviewerTranslationKey": "",
+            "temiz_metin": "harika bir işletme teşekkür ediyorum vermiş olduğu hizmetten dolayı"
+        },
+        {
+            "uuid": "ac707c32-732d-4924-bcac-dcc96ff31bb8",
+            "createdAt": "2025-05-28T09:41:49Z",
+            "updatedAt": "2025-05-28T09:41:49Z",
+            "text": "Sos ve peynir koyulmamıştı, içi bomboş ",
+            "isAnonymous": false,
+            "reviewerName": "...k",
+            "reviewerId": "trak1f4q",
+            "ratings": [
+                {
+                    "topic": "overall",
+                    "score": 2
+                },
+                {
+                    "topic": "restaurant_food",
+                    "score": 2
+                },
+                {
+                    "topic": "rider",
+                    "score": 5
+                }
+            ],
+            "type": "user",
+            "replies": [],
+            "commentPrettyDate": {
+                "translationKey": "NEXTGEN_REVIEWS_X_MONTHS_AGO",
+                "timeDuration": "10"
+            },
+            "likeCount": 0,
+            "isLiked": false,
+            "productVariations": [],
+            "topReviewerTranslationKey": "",
+            "temiz_metin": "sos ve peynir koyulmamıştı içi bomboş"
+        },
+        {
+            "uuid": "d1177761-f84f-4a84-a0a7-274c3ee929c7",
+            "createdAt": "2025-05-27T15:53:19Z",
+            "updatedAt": "2025-05-27T15:53:19Z",
+            "text": "Çok teşekkür ederim aslında hiç zor olmayan ama çoğu işletmenin nedense yapamadığı “not okuma ve düzgün sipariş gönderme” işini başardığınız için tebrik ediyorum. ",
+            "isAnonymous": false,
+            "reviewerName": "...n",
+            "reviewerId": "trqfeub0",
+            "ratings": [
+                {
+                    "topic": "overall",
+                    "score": 5
+                },
+                {
+                    "topic": "restaurant_food",
+                    "score": 5
+                },
+                {
+                    "topic": "rider",
+                    "score": 5
+                }
+            ],
+            "type": "user",
+            "replies": [],
+            "commentPrettyDate": {
+                "translationKey": "NEXTGEN_REVIEWS_X_MONTHS_AGO",
+                "timeDuration": "10"
+            },
+            "likeCount": 0,
+            "isLiked": false,
+            "productVariations": [],
+            "topReviewerTranslationKey": "",
+            "temiz_metin": "çok teşekkür ederim aslında hiç zor olmayan ama çoğu işletmenin nedense yapamadığı not okuma ve düzgün sipariş gönderme işini başardığınız için tebrik ediyorum"
+        },
+        {
+            "uuid": "a66d447e-2d60-4b21-86a2-0e3320997838",
+            "createdAt": "2025-05-26T12:56:41Z",
+            "updatedAt": "2025-05-26T12:56:41Z",
+            "text": "sipariş geç ve buz gibi geldiği yetmezmiş gibi eksik ürün gönderilmiş ilgilenen mağduriyetimizi gideren kimse yok. Asla tavsiye etmiyorum.",
+            "isAnonymous": false,
+            "reviewerName": "...n",
+            "reviewerId": "tr5w5xwn",
+            "ratings": [
+                {
+                    "topic": "overall",
+                    "score": 1
+                },
+                {
+                    "topic": "restaurant_food",
+                    "score": 1
+                },
+                {
+                    "topic": "rider",
+                    "score": 1
+                }
+            ],
+            "type": "user",
+            "replies": [],
+            "commentPrettyDate": {
+                "translationKey": "NEXTGEN_REVIEWS_X_MONTHS_AGO",
+                "timeDuration": "10"
+            },
+            "likeCount": 0,
+            "isLiked": false,
+            "productVariations": [],
+            "topReviewerTranslationKey": "",
+            "temiz_metin": "sipariş geç ve buz gibi geldiği yetmezmiş gibi eksik ürün gönderilmiş ilgilenen mağduriyetimizi gideren kimse yok asla tavsiye etmiyorum"
+        },
+        {
+            "uuid": "370d63f7-3950-45b6-a993-a6051276850f",
+            "createdAt": "2025-05-20T12:02:37Z",
+            "updatedAt": "2025-05-20T12:02:37Z",
+            "text": "İstedigim sosları göndermemiş olmaları beni derinden yaraladı .. söyleyeceklerim bukadar 😆",
+            "isAnonymous": false,
+            "reviewerName": "...k",
+            "reviewerId": "trm3v4bd",
+            "ratings": [
+                {
+                    "topic": "overall",
+                    "score": 5
+                },
+                {
+                    "topic": "restaurant_food",
+                    "score": 5
+                }
+            ],
+            "type": "user",
+            "replies": [],
+            "commentPrettyDate": {
+                "translationKey": "NEXTGEN_REVIEWS_X_MONTHS_AGO",
+                "timeDuration": "10"
+            },
+            "likeCount": 0,
+            "isLiked": false,
+            "productVariations": [],
+            "topReviewerTranslationKey": "",
+            "temiz_metin": "istedigim sosları göndermemiş olmaları beni derinden yaraladı söyleyeceklerim bukadar"
+        },
+        {
+            "uuid": "bd44f9cd-c021-49c0-a709-07ba8c5bd7a9",
+            "createdAt": "2025-05-18T20:13:27Z",
+            "updatedAt": "2025-05-18T20:13:27Z",
+            "text": "her şey çok lezzetli çok kaliteli malzemelerle yapılmış çok teşekkur ederiz😋🤍",
+            "isAnonymous": false,
+            "reviewerName": "...i",
+            "reviewerId": "trq2mo36",
+            "ratings": [
+                {
+                    "topic": "overall",
+                    "score": 5
+                },
+                {
+                    "topic": "restaurant_food",
+                    "score": 5
+                },
+                {
+                    "topic": "rider",
+                    "score": 5
+                }
+            ],
+            "type": "user",
+            "replies": [],
+            "commentPrettyDate": {
+                "translationKey": "NEXTGEN_REVIEWS_X_MONTHS_AGO",
+                "timeDuration": "10"
+            },
+            "likeCount": 0,
+            "isLiked": false,
+            "productVariations": [
+                {
+                    "id": "40809432",
+                    "defaultTitle": "Algida Menüsü (Joker Cheeseburger Menü)",
+                    "title": {},
+                    "unitPrice": 454,
+                    "product": {
+                        "id": "32958431",
+                        "defaultTitle": "Algida Menüsü (Joker Cheeseburger Menü)",
+                        "title": {
+                            "tr_TR": "Algida Menüsü (Joker Cheeseburger Menü)"
+                        },
+                        "description": "Joker Cheeseburger (85 gr.) + Patates Kızartması + Algida Maraş Usulü Cup (100 ml.) + İçecek (33 cl.)",
+                        "active": false,
+                        "imageUrls": [
+                            "https://images.deliveryhero.io/image/fd-tr/products/32958367.jpg"
+                        ]
+                    }
+                }
+            ],
+            "topReviewerTranslationKey": "",
+            "temiz_metin": "her şey çok lezzetli çok kaliteli malzemelerle yapılmış çok teşekkur ederiz"
+        },
+        {
+            "uuid": "961c0e77-0e4e-404c-8d7c-e8ced462ae3d",
+            "createdAt": "2025-05-18T16:32:05Z",
+            "updatedAt": "2025-05-18T16:32:05Z",
+            "text": "Fiş gönderin demeniz rağmen ısrarla Fiş göndermeyor. Kapıda ödeme de telefon ile ordan da Fiş alamazsınız telefona da bakmazlar. Lezzeti de bunca soruna değmez. ",
+            "isAnonymous": false,
+            "reviewerName": "...y",
+            "reviewerId": "tr1qkips",
+            "ratings": [
+                {
+                    "topic": "overall",
+                    "score": 1
+                },
+                {
+                    "topic": "restaurant_food",
+                    "score": 1
+                }
+            ],
+            "type": "user",
+            "replies": [],
+            "commentPrettyDate": {
+                "translationKey": "NEXTGEN_REVIEWS_X_MONTHS_AGO",
+                "timeDuration": "10"
+            },
+            "likeCount": 0,
+            "isLiked": false,
+            "productVariations": [],
+            "topReviewerTranslationKey": "",
+            "temiz_metin": "fiş gönderin demeniz rağmen ısrarla fiş göndermeyor kapıda ödeme de telefon ile ordan da fiş alamazsınız telefona da bakmazlar lezzeti de bunca soruna değmez"
+        },
+        {
+            "uuid": "13c93359-f126-46fb-91c9-72954a15b078",
+            "createdAt": "2025-05-10T16:00:25Z",
+            "updatedAt": "2025-05-10T16:00:25Z",
+            "text": "Chees burgerin içine peynir koymamışlar olacak iş değil berbattı hamburgeri ! Verdiğim paraya yazık resmen köfte turşu ekmek arası için bu kadar para ödedim !",
+            "isAnonymous": false,
+            "reviewerName": "...n",
+            "reviewerId": "trhip1nx",
+            "ratings": [
+                {
+                    "topic": "overall",
+                    "score": 1
+                },
+                {
+                    "topic": "restaurant_food",
+                    "score": 1
+                },
+                {
+                    "topic": "rider",
+                    "score": 1
+                }
+            ],
+            "type": "user",
+            "replies": [],
+            "commentPrettyDate": {
+                "translationKey": "NEXTGEN_REVIEWS_X_MONTHS_AGO",
+                "timeDuration": "10"
+            },
+            "likeCount": 0,
+            "isLiked": false,
+            "productVariations": [],
+            "topReviewerTranslationKey": "",
+            "temiz_metin": "chees burgerin içine peynir koymamışlar olacak iş değil berbattı hamburgeri verdiğim paraya yazık resmen köfte turşu ekmek arası için bu kadar para ödedim"
+        },
+        {
+            "uuid": "d3ea20ed-24b2-4b6d-a9b3-b744d2696b0c",
+            "createdAt": "2025-05-04T18:31:34Z",
+            "updatedAt": "2025-05-04T18:31:34Z",
+            "text": "Soguktu ama tadı lezetliydi",
+            "isAnonymous": false,
+            "reviewerName": "...a",
+            "reviewerId": "trhowbb2",
+            "ratings": [
+                {
+                    "topic": "overall",
+                    "score": 4
+                },
+                {
+                    "topic": "restaurant_food",
+                    "score": 4
+                },
+                {
+                    "topic": "rider",
+                    "score": 1
+                }
+            ],
+            "type": "user",
+            "replies": [],
+            "commentPrettyDate": {
+                "translationKey": "NEXTGEN_REVIEWS_X_MONTHS_AGO",
+                "timeDuration": "10"
+            },
+            "likeCount": 0,
+            "isLiked": false,
+            "productVariations": [
+                {
+                    "id": "30861006",
+                    "defaultTitle": "Mix Atıştırma",
+                    "title": {},
+                    "unitPrice": 160,
+                    "product": {
+                        "id": "23127259",
+                        "defaultTitle": "Mix Atıştırma",
+                        "title": {
+                            "en_TR": "Mix Atıştırma",
+                            "tr_TR": "Mix Atıştırma"
+                        },
+                        "description": "Stick peynir (2 adet), çıtır tavuk (2 adet), misket tavuk (4 adet), soğan halkası, (2 adet), patates kızartması",
+                        "active": true,
+                        "imageUrls": [
+                            "https://images.deliveryhero.io/image/fd-tr/products/27424686.jpg"
+                        ]
+                    }
+                },
+                {
+                    "id": "40809432",
+                    "defaultTitle": "Algida Menüsü (Joker Cheeseburger Menü)",
+                    "title": {},
+                    "unitPrice": 454,
+                    "product": {
+                        "id": "32958431",
+                        "defaultTitle": "Algida Menüsü (Joker Cheeseburger Menü)",
+                        "title": {
+                            "tr_TR": "Algida Menüsü (Joker Cheeseburger Menü)"
+                        },
+                        "description": "Joker Cheeseburger (85 gr.) + Patates Kızartması + Algida Maraş Usulü Cup (100 ml.) + İçecek (33 cl.)",
+                        "active": false,
+                        "imageUrls": [
+                            "https://images.deliveryhero.io/image/fd-tr/products/32958367.jpg"
+                        ]
+                    }
+                },
+                {
+                    "id": "77669890",
+                    "defaultTitle": "Algida Menüsü (Joker Smoky BBQ Burger Menü)",
+                    "title": {},
+                    "unitPrice": 559,
+                    "product": {
+                        "id": "69203914",
+                        "defaultTitle": "Algida Menüsü (Joker Smoky BBQ Burger Menü)",
+                        "title": {
+                            "en_TR": "Smoky BBQ Burger Menü",
+                            "tr_TR": "Algida Menüsü (Joker Smoky BBQ Burger Menü)"
+                        },
+                        "description": "Joker Smoky BBQ Burger (85 gr.) + Patates Kızartması + Algida Maraş Usulü Cup (100 ml.) + Coca-Cola (33 cl.)",
+                        "active": false,
+                        "imageUrls": [
+                            "https://images.deliveryhero.io/image/fd-tr/Products/69050099.jpg"
+                        ]
+                    }
+                }
+            ],
+            "topReviewerTranslationKey": "",
+            "temiz_metin": "soguktu ama tadı lezetliydi"
+        },
+        {
+            "uuid": "3f29859b-8e4b-4f1d-bb04-9ad9e4c6e0b4",
+            "createdAt": "2025-05-03T17:45:30Z",
+            "updatedAt": "2025-05-03T17:45:30Z",
+            "text": "Her zaman ki gibi lezzetli ama patates kızartması baharatsız sevme imkanı olsa daha süper olacak",
+            "isAnonymous": false,
+            "reviewerName": "...r",
+            "reviewerId": "trujb8qj",
+            "ratings": [
+                {
+                    "topic": "overall",
+                    "score": 4
+                },
+                {
+                    "topic": "restaurant_food",
+                    "score": 4
+                },
+                {
+                    "topic": "rider",
+                    "score": 5
+                }
+            ],
+            "type": "user",
+            "replies": [],
+            "commentPrettyDate": {
+                "translationKey": "NEXTGEN_REVIEWS_X_MONTHS_AGO",
+                "timeDuration": "10"
+            },
+            "likeCount": 0,
+            "isLiked": false,
+            "productVariations": [
+                {
+                    "id": "30861005",
+                    "defaultTitle": "Çıtır Tavuk",
+                    "title": {},
+                    "unitPrice": 200,
+                    "product": {
+                        "id": "23127258",
+                        "defaultTitle": "Çıtır Tavuk",
+                        "title": {
+                            "en_TR": "Çıtır Tavuk",
+                            "tr_TR": "Çıtır Tavuk"
+                        },
+                        "description": "Porsiyon",
+                        "active": true,
+                        "imageUrls": [
+                            "https://images.deliveryhero.io/image/fd-tr/Products/27424685.jpg"
+                        ]
+                    }
+                },
+                {
+                    "id": "42131629",
+                    "defaultTitle": "Joker Double Burger Menü",
+                    "title": {},
+                    "unitPrice": 575,
+                    "product": {
+                        "id": "34268159",
+                        "defaultTitle": "Joker Double Burger Menü",
+                        "title": {
+                            "tr_TR": "Joker Double Burger Menü"
+                        },
+                        "description": "Joker Double Burger (85 gr.) + Patates Kızartması + İçecek (33 cl.)",
+                        "active": true,
+                        "imageUrls": [
+                            "https://images.deliveryhero.io/image/fd-tr/Products/34217511.jpg"
+                        ]
+                    }
+                },
+                {
+                    "id": "43691246",
+                    "defaultTitle": "Joker Alev Alev Burger Menü",
+                    "title": {},
+                    "unitPrice": 440,
+                    "product": {
+                        "id": "35811295",
+                        "defaultTitle": "Joker Alev Alev Burger Menü",
+                        "title": {
+                            "tr_TR": "Joker Alev Alev Burger Menü"
+                        },
+                        "description": "Joker Alevli Burger (85 gr.) + Patates Kızartması + İçecek (33 cl.)",
+                        "active": true,
+                        "imageUrls": [
+                            "https://images.deliveryhero.io/image/fd-tr/Products/35800732.jpg"
+                        ]
+                    }
+                }
+            ],
+            "topReviewerTranslationKey": "",
+            "temiz_metin": "her zaman ki gibi lezzetli ama patates kızartması baharatsız sevme imkanı olsa daha süper olacak"
+        },
+        {
+            "uuid": "549ccce4-998d-4dc4-9436-03602252dc3d",
+            "createdAt": "2025-04-30T20:07:13Z",
+            "updatedAt": "2025-04-30T20:07:13Z",
+            "text": "teşekkürler ",
+            "isAnonymous": false,
+            "reviewerName": "...a",
+            "reviewerId": "trd806td",
+            "ratings": [
+                {
+                    "topic": "overall",
+                    "score": 3
+                },
+                {
+                    "topic": "restaurant_food",
+                    "score": 3
+                }
+            ],
+            "type": "user",
+            "replies": [],
+            "commentPrettyDate": {
+                "translationKey": "NEXTGEN_REVIEWS_X_MONTHS_AGO",
+                "timeDuration": "11"
+            },
+            "likeCount": 0,
+            "isLiked": false,
+            "productVariations": [
+                {
+                    "id": "42131629",
+                    "defaultTitle": "Joker Double Burger Menü",
+                    "title": {},
+                    "unitPrice": 575,
+                    "product": {
+                        "id": "34268159",
+                        "defaultTitle": "Joker Double Burger Menü",
+                        "title": {
+                            "tr_TR": "Joker Double Burger Menü"
+                        },
+                        "description": "Joker Double Burger (85 gr.) + Patates Kızartması + İçecek (33 cl.)",
+                        "active": true,
+                        "imageUrls": [
+                            "https://images.deliveryhero.io/image/fd-tr/Products/34217511.jpg"
+                        ]
+                    }
+                }
+            ],
+            "topReviewerTranslationKey": "",
+            "temiz_metin": "teşekkürler"
+        },
+        {
+            "uuid": "f35266aa-1394-468d-b6b9-f3ef50829dc6",
+            "createdAt": "2025-04-30T14:46:20Z",
+            "updatedAt": "2025-04-30T14:46:20Z",
+            "text": "İşaretledigim ücretsiz sosu 3. Kezde eklemeden göndermişler. Dikkatsiz paketleme yapıyorlar ",
+            "isAnonymous": false,
+            "reviewerName": "...n",
+            "reviewerId": "trqshx7c",
+            "ratings": [
+                {
+                    "topic": "overall",
+                    "score": 3
+                },
+                {
+                    "topic": "restaurant_food",
+                    "score": 3
+                }
+            ],
+            "type": "user",
+            "replies": [],
+            "commentPrettyDate": {
+                "translationKey": "NEXTGEN_REVIEWS_X_MONTHS_AGO",
+                "timeDuration": "11"
+            },
+            "likeCount": 0,
+            "isLiked": false,
+            "productVariations": [
+                {
+                    "id": "40809432",
+                    "defaultTitle": "Algida Menüsü (Joker Cheeseburger Menü)",
+                    "title": {},
+                    "unitPrice": 454,
+                    "product": {
+                        "id": "32958431",
+                        "defaultTitle": "Algida Menüsü (Joker Cheeseburger Menü)",
+                        "title": {
+                            "tr_TR": "Algida Menüsü (Joker Cheeseburger Menü)"
+                        },
+                        "description": "Joker Cheeseburger (85 gr.) + Patates Kızartması + Algida Maraş Usulü Cup (100 ml.) + İçecek (33 cl.)",
+                        "active": false,
+                        "imageUrls": [
+                            "https://images.deliveryhero.io/image/fd-tr/products/32958367.jpg"
+                        ]
+                    }
+                }
+            ],
+            "topReviewerTranslationKey": "",
+            "temiz_metin": "işaretledigim ücretsiz sosu 3 kezde eklemeden göndermişler dikkatsiz paketleme yapıyorlar"
+        },
+        {
+            "uuid": "8da28955-e756-448f-9bf0-a675b5feabfc",
+            "createdAt": "2025-04-24T17:05:19Z",
+            "updatedAt": "2025-04-24T17:05:19Z",
+            "text": "harikaydı.",
+            "isAnonymous": false,
+            "reviewerName": "...r",
+            "reviewerId": "trp2f8ln",
+            "ratings": [
+                {
+                    "topic": "overall",
+                    "score": 5
+                },
+                {
+                    "topic": "restaurant_food",
+                    "score": 5
+                },
+                {
+                    "topic": "rider",
+                    "score": 5
+                }
+            ],
+            "type": "user",
+            "replies": [
+                {
+                    "id": "8da28955-e756-448f-9bf0-a675b5feabfc",
+                    "text": "Bizi tercih ettiğiniz için teşekkürler,.  Afiyet olsun efendim :) ",
+                    "createdAt": "2025-04-24T18:31:13Z",
+                    "updatedAt": "2025-04-24T18:31:13Z",
+                    "commentPrettyDate": {
+                        "translationKey": "NEXTGEN_REVIEWS_X_MONTHS_AGO",
+                        "timeDuration": "11"
+                    }
+                }
+            ],
+            "commentPrettyDate": {
+                "translationKey": "NEXTGEN_REVIEWS_X_MONTHS_AGO",
+                "timeDuration": "11"
+            },
+            "likeCount": 0,
+            "isLiked": false,
+            "productVariations": [
+                {
+                    "id": "36440497",
+                    "defaultTitle": "Supper Double Burger",
+                    "title": {},
+                    "unitPrice": 610,
+                    "product": {
+                        "id": "28642349",
+                        "defaultTitle": "Supper Double Burger",
+                        "title": {
+                            "en_TR": "Süpper Double Burger",
+                            "tr_TR": "Supper Double Burger"
+                        },
+                        "description": "Burger köftesi (120 gr.), patates kızartması, köfte, burger sos, karamelize soğan, yeşillik, turşu, cheddar peyniri, ",
+                        "active": true,
+                        "imageUrls": [
+                            "https://images.deliveryhero.io/image/fd-tr/Products/28642383.jpg"
+                        ]
+                    }
+                }
+            ],
+            "topReviewerTranslationKey": "NEXTGEN_KEY_REVIEWS_LABEL",
+            "temiz_metin": "harikaydı"
+        },
+        {
+            "uuid": "4a4ca5ac-4da2-4ae4-8097-e46a8bdc018c",
+            "createdAt": "2025-04-22T19:31:29Z",
+            "updatedAt": "2025-04-22T19:31:29Z",
+            "text": "Özellikle. Sos seçimi yapıyorum. Neden gönderilmiyor hayır yoksa seçenek  de neden mevcut varsa neden. Gönderilmiyor. 5’6 hatta daha fazla sanırım sipariş verdim hep bekledim düzelir diye ama malesef ",
+            "isAnonymous": false,
+            "reviewerName": "...r",
+            "reviewerId": "tr63alt0",
+            "ratings": [
+                {
+                    "topic": "overall",
+                    "score": 1
+                },
+                {
+                    "topic": "restaurant_food",
+                    "score": 1
+                }
+            ],
+            "type": "user",
+            "replies": [],
+            "commentPrettyDate": {
+                "translationKey": "NEXTGEN_REVIEWS_X_MONTHS_AGO",
+                "timeDuration": "11"
+            },
+            "likeCount": 1,
+            "isLiked": false,
+            "productVariations": [],
+            "topReviewerTranslationKey": "",
+            "temiz_metin": "özellikle sos seçimi yapıyorum neden gönderilmiyor hayır yoksa seçenek de neden mevcut varsa neden gönderilmiyor 5 6 hatta daha fazla sanırım sipariş verdim hep bekledim düzelir diye ama malesef"
+        },
+        {
+            "uuid": "99f3ff61-c8af-417e-bc00-83cd121c81ee",
+            "createdAt": "2025-04-22T10:05:24Z",
+            "updatedAt": "2025-04-22T10:05:24Z",
+            "text": "Yorumlara ve fazla puanlamaya aldandım. Yerli zincir burgerci, lezzetsiz ama büyük. Lezzeti önemli değil doymak istiyorum diyorsanız, o zaman Burger King gibi garip yerdense iyidir. ",
+            "isAnonymous": false,
+            "reviewerName": "...u",
+            "reviewerId": "trab5l0g",
+            "ratings": [
+                {
+                    "topic": "overall",
+                    "score": 2
+                },
+                {
+                    "topic": "restaurant_food",
+                    "score": 2
+                }
+            ],
+            "type": "user",
+            "replies": [],
+            "commentPrettyDate": {
+                "translationKey": "NEXTGEN_REVIEWS_X_MONTHS_AGO",
+                "timeDuration": "11"
+            },
+            "likeCount": 0,
+            "isLiked": false,
+            "productVariations": [],
+            "topReviewerTranslationKey": "",
+            "temiz_metin": "yorumlara ve fazla puanlamaya aldandım yerli zincir burgerci lezzetsiz ama büyük lezzeti önemli değil doymak istiyorum diyorsanız o zaman burger king gibi garip yerdense iyidir"
+        },
+        {
+            "uuid": "63e98757-fecf-47b6-ae29-4d51c316022b",
+            "createdAt": "2025-04-20T16:04:19Z",
+            "updatedAt": "2025-04-20T16:04:19Z",
+            "text": "Böyle bir koku olamaz… Sos mu, soğan mı bilemedim ama hamburger yoğun şekilde kötü kokuyordu. Sanki bozulmuş gibiydi. Bir ısırık aldım, ama devam edemedim ve çöpe atmak zorunda kaldım.\n",
+            "isAnonymous": false,
+            "reviewerName": "...y",
+            "reviewerId": "trdi1k8h",
+            "ratings": [
+                {
+                    "topic": "overall",
+                    "score": 1
+                },
+                {
+                    "topic": "restaurant_food",
+                    "score": 1
+                },
+                {
+                    "topic": "rider",
+                    "score": 5
+                }
+            ],
+            "type": "user",
+            "replies": [],
+            "commentPrettyDate": {
+                "translationKey": "NEXTGEN_REVIEWS_X_MONTHS_AGO",
+                "timeDuration": "11"
+            },
+            "likeCount": 0,
+            "isLiked": false,
+            "productVariations": [],
+            "topReviewerTranslationKey": "",
+            "temiz_metin": "böyle bir koku olamaz sos mu soğan mı bilemedim ama hamburger yoğun şekilde kötü kokuyordu sanki bozulmuş gibiydi bir ısırık aldım ama devam edemedim ve çöpe atmak zorunda kaldım"
+        },
+        {
+            "uuid": "babf4186-f718-42b2-92f6-59bd596b2d31",
+            "createdAt": "2025-04-17T21:20:37Z",
+            "updatedAt": "2025-04-17T21:20:37Z",
+            "text": "yine 1 lt kolam eksik geldi bu iki oluyor. 2 menu siparis veriyorum birinin kolasi gelmiyor sebebi nedir cok merak ediyorum",
+            "isAnonymous": false,
+            "reviewerName": "...n",
+            "reviewerId": "try0uumj",
+            "ratings": [
+                {
+                    "topic": "overall",
+                    "score": 1
+                },
+                {
+                    "topic": "restaurant_food",
+                    "score": 1
+                }
+            ],
+            "type": "user",
+            "replies": [],
+            "commentPrettyDate": {
+                "translationKey": "NEXTGEN_REVIEWS_X_MONTHS_AGO",
+                "timeDuration": "11"
+            },
+            "likeCount": 0,
+            "isLiked": false,
+            "productVariations": [],
+            "topReviewerTranslationKey": "",
+            "temiz_metin": "yine 1 lt kolam eksik geldi bu iki oluyor 2 menu sipariş veriyorum birinin kolasi gelmiyor sebebi nedir çok merak ediyorum"
+        },
+        {
+            "uuid": "18e699cf-e4a4-45f9-a0bb-f428c7dd14f0",
+            "createdAt": "2025-04-17T10:19:20Z",
+            "updatedAt": "2025-04-17T10:19:20Z",
+            "text": "Trüflü mayonez ve ekstra füme istedim, yok!",
+            "isAnonymous": false,
+            "reviewerName": "...i",
+            "reviewerId": "trytiqrj",
+            "ratings": [
+                {
+                    "topic": "overall",
+                    "score": 3
+                },
+                {
+                    "topic": "restaurant_food",
+                    "score": 3
+                }
+            ],
+            "type": "user",
+            "replies": [],
+            "commentPrettyDate": {
+                "translationKey": "NEXTGEN_REVIEWS_X_MONTHS_AGO",
+                "timeDuration": "11"
+            },
+            "likeCount": 0,
+            "isLiked": false,
+            "productVariations": [],
+            "topReviewerTranslationKey": "",
+            "temiz_metin": "trüflü mayonez ve füme istedim yok"
+        },
+        {
+            "uuid": "bd30cde4-a775-4792-b8c0-370641d2a33a",
+            "createdAt": "2025-04-11T19:22:56Z",
+            "updatedAt": "2025-04-11T19:22:56Z",
+            "text": "Siparişte kola diyorum ayran geliyor yapacağınız işe skm ",
+            "isAnonymous": false,
+            "reviewerName": "...ı",
+            "reviewerId": "trh3mp30",
+            "ratings": [
+                {
+                    "topic": "overall",
+                    "score": 1
+                },
+                {
+                    "topic": "restaurant_food",
+                    "score": 1
+                },
+                {
+                    "topic": "rider",
+                    "score": 1
+                }
+            ],
+            "type": "user",
+            "replies": [],
+            "commentPrettyDate": {
+                "translationKey": "NEXTGEN_REVIEWS_X_MONTHS_AGO",
+                "timeDuration": "11"
+            },
+            "likeCount": 3,
+            "isLiked": false,
+            "productVariations": [],
+            "topReviewerTranslationKey": "",
+            "temiz_metin": "siparişte kola diyorum ayran geliyor yapacağınız işe"
+        },
+        {
+            "uuid": "73309ab9-0a45-485f-941a-82cf8f4e6166",
+            "createdAt": "2025-04-06T19:09:09Z",
+            "updatedAt": "2025-04-06T19:09:09Z",
+            "text": "it could more size of meal for perfection ",
+            "isAnonymous": false,
+            "reviewerName": "...9",
+            "reviewerId": "trgc475o",
+            "ratings": [
+                {
+                    "topic": "overall",
+                    "score": 5
+                },
+                {
+                    "topic": "restaurant_food",
+                    "score": 5
+                }
+            ],
+            "type": "user",
+            "replies": [],
+            "commentPrettyDate": {
+                "translationKey": "NEXTGEN_REVIEWS_X_MONTHS_AGO",
+                "timeDuration": "11"
+            },
+            "likeCount": 0,
+            "isLiked": false,
+            "productVariations": [
+                {
+                    "id": "40809432",
+                    "defaultTitle": "Algida Menüsü (Joker Cheeseburger Menü)",
+                    "title": {},
+                    "unitPrice": 454,
+                    "product": {
+                        "id": "32958431",
+                        "defaultTitle": "Algida Menüsü (Joker Cheeseburger Menü)",
+                        "title": {
+                            "tr_TR": "Algida Menüsü (Joker Cheeseburger Menü)"
+                        },
+                        "description": "Joker Cheeseburger (85 gr.) + Patates Kızartması + Algida Maraş Usulü Cup (100 ml.) + İçecek (33 cl.)",
+                        "active": false,
+                        "imageUrls": [
+                            "https://images.deliveryhero.io/image/fd-tr/products/32958367.jpg"
+                        ]
+                    }
+                }
+            ],
+            "topReviewerTranslationKey": "",
+            "temiz_metin": "it could more size of meal for perfection"
+        },
+        {
+            "uuid": "272efb4e-7e0f-4e96-bc47-ce6ddb0a941d",
+            "createdAt": "2025-04-06T17:23:48Z",
+            "updatedAt": "2025-04-06T17:23:48Z",
+            "text": "şiparişim 1 saat den fazla sürdü gelmesi  o yetmemiş gibi bir eksik geldi  de 4 - lü Nugget vardı şiparişte o yoktu  ",
+            "isAnonymous": false,
+            "reviewerName": "...a",
+            "reviewerId": "trd806td",
+            "ratings": [
+                {
+                    "topic": "overall",
+                    "score": 1
+                },
+                {
+                    "topic": "restaurant_food",
+                    "score": 1
+                },
+                {
+                    "topic": "rider",
+                    "score": 5
+                }
+            ],
+            "type": "user",
+            "replies": [],
+            "commentPrettyDate": {
+                "translationKey": "NEXTGEN_REVIEWS_X_MONTHS_AGO",
+                "timeDuration": "11"
+            },
+            "likeCount": 1,
+            "isLiked": false,
+            "productVariations": [
+                {
+                    "id": "78785695",
+                    "defaultTitle": "Tasty Smoky BBQ Menü",
+                    "title": {},
+                    "unitPrice": 670,
+                    "product": {
+                        "id": "70282916",
+                        "defaultTitle": "Tasty Smoky BBQ Menü",
+                        "title": {
+                            "en_TR": "Supper Smoky BBQ Menü",
+                            "tr_TR": "Tasty Smoky BBQ Menü"
+                        },
+                        "description": "Tasty Smoky BBQ Burger (150 gr.) + Patates Kızartması + İçecek (33 cl.)",
+                        "active": false,
+                        "imageUrls": [
+                            "https://images.deliveryhero.io/image/fd-tr/Products/70281583.jpg"
+                        ]
+                    }
+                }
+            ],
+            "topReviewerTranslationKey": "",
+            "temiz_metin": "şiparişim 1 saat den fazla sürdü gelmesi o yetmemiş gibi bir eksik geldi de 4 lü nugget vardı şiparişte o yoktu"
+        },
+        {
+            "uuid": "69bc0438-1b6d-4115-b362-83fd1f16d548",
+            "createdAt": "2025-04-05T15:25:22Z",
+            "updatedAt": "2025-04-05T15:25:22Z",
+            "text": "Hız lezzet her şey çok iyi de ekstra füme ve cheddar istemiştim asla koymamışlar. Kötüniyeten değil de dalgınlıktan olduğunu düşünüyorum ",
+            "isAnonymous": false,
+            "reviewerName": "...n",
+            "reviewerId": "trp6ygtq",
+            "ratings": [
+                {
+                    "topic": "overall",
+                    "score": 4
+                },
+                {
+                    "topic": "restaurant_food",
+                    "score": 4
+                }
+            ],
+            "type": "user",
+            "replies": [],
+            "commentPrettyDate": {
+                "translationKey": "NEXTGEN_REVIEWS_X_MONTHS_AGO",
+                "timeDuration": "11"
+            },
+            "likeCount": 0,
+            "isLiked": false,
+            "productVariations": [],
+            "topReviewerTranslationKey": "",
+            "temiz_metin": "hız lezzet her şey çok iyi de füme ve cheddar istemiştim asla koymamışlar kötüniyeten değil de dalgınlıktan olduğunu düşünüyorum"
+        },
+        {
+            "uuid": "2e9eaf34-a8d6-468a-ba56-4ab707cdd72b",
+            "createdAt": "2025-04-05T14:55:09Z",
+            "updatedAt": "2025-04-05T14:55:09Z",
+            "text": "büyük harflerle domates istenmediği halde dikkate alınmamış domatesli geldi sos olarak ranc ve barbeku istedim mayonez ketcap gönderilmiş sanirim yazilanlari okuma da sorun var",
+            "isAnonymous": false,
+            "reviewerName": "...ş",
+            "reviewerId": "tr6ik7qq",
+            "ratings": [
+                {
+                    "topic": "overall",
+                    "score": 2
+                },
+                {
+                    "topic": "restaurant_food",
+                    "score": 2
+                },
+                {
+                    "topic": "rider",
+                    "score": 5
+                }
+            ],
+            "type": "user",
+            "replies": [],
+            "commentPrettyDate": {
+                "translationKey": "NEXTGEN_REVIEWS_X_MONTHS_AGO",
+                "timeDuration": "11"
+            },
+            "likeCount": 0,
+            "isLiked": false,
+            "productVariations": [
+                {
+                    "id": "40809431",
+                    "defaultTitle": "Algida Menüsü (Joker Classic Burger Menü)",
+                    "title": {},
+                    "unitPrice": 439,
+                    "product": {
+                        "id": "32958430",
+                        "defaultTitle": "Algida Menüsü (Joker Classic Burger Menü)",
+                        "title": {
+                            "en_TR": "Joker Burger Menü",
+                            "tr_TR": "Algida Menüsü (Joker Classic Burger Menü)"
+                        },
+                        "description": "Joker Burger (85 gr.) + Patates Kızartması + Algida Maraş Usulü Cup (100 ml.) + Coca-Cola (33 cl.)",
+                        "active": false,
+                        "imageUrls": [
+                            "https://images.deliveryhero.io/image/fd-tr/products/32958366.jpg"
+                        ]
+                    }
+                }
+            ],
+            "topReviewerTranslationKey": "",
+            "temiz_metin": "büyük harflerle domates istenmediği halde dikkate alınmamış domatesli geldi sos olarak ranc ve barbeku istedim mayonez ketcap gönderilmiş sanirim yazilanlari okuma da sorun var"
+        },
+        {
+            "uuid": "b65f9419-b66b-4f90-9780-7a6696aa78c6",
+            "createdAt": "2025-04-03T19:56:24Z",
+            "updatedAt": "2025-04-03T19:56:24Z",
+            "text": "güzel",
+            "isAnonymous": false,
+            "reviewerName": "...r",
+            "reviewerId": "trqj3w18",
+            "ratings": [
+                {
+                    "topic": "overall",
+                    "score": 5
+                },
+                {
+                    "topic": "restaurant_food",
+                    "score": 5
+                }
+            ],
+            "type": "user",
+            "replies": [],
+            "commentPrettyDate": {
+                "translationKey": "NEXTGEN_REVIEWS_X_MONTHS_AGO",
+                "timeDuration": "11"
+            },
+            "likeCount": 0,
+            "isLiked": false,
+            "productVariations": [],
+            "topReviewerTranslationKey": "",
+            "temiz_metin": "güzel"
+        }
+    ]
+}

@@ -130,6 +130,17 @@ def yemeksepeti_yorum_bul(json_verisi):
             if sonuc: return sonuc
     return []
 
+
+def handle_response(response):
+    if "vendor" in response.url and response.status == 200:
+        try:
+            data = response.json()
+            # Buradaki JSON içinde görsel linkini ara
+            potential_img = yemeksepeti_gorsel_bul(data)
+            if potential_img:
+                print(f"🎯 API'den Görsel Yakalandı: {potential_img}")
+        except: pass
+
 def trendyol_go_yorum_bul(json_verisi):
     if isinstance(json_verisi, list) and len(json_verisi) > 0 and isinstance(json_verisi[0], dict):
         if "comment" in json_verisi[0] or "rate" in json_verisi[0] or "customerName" in json_verisi[0]:
@@ -560,11 +571,17 @@ def yemeksepeti_veri_cek(restoran_linki, max_sayfa):
             # Maps'te kullandığımız kusursuz kamuflaj ayarları
             context = p.chromium.launch_persistent_context(
                 user_data_dir=profil_klasoru,
-                headless=False, # Bot korumasını aşmak için görünür açıyoruz
+                headless=True, # Bot korumasını aşmak için görünür açıyoruz
                 user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36",
                 locale="tr-TR",
                 ignore_default_args=["--enable-automation"], # "Chrome test yazılımı tarafından kontrol ediliyor" yazısını SİLER!
-                args=["--disable-blink-features=AutomationControlled"]
+                args=[
+                    "--disable-blink-features=AutomationControlled",
+                    "--no-sandbox",
+                    # YENİ HEADLESS MANTIGI:
+                    "--headless=new"
+                ],
+                viewport={'width': 1920, 'height': 1080}
             )
 
             page = context.pages[0] if context.pages else context.new_page()
@@ -576,7 +593,10 @@ def yemeksepeti_veri_cek(restoran_linki, max_sayfa):
                 pass
 
             # Sayfanın ana iskeleti yüklenene kadar bekle
-            page.goto(restoran_linki, wait_until="domcontentloaded", timeout=30000)
+
+
+            page.on("response", handle_response)
+            page.goto(restoran_linki, wait_until="networkidle", timeout=60000)
 
             # --- POP-UP AVCI ---
             # Yemeksepetindeki olası "Anladım" veya "Kabul Et" butonlarına otomatik basmayı dener
@@ -771,7 +791,8 @@ def google_maps_veri_cek(mekan_linki, max_kaydirma):
 
             # --- SİHİR 1: AKILLI GÖRSEL AVCISI (AVATARLAR YASAKLANDI) ---
             try:
-                page.wait_for_selector('img', timeout=10000)
+                page.wait_for_selector('img[src*="googleusercontent.com"]', timeout=10000)
+                time.sleep(2)  # JS'nin görseli işlemesi için ek süre
                 gorsel_url = page.evaluate('''() => {
                     const images = Array.from(document.querySelectorAll('img'));
                     
@@ -847,31 +868,44 @@ def google_maps_veri_cek(mekan_linki, max_kaydirma):
             # 4.2 JavaScript ile yapısal (structured) veriyi söküp al
             ham_yorumlar = page.evaluate('''() => {
                 let results = [];
-                // Yorum bloklarını bul (class genelde jftiEf'tir)
+                let seenSignatures = new Set(); 
+
+                // Yorum bloklarını bul
                 let reviewBlocks = document.querySelectorAll('.jftiEf, div[data-review-id]');
-                
+
                 for(let block of reviewBlocks) {
-                    // İsim
+                    // 1. İsim elementini bul ve metni al
                     let nameEl = block.querySelector('.d4r55') || block.querySelector('.WNxzHc');
                     let isim = nameEl ? nameEl.innerText.trim() : "Bilinmiyor";
-                    
-                    // Tarih
-                    let dateEl = block.querySelector('.rsqaWe');
-                    let tarih = dateEl ? dateEl.innerText.trim() : "Bilinmiyor";
-                    
-                    // Puan
-                    let ratingEl = block.querySelector('.kvMYJc') || block.querySelector('span[role="img"]');
-                    let puan = "Bilinmiyor";
-                    if(ratingEl && ratingEl.getAttribute('aria-label')) {
-                        puan = ratingEl.getAttribute('aria-label');
-                    }
-                    
-                    // Metin
+
+                    // 2. Yorum metni elementini bul ve metni al
                     let textEl = block.querySelector('.wiI7pd');
                     let metin = textEl ? textEl.innerText.trim() : "";
-                    
-                    if(metin.length > 0) {
-                        results.push({isim: isim, tarih: tarih, puan: puan, orijinal_metin: metin});
+
+                    // 3. İMZA OLUŞTURMA (Hatanın olduğu yer burasıydı, değişkenler tanımlandıktan sonra olmalı)
+                    let imza = isim + "_" + metin;
+
+                    // 4. EĞER metin boş değilse VE daha önce görülmediyse listeye ekle
+                    if(metin.length > 0 && !seenSignatures.has(imza)) {
+                        // Tarih ve Puanı çek
+                        let dateEl = block.querySelector('.rsqaWe');
+                        let tarih = dateEl ? dateEl.innerText.trim() : "Bilinmiyor";
+
+                        let ratingEl = block.querySelector('.kvMYJc') || block.querySelector('span[role="img"]');
+                        let puan = "Bilinmiyor";
+                        if(ratingEl && ratingEl.getAttribute('aria-label')) {
+                            puan = ratingEl.getAttribute('aria-label');
+                        }
+
+                        results.push({
+                            isim: isim, 
+                            tarih: tarih, 
+                            puan: puan, 
+                            orijinal_metin: metin
+                        });
+
+                        // Bu imzayı "görüldü" olarak işaretle
+                        seenSignatures.add(imza);
                     }
                 }
                 return results;
