@@ -1,0 +1,758 @@
+{
+    "platform": "etstur",
+    "urun_id": "GURSAR",
+    "gorsel_url": "https://images.etstur.com/imgproxy/files/images/hotelImages/test/TR/51245/l/GS-Genel.jpg",
+    "yorumlar": [
+        {
+            "name": "c*****",
+            "surname": "C*****",
+            "reviewText": "Oteli çok beğendim memnun kaldım. Temizliği yeni değimiş herhalde bazı şeyler odalardan memnun kaldım aktiviteler az daha fazla olabilir yemekler güzel, çok çeşit vardı. Oda temizdi her gün geldiler çarşaf değiştiler. Odalarda bir koltuk var onun iki olması daha iyi olur.",
+            "date": "2026 Mart",
+            "recommendation": "RECOMMEND",
+            "score": 100.0,
+            "guestType": "Çift",
+            "scoreText": "Mükemmel",
+            "roomName": "Konaklanan Oda: Superior Oda",
+            "hotelReview": "Sayın Misafirimiz, NG Sapanca ailesi olarak, otelimizde yaşadığınız deneyimleri Otelpuan.com üzerinden paylaştığınız için içten teşekkürlerimizi sunarız. Değerli geri bildirimleriniz, sürekli gelişim hedefiyle çalışan ekibimize her zaman büyük bir motivasyon kaynağı olmaktadır. NG Sapanca hakkındaki yorumlarınız, puanlamalarınız ve yapıcı değerlendirmeleriniz için tekrar teşekkür eder; sizi en kısa sürede yeniden aramızda görmekten mutluluk duyacağımızı belirtmek isteriz. Saygılarımızla,",
+            "ratingTypes": [
+                {
+                    "name": "Oda",
+                    "score": 10.0
+                },
+                {
+                    "name": "Hizmet",
+                    "score": 10.0
+                },
+                {
+                    "name": "Yemek",
+                    "score": 10.0
+                }
+            ],
+            "images": null,
+            "temiz_metin": "oteli çok beğendim memnun kaldım temizliği yeni değimiş herhalde bazı şeyler odalardan memnun kaldım aktiviteler az daha fazla olabilir yemekler güzel çok çeşit vardı oda temizdi her gün geldiler çarşaf değiştiler odalarda bir koltuk var onun iki olması daha iyi olur"
+        },
+        {
+            "name": "N*****",
+            "surname": "E*****",
+            "reviewText": "Otel kalabalık olmasına rağemn kalabalığı çok hissetmedik ferahtı temzilik olarak problem yoktu . Çocuk menüsü olabilirdi açık büfede . Gayet keyifliydi. Oda iyiydi sıkıntı yoktu . Sıcaktı bir tık. Oda tam deponun yanındaydı sabahları ses oluyordu çok rahatsız edici değildi.",
+            "date": "2026 Mart",
+            "recommendation": "RECOMMEND",
+            "score": 100.0,
+            "guestType": "Aile",
+            "scoreText": "Mükemmel",
+            "roomName": "Konaklanan Oda: Superior Oda",
+            "hotelReview": "Sayın Misafirimiz, NG Sapanca ailesi olarak, otelimizde yaşadığınız deneyimleri Otelpuan.com üzerinden paylaştığınız için içten teşekkürlerimizi sunarız. Değerli geri bildirimleriniz, sürekli gelişim hedefiyle çalışan ekibimize her zaman büyük bir motivasyon kaynağı olmaktadır. NG Sapanca hakkındaki yorumlarınız, puanlamalarınız ve yapıcı değerlendirmeleriniz için tekrar teşekkür eder; sizi en kısa sürede yeniden aramızda görmekten mutluluk duyacağımızı belirtmek isteriz. Saygılarımızla, ",
+            "ratingTypes": [
+                {
+                    "name": "Oda",
+                    "score": 10.0
+                },
+                {
+                    "name": "Hizmet",
+                    "score": 10.0
+                },
+                {
+                    "name": "Yemek",
+                    "score": 10.0
+                }
+            ],
+            "images": null,
+            "temiz_metin": "otel kalabalık olmasına rağemn kalabalığı çok hissetmedik ferahtı temzilik olarak problem yoktu çocuk menüsü olabilirdi açık büfede gayet keyifliydi oda iyiydi sıkıntı yoktu sıcaktı bir tık oda tam deponun yanındaydı sabahları ses oluyordu çok rahatsız edici değildi"
+        },
+        {
+            "name": "c*****",
+            "surname": "C*****",
+            "reviewText": "Oteli tavsiye ederim. Otel çocuk için rahat bir oteldi konforlu yemekleride güzeldi. Yemek ve odanın konforu spasından memnun kaldım.",
+            "date": "2026 Mart",
+            "recommendation": "RECOMMEND",
+            "score": 73.0,
+            "guestType": "Arkadaş",
+            "scoreText": "İyi",
+            "roomName": "Konaklanan Oda: Superior Oda",
+            "hotelReview": "Sayın Misafirimiz, NG Sapanca ailesi olarak, otelimizde yaşadığınız deneyimleri Otelpuan.com üzerinden paylaştığınız için içten teşekkürlerimizi sunarız. Değerli geri bildirimleriniz, sürekli gelişim hedefiyle çalışan ekibimize her zaman büyük bir motivasyon kaynağı olmaktadır. NG Sapanca hakkındaki yorumlarınız, puanlamalarınız ve yapıcı değerlendirmeleriniz için tekrar teşekkür eder; sizi en kısa sürede yeniden aramızda görmekten mutluluk duyacağımızı belirtmek isteriz. Saygılarımızla, ",
+            "ratingTypes": [
+                {
+                    "name": "Oda",
+                    "score": 6.0
+                },
+                {
+                    "name": "Hizmet",
+                    "score": 8.0
+                },
+                {
+                    "name": "Yemek",
+                    "score": 8.0
+                }
+            ],
+            "images": null,
+            "temiz_metin": "oteli tavsiye ederim otel çocuk için rahat bir oteldi konforlu yemekleride güzeldi yemek ve odanın konforu spasından memnun kaldım"
+        },
+        {
+            "name": "F*****",
+            "surname": "A*****",
+            "reviewText": "Yastıklarını değiştirseler çok daha iyi olacak; gayrısı 4/4'lüktü.",
+            "date": "2026 Mart",
+            "recommendation": "RECOMMEND",
+            "score": 100.0,
+            "guestType": "Aile",
+            "scoreText": "Mükemmel",
+            "roomName": "Konaklanan Oda: Superior Deluxe Oda",
+            "hotelReview": "Sayın Misafirimiz, NG Sapanca ailesi olarak, otelimizde yaşadığınız deneyimleri Otelpuan.com üzerinden paylaştığınız için içten teşekkürlerimizi sunarız. Değerli geri bildirimleriniz, sürekli gelişim hedefiyle çalışan ekibimize her zaman büyük bir motivasyon kaynağı olmaktadır. NG Sapanca hakkındaki yorumlarınız, puanlamalarınız ve yapıcı değerlendirmeleriniz için tekrar teşekkür eder; sizi en kısa sürede yeniden aramızda görmekten mutluluk duyacağımızı belirtmek isteriz. Saygılarımızla,",
+            "ratingTypes": [
+                {
+                    "name": "Oda",
+                    "score": 10.0
+                },
+                {
+                    "name": "Hizmet",
+                    "score": 10.0
+                },
+                {
+                    "name": "Yemek",
+                    "score": 10.0
+                },
+                {
+                    "name": "Fiyat Performans",
+                    "score": 10.0
+                }
+            ],
+            "images": null,
+            "temiz_metin": "yastıklarını değiştirseler çok daha iyi olacak gayrısı 4 4 lüktü"
+        },
+        {
+            "name": "B*****",
+            "surname": "M*****",
+            "reviewText": "Ng sapanca ve ng enjoy yan yana iki tesis. Ng sapanca eski olan ve çocuklu ailelere uygun hotel. Ng enjoy ise 12 yaş üstü çocuklu aileler için olsa gerek. Bu detay bize önceden söylenmediği için bebelerin çok olduğu ng sapancada tatili geçirdik. Bizim cocuklar büyüdüğünden bir daha gidersem ng enjoyda kaşmak isterim.",
+            "date": "2026 Mart",
+            "recommendation": "RECOMMEND",
+            "score": 87.0,
+            "guestType": "Aile",
+            "scoreText": "Çok iyi",
+            "roomName": "Konaklanan Oda: Superior Deluxe Oda",
+            "hotelReview": "Sayın Misafirimiz, NG Sapanca ailesi olarak, otelimizde yaşadığınız deneyimleri Otelpuan.com üzerinden paylaştığınız için içten teşekkürlerimizi sunarız. Değerli geri bildirimleriniz, sürekli gelişim hedefiyle çalışan ekibimize her zaman büyük bir motivasyon kaynağı olmaktadır. NG Sapanca hakkındaki yorumlarınız, puanlamalarınız ve yapıcı değerlendirmeleriniz için tekrar teşekkür eder; sizi en kısa sürede yeniden aramızda görmekten mutluluk duyacağımızı belirtmek isteriz. Saygılarımızla, ",
+            "ratingTypes": [
+                {
+                    "name": "Oda",
+                    "score": 8.0
+                },
+                {
+                    "name": "Hizmet",
+                    "score": 10.0
+                },
+                {
+                    "name": "Yemek",
+                    "score": 8.0
+                },
+                {
+                    "name": "Fiyat Performans",
+                    "score": 8.0
+                }
+            ],
+            "images": null,
+            "temiz_metin": "ng sapanca ve ng enjoy yan yana iki tesis ng sapanca eski olan ve çocuklu ailelere uygun hotel ng enjoy ise 12 yaş üstü çocuklu aileler için olsa gerek bu detay bize önceden söylenmediği için bebelerin çok olduğu ng sapancada tatili geçirdik bizim cocuklar büyüdüğünden bir daha gidersem ng enjoyda kaşmak isterim"
+        },
+        {
+            "name": "S*****",
+            "surname": "H*****",
+            "reviewText": "Oldukça iyi . Amacına uygun.",
+            "date": "2026 Mart",
+            "recommendation": "RECOMMEND",
+            "score": 100.0,
+            "guestType": "Aile",
+            "scoreText": "Mükemmel",
+            "roomName": "Konaklanan Oda: Süperior Oda",
+            "hotelReview": "Sayın Misafirimiz, NG Sapanca ailesi olarak, otelimizde yaşadığınız deneyimleri Otelpuan.com üzerinden paylaştığınız için içten teşekkürlerimizi sunarız. Değerli geri bildirimleriniz, sürekli gelişim hedefiyle çalışan ekibimize her zaman büyük bir motivasyon kaynağı olmaktadır. NG Sapanca hakkındaki yorumlarınız, puanlamalarınız ve yapıcı değerlendirmeleriniz için tekrar teşekkür eder; sizi en kısa sürede yeniden aramızda görmekten mutluluk duyacağımızı belirtmek isteriz. Saygılarımızla, ",
+            "ratingTypes": [
+                {
+                    "name": "Oda",
+                    "score": 10.0
+                },
+                {
+                    "name": "Hizmet",
+                    "score": 10.0
+                },
+                {
+                    "name": "Yemek",
+                    "score": 10.0
+                },
+                {
+                    "name": "Fiyat Performans",
+                    "score": 8.0
+                }
+            ],
+            "images": null,
+            "temiz_metin": "oldukça iyi amacına uygun"
+        },
+        {
+            "name": "M*****",
+            "surname": "K*****",
+            "reviewText": "Gerçekten değer gördüğümüzü hissettik. Harika bir tatildi. Her şey için çok teşekkür ederiz.",
+            "date": "2026 Mart",
+            "recommendation": "RECOMMEND",
+            "score": 100.0,
+            "guestType": "Aile",
+            "scoreText": "Mükemmel",
+            "roomName": "Konaklanan Oda: Superior Deluxe Oda",
+            "hotelReview": "Sayın Misafirimiz, NG Sapanca ailesi olarak, otelimizde yaşadığınız deneyimleri Otelpuan.com üzerinden paylaştığınız için içten teşekkürlerimizi sunarız. Değerli geri bildirimleriniz, sürekli gelişim hedefiyle çalışan ekibimize her zaman büyük bir motivasyon kaynağı olmaktadır. NG Sapanca hakkındaki yorumlarınız, puanlamalarınız ve yapıcı değerlendirmeleriniz için tekrar teşekkür eder; sizi en kısa sürede yeniden aramızda görmekten mutluluk duyacağımızı belirtmek isteriz. Saygılarımızla, ",
+            "ratingTypes": [
+                {
+                    "name": "Oda",
+                    "score": 10.0
+                },
+                {
+                    "name": "Hizmet",
+                    "score": 10.0
+                },
+                {
+                    "name": "Yemek",
+                    "score": 10.0
+                },
+                {
+                    "name": "Fiyat Performans",
+                    "score": 10.0
+                }
+            ],
+            "images": null,
+            "temiz_metin": "gerçekten değer gördüğümüzü hissettik harika bir tatildi her şey için çok teşekkür ederiz"
+        },
+        {
+            "name": "S*****",
+            "surname": "Ş*****",
+            "reviewText": "Herşey mükemmeldi.",
+            "date": "2026 Mart",
+            "recommendation": "RECOMMEND",
+            "score": 100.0,
+            "guestType": "Arkadaş",
+            "scoreText": "Mükemmel",
+            "roomName": "Konaklanan Oda: Superior Oda",
+            "hotelReview": "Sayın Misafirimiz, NG Sapanca ailesi olarak, otelimizde yaşadığınız deneyimleri Otelpuan.com üzerinden paylaştığınız için içten teşekkürlerimizi sunarız. Değerli geri bildirimleriniz, sürekli gelişim hedefiyle çalışan ekibimize her zaman büyük bir motivasyon kaynağı olmaktadır. NG Sapanca hakkındaki yorumlarınız, puanlamalarınız ve yapıcı değerlendirmeleriniz için tekrar teşekkür eder; sizi en kısa sürede yeniden aramızda görmekten mutluluk duyacağımızı belirtmek isteriz. Saygılarımızla,",
+            "ratingTypes": [
+                {
+                    "name": "Oda",
+                    "score": 10.0
+                },
+                {
+                    "name": "Hizmet",
+                    "score": 10.0
+                },
+                {
+                    "name": "Yemek",
+                    "score": 10.0
+                },
+                {
+                    "name": "Fiyat Performans",
+                    "score": 10.0
+                }
+            ],
+            "images": null,
+            "temiz_metin": "her şey mükemmeldi"
+        },
+        {
+            "name": "b****",
+            "surname": "k****",
+            "reviewText": "Çok uzun yıllardır bu otelin konaklayan misafirleriyiz. Fakat bu sene ng sapanca kısmında yemeklerde çeşitlilik ve lezzetler de biraz seviye düşüktü. Çay saatinde kısıtlı ikramlıklar sürekli bitiyordu. Akşam yemeklerinde çeşitlilik ve meze oldukça azdı. Gittiğimiz özel dönemlerde çocuklar için kurulan etkinlik alanları gerçekten çok keyifli fakat bu kadar çocuklar için aktivite yapılan otelde neden çocuklar için bir yemek alternatifi yok. Mini bir hamburger gibi, onlara uygun sade makarna vs. Gibi. Kesinlikle eksik. Banyolarda çocuklar için yükselticiler olmalı, ellerini yıkarken vb. Onun haricinde çok memnun kalınacak bir otel.",
+            "date": "2026 Mart",
+            "recommendation": "RECOMMEND",
+            "score": 87.0,
+            "guestType": "Aile",
+            "scoreText": "Çok iyi",
+            "roomName": "Konaklanan Oda: Superior Oda",
+            "hotelReview": "Sayın Misafirimiz, NG Sapanca ailesi olarak, otelimizde yaşadığınız deneyimleri Otelpuan.com üzerinden paylaştığınız için içten teşekkürlerimizi sunarız. Değerli geri bildirimleriniz, sürekli gelişim hedefiyle çalışan ekibimize her zaman büyük bir motivasyon kaynağı olmaktadır. NG Sapanca hakkındaki yorumlarınız, puanlamalarınız ve yapıcı değerlendirmeleriniz için tekrar teşekkür eder; sizi en kısa sürede yeniden aramızda görmekten mutluluk duyacağımızı belirtmek isteriz. Saygılarımızla",
+            "ratingTypes": [
+                {
+                    "name": "Oda",
+                    "score": 10.0
+                },
+                {
+                    "name": "Hizmet",
+                    "score": 10.0
+                },
+                {
+                    "name": "Yemek",
+                    "score": 6.0
+                },
+                {
+                    "name": "Fiyat Performans",
+                    "score": 10.0
+                }
+            ],
+            "images": null,
+            "temiz_metin": "çok uzun yıllardır bu otelin konaklayan misafirleriyiz fakat bu sene ng sapanca kısmında yemeklerde çeşitlilik ve lezzetler de biraz seviye düşüktü çay saatinde kısıtlı ikramlıklar sürekli bitiyordu akşam yemeklerinde çeşitlilik ve meze oldukça azdı gittiğimiz özel dönemlerde çocuklar için kurulan etkinlik alanları gerçekten çok keyifli fakat bu kadar çocuklar için aktivite yapılan otelde neden çocuklar için bir yemek alternatifi yok mini bir hamburger gibi onlara uygun sade makarna vs gibi kesinlikle eksik banyolarda çocuklar için yükselticiler olmalı ellerini yıkarken vb onun haricinde çok memnun kalınacak bir otel"
+        },
+        {
+            "name": "J*****",
+            "surname": "D*****",
+            "reviewText": "Doğa ile iç içe güzel bir tesis. Yarım pansiyon olmasına rağmen 5 çayı olmasını çok sevdim. Yemekler çeşitlilik anlamında iyiydi. Et kalitesi biraz düşüktü sadece. Çalışanlar çok kibar ve güzel yüzlüydü. Hepsi harikaydı. Tatili en güzel kılan şey çalışanların ilgisi ve pozitifliğiydi. Spa kısmının geliştirilmesi lazım. Mutlak bir kaos hakimdi. Çocuksuz yetişkin tarafında çocuktan geçilmiyordu. Hijyen konusunda da pek emin değilim. Odalar temizdi ve housekeeping harikaydı. Bu gibi otellerde çocuklara özel aktiviteye ek yetişkin aktiviteleri de eklenmeli bence.",
+            "date": "2026 Mart",
+            "recommendation": "RECOMMEND",
+            "score": 80.0,
+            "guestType": "Çift",
+            "scoreText": "İyi",
+            "roomName": "Konaklanan Oda: Superior Oda",
+            "hotelReview": "Sayın Misafirimiz, NG Sapanca ailesi olarak, otelimizde yaşadığınız deneyimleri Otelpuan.com üzerinden paylaştığınız için içten teşekkürlerimizi sunarız. Değerli geri bildirimleriniz, sürekli gelişim hedefiyle çalışan ekibimize her zaman büyük bir motivasyon kaynağı olmaktadır. NG Sapanca hakkındaki yorumlarınız, puanlamalarınız ve yapıcı değerlendirmeleriniz için tekrar teşekkür eder; sizi en kısa sürede yeniden aramızda görmekten mutluluk duyacağımızı belirtmek isteriz. Saygılarımızla, ",
+            "ratingTypes": [
+                {
+                    "name": "Oda",
+                    "score": 8.0
+                },
+                {
+                    "name": "Hizmet",
+                    "score": 8.0
+                },
+                {
+                    "name": "Yemek",
+                    "score": 8.0
+                },
+                {
+                    "name": "Fiyat Performans",
+                    "score": 8.0
+                }
+            ],
+            "images": null,
+            "temiz_metin": "doğa ile iç içe güzel bir tesis yarım pansiyon olmasına rağmen 5 çayı olmasını çok sevdim yemekler çeşitlilik anlamında iyiydi et kalitesi biraz düşüktü sadece çalışanlar çok kibar ve güzel yüzlüydü hepsi harikaydı tatili en güzel kılan şey çalışanların ilgisi ve pozitifliğiydi spa kısmının geliştirilmesi lazım mutlak bir kaos hakimdi çocuksuz yetişkin tarafında çocuktan geçilmiyordu hijyen konusunda da pek emin değilim odalar temizdi ve housekeeping harikaydı bu gibi otellerde çocuklara özel aktiviteye ek yetişkin aktiviteleri de eklenmeli bence"
+        },
+        {
+            "name": "N*****",
+            "surname": "V*****",
+            "reviewText": "Tesiste her yer çok temiz personel çok ilgili huzur verici bir yer dinlenmek için süper bir yer.",
+            "date": "2026 Mart",
+            "recommendation": "RECOMMEND",
+            "score": 100.0,
+            "guestType": "Aile",
+            "scoreText": "Mükemmel",
+            "roomName": "Konaklanan Oda: Superior Deluxe Oda",
+            "hotelReview": "Sayın Misafirimiz, NG Sapanca ailesi olarak, otelimizde yaşadığınız deneyimleri Otelpuan.com üzerinden paylaştığınız için içten teşekkürlerimizi sunarız. Değerli geri bildirimleriniz, sürekli gelişim hedefiyle çalışan ekibimize her zaman büyük bir motivasyon kaynağı olmaktadır. NG Sapanca hakkındaki yorumlarınız, puanlamalarınız ve yapıcı değerlendirmeleriniz için tekrar teşekkür eder; sizi en kısa sürede yeniden aramızda görmekten mutluluk duyacağımızı belirtmek isteriz. Saygılarımızla",
+            "ratingTypes": [
+                {
+                    "name": "Oda",
+                    "score": 10.0
+                },
+                {
+                    "name": "Hizmet",
+                    "score": 10.0
+                },
+                {
+                    "name": "Yemek",
+                    "score": 10.0
+                },
+                {
+                    "name": "Fiyat Performans",
+                    "score": 10.0
+                }
+            ],
+            "images": null,
+            "temiz_metin": "tesiste her yer çok temiz personel çok ilgili huzur verici bir yer dinlenmek için süper bir yer"
+        },
+        {
+            "name": "P*****",
+            "surname": "S*****",
+            "reviewText": "It was great.",
+            "date": "2026 Mart",
+            "recommendation": "RECOMMEND",
+            "score": 93.0,
+            "guestType": "Aile",
+            "scoreText": "Mükemmel",
+            "roomName": "Konaklanan Oda: Superior Oda",
+            "hotelReview": "Sayın Misafirimiz, NG Sapanca ailesi olarak, otelimizde yaşadığınız deneyimleri Otelpuan.com üzerinden paylaştığınız için içten teşekkürlerimizi sunarız. Değerli geri bildirimleriniz, sürekli gelişim hedefiyle çalışan ekibimize her zaman büyük bir motivasyon kaynağı olmaktadır. NG Sapanca hakkındaki yorumlarınız, puanlamalarınız ve yapıcı değerlendirmeleriniz için tekrar teşekkür eder; sizi en kısa sürede yeniden aramızda görmekten mutluluk duyacağımızı belirtmek isteriz. Saygılarımızla,",
+            "ratingTypes": [
+                {
+                    "name": "Oda",
+                    "score": 10.0
+                },
+                {
+                    "name": "Hizmet",
+                    "score": 10.0
+                },
+                {
+                    "name": "Yemek",
+                    "score": 8.0
+                },
+                {
+                    "name": "Fiyat Performans",
+                    "score": 8.0
+                }
+            ],
+            "images": null,
+            "temiz_metin": "ıt was great"
+        },
+        {
+            "name": "İ*****",
+            "surname": "A*****",
+            "reviewText": "Herşey harika",
+            "date": "2026 Mart",
+            "recommendation": "RECOMMEND",
+            "score": 100.0,
+            "guestType": "Aile",
+            "scoreText": "Mükemmel",
+            "roomName": null,
+            "hotelReview": "Sayın Misafirimiz, NG Sapanca ailesi olarak, otelimizde yaşadığınız deneyimleri Otelpuan.com üzerinden paylaştığınız için içten teşekkürlerimizi sunarız. Değerli geri bildirimleriniz, sürekli gelişim hedefiyle çalışan ekibimize her zaman büyük bir motivasyon kaynağı olmaktadır. NG Sapanca hakkındaki yorumlarınız, puanlamalarınız ve yapıcı değerlendirmeleriniz için tekrar teşekkür eder; sizi en kısa sürede yeniden aramızda görmekten mutluluk duyacağımızı belirtmek isteriz. Saygılarımızla, ",
+            "ratingTypes": [
+                {
+                    "name": "Oda",
+                    "score": 10.0
+                },
+                {
+                    "name": "Hizmet",
+                    "score": 10.0
+                },
+                {
+                    "name": "Yemek",
+                    "score": 10.0
+                },
+                {
+                    "name": "Fiyat Performans",
+                    "score": 10.0
+                }
+            ],
+            "images": null,
+            "temiz_metin": "her şey harika"
+        },
+        {
+            "name": "N****",
+            "surname": "K*******",
+            "reviewText": "Mükemmeldi",
+            "date": "2026 Mart",
+            "recommendation": "RECOMMEND",
+            "score": 100.0,
+            "guestType": "Aile",
+            "scoreText": "Mükemmel",
+            "roomName": "Konaklanan Oda: Senior Suit",
+            "hotelReview": "Sayın Misafirimiz, NG Sapanca ailesi olarak, otelimizde yaşadığınız deneyimleri Otelpuan.com üzerinden paylaştığınız için içten teşekkürlerimizi sunarız. Değerli geri bildirimleriniz, sürekli gelişim hedefiyle çalışan ekibimize her zaman büyük bir motivasyon kaynağı olmaktadır. NG Sapanca hakkındaki yorumlarınız, puanlamalarınız ve yapıcı değerlendirmeleriniz için tekrar teşekkür eder; sizi en kısa sürede yeniden aramızda görmekten mutluluk duyacağımızı belirtmek isteriz. Saygılarımızla,",
+            "ratingTypes": [
+                {
+                    "name": "Oda",
+                    "score": 10.0
+                },
+                {
+                    "name": "Hizmet",
+                    "score": 10.0
+                },
+                {
+                    "name": "Yemek",
+                    "score": 10.0
+                },
+                {
+                    "name": "Fiyat Performans",
+                    "score": 10.0
+                }
+            ],
+            "images": null,
+            "temiz_metin": "mükemmeldi"
+        },
+        {
+            "name": "M*****",
+            "surname": "K*****",
+            "reviewText": "Otelin konumu, doğası, odaları güzeldi. Çalışanlar güler yüzlüydü. Çocuk havuzu dışındaki havuzlarda da fazlaca çocuk olması nedeniyle pek rahat yüzme şansımız olmadı. Akşam yemekleri güzeldi fakat beş çayı iyileştirilebilir. Sitede bilardo ücretsiz gözüküyordu fakat oynamak istediğimizde ücretli olduğu söylendi, bu tarz bilgilerin daha doğru verilmesi gerektiğini düşünüyorum.",
+            "date": "2026 Mart",
+            "recommendation": "UNDECIDED",
+            "score": 80.0,
+            "guestType": "Arkadaş",
+            "scoreText": "İyi",
+            "roomName": "Konaklanan Oda: Superior Oda",
+            "hotelReview": "Sayın Misafirimiz, NG Sapanca ailesi olarak, otelimizde yaşadığınız deneyimleri Otelpuan.com üzerinden paylaştığınız için içten teşekkürlerimizi sunarız. Değerli geri bildirimleriniz, sürekli gelişim hedefiyle çalışan ekibimize her zaman büyük bir motivasyon kaynağı olmaktadır. NG Sapanca hakkındaki yorumlarınız, puanlamalarınız ve yapıcı değerlendirmeleriniz için tekrar teşekkür eder; sizi en kısa sürede yeniden aramızda görmekten mutluluk duyacağımızı belirtmek isteriz. Saygılarımızla,",
+            "ratingTypes": [
+                {
+                    "name": "Oda",
+                    "score": 10.0
+                },
+                {
+                    "name": "Hizmet",
+                    "score": 8.0
+                },
+                {
+                    "name": "Yemek",
+                    "score": 6.0
+                },
+                {
+                    "name": "Fiyat Performans",
+                    "score": 6.0
+                }
+            ],
+            "images": null,
+            "temiz_metin": "otelin konumu doğası odaları güzeldi çalışanlar güler yüzlüydü çocuk havuzu dışındaki havuzlarda da fazlaca çocuk olması nedeniyle pek rahat yüzme şansımız olmadı akşam yemekleri güzeldi fakat beş çayı iyileştirilebilir sitede bilardo ücretsiz gözüküyordu fakat oynamak istediğimizde ücretli olduğu söylendi bu tarz bilgilerin daha doğru verilmesi gerektiğini düşünüyorum"
+        },
+        {
+            "name": "G*****",
+            "surname": "K*****",
+            "reviewText": "Ets nin de desteğiyle yine keyifli bir tatil….",
+            "date": "2026 Mart",
+            "recommendation": "RECOMMEND",
+            "score": 93.0,
+            "guestType": "Aile",
+            "scoreText": "Mükemmel",
+            "roomName": "Konaklanan Oda: Junior Suit",
+            "hotelReview": "Sayın Misafirimiz, NG Sapanca ailesi olarak, otelimizde yaşadığınız deneyimleri Otelpuan.com üzerinden paylaştığınız için içten teşekkürlerimizi sunarız. Değerli geri bildirimleriniz, sürekli gelişim hedefiyle çalışan ekibimize her zaman büyük bir motivasyon kaynağı olmaktadır. NG Sapanca hakkındaki yorumlarınız, puanlamalarınız ve yapıcı değerlendirmeleriniz için tekrar teşekkür eder; sizi en kısa sürede yeniden aramızda görmekten mutluluk duyacağımızı belirtmek isteriz. Saygılarımızla, ",
+            "ratingTypes": [
+                {
+                    "name": "Oda",
+                    "score": 10.0
+                },
+                {
+                    "name": "Hizmet",
+                    "score": 10.0
+                },
+                {
+                    "name": "Yemek",
+                    "score": 8.0
+                },
+                {
+                    "name": "Fiyat Performans",
+                    "score": 10.0
+                }
+            ],
+            "images": null,
+            "temiz_metin": "ets nin de desteğiyle yine keyifli bir tatil"
+        },
+        {
+            "name": "E*****",
+            "surname": "K*****",
+            "reviewText": "Hizmet kalitesi ve temizlik gayet iyiydi.",
+            "date": "2026 Mart",
+            "recommendation": "RECOMMEND",
+            "score": 93.0,
+            "guestType": "Aile",
+            "scoreText": "Mükemmel",
+            "roomName": "Konaklanan Oda: Superior Oda",
+            "hotelReview": "Sayın Misafirimiz, NG Sapanca ailesi olarak, otelimizde yaşadığınız deneyimleri Otelpuan.com üzerinden paylaştığınız için içten teşekkürlerimizi sunarız. Değerli geri bildirimleriniz, sürekli gelişim hedefiyle çalışan ekibimize her zaman büyük bir motivasyon kaynağı olmaktadır. NG Sapanca hakkındaki yorumlarınız, puanlamalarınız ve yapıcı değerlendirmeleriniz için tekrar teşekkür eder; sizi en kısa sürede yeniden aramızda görmekten mutluluk duyacağımızı belirtmek isteriz. Saygılarımızla, ",
+            "ratingTypes": [
+                {
+                    "name": "Oda",
+                    "score": 10.0
+                },
+                {
+                    "name": "Hizmet",
+                    "score": 10.0
+                },
+                {
+                    "name": "Yemek",
+                    "score": 8.0
+                },
+                {
+                    "name": "Fiyat Performans",
+                    "score": 10.0
+                }
+            ],
+            "images": null,
+            "temiz_metin": "hizmet kalitesi ve temizlik gayet iyiydi"
+        },
+        {
+            "name": "H*****",
+            "surname": "D*****",
+            "reviewText": "Personel çok ilgili,otelin konumu ve doğası çok iyi,odalar temiz ve güzel,spa iyi yemeklerde çeşit çok az lezzet olarak orta düzeyde kahvaltı çok iyi degil.",
+            "date": "2026 Mart",
+            "recommendation": "RECOMMEND",
+            "score": 93.0,
+            "guestType": "Aile",
+            "scoreText": "Mükemmel",
+            "roomName": "Konaklanan Oda: Superior Deluxe Oda",
+            "hotelReview": "Sayın Misafirimiz, NG Sapanca ailesi olarak, otelimizde yaşadığınız deneyimleri Otelpuan.com üzerinden paylaştığınız için içten teşekkürlerimizi sunarız. Değerli geri bildirimleriniz, sürekli gelişim hedefiyle çalışan ekibimize her zaman büyük bir motivasyon kaynağı olmaktadır. NG Sapanca hakkındaki yorumlarınız, puanlamalarınız ve yapıcı değerlendirmeleriniz için tekrar teşekkür eder; sizi en kısa sürede yeniden aramızda görmekten mutluluk duyacağımızı belirtmek isteriz. Saygılarımızla, ",
+            "ratingTypes": [
+                {
+                    "name": "Oda",
+                    "score": 10.0
+                },
+                {
+                    "name": "Hizmet",
+                    "score": 10.0
+                },
+                {
+                    "name": "Yemek",
+                    "score": 8.0
+                },
+                {
+                    "name": "Fiyat Performans",
+                    "score": 8.0
+                }
+            ],
+            "images": null,
+            "temiz_metin": "personel çok ilgili otelin konumu ve doğası çok iyi odalar temiz ve güzel spa iyi yemeklerde çeşit çok az lezzet olarak orta düzeyde kahvaltı çok iyi değil"
+        },
+        {
+            "name": "G*****",
+            "surname": "D*****",
+            "reviewText": "Keyifli bir tatildi. Otel yemyeşil bir korunun içinde olduğundan yürüyüş için çok elverişli. Otelin içinde çok rahat edebildiğimiz oturma ve dinlenme alanları var. Hizmet ve servis kalitesi üst düzey. . Genel olarak çok memnun kaldık.",
+            "date": "2026 Mart",
+            "recommendation": "RECOMMEND",
+            "score": 87.0,
+            "guestType": "Çift",
+            "scoreText": "Çok iyi",
+            "roomName": "Konaklanan Oda: Superior Oda",
+            "hotelReview": "Sayın Misafirimiz, NG Sapanca ailesi olarak, otelimizde yaşadığınız deneyimleri Otelpuan.com üzerinden paylaştığınız için içten teşekkürlerimizi sunarız. Değerli geri bildirimleriniz, sürekli gelişim hedefiyle çalışan ekibimize her zaman büyük bir motivasyon kaynağı olmaktadır. NG Sapanca hakkındaki yorumlarınız, puanlamalarınız ve yapıcı değerlendirmeleriniz için tekrar teşekkür eder; sizi en kısa sürede yeniden aramızda görmekten mutluluk duyacağımızı belirtmek isteriz. Saygılarımızla, ",
+            "ratingTypes": [
+                {
+                    "name": "Oda",
+                    "score": 8.0
+                },
+                {
+                    "name": "Hizmet",
+                    "score": 10.0
+                },
+                {
+                    "name": "Yemek",
+                    "score": 8.0
+                },
+                {
+                    "name": "Fiyat Performans",
+                    "score": 10.0
+                }
+            ],
+            "images": null,
+            "temiz_metin": "keyifli bir tatildi otel yemyeşil bir korunun içinde olduğundan yürüyüş için çok elverişli otelin içinde çok rahat edebildiğimiz oturma ve dinlenme alanları var hizmet ve servis kalitesi üst düzey genel olarak çok memnun kaldık"
+        },
+        {
+            "name": "E*****",
+            "surname": "C*****",
+            "reviewText": "Biz eğlendik konforlu bir oteldi. Çocuklu ailelere uygun bir di hijyen ve yemekleri iyiydi. Yemekler daha zengin olabilirdi ama yine de kötü değildi.",
+            "date": "2026 Mart",
+            "recommendation": "RECOMMEND",
+            "score": 93.0,
+            "guestType": "Aile",
+            "scoreText": "Mükemmel",
+            "roomName": "Konaklanan Oda: Superior Oda",
+            "hotelReview": "Sayın Misafirimiz, NG Sapanca ailesi olarak, otelimizde yaşadığınız deneyimleri Otelpuan.com üzerinden paylaştığınız için içten teşekkürlerimizi sunarız. Değerli geri bildirimleriniz, sürekli gelişim hedefiyle çalışan ekibimize her zaman büyük bir motivasyon kaynağı olmaktadır. NG Sapanca hakkındaki yorumlarınız, puanlamalarınız ve yapıcı değerlendirmeleriniz için tekrar teşekkür eder; sizi en kısa sürede yeniden aramızda görmekten mutluluk duyacağımızı belirtmek isteriz. Saygılarımızla, ",
+            "ratingTypes": [
+                {
+                    "name": "Oda",
+                    "score": 10.0
+                },
+                {
+                    "name": "Hizmet",
+                    "score": 10.0
+                },
+                {
+                    "name": "Yemek",
+                    "score": 8.0
+                }
+            ],
+            "images": null,
+            "temiz_metin": "biz eğlendik konforlu bir oteldi çocuklu ailelere uygun bir di hijyen ve yemekleri iyiydi yemekler daha zengin olabilirdi ama yine de kötü değildi"
+        },
+        {
+            "name": "M*****",
+            "surname": "M*****",
+            "reviewText": "Otelin doğası, odaları rahat, personel güler yüzlüydü, yardımseverlerdi ve isteklerimizi yerine getirdiler.",
+            "date": "2026 Mart",
+            "recommendation": "RECOMMEND",
+            "score": 100.0,
+            "guestType": "Çift",
+            "scoreText": "Mükemmel",
+            "roomName": "Konaklanan Oda: Superior Oda",
+            "hotelReview": "Sayın Misafirimiz, NG Sapanca ailesi olarak, otelimizde yaşadığınız deneyimleri Otelpuan.com üzerinden paylaştığınız için içten teşekkürlerimizi sunarız. Değerli geri bildirimleriniz, sürekli gelişim hedefiyle çalışan ekibimize her zaman büyük bir motivasyon kaynağı olmaktadır. NG Sapanca hakkındaki yorumlarınız, puanlamalarınız ve yapıcı değerlendirmeleriniz için tekrar teşekkür eder; sizi en kısa sürede yeniden aramızda görmekten mutluluk duyacağımızı belirtmek isteriz. Saygılarımızla, ",
+            "ratingTypes": [
+                {
+                    "name": "Oda",
+                    "score": 10.0
+                },
+                {
+                    "name": "Hizmet",
+                    "score": 10.0
+                },
+                {
+                    "name": "Yemek",
+                    "score": 10.0
+                }
+            ],
+            "images": null,
+            "temiz_metin": "otelin doğası odaları rahat personel güler yüzlüydü yardımseverlerdi ve isteklerimizi yerine getirdiler"
+        },
+        {
+            "name": "S*****",
+            "surname": "U***",
+            "reviewText": "Otel çocuklar açısından tavsiye edilir, sakin olması ve personelin ilgili olması iyiydi. Konum olarak iyi, çocuklar için konforlu olması ve aktivite bulunması sömestirde olduğumuz için iyiydi. Etrafındaki marketlere ve her şeye ulaşım rahattı, otobana da rahat çıkıyorsunuz.",
+            "date": "2026 Mart",
+            "recommendation": "RECOMMEND",
+            "score": 0.0,
+            "guestType": null,
+            "scoreText": null,
+            "roomName": "Konaklanan Oda: Superior Oda",
+            "hotelReview": "Sayın Misafirimiz, NG Sapanca ailesi olarak, otelimizde yaşadığınız deneyimleri Otelpuan.com üzerinden paylaştığınız için içten teşekkürlerimizi sunarız. Değerli geri bildirimleriniz, sürekli gelişim hedefiyle çalışan ekibimize her zaman büyük bir motivasyon kaynağı olmaktadır. NG Sapanca hakkındaki yorumlarınız, puanlamalarınız ve yapıcı değerlendirmeleriniz için tekrar teşekkür eder; sizi en kısa sürede yeniden aramızda görmekten mutluluk duyacağımızı belirtmek isteriz. Saygılarımızla, ",
+            "ratingTypes": null,
+            "images": null,
+            "temiz_metin": "otel çocuklar açısından tavsiye edilir sakin olması ve personelin ilgili olması iyiydi konum olarak iyi çocuklar için konforlu olması ve aktivite bulunması sömestirde olduğumuz için iyiydi etrafındaki marketlere ve her şeye ulaşım rahattı otobana da rahat çıkıyorsunuz"
+        },
+        {
+            "name": "B*****",
+            "surname": "E*****",
+            "reviewText": "Oteli tavsiye ederim çok memnun kaldım yemekleri harika aileler için çok uygun temizlik bakımından çok iyi havuz imkanlarıda güzeldi. Yemekleri ve doğal ortamından çok memnun kaldım.",
+            "date": "2026 Mart",
+            "recommendation": "RECOMMEND",
+            "score": 93.0,
+            "guestType": "Aile",
+            "scoreText": "Mükemmel",
+            "roomName": "Konaklanan Oda: Superior Oda",
+            "hotelReview": "Sayın Misafirimiz, NG Sapanca ailesi olarak, otelimizde yaşadığınız deneyimleri Otelpuan.com üzerinden paylaştığınız için içten teşekkürlerimizi sunarız. Değerli geri bildirimleriniz, sürekli gelişim hedefiyle çalışan ekibimize her zaman büyük bir motivasyon kaynağı olmaktadır. NG Sapanca hakkındaki yorumlarınız, puanlamalarınız ve yapıcı değerlendirmeleriniz için tekrar teşekkür eder; sizi en kısa sürede yeniden aramızda görmekten mutluluk duyacağımızı belirtmek isteriz. Saygılarımızla,",
+            "ratingTypes": [
+                {
+                    "name": "Oda",
+                    "score": 8.0
+                },
+                {
+                    "name": "Hizmet",
+                    "score": 10.0
+                },
+                {
+                    "name": "Yemek",
+                    "score": 10.0
+                }
+            ],
+            "images": null,
+            "temiz_metin": "oteli tavsiye ederim çok memnun kaldım yemekleri harika aileler için çok uygun temizlik bakımından çok iyi havuz imkanlarıda güzeldi yemekleri ve doğal ortamından çok memnun kaldım"
+        },
+        {
+            "name": "E*****",
+            "surname": "Y*****",
+            "reviewText": "Oteli tavsiye ederim. Otel doğası çok güzeldi, oteli sürekli tercih ediyoruz. Açık alanı doğasından dolayı tavsiye ediyorum.",
+            "date": "2026 Mart",
+            "recommendation": "RECOMMEND",
+            "score": 100.0,
+            "guestType": "Aile",
+            "scoreText": "Mükemmel",
+            "roomName": "Konaklanan Oda: Superior Oda",
+            "hotelReview": "Sayın Misafirimiz, NG Sapanca ailesi olarak, otelimizde yaşadığınız deneyimleri Otelpuan.com üzerinden paylaştığınız için içten teşekkürlerimizi sunarız. Değerli geri bildirimleriniz, sürekli gelişim hedefiyle çalışan ekibimize her zaman büyük bir motivasyon kaynağı olmaktadır. NG Sapanca hakkındaki yorumlarınız, puanlamalarınız ve yapıcı değerlendirmeleriniz için tekrar teşekkür eder; sizi en kısa sürede yeniden aramızda görmekten mutluluk duyacağımızı belirtmek isteriz. Saygılarımızla,",
+            "ratingTypes": [
+                {
+                    "name": "Oda",
+                    "score": 10.0
+                },
+                {
+                    "name": "Hizmet",
+                    "score": 10.0
+                },
+                {
+                    "name": "Yemek",
+                    "score": 10.0
+                }
+            ],
+            "images": null,
+            "temiz_metin": "oteli tavsiye ederim otel doğası çok güzeldi oteli sürekli tercih ediyoruz açık alanı doğasından dolayı tavsiye ediyorum"
+        },
+        {
+            "name": "E*****",
+            "surname": "G*****",
+            "reviewText": "Tesisin yemekleri güzeldi aktiviteleri eğlenceliydi genel itibariyle işleyişinden çok memnun kaldım. Herhangi bir olumsuzluk olmadı.",
+            "date": "2026 Mart",
+            "recommendation": "RECOMMEND",
+            "score": 100.0,
+            "guestType": "Aile",
+            "scoreText": "Mükemmel",
+            "roomName": "Konaklanan Oda: Superior Oda",
+            "hotelReview": "Sayın Misafirimiz, NG Sapanca ailesi olarak, otelimizde yaşadığınız deneyimleri Otelpuan.com üzerinden paylaştığınız için içten teşekkürlerimizi sunarız. Değerli geri bildirimleriniz, sürekli gelişim hedefiyle çalışan ekibimize her zaman büyük bir motivasyon kaynağı olmaktadır. NG Sapanca hakkındaki yorumlarınız, puanlamalarınız ve yapıcı değerlendirmeleriniz için tekrar teşekkür eder; sizi en kısa sürede yeniden aramızda görmekten mutluluk duyacağımızı belirtmek isteriz. Saygılarımızla",
+            "ratingTypes": [
+                {
+                    "name": "Oda",
+                    "score": 10.0
+                },
+                {
+                    "name": "Hizmet",
+                    "score": 10.0
+                },
+                {
+                    "name": "Yemek",
+                    "score": 10.0
+                }
+            ],
+            "images": null,
+            "temiz_metin": "tesisin yemekleri güzeldi aktiviteleri eğlenceliydi genel itibariyle işleyişinden çok memnun kaldım herhangi bir olumsuzluk olmadı"
+        }
+    ]
+}

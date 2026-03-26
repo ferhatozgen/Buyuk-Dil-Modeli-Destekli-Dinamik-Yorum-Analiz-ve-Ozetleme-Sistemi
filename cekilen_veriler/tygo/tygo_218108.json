@@ -1,0 +1,3866 @@
+{
+    "platform": "trendyol-go",
+    "urun_id": "218108",
+    "gorsel_url": "https://cdn.tgoapps.com/orangeprod149/mxBOUEvMvlqCAqkL.jpeg",
+    "yorumlar": [
+        {
+            "id": "56a7e469-e265-4601-822a-10ebea107a1b",
+            "comment": "Buz gibiydi ve tavuklar tam kızarmamış",
+            "date": 1774293763258,
+            "score": {
+                "flavor": 3,
+                "service": 4,
+                "delivery": 4
+            },
+            "userIcon": "https://cdn.tgoapps.com/Assets/t/y/creative/mobile/instantdelivery/meal_profile_icon.png",
+            "orderItems": [
+                {
+                    "id": 5986580,
+                    "name": "Antakyam Harboli Miss Döner (150 Gr)",
+                    "deeplink": "tgo://?Channel=Meal&Page=ProductDetail&RestaurantId=0&ProductId=5986580",
+                    "active": false,
+                    "directlyAddToBasket": false,
+                    "likingStatus": null
+                }
+            ],
+            "deliveryType": "GO",
+            "deliveryLogoUrl": "https://cdn.tgoapps.com/mobile/meal/cwgoicon.png",
+            "tags": [
+                {
+                    "id": 3,
+                    "name": "Teslimat"
+                }
+            ],
+            "temiz_metin": "buz gibiydi ve tavuklar tam kızarmamış"
+        },
+        {
+            "id": "dbebb984-707e-4362-87b5-2ea5bb394dff",
+            "comment": "Gerçekten çok güzeldi gerçek bir Hatay döner ellerinize sağlık",
+            "date": 1773844815960,
+            "score": {
+                "flavor": 5,
+                "service": 5,
+                "delivery": 5
+            },
+            "userIcon": "https://cdn.tgoapps.com/Assets/t/y/creative/mobile/instantdelivery/meal_profile_icon.png",
+            "orderItems": [
+                {
+                    "id": 5986566,
+                    "name": "Antakyam Miss Döner (120 Gr)",
+                    "deeplink": "tgo://?Channel=Meal&Page=ProductDetail&RestaurantId=0&ProductId=5986566",
+                    "active": false,
+                    "directlyAddToBasket": false,
+                    "likingStatus": {
+                        "icon": "https://cdn.tgoapps.com/mobile/meal/reviewedproductthumbsup.png",
+                        "text": "Beğendi",
+                        "textColor": "#0BC15C"
+                    }
+                }
+            ],
+            "deliveryType": "GO",
+            "deliveryLogoUrl": "https://cdn.tgoapps.com/mobile/meal/cwgoicon.png",
+            "tags": [
+                {
+                    "id": 1,
+                    "name": "Ürün Kalitesi"
+                }
+            ],
+            "temiz_metin": "gerçekten çok güzeldi gerçek bir hatay döner ellerinize sağlık"
+        },
+        {
+            "id": "28c4ad9a-c4e7-4b32-afda-fa4a47fd9891",
+            "comment": "Malzemeleri çok taze ve lezzetliydi ellerinize sağlık.",
+            "date": 1773843375267,
+            "score": {
+                "flavor": 5,
+                "service": 5,
+                "delivery": 5
+            },
+            "userIcon": "https://cdn.tgoapps.com/Assets/t/y/creative/mobile/instantdelivery/meal_profile_icon.png",
+            "orderItems": [
+                {
+                    "id": 5986566,
+                    "name": "Antakyam Miss Döner (120 Gr)",
+                    "deeplink": "tgo://?Channel=Meal&Page=ProductDetail&RestaurantId=0&ProductId=5986566",
+                    "active": false,
+                    "directlyAddToBasket": false,
+                    "likingStatus": {
+                        "icon": "https://cdn.tgoapps.com/mobile/meal/reviewedproductthumbsup.png",
+                        "text": "Beğendi",
+                        "textColor": "#0BC15C"
+                    }
+                }
+            ],
+            "deliveryType": "GO",
+            "deliveryLogoUrl": "https://cdn.tgoapps.com/mobile/meal/cwgoicon.png",
+            "tags": [
+                {
+                    "id": 1,
+                    "name": "Ürün Kalitesi"
+                }
+            ],
+            "temiz_metin": "malzemeleri çok taze ve lezzetliydi ellerinize sağlık"
+        },
+        {
+            "id": "5de5dbe8-d486-4664-a0a6-46eea751ff65",
+            "comment": "Çok hızlı bir biçimde elime ulaştı, sıcak ve lezzetliydi. Ellerinize sağlık çok teşekkür ediyorum.",
+            "date": 1773842302563,
+            "score": {
+                "flavor": 5,
+                "service": 5,
+                "delivery": 5
+            },
+            "userIcon": "https://cdn.tgoapps.com/Assets/t/y/creative/mobile/instantdelivery/meal_profile_icon.png",
+            "orderItems": [
+                {
+                    "id": 5986566,
+                    "name": "Antakyam Miss Döner (120 Gr)",
+                    "deeplink": "tgo://?Channel=Meal&Page=ProductDetail&RestaurantId=0&ProductId=5986566",
+                    "active": false,
+                    "directlyAddToBasket": false,
+                    "likingStatus": {
+                        "icon": "https://cdn.tgoapps.com/mobile/meal/reviewedproductthumbsup.png",
+                        "text": "Beğendi",
+                        "textColor": "#0BC15C"
+                    }
+                }
+            ],
+            "deliveryType": "GO",
+            "deliveryLogoUrl": "https://cdn.tgoapps.com/mobile/meal/cwgoicon.png",
+            "tags": [
+                {
+                    "id": 3,
+                    "name": "Teslimat"
+                }
+            ],
+            "temiz_metin": "çok hızlı bir biçimde elime ulaştı sıcak ve lezzetliydi ellerinize sağlık çok teşekkür ediyorum"
+        },
+        {
+            "id": "d5a1d6bf-00c8-441d-8951-877a9e4e3f37",
+            "comment": "Tavuk kalitesi iyi değil, çok fazla yumuşak kısım çıktı etten. Bitiremeden atmak durumunda kaldım bir daha tercih etmem",
+            "date": 1773824221605,
+            "score": {
+                "flavor": 1,
+                "service": 2,
+                "delivery": 4
+            },
+            "userIcon": "https://cdn.tgoapps.com/Assets/t/y/creative/mobile/instantdelivery/meal_profile_icon.png",
+            "orderItems": [
+                {
+                    "id": 5986567,
+                    "name": "Antakyam Miss Döner (150 Gr)",
+                    "deeplink": "tgo://?Channel=Meal&Page=ProductDetail&RestaurantId=0&ProductId=5986567",
+                    "active": false,
+                    "directlyAddToBasket": false,
+                    "likingStatus": null
+                }
+            ],
+            "deliveryType": "GO",
+            "deliveryLogoUrl": "https://cdn.tgoapps.com/mobile/meal/cwgoicon.png",
+            "tags": [
+                {
+                    "id": 1,
+                    "name": "Ürün Kalitesi"
+                }
+            ],
+            "temiz_metin": "tavuk kalitesi iyi değil çok fazla yumuşak kısım çıktı etten bitiremeden atmak durumunda kaldım bir daha tercih etmem"
+        },
+        {
+            "id": "8ffeaa3a-2418-476d-8838-2672f0b7fb34",
+            "comment": "berbattı gerçekten berbattı normalde çok güzel yaparlar bu sefer hayatımda yediğimin en kötüsüydü ve yalnis ürün gelmişti umarım tekrarlanmaz",
+            "date": 1773780287391,
+            "score": {
+                "flavor": 1,
+                "service": 1,
+                "delivery": 4
+            },
+            "userIcon": "https://cdn.tgoapps.com/Assets/t/y/creative/mobile/instantdelivery/meal_profile_icon.png",
+            "orderItems": [
+                {
+                    "id": 6414213,
+                    "name": "Antakyam Tıka Basa Miss Döner ( 150 Gr )",
+                    "deeplink": "tgo://?Channel=Meal&Page=ProductDetail&RestaurantId=0&ProductId=6414213",
+                    "active": false,
+                    "directlyAddToBasket": false,
+                    "likingStatus": null
+                },
+                {
+                    "id": 5986594,
+                    "name": "Ayran (33 Cl)",
+                    "deeplink": "tgo://?Channel=Meal&Page=ProductDetail&RestaurantId=0&ProductId=5986594",
+                    "active": false,
+                    "directlyAddToBasket": false,
+                    "likingStatus": null
+                }
+            ],
+            "deliveryType": "GO",
+            "deliveryLogoUrl": "https://cdn.tgoapps.com/mobile/meal/cwgoicon.png",
+            "tags": [
+                {
+                    "id": 6,
+                    "name": "Eksik/Farklı Ürün"
+                }
+            ],
+            "temiz_metin": "berbattı gerçekten berbattı normalde çok güzel yaparlar bu sefer hayatımda yediğimin en kötüsüydü ve yalnis ürün gelmişti umarım tekrarlanmaz"
+        },
+        {
+            "id": "35207ff8-8318-4592-af10-46a06ef5f5a8",
+            "comment": "Güleryüzlü ve efendi bir kurye getirdi o ayrı bir şey bence insanla alakalı ama aldığım dürümün lezzeti hayatımda yediğim Hatay dönerler arasında en kötüsü olabilir abi ben normalde yorum yapmam parasında da değilim ama biraz daha özenin bence niğmeti çöpe atmak zorunda kalmayalım…",
+            "date": 1773536851629,
+            "score": {
+                "flavor": 1,
+                "service": 4,
+                "delivery": 5
+            },
+            "userIcon": "https://cdn.tgoapps.com/Assets/t/y/creative/mobile/instantdelivery/meal_profile_icon.png",
+            "orderItems": [
+                {
+                    "id": 6414213,
+                    "name": "Antakyam Tıka Basa Miss Döner ( 150 Gr )",
+                    "deeplink": "tgo://?Channel=Meal&Page=ProductDetail&RestaurantId=0&ProductId=6414213",
+                    "active": false,
+                    "directlyAddToBasket": false,
+                    "likingStatus": null
+                },
+                {
+                    "id": 5986594,
+                    "name": "Ayran (33 Cl)",
+                    "deeplink": "tgo://?Channel=Meal&Page=ProductDetail&RestaurantId=0&ProductId=5986594",
+                    "active": false,
+                    "directlyAddToBasket": false,
+                    "likingStatus": {
+                        "icon": "https://cdn.tgoapps.com/mobile/meal/reviewedproductthumbsup.png",
+                        "text": "Beğendi",
+                        "textColor": "#0BC15C"
+                    }
+                }
+            ],
+            "deliveryType": "GO",
+            "deliveryLogoUrl": "https://cdn.tgoapps.com/mobile/meal/cwgoicon.png",
+            "temiz_metin": "güleryüzlü ve efendi bir kurye getirdi o ayrı bir şey bence insanla alakalı ama aldığım dürümün lezzeti hayatımda yediğim hatay dönerler arasında en kötüsü olabilir abi ben normalde yorum yapmam parasında da değilim ama biraz daha özenin bence niğmeti çöpe atmak zorunda kalmayalım"
+        },
+        {
+            "id": "1da69b95-f17d-46bf-9b23-8a319ff26845",
+            "comment": "Hiç beğenmedim maalesef son siparişimdi",
+            "date": 1773530966583,
+            "score": {
+                "flavor": 1,
+                "service": 5,
+                "delivery": 5
+            },
+            "userIcon": "https://cdn.tgoapps.com/Assets/t/y/creative/mobile/instantdelivery/meal_profile_icon.png",
+            "orderItems": [
+                {
+                    "id": 5986567,
+                    "name": "Antakyam Miss Döner (150 Gr)",
+                    "deeplink": "tgo://?Channel=Meal&Page=ProductDetail&RestaurantId=0&ProductId=5986567",
+                    "active": false,
+                    "directlyAddToBasket": false,
+                    "likingStatus": null
+                },
+                {
+                    "id": 5986564,
+                    "name": "Antakyam Miss Döner (60 Gr)",
+                    "deeplink": "tgo://?Channel=Meal&Page=ProductDetail&RestaurantId=0&ProductId=5986564",
+                    "active": false,
+                    "directlyAddToBasket": false,
+                    "likingStatus": null
+                },
+                {
+                    "id": 16660081,
+                    "name": "Ekstra Lavaş",
+                    "deeplink": "tgo://?Channel=Meal&Page=ProductDetail&RestaurantId=0&ProductId=16660081",
+                    "active": false,
+                    "directlyAddToBasket": false,
+                    "likingStatus": null
+                }
+            ],
+            "deliveryType": "GO",
+            "deliveryLogoUrl": "https://cdn.tgoapps.com/mobile/meal/cwgoicon.png",
+            "tags": [
+                {
+                    "id": 1,
+                    "name": "Ürün Kalitesi"
+                }
+            ],
+            "temiz_metin": "hiç beğenmedim maalesef son siparişimdi"
+        },
+        {
+            "id": "de73c1b1-46ca-4994-901d-a6a6e5386cdf",
+            "comment": "Tad olarak inanılmaz kötü",
+            "date": 1773517680417,
+            "score": {
+                "flavor": 1,
+                "service": 5,
+                "delivery": 5
+            },
+            "userIcon": "https://cdn.tgoapps.com/Assets/t/y/creative/mobile/instantdelivery/meal_profile_icon.png",
+            "orderItems": [
+                {
+                    "id": 6507625,
+                    "name": "Kanka Menü",
+                    "deeplink": "tgo://?Channel=Meal&Page=ProductDetail&RestaurantId=0&ProductId=6507625",
+                    "active": false,
+                    "directlyAddToBasket": false,
+                    "likingStatus": null
+                }
+            ],
+            "deliveryType": "GO",
+            "deliveryLogoUrl": "https://cdn.tgoapps.com/mobile/meal/cwgoicon.png",
+            "tags": [
+                {
+                    "id": 1,
+                    "name": "Ürün Kalitesi"
+                }
+            ],
+            "temiz_metin": "tad olarak inanılmaz kötü"
+        },
+        {
+            "id": "34f7d6ba-cf80-46a6-b31b-0f04905bf4a9",
+            "comment": "Koca koca doğranmış etler salçalı su bu ikinci siparişim ilki çok güzeldi ama bu malesef",
+            "date": 1773417622685,
+            "score": {
+                "flavor": 1,
+                "service": 5,
+                "delivery": 5
+            },
+            "userIcon": "https://cdn.tgoapps.com/Assets/t/y/creative/mobile/instantdelivery/meal_profile_icon.png",
+            "orderItems": [
+                {
+                    "id": 5986567,
+                    "name": "Antakyam Miss Döner (150 Gr)",
+                    "deeplink": "tgo://?Channel=Meal&Page=ProductDetail&RestaurantId=0&ProductId=5986567",
+                    "active": false,
+                    "directlyAddToBasket": false,
+                    "likingStatus": null
+                },
+                {
+                    "id": 5986594,
+                    "name": "Ayran (33 Cl)",
+                    "deeplink": "tgo://?Channel=Meal&Page=ProductDetail&RestaurantId=0&ProductId=5986594",
+                    "active": false,
+                    "directlyAddToBasket": false,
+                    "likingStatus": null
+                }
+            ],
+            "deliveryType": "GO",
+            "deliveryLogoUrl": "https://cdn.tgoapps.com/mobile/meal/cwgoicon.png",
+            "tags": [
+                {
+                    "id": 1,
+                    "name": "Ürün Kalitesi"
+                }
+            ],
+            "temiz_metin": "koca koca doğranmış etler salçalı su bu ikinci siparişim ilki çok güzeldi ama bu malesef"
+        },
+        {
+            "id": "3a957156-353a-449b-a5c3-75a180d82d45",
+            "comment": "şahaneydi yorumlardan gördüm kötü yorumlar yapılmış ama hiç öyle değildi gerçekten ekmeği taptaze çok memnun kaldım.",
+            "date": 1773413571456,
+            "score": {
+                "flavor": 5,
+                "service": 5,
+                "delivery": 5
+            },
+            "userIcon": "https://cdn.tgoapps.com/Assets/t/y/creative/mobile/instantdelivery/meal_profile_icon.png",
+            "orderItems": [
+                {
+                    "id": 5986566,
+                    "name": "Antakyam Miss Döner (120 Gr)",
+                    "deeplink": "tgo://?Channel=Meal&Page=ProductDetail&RestaurantId=0&ProductId=5986566",
+                    "active": false,
+                    "directlyAddToBasket": false,
+                    "likingStatus": {
+                        "icon": "https://cdn.tgoapps.com/mobile/meal/reviewedproductthumbsup.png",
+                        "text": "Beğendi",
+                        "textColor": "#0BC15C"
+                    }
+                },
+                {
+                    "id": 16660081,
+                    "name": "Ekstra Lavaş",
+                    "deeplink": "tgo://?Channel=Meal&Page=ProductDetail&RestaurantId=0&ProductId=16660081",
+                    "active": false,
+                    "directlyAddToBasket": false,
+                    "likingStatus": {
+                        "icon": "https://cdn.tgoapps.com/mobile/meal/reviewedproductthumbsup.png",
+                        "text": "Beğendi",
+                        "textColor": "#0BC15C"
+                    }
+                }
+            ],
+            "deliveryType": "GO",
+            "deliveryLogoUrl": "https://cdn.tgoapps.com/mobile/meal/cwgoicon.png",
+            "tags": [
+                {
+                    "id": 1,
+                    "name": "Ürün Kalitesi"
+                }
+            ],
+            "temiz_metin": "şahaneydi yorumlardan gördüm kötü yorumlar yapılmış ama hiç öyle değildi gerçekten ekmeği taptaze çok memnun kaldım"
+        },
+        {
+            "id": "1b045db0-1a20-462f-a79b-7897ed76a652",
+            "comment": "lezzetli sicak geldi sosu guzel",
+            "date": 1773413214571,
+            "score": {
+                "flavor": 5,
+                "service": 5,
+                "delivery": 5
+            },
+            "userIcon": "https://cdn.tgoapps.com/Assets/t/y/creative/mobile/instantdelivery/meal_profile_icon.png",
+            "orderItems": [
+                {
+                    "id": 5986567,
+                    "name": "Antakyam Miss Döner (150 Gr)",
+                    "deeplink": "tgo://?Channel=Meal&Page=ProductDetail&RestaurantId=0&ProductId=5986567",
+                    "active": false,
+                    "directlyAddToBasket": false,
+                    "likingStatus": null
+                },
+                {
+                    "id": 16660081,
+                    "name": "Ekstra Lavaş",
+                    "deeplink": "tgo://?Channel=Meal&Page=ProductDetail&RestaurantId=0&ProductId=16660081",
+                    "active": false,
+                    "directlyAddToBasket": false,
+                    "likingStatus": null
+                },
+                {
+                    "id": 5986594,
+                    "name": "Ayran (33 Cl)",
+                    "deeplink": "tgo://?Channel=Meal&Page=ProductDetail&RestaurantId=0&ProductId=5986594",
+                    "active": false,
+                    "directlyAddToBasket": false,
+                    "likingStatus": null
+                }
+            ],
+            "deliveryType": "GO",
+            "deliveryLogoUrl": "https://cdn.tgoapps.com/mobile/meal/cwgoicon.png",
+            "tags": [
+                {
+                    "id": 3,
+                    "name": "Teslimat"
+                }
+            ],
+            "temiz_metin": "lezzetli sicak geldi sosu güzel"
+        },
+        {
+            "id": "e5436214-6d97-408b-9786-74129a573d8d",
+            "comment": "hayatımda yediğim en kötü döner net.",
+            "date": 1773361206505,
+            "score": {
+                "flavor": 1,
+                "service": 1,
+                "delivery": 4
+            },
+            "userIcon": "https://cdn.tgoapps.com/Assets/t/y/creative/mobile/instantdelivery/meal_profile_icon.png",
+            "orderItems": [
+                {
+                    "id": 6507616,
+                    "name": "Doydum Menü",
+                    "deeplink": "tgo://?Channel=Meal&Page=ProductDetail&RestaurantId=0&ProductId=6507616",
+                    "active": false,
+                    "directlyAddToBasket": false,
+                    "likingStatus": null
+                }
+            ],
+            "deliveryType": "GO",
+            "deliveryLogoUrl": "https://cdn.tgoapps.com/mobile/meal/cwgoicon.png",
+            "tags": [
+                {
+                    "id": 1,
+                    "name": "Ürün Kalitesi"
+                }
+            ],
+            "temiz_metin": "hayatımda yediğim en kötü döner net"
+        },
+        {
+            "id": "977fca9e-f6be-4d62-8292-061a51e88e13",
+            "comment": "durum buz gibi geldi asiri bayatti hani su camasir suyuna batirilan tavuklar olur ya o kivamdaydi tadi",
+            "date": 1773346052394,
+            "score": {
+                "flavor": 1,
+                "service": 4,
+                "delivery": 5
+            },
+            "userIcon": "https://cdn.tgoapps.com/Assets/t/y/creative/mobile/instantdelivery/meal_profile_icon.png",
+            "orderItems": [
+                {
+                    "id": 16966591,
+                    "name": "Döneritos Menü (150 gram)",
+                    "deeplink": "tgo://?Channel=Meal&Page=ProductDetail&RestaurantId=0&ProductId=16966591",
+                    "active": false,
+                    "directlyAddToBasket": false,
+                    "likingStatus": null
+                }
+            ],
+            "deliveryType": "GO",
+            "deliveryLogoUrl": "https://cdn.tgoapps.com/mobile/meal/cwgoicon.png",
+            "tags": [
+                {
+                    "id": 3,
+                    "name": "Teslimat"
+                }
+            ],
+            "temiz_metin": "durum buz gibi geldi aşırı bayatti hani su camasir suyuna batirilan tavuklar olur ya o kivamdaydi tadi"
+        },
+        {
+            "id": "b12cc985-1480-4b07-b21d-edb437114b66",
+            "comment": "menüde 1 ve ekstra 1 tane daha toplamda iki puding olması gerekirken sadece 1 tane göndermişler.",
+            "date": 1773338417903,
+            "score": {
+                "flavor": 3,
+                "service": 1,
+                "delivery": 4
+            },
+            "userIcon": "https://cdn.tgoapps.com/Assets/t/y/creative/mobile/instantdelivery/meal_profile_icon.png",
+            "orderItems": [
+                {
+                    "id": 6507626,
+                    "name": "Eker Puding",
+                    "deeplink": "tgo://?Channel=Meal&Page=ProductDetail&RestaurantId=0&ProductId=6507626",
+                    "active": false,
+                    "directlyAddToBasket": false,
+                    "likingStatus": null
+                },
+                {
+                    "id": 6507616,
+                    "name": "Doydum Menü",
+                    "deeplink": "tgo://?Channel=Meal&Page=ProductDetail&RestaurantId=0&ProductId=6507616",
+                    "active": false,
+                    "directlyAddToBasket": false,
+                    "likingStatus": null
+                }
+            ],
+            "deliveryType": "GO",
+            "deliveryLogoUrl": "https://cdn.tgoapps.com/mobile/meal/cwgoicon.png",
+            "tags": [
+                {
+                    "id": 6,
+                    "name": "Eksik/Farklı Ürün"
+                }
+            ],
+            "temiz_metin": "menüde 1 ve 1 tane daha toplamda iki puding olması gerekirken sadece 1 tane göndermişler"
+        },
+        {
+            "id": "61e3467b-fbfc-4bfd-82d5-87ac70fc83be",
+            "comment": "notumu dikkate almanıza çok sevindim, dürüm de lezzetliydi ama içindeki çiğ soğan pek alışık olmadığım için tuhaf geldi, elinize sağlıkk",
+            "date": 1773262129932,
+            "score": {
+                "flavor": 5,
+                "service": 5,
+                "delivery": 5
+            },
+            "userIcon": "https://cdn.tgoapps.com/Assets/t/y/creative/mobile/instantdelivery/meal_profile_icon.png",
+            "orderItems": [
+                {
+                    "id": 6507616,
+                    "name": "Doydum Menü",
+                    "deeplink": "tgo://?Channel=Meal&Page=ProductDetail&RestaurantId=0&ProductId=6507616",
+                    "active": false,
+                    "directlyAddToBasket": false,
+                    "likingStatus": {
+                        "icon": "https://cdn.tgoapps.com/mobile/meal/reviewedproductthumbsup.png",
+                        "text": "Beğendi",
+                        "textColor": "#0BC15C"
+                    }
+                }
+            ],
+            "deliveryType": "GO",
+            "deliveryLogoUrl": "https://cdn.tgoapps.com/mobile/meal/cwgoicon.png",
+            "tags": [
+                {
+                    "id": 8,
+                    "name": "Sipariş Notu"
+                }
+            ],
+            "temiz_metin": "notumu dikkate almanıza çok sevindim dürüm de lezzetliydi ama içindeki çiğ soğan pek alışık olmadığım için tuhaf geldi elinize sağlıkk"
+        },
+        {
+            "id": "8a84cb6d-438c-4f40-8f25-eec5c39a6932",
+            "comment": "Hiç beğenmedim içinde kaşarlar donmuştu sos diye birşey yoktu kuru tatsız birşeydi",
+            "date": 1773237815316,
+            "score": {
+                "flavor": 1,
+                "service": 3,
+                "delivery": 3
+            },
+            "userIcon": "https://cdn.tgoapps.com/Assets/t/y/creative/mobile/instantdelivery/meal_profile_icon.png",
+            "orderItems": [
+                {
+                    "id": 6414213,
+                    "name": "Antakyam Tıka Basa Miss Döner ( 150 Gr )",
+                    "deeplink": "tgo://?Channel=Meal&Page=ProductDetail&RestaurantId=0&ProductId=6414213",
+                    "active": false,
+                    "directlyAddToBasket": false,
+                    "likingStatus": null
+                }
+            ],
+            "deliveryType": "GO",
+            "deliveryLogoUrl": "https://cdn.tgoapps.com/mobile/meal/cwgoicon.png",
+            "tags": [
+                {
+                    "id": 1,
+                    "name": "Ürün Kalitesi"
+                }
+            ],
+            "temiz_metin": "hiç beğenmedim içinde kaşarlar donmuştu sos diye bir şey yoktu kuru tatsız birşeydi"
+        },
+        {
+            "id": "78e1e757-d042-4046-a62a-29cc611fb4eb",
+            "comment": "Çokk lezzetliydi tavuk tadını alıyorsunuz sosu da lezzetli baya bu arada",
+            "date": 1773237685855,
+            "score": {
+                "flavor": 5,
+                "service": 5,
+                "delivery": 5
+            },
+            "userIcon": "https://cdn.tgoapps.com/Assets/t/y/creative/mobile/instantdelivery/meal_profile_icon.png",
+            "orderItems": [
+                {
+                    "id": 5986567,
+                    "name": "Antakyam Miss Döner (150 Gr)",
+                    "deeplink": "tgo://?Channel=Meal&Page=ProductDetail&RestaurantId=0&ProductId=5986567",
+                    "active": false,
+                    "directlyAddToBasket": false,
+                    "likingStatus": null
+                },
+                {
+                    "id": 5986594,
+                    "name": "Ayran (33 Cl)",
+                    "deeplink": "tgo://?Channel=Meal&Page=ProductDetail&RestaurantId=0&ProductId=5986594",
+                    "active": false,
+                    "directlyAddToBasket": false,
+                    "likingStatus": null
+                }
+            ],
+            "deliveryType": "GO",
+            "deliveryLogoUrl": "https://cdn.tgoapps.com/mobile/meal/cwgoicon.png",
+            "tags": [
+                {
+                    "id": 1,
+                    "name": "Ürün Kalitesi"
+                }
+            ],
+            "temiz_metin": "çokk lezzetliydi tavuk tadını alıyorsunuz sosu da lezzetli bayağı bu arada"
+        },
+        {
+            "id": "4e5df09b-430d-4c97-80ab-e6bd9e39f7d9",
+            "comment": "Lezzet yok tavuğun tadı kötü",
+            "date": 1773164610389,
+            "score": {
+                "flavor": 1,
+                "service": 1,
+                "delivery": 5
+            },
+            "userIcon": "https://cdn.tgoapps.com/Assets/t/y/creative/mobile/instantdelivery/meal_profile_icon.png",
+            "orderItems": [
+                {
+                    "id": 5986567,
+                    "name": "Antakyam Miss Döner (150 Gr)",
+                    "deeplink": "tgo://?Channel=Meal&Page=ProductDetail&RestaurantId=0&ProductId=5986567",
+                    "active": false,
+                    "directlyAddToBasket": false,
+                    "likingStatus": null
+                }
+            ],
+            "deliveryType": "GO",
+            "deliveryLogoUrl": "https://cdn.tgoapps.com/mobile/meal/cwgoicon.png",
+            "tags": [
+                {
+                    "id": 1,
+                    "name": "Ürün Kalitesi"
+                }
+            ],
+            "temiz_metin": "lezzet yok tavuğun tadı kötü"
+        },
+        {
+            "id": "4e456763-d155-416d-9631-a3ad6c8679cd",
+            "comment": "Uzun zaman sonra yediğim güzel tavuk tadı gelen ve tavuk oldugu hissedilen dürümdü. Ellerinize saglık",
+            "date": 1773155503564,
+            "score": {
+                "flavor": 5,
+                "service": 5,
+                "delivery": 5
+            },
+            "userIcon": "https://cdn.tgoapps.com/Assets/t/y/creative/mobile/instantdelivery/meal_profile_icon.png",
+            "orderItems": [
+                {
+                    "id": 6507616,
+                    "name": "Doydum Menü",
+                    "deeplink": "tgo://?Channel=Meal&Page=ProductDetail&RestaurantId=0&ProductId=6507616",
+                    "active": false,
+                    "directlyAddToBasket": false,
+                    "likingStatus": {
+                        "icon": "https://cdn.tgoapps.com/mobile/meal/reviewedproductthumbsup.png",
+                        "text": "Beğendi",
+                        "textColor": "#0BC15C"
+                    }
+                }
+            ],
+            "deliveryType": "GO",
+            "deliveryLogoUrl": "https://cdn.tgoapps.com/mobile/meal/cwgoicon.png",
+            "tags": [
+                {
+                    "id": 1,
+                    "name": "Ürün Kalitesi"
+                }
+            ],
+            "temiz_metin": "uzun zaman sonra yediğim güzel tavuk tadı gelen ve tavuk olduğu hissedilen dürümdü ellerinize saglık"
+        },
+        {
+            "id": "f8bd653c-ed2c-4364-a1ef-16eb2b64320f",
+            "comment": "Ben buraya tek kelimeyle bayıldım her şeyi çok güzel ayarında ve lezzetli ilk defa söyledim ama tekrar tekrar söyleyeceğime eminim",
+            "date": 1773090668081,
+            "score": {
+                "flavor": 5,
+                "service": 5,
+                "delivery": 5
+            },
+            "userIcon": "https://cdn.tgoapps.com/Assets/t/y/creative/mobile/instantdelivery/meal_profile_icon.png",
+            "orderItems": [
+                {
+                    "id": 5986565,
+                    "name": "Antakyam Miss Döner (100 Gr)",
+                    "deeplink": "tgo://?Channel=Meal&Page=ProductDetail&RestaurantId=0&ProductId=5986565",
+                    "active": false,
+                    "directlyAddToBasket": false,
+                    "likingStatus": {
+                        "icon": "https://cdn.tgoapps.com/mobile/meal/reviewedproductthumbsup.png",
+                        "text": "Beğendi",
+                        "textColor": "#0BC15C"
+                    }
+                },
+                {
+                    "id": 5986566,
+                    "name": "Antakyam Miss Döner (120 Gr)",
+                    "deeplink": "tgo://?Channel=Meal&Page=ProductDetail&RestaurantId=0&ProductId=5986566",
+                    "active": false,
+                    "directlyAddToBasket": false,
+                    "likingStatus": {
+                        "icon": "https://cdn.tgoapps.com/mobile/meal/reviewedproductthumbsup.png",
+                        "text": "Beğendi",
+                        "textColor": "#0BC15C"
+                    }
+                }
+            ],
+            "deliveryType": "GO",
+            "deliveryLogoUrl": "https://cdn.tgoapps.com/mobile/meal/cwgoicon.png",
+            "tags": [
+                {
+                    "id": 1,
+                    "name": "Ürün Kalitesi"
+                }
+            ],
+            "temiz_metin": "ben buraya tek kelimeyle bayıldım her şeyi çok güzel ayarında ve lezzetli ilk defa söyledim ama tekrar tekrar söyleyeceğime eminim"
+        },
+        {
+            "id": "2709c339-eb07-46c9-bde6-8c43498ded42",
+            "comment": "Herșey çok güzeldi ellerinize saclike tika basa doydum sadece lavaşı dagiliyordu biraz",
+            "date": 1772833451059,
+            "score": {
+                "flavor": 5,
+                "service": 4,
+                "delivery": 5
+            },
+            "userIcon": "https://cdn.tgoapps.com/Assets/t/y/creative/mobile/instantdelivery/meal_profile_icon.png",
+            "orderItems": [
+                {
+                    "id": 5986567,
+                    "name": "Antakyam Miss Döner (150 Gr)",
+                    "deeplink": "tgo://?Channel=Meal&Page=ProductDetail&RestaurantId=0&ProductId=5986567",
+                    "active": false,
+                    "directlyAddToBasket": false,
+                    "likingStatus": {
+                        "icon": "https://cdn.tgoapps.com/mobile/meal/reviewedproductthumbsup.png",
+                        "text": "Beğendi",
+                        "textColor": "#0BC15C"
+                    }
+                },
+                {
+                    "id": 5986594,
+                    "name": "Ayran (33 Cl)",
+                    "deeplink": "tgo://?Channel=Meal&Page=ProductDetail&RestaurantId=0&ProductId=5986594",
+                    "active": false,
+                    "directlyAddToBasket": false,
+                    "likingStatus": null
+                }
+            ],
+            "deliveryType": "GO",
+            "deliveryLogoUrl": "https://cdn.tgoapps.com/mobile/meal/cwgoicon.png",
+            "tags": [
+                {
+                    "id": 1,
+                    "name": "Ürün Kalitesi"
+                }
+            ],
+            "temiz_metin": "herșey çok güzeldi ellerinize saclike tika basa doydum sadece lavaşı dagiliyordu biraz"
+        },
+        {
+            "id": "0fc37e37-2fb4-43ed-b821-13f6a8d2c523",
+            "comment": "Çok güzeldi bol sosluydu iftarda da asiri guzel gitti",
+            "date": 1772813888299,
+            "score": {
+                "flavor": 5,
+                "service": 4,
+                "delivery": 5
+            },
+            "userIcon": "https://cdn.tgoapps.com/Assets/t/y/creative/mobile/instantdelivery/meal_profile_icon.png",
+            "orderItems": [
+                {
+                    "id": 6507624,
+                    "name": "Kanka Menü",
+                    "deeplink": "tgo://?Channel=Meal&Page=ProductDetail&RestaurantId=0&ProductId=6507624",
+                    "active": false,
+                    "directlyAddToBasket": false,
+                    "likingStatus": {
+                        "icon": "https://cdn.tgoapps.com/mobile/meal/reviewedproductthumbsup.png",
+                        "text": "Beğendi",
+                        "textColor": "#0BC15C"
+                    }
+                }
+            ],
+            "deliveryType": "GO",
+            "deliveryLogoUrl": "https://cdn.tgoapps.com/mobile/meal/cwgoicon.png",
+            "tags": [
+                {
+                    "id": 1,
+                    "name": "Ürün Kalitesi"
+                }
+            ],
+            "temiz_metin": "çok güzeldi bol sosluydu iftarda da aşırı güzel gitti"
+        },
+        {
+            "id": "cea30e0a-2082-4eef-b681-9ce59536eeb1",
+            "comment": "Tavuk döner diye söyledim ama içinde ki döner değil tavuk sote gibi parça tavuklarla yapılmaya çalışılmış. Dönerle alakası yok",
+            "date": 1772575857347,
+            "score": {
+                "flavor": 1,
+                "service": 2,
+                "delivery": 5
+            },
+            "userIcon": "https://cdn.tgoapps.com/Assets/t/y/creative/mobile/instantdelivery/meal_profile_icon.png",
+            "orderItems": [
+                {
+                    "id": 5986566,
+                    "name": "Antakyam Miss Döner (120 Gr)",
+                    "deeplink": "tgo://?Channel=Meal&Page=ProductDetail&RestaurantId=0&ProductId=5986566",
+                    "active": false,
+                    "directlyAddToBasket": false,
+                    "likingStatus": null
+                },
+                {
+                    "id": 5986564,
+                    "name": "Antakyam Miss Döner (60 Gr)",
+                    "deeplink": "tgo://?Channel=Meal&Page=ProductDetail&RestaurantId=0&ProductId=5986564",
+                    "active": false,
+                    "directlyAddToBasket": false,
+                    "likingStatus": null
+                }
+            ],
+            "deliveryType": "GO",
+            "deliveryLogoUrl": "https://cdn.tgoapps.com/mobile/meal/cwgoicon.png",
+            "tags": [
+                {
+                    "id": 5,
+                    "name": "Porsiyon"
+                }
+            ],
+            "temiz_metin": "tavuk döner diye söyledim ama içinde ki döner değil tavuk sote gibi parça tavuklarla yapılmaya çalışılmış dönerle alakası yok"
+        },
+        {
+            "id": "2c24c5b7-714d-4a5c-989f-db806b8efd8c",
+            "comment": "Çok güzeldi sıcacıktı notlara da dikkat ediyorlar",
+            "date": 1772566034804,
+            "score": {
+                "flavor": 5,
+                "service": 5,
+                "delivery": 5
+            },
+            "userIcon": "https://cdn.tgoapps.com/Assets/t/y/creative/mobile/instantdelivery/meal_profile_icon.png",
+            "orderItems": [
+                {
+                    "id": 5986566,
+                    "name": "Antakyam Miss Döner (120 Gr)",
+                    "deeplink": "tgo://?Channel=Meal&Page=ProductDetail&RestaurantId=0&ProductId=5986566",
+                    "active": false,
+                    "directlyAddToBasket": false,
+                    "likingStatus": null
+                },
+                {
+                    "id": 5986594,
+                    "name": "Ayran (33 Cl)",
+                    "deeplink": "tgo://?Channel=Meal&Page=ProductDetail&RestaurantId=0&ProductId=5986594",
+                    "active": false,
+                    "directlyAddToBasket": false,
+                    "likingStatus": null
+                }
+            ],
+            "deliveryType": "GO",
+            "deliveryLogoUrl": "https://cdn.tgoapps.com/mobile/meal/cwgoicon.png",
+            "tags": [
+                {
+                    "id": 8,
+                    "name": "Sipariş Notu"
+                }
+            ],
+            "temiz_metin": "çok güzeldi sıcacıktı notlara da dikkat ediyorlar"
+        },
+        {
+            "id": "cbabc18b-f6c0-49c3-b980-1ea3f6905ebb",
+            "comment": "canım çok istediği için söylemiştim o kadar kötüydü ki yiyemedim çöpe gitti",
+            "date": 1772548032350,
+            "score": {
+                "flavor": 1,
+                "service": 3,
+                "delivery": 5
+            },
+            "userIcon": "https://cdn.tgoapps.com/Assets/t/y/creative/mobile/instantdelivery/meal_profile_icon.png",
+            "orderItems": [
+                {
+                    "id": 5986567,
+                    "name": "Antakyam Miss Döner (150 Gr)",
+                    "deeplink": "tgo://?Channel=Meal&Page=ProductDetail&RestaurantId=0&ProductId=5986567",
+                    "active": false,
+                    "directlyAddToBasket": false,
+                    "likingStatus": null
+                },
+                {
+                    "id": 16660081,
+                    "name": "Ekstra Lavaş",
+                    "deeplink": "tgo://?Channel=Meal&Page=ProductDetail&RestaurantId=0&ProductId=16660081",
+                    "active": false,
+                    "directlyAddToBasket": false,
+                    "likingStatus": null
+                }
+            ],
+            "deliveryType": "GO",
+            "deliveryLogoUrl": "https://cdn.tgoapps.com/mobile/meal/cwgoicon.png",
+            "tags": [
+                {
+                    "id": 1,
+                    "name": "Ürün Kalitesi"
+                }
+            ],
+            "temiz_metin": "canım çok istediği için söylemiştim o kadar kötüydü ki yiyemedim çöpe gitti"
+        },
+        {
+            "id": "40276f5f-e151-4ca6-bdbc-a3a4997da059",
+            "comment": "neden Pepsi yerine coca cila geldi merak ediyorum ordan puan kırdım.kiracağim da . Ve notada uymamış siniz pes yani",
+            "date": 1772470603647,
+            "score": {
+                "flavor": 4,
+                "service": 2,
+                "delivery": 4
+            },
+            "userIcon": "https://cdn.tgoapps.com/Assets/t/y/creative/mobile/instantdelivery/meal_profile_icon.png",
+            "orderItems": [
+                {
+                    "id": 6414213,
+                    "name": "Antakyam Tıka Basa Miss Döner ( 150 Gr )",
+                    "deeplink": "tgo://?Channel=Meal&Page=ProductDetail&RestaurantId=0&ProductId=6414213",
+                    "active": false,
+                    "directlyAddToBasket": false,
+                    "likingStatus": {
+                        "icon": "https://cdn.tgoapps.com/mobile/meal/reviewedproductthumbsup.png",
+                        "text": "Beğendi",
+                        "textColor": "#0BC15C"
+                    }
+                },
+                {
+                    "id": 5986599,
+                    "name": "Pepsi (1 L)",
+                    "deeplink": "tgo://?Channel=Meal&Page=ProductDetail&RestaurantId=0&ProductId=5986599",
+                    "active": false,
+                    "directlyAddToBasket": false,
+                    "likingStatus": null
+                }
+            ],
+            "deliveryType": "GO",
+            "deliveryLogoUrl": "https://cdn.tgoapps.com/mobile/meal/cwgoicon.png",
+            "tags": [
+                {
+                    "id": 6,
+                    "name": "Eksik/Farklı Ürün"
+                }
+            ],
+            "temiz_metin": "neden pepsi yerine coca cila geldi merak ediyorum ordan puan kırdım kiracağim da ve notada uymamış siniz pes yani"
+        },
+        {
+            "id": "44ea90f0-a332-4725-abbe-39e52507b1b3",
+            "comment": "Sıcak ve hızlı teslimat ve tabi mükemmel lezzeti ile favorim. Ellerinize sağlık",
+            "date": 1772470147644,
+            "score": {
+                "flavor": 5,
+                "service": 5,
+                "delivery": 5
+            },
+            "userIcon": "https://cdn.tgoapps.com/Assets/t/y/creative/mobile/instantdelivery/meal_profile_icon.png",
+            "orderItems": [
+                {
+                    "id": 5986580,
+                    "name": "Antakyam Harboli Miss Döner (150 Gr)",
+                    "deeplink": "tgo://?Channel=Meal&Page=ProductDetail&RestaurantId=0&ProductId=5986580",
+                    "active": false,
+                    "directlyAddToBasket": false,
+                    "likingStatus": {
+                        "icon": "https://cdn.tgoapps.com/mobile/meal/reviewedproductthumbsup.png",
+                        "text": "Beğendi",
+                        "textColor": "#0BC15C"
+                    }
+                },
+                {
+                    "id": 5986594,
+                    "name": "Ayran (33 Cl)",
+                    "deeplink": "tgo://?Channel=Meal&Page=ProductDetail&RestaurantId=0&ProductId=5986594",
+                    "active": false,
+                    "directlyAddToBasket": false,
+                    "likingStatus": null
+                }
+            ],
+            "deliveryType": "GO",
+            "deliveryLogoUrl": "https://cdn.tgoapps.com/mobile/meal/cwgoicon.png",
+            "tags": [
+                {
+                    "id": 3,
+                    "name": "Teslimat"
+                }
+            ],
+            "temiz_metin": "sıcak ve hızlı teslimat ve tabii mükemmel lezzeti ile favorim ellerinize sağlık"
+        },
+        {
+            "id": "a17e0fce-09b6-4e72-90cf-1bdc72661615",
+            "comment": "uzun bir suredir buradan siparis veriyorum doyuruculugu ve lezzeti simdiye kadar sasmadi urunler oldukca da sicak geliyor",
+            "date": 1772462333865,
+            "score": {
+                "flavor": 5,
+                "service": 4,
+                "delivery": 4
+            },
+            "userIcon": "https://cdn.tgoapps.com/Assets/t/y/creative/mobile/instantdelivery/meal_profile_icon.png",
+            "restaurantReply": {
+                "restaurantIcon": "https://cdn.tgoapps.com/mobile/meal/restauranticoncommentspage.png",
+                "title": "Restoranın Cevabı",
+                "comment": "öyle güzel bir yorumu görmek bizi çok mutlu etti. Dönerimizi sevmenize sevindik ve sizin için 50 TL yemek kuponu ekledik. AFİYET OLSUN."
+            },
+            "orderItems": [
+                {
+                    "id": 5986574,
+                    "name": "Antakyam Kaşarlı Miss Döner (120 Gr)",
+                    "deeplink": "tgo://?Channel=Meal&Page=ProductDetail&RestaurantId=0&ProductId=5986574",
+                    "active": false,
+                    "directlyAddToBasket": false,
+                    "likingStatus": null
+                },
+                {
+                    "id": 5986599,
+                    "name": "Pepsi (1 L)",
+                    "deeplink": "tgo://?Channel=Meal&Page=ProductDetail&RestaurantId=0&ProductId=5986599",
+                    "active": false,
+                    "directlyAddToBasket": false,
+                    "likingStatus": null
+                }
+            ],
+            "deliveryType": "GO",
+            "deliveryLogoUrl": "https://cdn.tgoapps.com/mobile/meal/cwgoicon.png",
+            "tags": [
+                {
+                    "id": 3,
+                    "name": "Teslimat"
+                }
+            ],
+            "temiz_metin": "uzun bir suredir buradan sipariş veriyorum doyuruculugu ve lezzeti simdiye kadar sasmadi urunler oldukca da sicak geliyor"
+        },
+        {
+            "id": "ce2881df-bb66-491f-be98-dd75cdad6b89",
+            "comment": "Siparişim hızlı geldi,getiren kurye de kibar nazik biriydi fakat dönerde bir eksiklik vardı sosu biraz az ve tuzsuzdu.",
+            "date": 1772388975525,
+            "score": {
+                "flavor": 4,
+                "service": 4,
+                "delivery": 5
+            },
+            "userIcon": "https://cdn.tgoapps.com/Assets/t/y/creative/mobile/instantdelivery/meal_profile_icon.png",
+            "restaurantReply": {
+                "restaurantIcon": "https://cdn.tgoapps.com/mobile/meal/restauranticoncommentspage.png",
+                "title": "Restoranın Cevabı",
+                "comment": "öyle güzel bir yorumu görmek bizi çok mutlu etti. Dönerimizi sevmenize sevindik ve sizin için 50 TL yemek kuponu ekledik. AFİYET OLSUN.   yorumunuza dikkat edeceğiz efendim."
+            },
+            "orderItems": [
+                {
+                    "id": 5986565,
+                    "name": "Antakyam Miss Döner (100 Gr)",
+                    "deeplink": "tgo://?Channel=Meal&Page=ProductDetail&RestaurantId=0&ProductId=5986565",
+                    "active": false,
+                    "directlyAddToBasket": false,
+                    "likingStatus": {
+                        "icon": "https://cdn.tgoapps.com/mobile/meal/reviewedproductthumbsup.png",
+                        "text": "Beğendi",
+                        "textColor": "#0BC15C"
+                    }
+                }
+            ],
+            "deliveryType": "GO",
+            "deliveryLogoUrl": "https://cdn.tgoapps.com/mobile/meal/cwgoicon.png",
+            "tags": [
+                {
+                    "id": 5,
+                    "name": "Porsiyon"
+                }
+            ],
+            "temiz_metin": "siparişim hızlı geldi getiren kurye de kibar nazik biriydi fakat dönerde bir eksiklik vardı sosu biraz az ve tuzsuzdu"
+        },
+        {
+            "id": "a58a5196-0348-407c-8349-192dba11964c",
+            "comment": "lezzeti iyiydi ancak 150 gr dönere o küçük lavaş olmamış bence doyurucu değildi.",
+            "date": 1772295511339,
+            "score": {
+                "flavor": 5,
+                "service": 5,
+                "delivery": 5
+            },
+            "userIcon": "https://cdn.tgoapps.com/Assets/t/y/creative/mobile/instantdelivery/meal_profile_icon.png",
+            "restaurantReply": {
+                "restaurantIcon": "https://cdn.tgoapps.com/mobile/meal/restauranticoncommentspage.png",
+                "title": "Restoranın Cevabı",
+                "comment": "Dikkate alacağız efendim lezzeti beğenmenize sevindik. Afiyet olsun."
+            },
+            "orderItems": [
+                {
+                    "id": 5986567,
+                    "name": "Antakyam Miss Döner (150 Gr)",
+                    "deeplink": "tgo://?Channel=Meal&Page=ProductDetail&RestaurantId=0&ProductId=5986567",
+                    "active": false,
+                    "directlyAddToBasket": false,
+                    "likingStatus": {
+                        "icon": "https://cdn.tgoapps.com/mobile/meal/reviewedproductthumbsup.png",
+                        "text": "Beğendi",
+                        "textColor": "#0BC15C"
+                    }
+                }
+            ],
+            "deliveryType": "GO",
+            "deliveryLogoUrl": "https://cdn.tgoapps.com/mobile/meal/cwgoicon.png",
+            "tags": [
+                {
+                    "id": 5,
+                    "name": "Porsiyon"
+                }
+            ],
+            "temiz_metin": "lezzeti iyiydi ancak 150 gr dönere o küçük lavaş olmamış bence doyurucu değildi"
+        },
+        {
+            "id": "6bcd9a67-1dc9-4e39-a556-963ffb29442d",
+            "comment": "çok lezzetli",
+            "date": 1772294861403,
+            "score": {
+                "flavor": 5,
+                "service": 5,
+                "delivery": 3
+            },
+            "userIcon": "https://cdn.tgoapps.com/Assets/t/y/creative/mobile/instantdelivery/meal_profile_icon.png",
+            "restaurantReply": {
+                "restaurantIcon": "https://cdn.tgoapps.com/mobile/meal/restauranticoncommentspage.png",
+                "title": "Restoranın Cevabı",
+                "comment": "öyle güzel bir yorumu görmek bizi çok mutlu etti. Dönerimizi sevmenize sevindik ve sizin için 50 TL yemek kuponu ekledik. AFİYET OLSUN."
+            },
+            "orderItems": [
+                {
+                    "id": 5986567,
+                    "name": "Antakyam Miss Döner (150 Gr)",
+                    "deeplink": "tgo://?Channel=Meal&Page=ProductDetail&RestaurantId=0&ProductId=5986567",
+                    "active": false,
+                    "directlyAddToBasket": false,
+                    "likingStatus": {
+                        "icon": "https://cdn.tgoapps.com/mobile/meal/reviewedproductthumbsup.png",
+                        "text": "Beğendi",
+                        "textColor": "#0BC15C"
+                    }
+                }
+            ],
+            "deliveryType": "GO",
+            "deliveryLogoUrl": "https://cdn.tgoapps.com/mobile/meal/cwgoicon.png",
+            "tags": [
+                {
+                    "id": 1,
+                    "name": "Ürün Kalitesi"
+                }
+            ],
+            "temiz_metin": "çok lezzetli"
+        },
+        {
+            "id": "cd1114f3-dd5e-4dc4-aac1-c6d5d87bb1f4",
+            "comment": "Muhteşemdi hem döneri hem sosu dolu doluydu çok hızlı geldi teşekürler.",
+            "date": 1772144108316,
+            "score": {
+                "flavor": 5,
+                "service": 5,
+                "delivery": 5
+            },
+            "userIcon": "https://cdn.tgoapps.com/Assets/t/y/creative/mobile/instantdelivery/meal_profile_icon.png",
+            "restaurantReply": {
+                "restaurantIcon": "https://cdn.tgoapps.com/mobile/meal/restauranticoncommentspage.png",
+                "title": "Restoranın Cevabı",
+                "comment": "öyle güzel bir yorumu görmek bizi çok mutlu etti. Dönerimizi sevmenize sevindik ve sizin için 50 TL yemek kuponu ekledik. AFİYET OLSUN."
+            },
+            "orderItems": [
+                {
+                    "id": 5986567,
+                    "name": "Antakyam Miss Döner (150 Gr)",
+                    "deeplink": "tgo://?Channel=Meal&Page=ProductDetail&RestaurantId=0&ProductId=5986567",
+                    "active": false,
+                    "directlyAddToBasket": false,
+                    "likingStatus": {
+                        "icon": "https://cdn.tgoapps.com/mobile/meal/reviewedproductthumbsup.png",
+                        "text": "Beğendi",
+                        "textColor": "#0BC15C"
+                    }
+                },
+                {
+                    "id": 5986594,
+                    "name": "Ayran (33 Cl)",
+                    "deeplink": "tgo://?Channel=Meal&Page=ProductDetail&RestaurantId=0&ProductId=5986594",
+                    "active": false,
+                    "directlyAddToBasket": false,
+                    "likingStatus": {
+                        "icon": "https://cdn.tgoapps.com/mobile/meal/reviewedproductthumbsup.png",
+                        "text": "Beğendi",
+                        "textColor": "#0BC15C"
+                    }
+                }
+            ],
+            "deliveryType": "GO",
+            "deliveryLogoUrl": "https://cdn.tgoapps.com/mobile/meal/cwgoicon.png",
+            "tags": [
+                {
+                    "id": 5,
+                    "name": "Porsiyon"
+                }
+            ],
+            "temiz_metin": "muhteşemdi hem döneri hem sosu dolu doluydu çok hızlı geldi teşekürler"
+        },
+        {
+            "id": "d1de0c0e-a558-433e-90be-52fe4017b846",
+            "comment": "lezzetli ve güzel paketlenmişti",
+            "date": 1772060201432,
+            "score": {
+                "flavor": 5,
+                "service": 5,
+                "delivery": 5
+            },
+            "userIcon": "https://cdn.tgoapps.com/Assets/t/y/creative/mobile/instantdelivery/meal_profile_icon.png",
+            "restaurantReply": {
+                "restaurantIcon": "https://cdn.tgoapps.com/mobile/meal/restauranticoncommentspage.png",
+                "title": "Restoranın Cevabı",
+                "comment": "Bizi tercih ettiğiniz için teşekkür ederiz. Afiyet olsun."
+            },
+            "orderItems": [
+                {
+                    "id": 5986567,
+                    "name": "Antakyam Miss Döner (150 Gr)",
+                    "deeplink": "tgo://?Channel=Meal&Page=ProductDetail&RestaurantId=0&ProductId=5986567",
+                    "active": false,
+                    "directlyAddToBasket": false,
+                    "likingStatus": {
+                        "icon": "https://cdn.tgoapps.com/mobile/meal/reviewedproductthumbsup.png",
+                        "text": "Beğendi",
+                        "textColor": "#0BC15C"
+                    }
+                }
+            ],
+            "deliveryType": "GO",
+            "deliveryLogoUrl": "https://cdn.tgoapps.com/mobile/meal/cwgoicon.png",
+            "tags": [
+                {
+                    "id": 4,
+                    "name": "Paketleme"
+                }
+            ],
+            "temiz_metin": "lezzetli ve güzel paketlenmişti"
+        },
+        {
+            "id": "60dafc5f-ce5d-4121-8f06-0e79d335759f",
+            "comment": "Kızartması gelmedı kızartma siparişi verdım",
+            "date": 1772034139677,
+            "score": {
+                "flavor": 3,
+                "service": 5,
+                "delivery": 5
+            },
+            "userIcon": "https://cdn.tgoapps.com/Assets/t/y/creative/mobile/instantdelivery/meal_profile_icon.png",
+            "restaurantReply": {
+                "restaurantIcon": "https://cdn.tgoapps.com/mobile/meal/restauranticoncommentspage.png",
+                "title": "Restoranın Cevabı",
+                "comment": "Merhabalar patates kızartmasını sadece dürümün içine olacak şekilde yapıyoruz. Menümüzdede patates kızartması yok efendim. Afiyet olsun."
+            },
+            "orderItems": [
+                {
+                    "id": 5986567,
+                    "name": "Antakyam Miss Döner (150 Gr)",
+                    "deeplink": "tgo://?Channel=Meal&Page=ProductDetail&RestaurantId=0&ProductId=5986567",
+                    "active": false,
+                    "directlyAddToBasket": false,
+                    "likingStatus": null
+                }
+            ],
+            "deliveryType": "GO",
+            "deliveryLogoUrl": "https://cdn.tgoapps.com/mobile/meal/cwgoicon.png",
+            "tags": [
+                {
+                    "id": 6,
+                    "name": "Eksik/Farklı Ürün"
+                }
+            ],
+            "temiz_metin": "kızartması gelmedı kızartma siparişi verdım"
+        },
+        {
+            "id": "d116dfbd-35d9-40e7-8d7d-29b03194723a",
+            "comment": "sosu çok olsun diyenlere tavsiye ederim ama bana aşırı sulu geldi öyleki suyu yerlere dökülüyor ürünler hızlı geldi ama biraz soğuktu büyük ihtimalle havaların soğuk olmasından dolayı genel olarak iyidi ama abartı soslu",
+            "date": 1771967452561,
+            "score": {
+                "flavor": 3,
+                "service": 4,
+                "delivery": 5
+            },
+            "userIcon": "https://cdn.tgoapps.com/Assets/t/y/creative/mobile/instantdelivery/meal_profile_icon.png",
+            "restaurantReply": {
+                "restaurantIcon": "https://cdn.tgoapps.com/mobile/meal/restauranticoncommentspage.png",
+                "title": "Restoranın Cevabı",
+                "comment": "Kusura bakmayın, dikkat edeceğiz görüşleriniz bizim için çok önemli. Afiyet olsun."
+            },
+            "orderItems": [
+                {
+                    "id": 5986566,
+                    "name": "Antakyam Miss Döner (120 Gr)",
+                    "deeplink": "tgo://?Channel=Meal&Page=ProductDetail&RestaurantId=0&ProductId=5986566",
+                    "active": false,
+                    "directlyAddToBasket": false,
+                    "likingStatus": null
+                }
+            ],
+            "deliveryType": "GO",
+            "deliveryLogoUrl": "https://cdn.tgoapps.com/mobile/meal/cwgoicon.png",
+            "tags": [
+                {
+                    "id": 3,
+                    "name": "Teslimat"
+                }
+            ],
+            "temiz_metin": "sosu çok olsun diyenlere tavsiye ederim ama bana aşırı sulu geldi öyleki suyu yerlere dökülüyor ürünler hızlı geldi ama biraz soğuktu büyük ihtimalle havaların soğuk olmasından dolayı genel olarak iyidi ama abartı soslu"
+        },
+        {
+            "id": "ad25e2aa-9c5f-4650-94ab-60c2c052d54b",
+            "comment": "Patatesler çiğ tadı bozuyor onun dışında iyidi.",
+            "date": 1771877863722,
+            "score": {
+                "flavor": 3,
+                "service": 4,
+                "delivery": 5
+            },
+            "userIcon": "https://cdn.tgoapps.com/Assets/t/y/creative/mobile/instantdelivery/meal_profile_icon.png",
+            "orderItems": [
+                {
+                    "id": 5986575,
+                    "name": "Antakyam Kaşarlı Miss Döner (150 Gr)",
+                    "deeplink": "tgo://?Channel=Meal&Page=ProductDetail&RestaurantId=0&ProductId=5986575",
+                    "active": false,
+                    "directlyAddToBasket": false,
+                    "likingStatus": null
+                }
+            ],
+            "deliveryType": "GO",
+            "deliveryLogoUrl": "https://cdn.tgoapps.com/mobile/meal/cwgoicon.png",
+            "tags": [
+                {
+                    "id": 1,
+                    "name": "Ürün Kalitesi"
+                }
+            ],
+            "temiz_metin": "patatesler çiğ tadı bozuyor onun dışında iyidi"
+        },
+        {
+            "id": "8eb70802-8414-433d-a8a1-9b274fe44072",
+            "comment": "Yazdığımım notu okumaya bile tenezzül etmemişsiniz bide üstüne üstlük çiğ patatesleri doldurmuşsunuz yakışmadı sizin gibi bi işletmeye",
+            "date": 1771868320194,
+            "score": {
+                "flavor": 1,
+                "service": 1,
+                "delivery": 1
+            },
+            "userIcon": "https://cdn.tgoapps.com/Assets/t/y/creative/mobile/instantdelivery/meal_profile_icon.png",
+            "orderItems": [
+                {
+                    "id": 5986575,
+                    "name": "Antakyam Kaşarlı Miss Döner (150 Gr)",
+                    "deeplink": "tgo://?Channel=Meal&Page=ProductDetail&RestaurantId=0&ProductId=5986575",
+                    "active": false,
+                    "directlyAddToBasket": false,
+                    "likingStatus": null
+                },
+                {
+                    "id": 5986594,
+                    "name": "Ayran (33 Cl)",
+                    "deeplink": "tgo://?Channel=Meal&Page=ProductDetail&RestaurantId=0&ProductId=5986594",
+                    "active": false,
+                    "directlyAddToBasket": false,
+                    "likingStatus": null
+                }
+            ],
+            "deliveryType": "GO",
+            "deliveryLogoUrl": "https://cdn.tgoapps.com/mobile/meal/cwgoicon.png",
+            "tags": [
+                {
+                    "id": 8,
+                    "name": "Sipariş Notu"
+                }
+            ],
+            "temiz_metin": "yazdığımım notu okumaya bile tenezzül etmemişsiniz bir de üstüne üstlük çiğ patatesleri doldurmuşsunuz yakışmadı sizin gibi bir işletmeye"
+        },
+        {
+            "id": "b4c6529d-de14-49bd-b2dd-d2a5cb9e98f8",
+            "comment": "9dkda geldi ve sicacikti. baya lezzetli elinize saglik",
+            "date": 1771776784413,
+            "score": {
+                "flavor": 5,
+                "service": 5,
+                "delivery": 5
+            },
+            "userIcon": "https://cdn.tgoapps.com/Assets/t/y/creative/mobile/instantdelivery/meal_profile_icon.png",
+            "orderItems": [
+                {
+                    "id": 5986565,
+                    "name": "Antakyam Miss Döner (100 Gr)",
+                    "deeplink": "tgo://?Channel=Meal&Page=ProductDetail&RestaurantId=0&ProductId=5986565",
+                    "active": false,
+                    "directlyAddToBasket": false,
+                    "likingStatus": null
+                }
+            ],
+            "deliveryType": "GO",
+            "deliveryLogoUrl": "https://cdn.tgoapps.com/mobile/meal/cwgoicon.png",
+            "tags": [
+                {
+                    "id": 3,
+                    "name": "Teslimat"
+                }
+            ],
+            "temiz_metin": "9dkda geldi ve sicacikti bayağı lezzetli elinize saglik"
+        },
+        {
+            "id": "81e1cf6e-24d0-4032-973e-ff67ee959a53",
+            "comment": "Çok patatesliydi ama tadı çok güzeldi ellerinize sağlık",
+            "date": 1771622497288,
+            "score": {
+                "flavor": 4,
+                "service": 5,
+                "delivery": 4
+            },
+            "userIcon": "https://cdn.tgoapps.com/Assets/t/y/creative/mobile/instantdelivery/meal_profile_icon.png",
+            "orderItems": [
+                {
+                    "id": 5986565,
+                    "name": "Antakyam Miss Döner (100 Gr)",
+                    "deeplink": "tgo://?Channel=Meal&Page=ProductDetail&RestaurantId=0&ProductId=5986565",
+                    "active": false,
+                    "directlyAddToBasket": false,
+                    "likingStatus": null
+                }
+            ],
+            "deliveryType": "GO",
+            "deliveryLogoUrl": "https://cdn.tgoapps.com/mobile/meal/cwgoicon.png",
+            "tags": [
+                {
+                    "id": 1,
+                    "name": "Ürün Kalitesi"
+                }
+            ],
+            "temiz_metin": "çok patatesliydi ama tadı çok güzeldi ellerinize sağlık"
+        },
+        {
+            "id": "878ea86f-5984-49a9-8a96-c3a4c2ee56bd",
+            "comment": "çok kötüydü malesef",
+            "date": 1771438449999,
+            "score": {
+                "flavor": 1,
+                "service": 1,
+                "delivery": 3
+            },
+            "userIcon": "https://cdn.tgoapps.com/Assets/t/y/creative/mobile/instantdelivery/meal_profile_icon.png",
+            "orderItems": [
+                {
+                    "id": 5986567,
+                    "name": "Antakyam Miss Döner (150 Gr)",
+                    "deeplink": "tgo://?Channel=Meal&Page=ProductDetail&RestaurantId=0&ProductId=5986567",
+                    "active": false,
+                    "directlyAddToBasket": false,
+                    "likingStatus": null
+                }
+            ],
+            "deliveryType": "GO",
+            "deliveryLogoUrl": "https://cdn.tgoapps.com/mobile/meal/cwgoicon.png",
+            "tags": [
+                {
+                    "id": 1,
+                    "name": "Ürün Kalitesi"
+                }
+            ],
+            "temiz_metin": "çok kötüydü malesef"
+        },
+        {
+            "id": "4c2f615f-6775-499e-8741-24c37b1c9b00",
+            "comment": "hızlı geldi, puding için de teşekkür ederim",
+            "date": 1771435191798,
+            "score": {
+                "flavor": 5,
+                "service": 5,
+                "delivery": 5
+            },
+            "userIcon": "https://cdn.tgoapps.com/Assets/t/y/creative/mobile/instantdelivery/meal_profile_icon.png",
+            "orderItems": [
+                {
+                    "id": 6414213,
+                    "name": "Antakyam Tıka Basa Miss Döner ( 150 Gr )",
+                    "deeplink": "tgo://?Channel=Meal&Page=ProductDetail&RestaurantId=0&ProductId=6414213",
+                    "active": false,
+                    "directlyAddToBasket": false,
+                    "likingStatus": {
+                        "icon": "https://cdn.tgoapps.com/mobile/meal/reviewedproductthumbsup.png",
+                        "text": "Beğendi",
+                        "textColor": "#0BC15C"
+                    }
+                },
+                {
+                    "id": 5986594,
+                    "name": "Ayran (33 Cl)",
+                    "deeplink": "tgo://?Channel=Meal&Page=ProductDetail&RestaurantId=0&ProductId=5986594",
+                    "active": false,
+                    "directlyAddToBasket": false,
+                    "likingStatus": {
+                        "icon": "https://cdn.tgoapps.com/mobile/meal/reviewedproductthumbsup.png",
+                        "text": "Beğendi",
+                        "textColor": "#0BC15C"
+                    }
+                }
+            ],
+            "deliveryType": "GO",
+            "deliveryLogoUrl": "https://cdn.tgoapps.com/mobile/meal/cwgoicon.png",
+            "tags": [
+                {
+                    "id": 3,
+                    "name": "Teslimat"
+                }
+            ],
+            "temiz_metin": "hızlı geldi puding için de teşekkür ederim"
+        },
+        {
+            "id": "092b801f-d51f-48d6-9f71-185a6c19c5d4",
+            "comment": "Not yazıyoruz ciddiye alıp okuyan yok. Patates koymayın diyoruz ama nafile",
+            "date": 1771357421308,
+            "score": {
+                "flavor": 1,
+                "service": 1,
+                "delivery": 1
+            },
+            "userIcon": "https://cdn.tgoapps.com/Assets/t/y/creative/mobile/instantdelivery/meal_profile_icon.png",
+            "orderItems": [
+                {
+                    "id": 5986566,
+                    "name": "Antakyam Miss Döner (120 Gr)",
+                    "deeplink": "tgo://?Channel=Meal&Page=ProductDetail&RestaurantId=0&ProductId=5986566",
+                    "active": false,
+                    "directlyAddToBasket": false,
+                    "likingStatus": null
+                }
+            ],
+            "deliveryType": "GO",
+            "deliveryLogoUrl": "https://cdn.tgoapps.com/mobile/meal/cwgoicon.png",
+            "tags": [
+                {
+                    "id": 8,
+                    "name": "Sipariş Notu"
+                }
+            ],
+            "temiz_metin": "not yazıyoruz ciddiye alıp okuyan yok patates koymayın diyoruz ama nafile"
+        },
+        {
+            "id": "0e3c1bb9-46c3-44de-89e3-325f0415a7e5",
+            "comment": "Tercih etmeyin güzel değildi",
+            "date": 1771340199771,
+            "score": {
+                "flavor": 1,
+                "service": 3,
+                "delivery": 1
+            },
+            "userIcon": "https://cdn.tgoapps.com/Assets/t/y/creative/mobile/instantdelivery/meal_profile_icon.png",
+            "restaurantReply": {
+                "restaurantIcon": "https://cdn.tgoapps.com/mobile/meal/restauranticoncommentspage.png",
+                "title": "Restoranın Cevabı",
+                "comment": "Beğenmemenizi saygıyla karşılıyoruz. Beğenmemenizden dolayı ççok üzgünüz ama damak tadı göreceli birşeydir bu şekilde yönlendirme yapmanız bizi üzdü."
+            },
+            "orderItems": [
+                {
+                    "id": 5986567,
+                    "name": "Antakyam Miss Döner (150 Gr)",
+                    "deeplink": "tgo://?Channel=Meal&Page=ProductDetail&RestaurantId=0&ProductId=5986567",
+                    "active": false,
+                    "directlyAddToBasket": false,
+                    "likingStatus": null
+                }
+            ],
+            "deliveryType": "GO",
+            "deliveryLogoUrl": "https://cdn.tgoapps.com/mobile/meal/cwgoicon.png",
+            "tags": [
+                {
+                    "id": 1,
+                    "name": "Ürün Kalitesi"
+                }
+            ],
+            "temiz_metin": "tercih etmeyin güzel değildi"
+        },
+        {
+            "id": "4b07da26-857d-4d7a-a83e-4b5e4a57f35b",
+            "comment": "çok güzeldi sıcaktı hızlıydı ellerine sağlık",
+            "date": 1771275174197,
+            "score": {
+                "flavor": 5,
+                "service": 5,
+                "delivery": 5
+            },
+            "userIcon": "https://cdn.tgoapps.com/Assets/t/y/creative/mobile/instantdelivery/meal_profile_icon.png",
+            "orderItems": [
+                {
+                    "id": 5986565,
+                    "name": "Antakyam Miss Döner (100 Gr)",
+                    "deeplink": "tgo://?Channel=Meal&Page=ProductDetail&RestaurantId=0&ProductId=5986565",
+                    "active": false,
+                    "directlyAddToBasket": false,
+                    "likingStatus": {
+                        "icon": "https://cdn.tgoapps.com/mobile/meal/reviewedproductthumbsup.png",
+                        "text": "Beğendi",
+                        "textColor": "#0BC15C"
+                    }
+                },
+                {
+                    "id": 5986594,
+                    "name": "Ayran (33 Cl)",
+                    "deeplink": "tgo://?Channel=Meal&Page=ProductDetail&RestaurantId=0&ProductId=5986594",
+                    "active": false,
+                    "directlyAddToBasket": false,
+                    "likingStatus": {
+                        "icon": "https://cdn.tgoapps.com/mobile/meal/reviewedproductthumbsup.png",
+                        "text": "Beğendi",
+                        "textColor": "#0BC15C"
+                    }
+                }
+            ],
+            "deliveryType": "GO",
+            "deliveryLogoUrl": "https://cdn.tgoapps.com/mobile/meal/cwgoicon.png",
+            "tags": [
+                {
+                    "id": 3,
+                    "name": "Teslimat"
+                }
+            ],
+            "temiz_metin": "çok güzeldi sıcaktı hızlıydı ellerine sağlık"
+        },
+        {
+            "id": "5d92ae9e-77ee-4bcd-b9e9-c00bd99d71e8",
+            "comment": "süper ötesi döner daha iyisini yemedim ama fiyatı flaş indirimle çok iyi",
+            "date": 1771227004158,
+            "score": {
+                "flavor": 5,
+                "service": 5,
+                "delivery": 5
+            },
+            "userIcon": "https://cdn.tgoapps.com/Assets/t/y/creative/mobile/instantdelivery/meal_profile_icon.png",
+            "orderItems": [
+                {
+                    "id": 5986567,
+                    "name": "Antakyam Miss Döner (150 Gr)",
+                    "deeplink": "tgo://?Channel=Meal&Page=ProductDetail&RestaurantId=0&ProductId=5986567",
+                    "active": false,
+                    "directlyAddToBasket": false,
+                    "likingStatus": null
+                },
+                {
+                    "id": 5986566,
+                    "name": "Antakyam Miss Döner (120 Gr)",
+                    "deeplink": "tgo://?Channel=Meal&Page=ProductDetail&RestaurantId=0&ProductId=5986566",
+                    "active": false,
+                    "directlyAddToBasket": false,
+                    "likingStatus": null
+                }
+            ],
+            "deliveryType": "GO",
+            "deliveryLogoUrl": "https://cdn.tgoapps.com/mobile/meal/cwgoicon.png",
+            "tags": [
+                {
+                    "id": 2,
+                    "name": "Fiyat"
+                }
+            ],
+            "temiz_metin": "süper ötesi döner daha iyisini yemedim ama fiyatı flaş indirimle çok iyi"
+        },
+        {
+            "id": "00d01510-de2f-44d5-9bd3-65dd2311cbdb",
+            "comment": "Lütfen sos koymayın diye not düştüm inadına 3 kilo sos ve sarımsak basmışlar",
+            "date": 1771170197039,
+            "score": {
+                "flavor": 1,
+                "service": 1,
+                "delivery": 5
+            },
+            "userIcon": "https://cdn.tgoapps.com/Assets/t/y/creative/mobile/instantdelivery/meal_profile_icon.png",
+            "restaurantReply": {
+                "restaurantIcon": "https://cdn.tgoapps.com/mobile/meal/restauranticoncommentspage.png",
+                "title": "Restoranın Cevabı",
+                "comment": "Hatamızdan dolayı çok özür dileriz telafi etmek isteriz"
+            },
+            "orderItems": [
+                {
+                    "id": 6507624,
+                    "name": "Kanka Menü",
+                    "deeplink": "tgo://?Channel=Meal&Page=ProductDetail&RestaurantId=0&ProductId=6507624",
+                    "active": false,
+                    "directlyAddToBasket": false,
+                    "likingStatus": null
+                }
+            ],
+            "deliveryType": "GO",
+            "deliveryLogoUrl": "https://cdn.tgoapps.com/mobile/meal/cwgoicon.png",
+            "tags": [
+                {
+                    "id": 8,
+                    "name": "Sipariş Notu"
+                }
+            ],
+            "temiz_metin": "lütfen sos koymayın diye not düştüm inadına 3 kilo sos ve sarımsak basmışlar"
+        },
+        {
+            "id": "b4e4fb1b-d606-442f-9ec8-b4f89d9a5088",
+            "comment": "Her şey mükemmeldi",
+            "date": 1771095604210,
+            "score": {
+                "flavor": 5,
+                "service": 5,
+                "delivery": 5
+            },
+            "userIcon": "https://cdn.tgoapps.com/Assets/t/y/creative/mobile/instantdelivery/meal_profile_icon.png",
+            "restaurantReply": {
+                "restaurantIcon": "https://cdn.tgoapps.com/mobile/meal/restauranticoncommentspage.png",
+                "title": "Restoranın Cevabı",
+                "comment": "öyle güzel bir yorumu görmek bizi çok mutlu etti. Dönerimizi sevmenize sevindik ve sizin için 50 TL yemek kuponu ekledik. AFİYET OLSUN."
+            },
+            "orderItems": [
+                {
+                    "id": 5986567,
+                    "name": "Antakyam Miss Döner (150 Gr)",
+                    "deeplink": "tgo://?Channel=Meal&Page=ProductDetail&RestaurantId=0&ProductId=5986567",
+                    "active": false,
+                    "directlyAddToBasket": false,
+                    "likingStatus": null
+                }
+            ],
+            "deliveryType": "GO",
+            "deliveryLogoUrl": "https://cdn.tgoapps.com/mobile/meal/cwgoicon.png",
+            "tags": [
+                {
+                    "id": 1,
+                    "name": "Ürün Kalitesi"
+                }
+            ],
+            "temiz_metin": "her şey mükemmeldi"
+        },
+        {
+            "id": "4fef25b8-a1f7-42ab-b80f-8b94ffa23755",
+            "comment": "lezzetli doyurucu hem de uygun fiyatlı ellerinize sağlık",
+            "date": 1771007309084,
+            "score": {
+                "flavor": 5,
+                "service": 5,
+                "delivery": 5
+            },
+            "userIcon": "https://cdn.tgoapps.com/Assets/t/y/creative/mobile/instantdelivery/meal_profile_icon.png",
+            "restaurantReply": {
+                "restaurantIcon": "https://cdn.tgoapps.com/mobile/meal/restauranticoncommentspage.png",
+                "title": "Restoranın Cevabı",
+                "comment": "öyle güzel bir yorumu görmek bizi çok mutlu etti. Dönerimizi sevmenize sevindik ve sizin için 50 TL yemek kuponu ekledik. AFİYET OLSUN."
+            },
+            "orderItems": [
+                {
+                    "id": 6507624,
+                    "name": "Kanka Menü",
+                    "deeplink": "tgo://?Channel=Meal&Page=ProductDetail&RestaurantId=0&ProductId=6507624",
+                    "active": false,
+                    "directlyAddToBasket": false,
+                    "likingStatus": null
+                }
+            ],
+            "deliveryType": "GO",
+            "deliveryLogoUrl": "https://cdn.tgoapps.com/mobile/meal/cwgoicon.png",
+            "tags": [
+                {
+                    "id": 2,
+                    "name": "Fiyat"
+                }
+            ],
+            "temiz_metin": "lezzetli doyurucu hem de uygun fiyatlı ellerinize sağlık"
+        },
+        {
+            "id": "35cc2354-3386-4fed-a767-e61b45c93cb8",
+            "comment": "servis ve paketleme gayet iyi ama köri tadı vardı, çift lavaş istemiştim, dürümun yarısi sade lavaşti diğer malzemeler  ise sadece ortaya toplanmış gibiydi. yerken malesef  hic mutlu olmadım.",
+            "date": 1770991073041,
+            "score": {
+                "flavor": 4,
+                "service": 5,
+                "delivery": 5
+            },
+            "userIcon": "https://cdn.tgoapps.com/Assets/t/y/creative/mobile/instantdelivery/meal_profile_icon.png",
+            "restaurantReply": {
+                "restaurantIcon": "https://cdn.tgoapps.com/mobile/meal/restauranticoncommentspage.png",
+                "title": "Restoranın Cevabı",
+                "comment": "Yapıcı eleştirileriniz için teşekkür ediyoruz. Kesinlikle eleştrilerinizi dikkate alacağımıza emin olabilirsiniz. Afiyet olsun"
+            },
+            "orderItems": [
+                {
+                    "id": 5986567,
+                    "name": "Antakyam Miss Döner (150 Gr)",
+                    "deeplink": "tgo://?Channel=Meal&Page=ProductDetail&RestaurantId=0&ProductId=5986567",
+                    "active": false,
+                    "directlyAddToBasket": false,
+                    "likingStatus": null
+                },
+                {
+                    "id": 16660081,
+                    "name": "Ekstra Lavaş",
+                    "deeplink": "tgo://?Channel=Meal&Page=ProductDetail&RestaurantId=0&ProductId=16660081",
+                    "active": false,
+                    "directlyAddToBasket": false,
+                    "likingStatus": {
+                        "icon": "https://cdn.tgoapps.com/mobile/meal/reviewedproductthumbsup.png",
+                        "text": "Beğendi",
+                        "textColor": "#0BC15C"
+                    }
+                }
+            ],
+            "deliveryType": "GO",
+            "deliveryLogoUrl": "https://cdn.tgoapps.com/mobile/meal/cwgoicon.png",
+            "tags": [
+                {
+                    "id": 4,
+                    "name": "Paketleme"
+                }
+            ],
+            "temiz_metin": "servis ve paketleme gayet iyi ama köri tadı vardı çift lavaş istemiştim dürümun yarısi sade lavaşti diğer malzemeler ise sadece ortaya toplanmış gibiydi yerken malesef hiç mutlu olmadım"
+        },
+        {
+            "id": "e695a4e6-2a50-428e-873b-b56ed2126e61",
+            "comment": "Dönerler çok sıcak geldi. Siparişimde belirttiğim notuma dikkat edilip çok hızlı teslim edildiği için teşekkür ederim. En yakın zamanda tekrar sipariş vereceğim.",
+            "date": 1770739273164,
+            "score": {
+                "flavor": 5,
+                "service": 5,
+                "delivery": 5
+            },
+            "userIcon": "https://cdn.tgoapps.com/Assets/t/y/creative/mobile/instantdelivery/meal_profile_icon.png",
+            "restaurantReply": {
+                "restaurantIcon": "https://cdn.tgoapps.com/mobile/meal/restauranticoncommentspage.png",
+                "title": "Restoranın Cevabı",
+                "comment": "öyle güzel bir yorumu görmek bizi çok mutlu etti. Dönerimizi sevmenize sevindik ve sizin için 50 TL yemek kuponu ekledik. AFİYET OLSUN."
+            },
+            "orderItems": [
+                {
+                    "id": 5986565,
+                    "name": "Antakyam Miss Döner (100 Gr)",
+                    "deeplink": "tgo://?Channel=Meal&Page=ProductDetail&RestaurantId=0&ProductId=5986565",
+                    "active": false,
+                    "directlyAddToBasket": false,
+                    "likingStatus": {
+                        "icon": "https://cdn.tgoapps.com/mobile/meal/reviewedproductthumbsup.png",
+                        "text": "Beğendi",
+                        "textColor": "#0BC15C"
+                    }
+                },
+                {
+                    "id": 5986566,
+                    "name": "Antakyam Miss Döner (120 Gr)",
+                    "deeplink": "tgo://?Channel=Meal&Page=ProductDetail&RestaurantId=0&ProductId=5986566",
+                    "active": false,
+                    "directlyAddToBasket": false,
+                    "likingStatus": {
+                        "icon": "https://cdn.tgoapps.com/mobile/meal/reviewedproductthumbsup.png",
+                        "text": "Beğendi",
+                        "textColor": "#0BC15C"
+                    }
+                },
+                {
+                    "id": 5986594,
+                    "name": "Ayran (33 Cl)",
+                    "deeplink": "tgo://?Channel=Meal&Page=ProductDetail&RestaurantId=0&ProductId=5986594",
+                    "active": false,
+                    "directlyAddToBasket": false,
+                    "likingStatus": {
+                        "icon": "https://cdn.tgoapps.com/mobile/meal/reviewedproductthumbsup.png",
+                        "text": "Beğendi",
+                        "textColor": "#0BC15C"
+                    }
+                },
+                {
+                    "id": 5986582,
+                    "name": "Pepsi (200 Cl)",
+                    "deeplink": "tgo://?Channel=Meal&Page=ProductDetail&RestaurantId=0&ProductId=5986582",
+                    "active": false,
+                    "directlyAddToBasket": false,
+                    "likingStatus": {
+                        "icon": "https://cdn.tgoapps.com/mobile/meal/reviewedproductthumbsup.png",
+                        "text": "Beğendi",
+                        "textColor": "#0BC15C"
+                    }
+                }
+            ],
+            "deliveryType": "GO",
+            "deliveryLogoUrl": "https://cdn.tgoapps.com/mobile/meal/cwgoicon.png",
+            "tags": [
+                {
+                    "id": 8,
+                    "name": "Sipariş Notu"
+                }
+            ],
+            "temiz_metin": "dönerler çok sıcak geldi siparişimde belirttiğim notuma dikkat edilip çok hızlı teslim edildiği için teşekkür ederim en yakın zamanda tekrar sipariş vereceğim"
+        },
+        {
+            "id": "e469a207-a15c-422b-9ace-aa98bb3aab84",
+            "comment": "sadece kuryeyle ilgili sıkıntı var hem zile basma işaretleyip not yazıp bina şifresi bile veriyoruz ara diyoruz zile abanıyor restoran çalışanları kuryeyi nota göre uyarırsa çok iyi olur",
+            "date": 1770583245118,
+            "score": {
+                "flavor": 5,
+                "service": 5,
+                "delivery": 1
+            },
+            "userIcon": "https://cdn.tgoapps.com/Assets/t/y/creative/mobile/instantdelivery/meal_profile_icon.png",
+            "restaurantReply": {
+                "restaurantIcon": "https://cdn.tgoapps.com/mobile/meal/restauranticoncommentspage.png",
+                "title": "Restoranın Cevabı",
+                "comment": "Trenduolgo kuryeleyeri ile çalışmaktayız. Kuryelere notları özellikle söylüyoruz siz Müşterilerimizin notlarınıza dikkat etmekteyiz. Onun adına biz özürlerimizi diliyoruz. Kusura bakmayın tekrardan. Afiyet olsun."
+            },
+            "orderItems": [
+                {
+                    "id": 6414213,
+                    "name": "Antakyam Tıka Basa Miss Döner ( 150 Gr )",
+                    "deeplink": "tgo://?Channel=Meal&Page=ProductDetail&RestaurantId=0&ProductId=6414213",
+                    "active": false,
+                    "directlyAddToBasket": false,
+                    "likingStatus": {
+                        "icon": "https://cdn.tgoapps.com/mobile/meal/reviewedproductthumbsup.png",
+                        "text": "Beğendi",
+                        "textColor": "#0BC15C"
+                    }
+                },
+                {
+                    "id": 16660081,
+                    "name": "Ekstra Lavaş",
+                    "deeplink": "tgo://?Channel=Meal&Page=ProductDetail&RestaurantId=0&ProductId=16660081",
+                    "active": false,
+                    "directlyAddToBasket": false,
+                    "likingStatus": {
+                        "icon": "https://cdn.tgoapps.com/mobile/meal/reviewedproductthumbsup.png",
+                        "text": "Beğendi",
+                        "textColor": "#0BC15C"
+                    }
+                }
+            ],
+            "deliveryType": "GO",
+            "deliveryLogoUrl": "https://cdn.tgoapps.com/mobile/meal/cwgoicon.png",
+            "temiz_metin": "sadece kuryeyle ilgili sıkıntı var hem zile basma işaretleyip not yazıp bina şifresi bile veriyoruz ara diyoruz zile abanıyor restoran çalışanları kuryeyi nota göre uyarırsa çok iyi olur"
+        },
+        {
+            "id": "07b35595-e997-4485-b506-85d788eeeda3",
+            "comment": "Hayatımda yediğim en kötü dönerdi kupkuru gramajı azdı",
+            "date": 1770570802544,
+            "score": {
+                "flavor": 2,
+                "service": 1,
+                "delivery": 3
+            },
+            "userIcon": "https://cdn.tgoapps.com/Assets/t/y/creative/mobile/instantdelivery/meal_profile_icon.png",
+            "restaurantReply": {
+                "restaurantIcon": "https://cdn.tgoapps.com/mobile/meal/restauranticoncommentspage.png",
+                "title": "Restoranın Cevabı",
+                "comment": "Tüm ürünlerimiz tartışarak yapılmaktadır istenildiği zaman kontrol edilebilir dönerin kuruluğu göreceli bir durum size göre kuru olan başkasına normal gelebilir o açıdan bol sos istediğinizi not etseydiniz bol koyardık"
+            },
+            "orderItems": [
+                {
+                    "id": 5986566,
+                    "name": "Antakyam Miss Döner (120 Gr)",
+                    "deeplink": "tgo://?Channel=Meal&Page=ProductDetail&RestaurantId=0&ProductId=5986566",
+                    "active": false,
+                    "directlyAddToBasket": false,
+                    "likingStatus": null
+                },
+                {
+                    "id": 5986564,
+                    "name": "Antakyam Miss Döner (60 Gr)",
+                    "deeplink": "tgo://?Channel=Meal&Page=ProductDetail&RestaurantId=0&ProductId=5986564",
+                    "active": false,
+                    "directlyAddToBasket": false,
+                    "likingStatus": null
+                }
+            ],
+            "deliveryType": "GO",
+            "deliveryLogoUrl": "https://cdn.tgoapps.com/mobile/meal/cwgoicon.png",
+            "tags": [
+                {
+                    "id": 5,
+                    "name": "Porsiyon"
+                }
+            ],
+            "temiz_metin": "hayatımda yediğim en kötü dönerdi kupkuru gramajı azdı"
+        },
+        {
+            "id": "329bdd99-ba9e-43f2-a597-f103f1238241",
+            "comment": "biraz geç ve soğuk geldi ama doyurucu ve güzeldi. Elinize sağlık",
+            "date": 1770454573659,
+            "score": {
+                "flavor": 4,
+                "service": 5,
+                "delivery": 3
+            },
+            "userIcon": "https://cdn.tgoapps.com/Assets/t/y/creative/mobile/instantdelivery/meal_profile_icon.png",
+            "restaurantReply": {
+                "restaurantIcon": "https://cdn.tgoapps.com/mobile/meal/restauranticoncommentspage.png",
+                "title": "Restoranın Cevabı",
+                "comment": "Afiyet olsun."
+            },
+            "orderItems": [
+                {
+                    "id": 6414213,
+                    "name": "Antakyam Tıka Basa Miss Döner ( 150 Gr )",
+                    "deeplink": "tgo://?Channel=Meal&Page=ProductDetail&RestaurantId=0&ProductId=6414213",
+                    "active": false,
+                    "directlyAddToBasket": false,
+                    "likingStatus": null
+                },
+                {
+                    "id": 16660081,
+                    "name": "Ekstra Lavaş",
+                    "deeplink": "tgo://?Channel=Meal&Page=ProductDetail&RestaurantId=0&ProductId=16660081",
+                    "active": false,
+                    "directlyAddToBasket": false,
+                    "likingStatus": null
+                }
+            ],
+            "deliveryType": "GO",
+            "deliveryLogoUrl": "https://cdn.tgoapps.com/mobile/meal/cwgoicon.png",
+            "tags": [
+                {
+                    "id": 3,
+                    "name": "Teslimat"
+                }
+            ],
+            "temiz_metin": "biraz geç ve soğuk geldi ama doyurucu ve güzeldi elinize sağlık"
+        },
+        {
+            "id": "e5dce07a-4006-4e12-a0ca-a4d4bce2d20d",
+            "comment": "Yarısını yiyebildim çok sosluydu birde neden herkes jalapeno koyuyor bıktık valla cin biberini özledim",
+            "date": 1770399371441,
+            "score": {
+                "flavor": 2,
+                "service": 4,
+                "delivery": 5
+            },
+            "userIcon": "https://cdn.tgoapps.com/Assets/t/y/creative/mobile/instantdelivery/meal_profile_icon.png",
+            "restaurantReply": {
+                "restaurantIcon": "https://cdn.tgoapps.com/mobile/meal/restauranticoncommentspage.png",
+                "title": "Restoranın Cevabı",
+                "comment": "Biz dürümlerimizi normal soslu yapıyoruz fakat isteğe göre notunuza. Az soslu olarak belirtebilirsiniz."
+            },
+            "orderItems": [
+                {
+                    "id": 5986567,
+                    "name": "Antakyam Miss Döner (150 Gr)",
+                    "deeplink": "tgo://?Channel=Meal&Page=ProductDetail&RestaurantId=0&ProductId=5986567",
+                    "active": false,
+                    "directlyAddToBasket": false,
+                    "likingStatus": null
+                },
+                {
+                    "id": 5986594,
+                    "name": "Ayran (33 Cl)",
+                    "deeplink": "tgo://?Channel=Meal&Page=ProductDetail&RestaurantId=0&ProductId=5986594",
+                    "active": false,
+                    "directlyAddToBasket": false,
+                    "likingStatus": null
+                },
+                {
+                    "id": 5986598,
+                    "name": "Su (33 Cl)",
+                    "deeplink": "tgo://?Channel=Meal&Page=ProductDetail&RestaurantId=0&ProductId=5986598",
+                    "active": false,
+                    "directlyAddToBasket": false,
+                    "likingStatus": null
+                }
+            ],
+            "deliveryType": "GO",
+            "deliveryLogoUrl": "https://cdn.tgoapps.com/mobile/meal/cwgoicon.png",
+            "tags": [
+                {
+                    "id": 1,
+                    "name": "Ürün Kalitesi"
+                }
+            ],
+            "temiz_metin": "yarısını yiyebildim çok sosluydu birde neden herkes jalapeno koyuyor bıktık valla cin biberini özledim"
+        },
+        {
+            "id": "f364fcde-f330-4e01-bc8c-cc16985c2e4e",
+            "comment": "ilk defa denemek için söyledim hiç beğenmedim. lavaş parçalanmıştı biraz özen olsaydı keşke sanki bedava veriyorsunuz!",
+            "date": 1770327943178,
+            "score": {
+                "flavor": 3,
+                "service": 3,
+                "delivery": 4
+            },
+            "userIcon": "https://cdn.tgoapps.com/Assets/t/y/creative/mobile/instantdelivery/meal_profile_icon.png",
+            "orderItems": [
+                {
+                    "id": 5986580,
+                    "name": "Antakyam Harboli Miss Döner (150 Gr)",
+                    "deeplink": "tgo://?Channel=Meal&Page=ProductDetail&RestaurantId=0&ProductId=5986580",
+                    "active": false,
+                    "directlyAddToBasket": false,
+                    "likingStatus": null
+                }
+            ],
+            "deliveryType": "GO",
+            "deliveryLogoUrl": "https://cdn.tgoapps.com/mobile/meal/cwgoicon.png",
+            "tags": [
+                {
+                    "id": 2,
+                    "name": "Fiyat"
+                }
+            ],
+            "temiz_metin": "ilk defa denemek için söyledim hiç beğenmedim lavaş parçalanmıştı biraz özen olsaydı keşke sanki bedava veriyorsunuz"
+        },
+        {
+            "id": "ce8cc505-3db3-4e1b-a451-7e193d73e3e0",
+            "comment": "Döneritossssssss<3<3<3😋 Çok leziz olmuş, ellerinize sağlık.",
+            "date": 1770188513261,
+            "score": {
+                "flavor": 5,
+                "service": 5,
+                "delivery": 5
+            },
+            "userIcon": "https://cdn.tgoapps.com/Assets/t/y/creative/mobile/instantdelivery/meal_profile_icon.png",
+            "restaurantReply": {
+                "restaurantIcon": "https://cdn.tgoapps.com/mobile/meal/restauranticoncommentspage.png",
+                "title": "Restoranın Cevabı",
+                "comment": "öyle güzel bir yorumu görmek bizi çok mutlu etti. Dönerimizi sevmenize sevindik ve sizin için 50 TL yemek kuponu ekledik. AFİYET OLSUN."
+            },
+            "orderItems": [
+                {
+                    "id": 16966616,
+                    "name": "Döneritos Menü (120 gram)",
+                    "deeplink": "tgo://?Channel=Meal&Page=ProductDetail&RestaurantId=0&ProductId=16966616",
+                    "active": false,
+                    "directlyAddToBasket": false,
+                    "likingStatus": {
+                        "icon": "https://cdn.tgoapps.com/mobile/meal/reviewedproductthumbsup.png",
+                        "text": "Beğendi",
+                        "textColor": "#0BC15C"
+                    }
+                }
+            ],
+            "deliveryType": "GO",
+            "deliveryLogoUrl": "https://cdn.tgoapps.com/mobile/meal/cwgoicon.png",
+            "tags": [
+                {
+                    "id": 1,
+                    "name": "Ürün Kalitesi"
+                }
+            ],
+            "temiz_metin": "döneritos 3 3 3 çok leziz olmuş ellerinize sağlık"
+        },
+        {
+            "id": "d09849ac-50eb-4824-aa26-ea3c029ab7c8",
+            "comment": "Uzun süredir artık neredeyse tek sipariş ettiğim dürüm bu oldu , kaliteli temiz ve gerçekten lezzetli hakiki Hatay usulü dürüm , tavsiye ederim",
+            "date": 1770142229575,
+            "score": {
+                "flavor": 5,
+                "service": 5,
+                "delivery": 5
+            },
+            "userIcon": "https://cdn.tgoapps.com/Assets/t/y/creative/mobile/instantdelivery/meal_profile_icon.png",
+            "restaurantReply": {
+                "restaurantIcon": "https://cdn.tgoapps.com/mobile/meal/restauranticoncommentspage.png",
+                "title": "Restoranın Cevabı",
+                "comment": "öyle güzel bir yorumu görmek bizi çok mutlu etti. Dönerimizi sevmenize sevindik ve sizin için 50 TL yemek kuponu ekledik. AFİYET OLSUN."
+            },
+            "orderItems": [
+                {
+                    "id": 16966616,
+                    "name": "Döneritos Menü (120 gram)",
+                    "deeplink": "tgo://?Channel=Meal&Page=ProductDetail&RestaurantId=0&ProductId=16966616",
+                    "active": false,
+                    "directlyAddToBasket": false,
+                    "likingStatus": null
+                }
+            ],
+            "deliveryType": "GO",
+            "deliveryLogoUrl": "https://cdn.tgoapps.com/mobile/meal/cwgoicon.png",
+            "tags": [
+                {
+                    "id": 1,
+                    "name": "Ürün Kalitesi"
+                }
+            ],
+            "temiz_metin": "uzun süredir artık neredeyse tek sipariş ettiğim dürüm bu oldu kaliteli temiz ve gerçekten lezzetli hakiki hatay usulü dürüm tavsiye ederim"
+        },
+        {
+            "id": "06638473-a221-4b3c-b749-21df4cbdf539",
+            "comment": "Alt taraftaki yorumu gördüm başta tereddütlüydüm ama gerçekten hepsi birbirine çok uyuşuyor döneritos ismi de çok hoş ve tatlı 😁",
+            "date": 1770135266814,
+            "score": {
+                "flavor": 5,
+                "service": 5,
+                "delivery": 5
+            },
+            "userIcon": "https://cdn.tgoapps.com/Assets/t/y/creative/mobile/instantdelivery/meal_profile_icon.png",
+            "restaurantReply": {
+                "restaurantIcon": "https://cdn.tgoapps.com/mobile/meal/restauranticoncommentspage.png",
+                "title": "Restoranın Cevabı",
+                "comment": "öyle güzel bir yorumu görmek bizi çok mutlu etti. Dönerimizi sevmenize sevindik ve sizin için 50 TL yemek kuponu ekledik. AFİYET OLSUN."
+            },
+            "orderItems": [
+                {
+                    "id": 16966616,
+                    "name": "Döneritos Menü (120 gram)",
+                    "deeplink": "tgo://?Channel=Meal&Page=ProductDetail&RestaurantId=0&ProductId=16966616",
+                    "active": false,
+                    "directlyAddToBasket": false,
+                    "likingStatus": {
+                        "icon": "https://cdn.tgoapps.com/mobile/meal/reviewedproductthumbsup.png",
+                        "text": "Beğendi",
+                        "textColor": "#0BC15C"
+                    }
+                }
+            ],
+            "deliveryType": "GO",
+            "deliveryLogoUrl": "https://cdn.tgoapps.com/mobile/meal/cwgoicon.png",
+            "tags": [
+                {
+                    "id": 1,
+                    "name": "Ürün Kalitesi"
+                }
+            ],
+            "temiz_metin": "alt taraftaki yorumu gördüm başta tereddütlüydüm ama gerçekten hepsi birbirine çok uyuşuyor döneritos ismi de çok hoş ve tatlı"
+        },
+        {
+            "id": "86e149ad-b002-4827-8555-57d9b08dd6ee",
+            "comment": "döneritos menüyü kesin denemelisiniz ben merak edip aldım çok begendim guzel bir lezzet olmuş elinize sağlık.",
+            "date": 1770131814316,
+            "score": {
+                "flavor": 5,
+                "service": 5,
+                "delivery": 5
+            },
+            "userIcon": "https://cdn.tgoapps.com/Assets/t/y/creative/mobile/instantdelivery/meal_profile_icon.png",
+            "restaurantReply": {
+                "restaurantIcon": "https://cdn.tgoapps.com/mobile/meal/restauranticoncommentspage.png",
+                "title": "Restoranın Cevabı",
+                "comment": "öyle güzel bir yorumu görmek bizi çok mutlu etti. Dönerimizi sevmenize sevindik ve sizin için 50 TL yemek kuponu ekledik. AFİYET OLSUN."
+            },
+            "orderItems": [
+                {
+                    "id": 16966616,
+                    "name": "Döneritos Menü (120 gram)",
+                    "deeplink": "tgo://?Channel=Meal&Page=ProductDetail&RestaurantId=0&ProductId=16966616",
+                    "active": false,
+                    "directlyAddToBasket": false,
+                    "likingStatus": null
+                }
+            ],
+            "deliveryType": "GO",
+            "deliveryLogoUrl": "https://cdn.tgoapps.com/mobile/meal/cwgoicon.png",
+            "tags": [
+                {
+                    "id": 1,
+                    "name": "Ürün Kalitesi"
+                }
+            ],
+            "temiz_metin": "döneritos menüyü kesin denemelisiniz ben merak edip aldım çok beğendim güzel bir lezzet olmuş elinize sağlık"
+        },
+        {
+            "id": "c0a09d2e-293b-4f39-b9c1-f84bcca4a3d4",
+            "comment": "Çok kötüydü bu kadar kötü olamaz bir döner",
+            "date": 1770028764490,
+            "score": {
+                "flavor": 1,
+                "service": 1,
+                "delivery": 4
+            },
+            "userIcon": "https://cdn.tgoapps.com/Assets/t/y/creative/mobile/instantdelivery/meal_profile_icon.png",
+            "orderItems": [
+                {
+                    "id": 5986575,
+                    "name": "Antakyam Kaşarlı Miss Döner (150 Gr)",
+                    "deeplink": "tgo://?Channel=Meal&Page=ProductDetail&RestaurantId=0&ProductId=5986575",
+                    "active": false,
+                    "directlyAddToBasket": false,
+                    "likingStatus": null
+                },
+                {
+                    "id": 6507626,
+                    "name": "Eker Puding",
+                    "deeplink": "tgo://?Channel=Meal&Page=ProductDetail&RestaurantId=0&ProductId=6507626",
+                    "active": false,
+                    "directlyAddToBasket": false,
+                    "likingStatus": null
+                }
+            ],
+            "deliveryType": "GO",
+            "deliveryLogoUrl": "https://cdn.tgoapps.com/mobile/meal/cwgoicon.png",
+            "tags": [
+                {
+                    "id": 1,
+                    "name": "Ürün Kalitesi"
+                }
+            ],
+            "temiz_metin": "çok kötüydü bu kadar kötü olamaz bir döner"
+        },
+        {
+            "id": "736af18a-8b5b-47d1-9551-d8a12f62f136",
+            "comment": "Eksik ürün ve hatay usulü döner dışında herşey",
+            "date": 1769978599258,
+            "score": {
+                "flavor": 1,
+                "service": 1,
+                "delivery": 5
+            },
+            "userIcon": "https://cdn.tgoapps.com/Assets/t/y/creative/mobile/instantdelivery/meal_profile_icon.png",
+            "restaurantReply": {
+                "restaurantIcon": "https://cdn.tgoapps.com/mobile/meal/restauranticoncommentspage.png",
+                "title": "Restoranın Cevabı",
+                "comment": "Ürün eksik olduğu için ürünün tamamı iade edildi size karşı mahçup olmamızdan dolayı ama sanırım gönlünüzü alamamışız  bu bizi çok üzdü"
+            },
+            "orderItems": [
+                {
+                    "id": 6507621,
+                    "name": "Doydum Menü",
+                    "deeplink": "tgo://?Channel=Meal&Page=ProductDetail&RestaurantId=0&ProductId=6507621",
+                    "active": false,
+                    "directlyAddToBasket": false,
+                    "likingStatus": null
+                }
+            ],
+            "deliveryType": "GO",
+            "deliveryLogoUrl": "https://cdn.tgoapps.com/mobile/meal/cwgoicon.png",
+            "tags": [
+                {
+                    "id": 6,
+                    "name": "Eksik/Farklı Ürün"
+                }
+            ],
+            "temiz_metin": "eksik ürün ve hatay usulü döner dışında her şey"
+        },
+        {
+            "id": "573ba2c7-ccc3-4102-8b52-f1230c21a00a",
+            "comment": "ilk ve sondu .",
+            "date": 1769976491645,
+            "score": {
+                "flavor": 1,
+                "service": 1,
+                "delivery": 4
+            },
+            "userIcon": "https://cdn.tgoapps.com/Assets/t/y/creative/mobile/instantdelivery/meal_profile_icon.png",
+            "restaurantReply": {
+                "restaurantIcon": "https://cdn.tgoapps.com/mobile/meal/restauranticoncommentspage.png",
+                "title": "Restoranın Cevabı",
+                "comment": "Canınız sağolsun sizi memnun edememek bizi üzdü"
+            },
+            "orderItems": [
+                {
+                    "id": 5986567,
+                    "name": "Antakyam Miss Döner (150 Gr)",
+                    "deeplink": "tgo://?Channel=Meal&Page=ProductDetail&RestaurantId=0&ProductId=5986567",
+                    "active": false,
+                    "directlyAddToBasket": false,
+                    "likingStatus": null
+                },
+                {
+                    "id": 5986599,
+                    "name": "Pepsi (1 L)",
+                    "deeplink": "tgo://?Channel=Meal&Page=ProductDetail&RestaurantId=0&ProductId=5986599",
+                    "active": false,
+                    "directlyAddToBasket": false,
+                    "likingStatus": null
+                }
+            ],
+            "deliveryType": "GO",
+            "deliveryLogoUrl": "https://cdn.tgoapps.com/mobile/meal/cwgoicon.png",
+            "tags": [
+                {
+                    "id": 1,
+                    "name": "Ürün Kalitesi"
+                }
+            ],
+            "temiz_metin": "ilk ve sondu"
+        },
+        {
+            "id": "21bc71bc-b073-4f62-beb6-e5f3fb932253",
+            "comment": "Çok lezzetliydi, sıcacık geldi tavsiye ederim.",
+            "date": 1769971358903,
+            "score": {
+                "flavor": 5,
+                "service": 5,
+                "delivery": 5
+            },
+            "userIcon": "https://cdn.tgoapps.com/Assets/t/y/creative/mobile/instantdelivery/meal_profile_icon.png",
+            "restaurantReply": {
+                "restaurantIcon": "https://cdn.tgoapps.com/mobile/meal/restauranticoncommentspage.png",
+                "title": "Restoranın Cevabı",
+                "comment": "öyle güzel bir yorumu görmek bizi çok mutlu etti. Dönerimizi sevmenize sevindik ve sizin için 50 TL yemek kuponu ekledik. AFİYET OLSUN."
+            },
+            "orderItems": [
+                {
+                    "id": 5986567,
+                    "name": "Antakyam Miss Döner (150 Gr)",
+                    "deeplink": "tgo://?Channel=Meal&Page=ProductDetail&RestaurantId=0&ProductId=5986567",
+                    "active": false,
+                    "directlyAddToBasket": false,
+                    "likingStatus": {
+                        "icon": "https://cdn.tgoapps.com/mobile/meal/reviewedproductthumbsup.png",
+                        "text": "Beğendi",
+                        "textColor": "#0BC15C"
+                    }
+                }
+            ],
+            "deliveryType": "GO",
+            "deliveryLogoUrl": "https://cdn.tgoapps.com/mobile/meal/cwgoicon.png",
+            "tags": [
+                {
+                    "id": 3,
+                    "name": "Teslimat"
+                }
+            ],
+            "temiz_metin": "çok lezzetliydi sıcacık geldi tavsiye ederim"
+        },
+        {
+            "id": "6baf9f6d-b313-4a51-a093-7d13d95785f6",
+            "comment": "lezzetsiz ve kalitesizdi",
+            "date": 1769876299300,
+            "score": {
+                "flavor": 1,
+                "service": 4,
+                "delivery": 5
+            },
+            "userIcon": "https://cdn.tgoapps.com/Assets/t/y/creative/mobile/instantdelivery/meal_profile_icon.png",
+            "restaurantReply": {
+                "restaurantIcon": "https://cdn.tgoapps.com/mobile/meal/restauranticoncommentspage.png",
+                "title": "Restoranın Cevabı",
+                "comment": "Kalitesiz ürün derken neyden bahsettiğinizi anlayamadık. Tüm ürünlerimiz günlük en iyi şekilde imal edilmektedir. Sizi memnun edememek bi o kadarda üzdü."
+            },
+            "orderItems": [
+                {
+                    "id": 5986567,
+                    "name": "Antakyam Miss Döner (150 Gr)",
+                    "deeplink": "tgo://?Channel=Meal&Page=ProductDetail&RestaurantId=0&ProductId=5986567",
+                    "active": false,
+                    "directlyAddToBasket": false,
+                    "likingStatus": null
+                },
+                {
+                    "id": 5986594,
+                    "name": "Ayran (33 Cl)",
+                    "deeplink": "tgo://?Channel=Meal&Page=ProductDetail&RestaurantId=0&ProductId=5986594",
+                    "active": false,
+                    "directlyAddToBasket": false,
+                    "likingStatus": null
+                }
+            ],
+            "deliveryType": "GO",
+            "deliveryLogoUrl": "https://cdn.tgoapps.com/mobile/meal/cwgoicon.png",
+            "tags": [
+                {
+                    "id": 1,
+                    "name": "Ürün Kalitesi"
+                }
+            ],
+            "temiz_metin": "lezzetsiz ve kalitesizdi"
+        },
+        {
+            "id": "e7c6176d-3d8e-427d-89e5-6b481e377118",
+            "comment": "Hep yediğimden yedim, kendilerini bozmuyorlar hâlâ güzel, gerçek Antakya döneri sevenlere öneririm. Döneritos diye yeni bir menü gelmiş bir dahakine de onu deneriz. Burger sosuyla Doritos hoş bir karışım olabilir",
+            "date": 1769793285606,
+            "score": {
+                "flavor": 5,
+                "service": 5,
+                "delivery": 5
+            },
+            "userIcon": "https://cdn.tgoapps.com/Assets/t/y/creative/mobile/instantdelivery/meal_profile_icon.png",
+            "restaurantReply": {
+                "restaurantIcon": "https://cdn.tgoapps.com/mobile/meal/restauranticoncommentspage.png",
+                "title": "Restoranın Cevabı",
+                "comment": "öyle güzel bir yorumu görmek bizi çok mutlu etti. Dönerimizi sevmenize sevindik ve sizin için 50 TL yemek kuponu ekledik. AFİYET OLSUN."
+            },
+            "orderItems": [
+                {
+                    "id": 5986567,
+                    "name": "Antakyam Miss Döner (150 Gr)",
+                    "deeplink": "tgo://?Channel=Meal&Page=ProductDetail&RestaurantId=0&ProductId=5986567",
+                    "active": false,
+                    "directlyAddToBasket": false,
+                    "likingStatus": {
+                        "icon": "https://cdn.tgoapps.com/mobile/meal/reviewedproductthumbsup.png",
+                        "text": "Beğendi",
+                        "textColor": "#0BC15C"
+                    }
+                }
+            ],
+            "deliveryType": "GO",
+            "deliveryLogoUrl": "https://cdn.tgoapps.com/mobile/meal/cwgoicon.png",
+            "tags": [
+                {
+                    "id": 1,
+                    "name": "Ürün Kalitesi"
+                }
+            ],
+            "temiz_metin": "hep yediğimden yedim kendilerini bozmuyorlar hâlâ güzel gerçek antakya döneri sevenlere öneririm döneritos diye yeni bir menü gelmiş bir dahakine de onu deneriz burger sosuyla doritos hoş bir karışım olabilir"
+        },
+        {
+            "id": "4a7ea3cd-155d-49e5-97f3-1ba85646c103",
+            "comment": "superdi\nsicak ve leziz geldi\n20dkda kurye kapidaydi\ndonerinizi seviorum",
+            "date": 1769711700274,
+            "score": {
+                "flavor": 5,
+                "service": 5,
+                "delivery": 5
+            },
+            "userIcon": "https://cdn.tgoapps.com/Assets/t/y/creative/mobile/instantdelivery/meal_profile_icon.png",
+            "restaurantReply": {
+                "restaurantIcon": "https://cdn.tgoapps.com/mobile/meal/restauranticoncommentspage.png",
+                "title": "Restoranın Cevabı",
+                "comment": "Böyle güzel bir yorumu görmek bizi çok mutlu etti. Dönerimizi sevmenize sevindik ve sizin için 50 TL yemek kuponu ekledik. AFİYET OLSUN."
+            },
+            "orderItems": [
+                {
+                    "id": 5986567,
+                    "name": "Antakyam Miss Döner (150 Gr)",
+                    "deeplink": "tgo://?Channel=Meal&Page=ProductDetail&RestaurantId=0&ProductId=5986567",
+                    "active": false,
+                    "directlyAddToBasket": false,
+                    "likingStatus": {
+                        "icon": "https://cdn.tgoapps.com/mobile/meal/reviewedproductthumbsup.png",
+                        "text": "Beğendi",
+                        "textColor": "#0BC15C"
+                    }
+                }
+            ],
+            "deliveryType": "GO",
+            "deliveryLogoUrl": "https://cdn.tgoapps.com/mobile/meal/cwgoicon.png",
+            "temiz_metin": "superdi sicak ve leziz geldi 20dkda kurye kapidaydi donerinizi seviorum"
+        },
+        {
+            "id": "2131716d-f541-45ce-a608-16425e56b33d",
+            "comment": "tavuğun kalitesi iyi değildi",
+            "date": 1769638613512,
+            "score": {
+                "flavor": 3,
+                "service": 5,
+                "delivery": 5
+            },
+            "userIcon": "https://cdn.tgoapps.com/Assets/t/y/creative/mobile/instantdelivery/meal_profile_icon.png",
+            "orderItems": [
+                {
+                    "id": 6414213,
+                    "name": "Antakyam Tıka Basa Miss Döner ( 150 Gr )",
+                    "deeplink": "tgo://?Channel=Meal&Page=ProductDetail&RestaurantId=0&ProductId=6414213",
+                    "active": false,
+                    "directlyAddToBasket": false,
+                    "likingStatus": null
+                },
+                {
+                    "id": 5986594,
+                    "name": "Ayran (33 Cl)",
+                    "deeplink": "tgo://?Channel=Meal&Page=ProductDetail&RestaurantId=0&ProductId=5986594",
+                    "active": false,
+                    "directlyAddToBasket": false,
+                    "likingStatus": null
+                }
+            ],
+            "deliveryType": "GO",
+            "deliveryLogoUrl": "https://cdn.tgoapps.com/mobile/meal/cwgoicon.png",
+            "tags": [
+                {
+                    "id": 1,
+                    "name": "Ürün Kalitesi"
+                }
+            ],
+            "temiz_metin": "tavuğun kalitesi iyi değildi"
+        },
+        {
+            "id": "2b615062-9775-416c-b556-f3e4c7464ea2",
+            "comment": "Ürünlerim eksik geldi ayran ve puding yoktu eksik ürün",
+            "date": 1769638359854,
+            "score": {
+                "flavor": 1,
+                "service": 1,
+                "delivery": 5
+            },
+            "userIcon": "https://cdn.tgoapps.com/Assets/t/y/creative/mobile/instantdelivery/meal_profile_icon.png",
+            "orderItems": [
+                {
+                    "id": 16631183,
+                    "name": "Antakyam Hepsi 1 Arada",
+                    "deeplink": "tgo://?Channel=Meal&Page=ProductDetail&RestaurantId=0&ProductId=16631183",
+                    "active": false,
+                    "directlyAddToBasket": false,
+                    "likingStatus": null
+                }
+            ],
+            "deliveryType": "GO",
+            "deliveryLogoUrl": "https://cdn.tgoapps.com/mobile/meal/cwgoicon.png",
+            "tags": [
+                {
+                    "id": 6,
+                    "name": "Eksik/Farklı Ürün"
+                }
+            ],
+            "temiz_metin": "ürünlerim eksik geldi ayran ve puding yoktu eksik ürün"
+        },
+        {
+            "id": "93f4f011-d399-4f0c-8004-ffaa344b750a",
+            "comment": "siparişi verdim direkt zil çaldı sanki öyle bir hız porsiyonlar da gayet güzel ve doyurucu",
+            "date": 1769629919608,
+            "score": {
+                "flavor": 5,
+                "service": 5,
+                "delivery": 5
+            },
+            "userIcon": "https://cdn.tgoapps.com/Assets/t/y/creative/mobile/instantdelivery/meal_profile_icon.png",
+            "restaurantReply": {
+                "restaurantIcon": "https://cdn.tgoapps.com/mobile/meal/restauranticoncommentspage.png",
+                "title": "Restoranın Cevabı",
+                "comment": "Bizi tercih ettiğiniz için teşekkür ederiz. Afiyet olsun."
+            },
+            "orderItems": [
+                {
+                    "id": 16631183,
+                    "name": "Antakyam Hepsi 1 Arada",
+                    "deeplink": "tgo://?Channel=Meal&Page=ProductDetail&RestaurantId=0&ProductId=16631183",
+                    "active": false,
+                    "directlyAddToBasket": false,
+                    "likingStatus": null
+                }
+            ],
+            "deliveryType": "GO",
+            "deliveryLogoUrl": "https://cdn.tgoapps.com/mobile/meal/cwgoicon.png",
+            "tags": [
+                {
+                    "id": 5,
+                    "name": "Porsiyon"
+                }
+            ],
+            "temiz_metin": "siparişi verdim direkt zil çaldı sanki öyle bir hız porsiyonlar da gayet güzel ve doyurucu"
+        },
+        {
+            "id": "8a0b06c1-d94e-465f-b3a8-7bdf1c665539",
+            "comment": "Siparişi sos koymayı unuttunuz galiba yoksa bu kadar kuru döner yemem imkansız",
+            "date": 1769618751113,
+            "score": {
+                "flavor": 1,
+                "service": 1,
+                "delivery": 5
+            },
+            "userIcon": "https://cdn.tgoapps.com/Assets/t/y/creative/mobile/instantdelivery/meal_profile_icon.png",
+            "restaurantReply": {
+                "restaurantIcon": "https://cdn.tgoapps.com/mobile/meal/restauranticoncommentspage.png",
+                "title": "Restoranın Cevabı",
+                "comment": "Kusura bakmayın bizzat çok çok özürlerimizi sizlere iletiyoruz. Sosu koyuyoruz fakat teslimat işlemi yapılana kadar buharlaşma işlemi oluyor. Notunuza dikkat edeceğiz iyi günler efendim."
+            },
+            "orderItems": [
+                {
+                    "id": 5986567,
+                    "name": "Antakyam Miss Döner (150 Gr)",
+                    "deeplink": "tgo://?Channel=Meal&Page=ProductDetail&RestaurantId=0&ProductId=5986567",
+                    "active": false,
+                    "directlyAddToBasket": false,
+                    "likingStatus": null
+                },
+                {
+                    "id": 5986594,
+                    "name": "Ayran (33 Cl)",
+                    "deeplink": "tgo://?Channel=Meal&Page=ProductDetail&RestaurantId=0&ProductId=5986594",
+                    "active": false,
+                    "directlyAddToBasket": false,
+                    "likingStatus": null
+                }
+            ],
+            "deliveryType": "GO",
+            "deliveryLogoUrl": "https://cdn.tgoapps.com/mobile/meal/cwgoicon.png",
+            "tags": [
+                {
+                    "id": 6,
+                    "name": "Eksik/Farklı Ürün"
+                }
+            ],
+            "temiz_metin": "siparişi sos koymayı unuttunuz galiba yoksa bu kadar kuru döner yemem imkansız"
+        },
+        {
+            "id": "df3cc3bf-d3f6-4dd6-a591-a60d45060e7c",
+            "comment": "Mide yanması ve tadı berbattı içi hamur olmuş rahatsız edici acıydı birdaha asla",
+            "date": 1769602746897,
+            "score": {
+                "flavor": 1,
+                "service": 5,
+                "delivery": 5
+            },
+            "userIcon": "https://cdn.tgoapps.com/Assets/t/y/creative/mobile/instantdelivery/meal_profile_icon.png",
+            "restaurantReply": {
+                "restaurantIcon": "https://cdn.tgoapps.com/mobile/meal/restauranticoncommentspage.png",
+                "title": "Restoranın Cevabı",
+                "comment": "İmalatımız ve malzemelerimiz günlük hazırlanmakta. Yemiş olduğunuz harboli dürümde ürün açıklamasında acılı olduğunu belirttik. Yediğiniz dürüm acılı olduğundan dolayı rahatsızlanmış olabilirsiniz. Mideniz ağrıdığı için üzgünüz iyi günler."
+            },
+            "orderItems": [
+                {
+                    "id": 5986579,
+                    "name": "Antakyam Harboli Miss Döner (120 Gr)",
+                    "deeplink": "tgo://?Channel=Meal&Page=ProductDetail&RestaurantId=0&ProductId=5986579",
+                    "active": false,
+                    "directlyAddToBasket": false,
+                    "likingStatus": null
+                },
+                {
+                    "id": 5986594,
+                    "name": "Ayran (33 Cl)",
+                    "deeplink": "tgo://?Channel=Meal&Page=ProductDetail&RestaurantId=0&ProductId=5986594",
+                    "active": false,
+                    "directlyAddToBasket": false,
+                    "likingStatus": {
+                        "icon": "https://cdn.tgoapps.com/mobile/meal/reviewedproductthumbsup.png",
+                        "text": "Beğendi",
+                        "textColor": "#0BC15C"
+                    }
+                }
+            ],
+            "deliveryType": "GO",
+            "deliveryLogoUrl": "https://cdn.tgoapps.com/mobile/meal/cwgoicon.png",
+            "tags": [
+                {
+                    "id": 1,
+                    "name": "Ürün Kalitesi"
+                }
+            ],
+            "temiz_metin": "mide yanması ve tadı berbattı içi hamur olmuş rahatsız edici acıydı bir daha asla"
+        },
+        {
+            "id": "9774b12b-84df-405f-a2de-9c8100e8794c",
+            "comment": "elinize sağlık, notumu da dikkate almışsınız dürüm de güzeldi.",
+            "date": 1769543017685,
+            "score": {
+                "flavor": 5,
+                "service": 5,
+                "delivery": 5
+            },
+            "userIcon": "https://cdn.tgoapps.com/Assets/t/y/creative/mobile/instantdelivery/meal_profile_icon.png",
+            "restaurantReply": {
+                "restaurantIcon": "https://cdn.tgoapps.com/mobile/meal/restauranticoncommentspage.png",
+                "title": "Restoranın Cevabı",
+                "comment": "Bizi tercih ettiğiniz için teşekkür ederiz. Afiyet olsun."
+            },
+            "orderItems": [
+                {
+                    "id": 16631183,
+                    "name": "Antakyam Hepsi 1 Arada",
+                    "deeplink": "tgo://?Channel=Meal&Page=ProductDetail&RestaurantId=0&ProductId=16631183",
+                    "active": false,
+                    "directlyAddToBasket": false,
+                    "likingStatus": {
+                        "icon": "https://cdn.tgoapps.com/mobile/meal/reviewedproductthumbsup.png",
+                        "text": "Beğendi",
+                        "textColor": "#0BC15C"
+                    }
+                }
+            ],
+            "deliveryType": "GO",
+            "deliveryLogoUrl": "https://cdn.tgoapps.com/mobile/meal/cwgoicon.png",
+            "tags": [
+                {
+                    "id": 8,
+                    "name": "Sipariş Notu"
+                }
+            ],
+            "temiz_metin": "elinize sağlık notumu da dikkate almışsınız dürüm de güzeldi"
+        },
+        {
+            "id": "e3190885-740f-4e30-ae3d-07735a0eca07",
+            "comment": "doyurucu lezzetli",
+            "date": 1769377613006,
+            "score": {
+                "flavor": 5,
+                "service": 5,
+                "delivery": 5
+            },
+            "userIcon": "https://cdn.tgoapps.com/Assets/t/y/creative/mobile/instantdelivery/meal_profile_icon.png",
+            "restaurantReply": {
+                "restaurantIcon": "https://cdn.tgoapps.com/mobile/meal/restauranticoncommentspage.png",
+                "title": "Restoranın Cevabı",
+                "comment": "Bizi tercih ettiğiniz için teşekkür ederiz. Afiyet olsun."
+            },
+            "orderItems": [
+                {
+                    "id": 5986567,
+                    "name": "Antakyam Miss Döner (150 Gr)",
+                    "deeplink": "tgo://?Channel=Meal&Page=ProductDetail&RestaurantId=0&ProductId=5986567",
+                    "active": false,
+                    "directlyAddToBasket": false,
+                    "likingStatus": null
+                }
+            ],
+            "deliveryType": "GO",
+            "deliveryLogoUrl": "https://cdn.tgoapps.com/mobile/meal/cwgoicon.png",
+            "tags": [
+                {
+                    "id": 1,
+                    "name": "Ürün Kalitesi"
+                }
+            ],
+            "temiz_metin": "doyurucu lezzetli"
+        },
+        {
+            "id": "9ac6c533-b75b-4634-bdfa-8622dc5d0fa4",
+            "comment": "çok iyiydi yardımcım ve abimde çok beğendi elinize sağlık",
+            "date": 1769351534753,
+            "score": {
+                "flavor": 5,
+                "service": 5,
+                "delivery": 5
+            },
+            "userIcon": "https://cdn.tgoapps.com/Assets/t/y/creative/mobile/instantdelivery/meal_profile_icon.png",
+            "restaurantReply": {
+                "restaurantIcon": "https://cdn.tgoapps.com/mobile/meal/restauranticoncommentspage.png",
+                "title": "Restoranın Cevabı",
+                "comment": "Bizi tercih ettiğiniz için teşekkür ederiz. Afiyet olsun."
+            },
+            "orderItems": [
+                {
+                    "id": 16293470,
+                    "name": "Ailem Menü ( 3 Kişilik )",
+                    "deeplink": "tgo://?Channel=Meal&Page=ProductDetail&RestaurantId=0&ProductId=16293470",
+                    "active": false,
+                    "directlyAddToBasket": false,
+                    "likingStatus": {
+                        "icon": "https://cdn.tgoapps.com/mobile/meal/reviewedproductthumbsup.png",
+                        "text": "Beğendi",
+                        "textColor": "#0BC15C"
+                    }
+                }
+            ],
+            "deliveryType": "GO",
+            "deliveryLogoUrl": "https://cdn.tgoapps.com/mobile/meal/cwgoicon.png",
+            "tags": [
+                {
+                    "id": 1,
+                    "name": "Ürün Kalitesi"
+                }
+            ],
+            "temiz_metin": "çok iyiydi yardımcım ve abimde çok beğendi elinize sağlık"
+        },
+        {
+            "id": "c4ec2c60-3dab-498e-b162-08ab32e0f626",
+            "comment": "sevenine güzel",
+            "date": 1769253163890,
+            "score": {
+                "flavor": 5,
+                "service": 5,
+                "delivery": 5
+            },
+            "userIcon": "https://cdn.tgoapps.com/Assets/t/y/creative/mobile/instantdelivery/meal_profile_icon.png",
+            "restaurantReply": {
+                "restaurantIcon": "https://cdn.tgoapps.com/mobile/meal/restauranticoncommentspage.png",
+                "title": "Restoranın Cevabı",
+                "comment": "Afiyet olsun."
+            },
+            "orderItems": [
+                {
+                    "id": 5986567,
+                    "name": "Antakyam Miss Döner (150 Gr)",
+                    "deeplink": "tgo://?Channel=Meal&Page=ProductDetail&RestaurantId=0&ProductId=5986567",
+                    "active": false,
+                    "directlyAddToBasket": false,
+                    "likingStatus": null
+                },
+                {
+                    "id": 5986594,
+                    "name": "Ayran (33 Cl)",
+                    "deeplink": "tgo://?Channel=Meal&Page=ProductDetail&RestaurantId=0&ProductId=5986594",
+                    "active": false,
+                    "directlyAddToBasket": false,
+                    "likingStatus": null
+                },
+                {
+                    "id": 6414213,
+                    "name": "Antakyam Tıka Basa Miss Döner ( 150 Gr )",
+                    "deeplink": "tgo://?Channel=Meal&Page=ProductDetail&RestaurantId=0&ProductId=6414213",
+                    "active": false,
+                    "directlyAddToBasket": false,
+                    "likingStatus": null
+                }
+            ],
+            "deliveryType": "GO",
+            "deliveryLogoUrl": "https://cdn.tgoapps.com/mobile/meal/cwgoicon.png",
+            "tags": [
+                {
+                    "id": 1,
+                    "name": "Ürün Kalitesi"
+                }
+            ],
+            "temiz_metin": "sevenine güzel"
+        },
+        {
+            "id": "3c3bc23c-18c1-469c-8d54-df08f4aae422",
+            "comment": "Gece sipariş etmemize rağmen tavukları gayet iyiydi, paketleme de güzeldi. Sadece sos bir tık azdı onun dışında güzel.",
+            "date": 1769194133484,
+            "score": {
+                "flavor": 5,
+                "service": 5,
+                "delivery": 5
+            },
+            "userIcon": "https://cdn.tgoapps.com/Assets/t/y/creative/mobile/instantdelivery/meal_profile_icon.png",
+            "restaurantReply": {
+                "restaurantIcon": "https://cdn.tgoapps.com/mobile/meal/restauranticoncommentspage.png",
+                "title": "Restoranın Cevabı",
+                "comment": "Bizi tercih ettiğiniz için teşekkür ederiz. Afiyet olsun."
+            },
+            "orderItems": [
+                {
+                    "id": 5986567,
+                    "name": "Antakyam Miss Döner (150 Gr)",
+                    "deeplink": "tgo://?Channel=Meal&Page=ProductDetail&RestaurantId=0&ProductId=5986567",
+                    "active": false,
+                    "directlyAddToBasket": false,
+                    "likingStatus": null
+                },
+                {
+                    "id": 5986565,
+                    "name": "Antakyam Miss Döner (100 Gr)",
+                    "deeplink": "tgo://?Channel=Meal&Page=ProductDetail&RestaurantId=0&ProductId=5986565",
+                    "active": false,
+                    "directlyAddToBasket": false,
+                    "likingStatus": null
+                }
+            ],
+            "deliveryType": "GO",
+            "deliveryLogoUrl": "https://cdn.tgoapps.com/mobile/meal/cwgoicon.png",
+            "tags": [
+                {
+                    "id": 4,
+                    "name": "Paketleme"
+                }
+            ],
+            "temiz_metin": "gece sipariş etmemize rağmen tavukları gayet iyiydi paketleme de güzeldi sadece sos bir tık azdı onun dışında güzel"
+        },
+        {
+            "id": "0c159192-5fc9-4379-b753-82fb89d78b80",
+            "comment": "Yemek güzeldi hızli geldi",
+            "date": 1768937542039,
+            "score": {
+                "flavor": 5,
+                "service": 5,
+                "delivery": 5
+            },
+            "userIcon": "https://cdn.tgoapps.com/Assets/t/y/creative/mobile/instantdelivery/meal_profile_icon.png",
+            "restaurantReply": {
+                "restaurantIcon": "https://cdn.tgoapps.com/mobile/meal/restauranticoncommentspage.png",
+                "title": "Restoranın Cevabı",
+                "comment": "Bizi tercih ettiğiniz için teşekkür ederiz. Afiyet olsun."
+            },
+            "orderItems": [
+                {
+                    "id": 5986564,
+                    "name": "Antakyam Miss Döner (60 Gr)",
+                    "deeplink": "tgo://?Channel=Meal&Page=ProductDetail&RestaurantId=0&ProductId=5986564",
+                    "active": false,
+                    "directlyAddToBasket": false,
+                    "likingStatus": null
+                }
+            ],
+            "deliveryType": "GO",
+            "deliveryLogoUrl": "https://cdn.tgoapps.com/mobile/meal/cwgoicon.png",
+            "tags": [
+                {
+                    "id": 3,
+                    "name": "Teslimat"
+                }
+            ],
+            "temiz_metin": "yemek güzeldi hızlı geldi"
+        },
+        {
+            "id": "dd075a90-906c-4edc-a4f4-0454db8f1665",
+            "comment": "mide ağrısı yaşıyorum . ya beklemiş üründe yada başka bir şey vardı.",
+            "date": 1768935507802,
+            "score": {
+                "flavor": 1,
+                "service": 5,
+                "delivery": 5
+            },
+            "userIcon": "https://cdn.tgoapps.com/Assets/t/y/creative/mobile/instantdelivery/meal_profile_icon.png",
+            "restaurantReply": {
+                "restaurantIcon": "https://cdn.tgoapps.com/mobile/meal/restauranticoncommentspage.png",
+                "title": "Restoranın Cevabı",
+                "comment": "Yaşadığınız olumsuz deneyimden dolayı üzgünüz. Fakat ürünlerimiz günlük olarak hazırlanmaktadır. Her türlü denetime tâbiyiz."
+            },
+            "orderItems": [
+                {
+                    "id": 5986575,
+                    "name": "Antakyam Kaşarlı Miss Döner (150 Gr)",
+                    "deeplink": "tgo://?Channel=Meal&Page=ProductDetail&RestaurantId=0&ProductId=5986575",
+                    "active": false,
+                    "directlyAddToBasket": false,
+                    "likingStatus": null
+                },
+                {
+                    "id": 16660081,
+                    "name": "Ekstra Lavaş",
+                    "deeplink": "tgo://?Channel=Meal&Page=ProductDetail&RestaurantId=0&ProductId=16660081",
+                    "active": false,
+                    "directlyAddToBasket": false,
+                    "likingStatus": null
+                },
+                {
+                    "id": 5986594,
+                    "name": "Ayran (33 Cl)",
+                    "deeplink": "tgo://?Channel=Meal&Page=ProductDetail&RestaurantId=0&ProductId=5986594",
+                    "active": false,
+                    "directlyAddToBasket": false,
+                    "likingStatus": {
+                        "icon": "https://cdn.tgoapps.com/mobile/meal/reviewedproductthumbsup.png",
+                        "text": "Beğendi",
+                        "textColor": "#0BC15C"
+                    }
+                }
+            ],
+            "deliveryType": "GO",
+            "deliveryLogoUrl": "https://cdn.tgoapps.com/mobile/meal/cwgoicon.png",
+            "tags": [
+                {
+                    "id": 1,
+                    "name": "Ürün Kalitesi"
+                }
+            ],
+            "temiz_metin": "mide ağrısı yaşıyorum ya beklemiş üründe ya da başka bir şey vardı"
+        },
+        {
+            "id": "555d53fa-81e6-45c8-9a29-8ba1e169b19f",
+            "comment": "Döneri ve dönerin sosu harika bizzat dükkanda yemenizi öneriyorum..",
+            "date": 1768924788518,
+            "score": {
+                "flavor": 5,
+                "service": 5,
+                "delivery": 5
+            },
+            "userIcon": "https://cdn.tgoapps.com/Assets/t/y/creative/mobile/instantdelivery/meal_profile_icon.png",
+            "restaurantReply": {
+                "restaurantIcon": "https://cdn.tgoapps.com/mobile/meal/restauranticoncommentspage.png",
+                "title": "Restoranın Cevabı",
+                "comment": "Bizi tercih ettiğiniz için teşekkür ederiz. Afiyet olsun."
+            },
+            "orderItems": [
+                {
+                    "id": 16631183,
+                    "name": "Antakyam Hepsi 1 Arada",
+                    "deeplink": "tgo://?Channel=Meal&Page=ProductDetail&RestaurantId=0&ProductId=16631183",
+                    "active": false,
+                    "directlyAddToBasket": false,
+                    "likingStatus": {
+                        "icon": "https://cdn.tgoapps.com/mobile/meal/reviewedproductthumbsup.png",
+                        "text": "Beğendi",
+                        "textColor": "#0BC15C"
+                    }
+                },
+                {
+                    "id": 5986594,
+                    "name": "Ayran (33 Cl)",
+                    "deeplink": "tgo://?Channel=Meal&Page=ProductDetail&RestaurantId=0&ProductId=5986594",
+                    "active": false,
+                    "directlyAddToBasket": false,
+                    "likingStatus": null
+                },
+                {
+                    "id": 5986598,
+                    "name": "Su (33 Cl)",
+                    "deeplink": "tgo://?Channel=Meal&Page=ProductDetail&RestaurantId=0&ProductId=5986598",
+                    "active": false,
+                    "directlyAddToBasket": false,
+                    "likingStatus": null
+                }
+            ],
+            "deliveryType": "GO",
+            "deliveryLogoUrl": "https://cdn.tgoapps.com/mobile/meal/cwgoicon.png",
+            "tags": [
+                {
+                    "id": 1,
+                    "name": "Ürün Kalitesi"
+                }
+            ],
+            "temiz_metin": "döneri ve dönerin sosu harika bizzat dükkanda yemenizi öneriyorum"
+        },
+        {
+            "id": "8f63d0d6-93b6-4497-8051-acca6bbf33bf",
+            "comment": "sosu biraz fazlaydı ama lezzeti yerinde. Sıcak geldi",
+            "date": 1768924208271,
+            "score": {
+                "flavor": 5,
+                "service": 5,
+                "delivery": 5
+            },
+            "userIcon": "https://cdn.tgoapps.com/Assets/t/y/creative/mobile/instantdelivery/meal_profile_icon.png",
+            "restaurantReply": {
+                "restaurantIcon": "https://cdn.tgoapps.com/mobile/meal/restauranticoncommentspage.png",
+                "title": "Restoranın Cevabı",
+                "comment": "Afiyet olsun."
+            },
+            "orderItems": [
+                {
+                    "id": 5986567,
+                    "name": "Antakyam Miss Döner (150 Gr)",
+                    "deeplink": "tgo://?Channel=Meal&Page=ProductDetail&RestaurantId=0&ProductId=5986567",
+                    "active": false,
+                    "directlyAddToBasket": false,
+                    "likingStatus": {
+                        "icon": "https://cdn.tgoapps.com/mobile/meal/reviewedproductthumbsup.png",
+                        "text": "Beğendi",
+                        "textColor": "#0BC15C"
+                    }
+                },
+                {
+                    "id": 5986594,
+                    "name": "Ayran (33 Cl)",
+                    "deeplink": "tgo://?Channel=Meal&Page=ProductDetail&RestaurantId=0&ProductId=5986594",
+                    "active": false,
+                    "directlyAddToBasket": false,
+                    "likingStatus": {
+                        "icon": "https://cdn.tgoapps.com/mobile/meal/reviewedproductthumbsup.png",
+                        "text": "Beğendi",
+                        "textColor": "#0BC15C"
+                    }
+                }
+            ],
+            "deliveryType": "GO",
+            "deliveryLogoUrl": "https://cdn.tgoapps.com/mobile/meal/cwgoicon.png",
+            "tags": [
+                {
+                    "id": 3,
+                    "name": "Teslimat"
+                }
+            ],
+            "temiz_metin": "sosu biraz fazlaydı ama lezzeti yerinde sıcak geldi"
+        },
+        {
+            "id": "f1e7bf26-267e-4182-b41a-decdbb8bff47",
+            "comment": "sipariş verirken önce tereddüt ettim ondan sonra ardından yapılan olumsuz yorumların farklı farklı olduğunu görünce denemek istedim iyiki de denemişim yapanın eline sağlık kesinlikle tavsiye ediyorum.",
+            "date": 1768911753898,
+            "score": {
+                "flavor": 5,
+                "service": 5,
+                "delivery": 5
+            },
+            "userIcon": "https://cdn.tgoapps.com/Assets/t/y/creative/mobile/instantdelivery/meal_profile_icon.png",
+            "restaurantReply": {
+                "restaurantIcon": "https://cdn.tgoapps.com/mobile/meal/restauranticoncommentspage.png",
+                "title": "Restoranın Cevabı",
+                "comment": "Bizi tercih ettiğiniz için teşekkür ederiz. Afiyet olsun."
+            },
+            "orderItems": [
+                {
+                    "id": 5986564,
+                    "name": "Antakyam Miss Döner (60 Gr)",
+                    "deeplink": "tgo://?Channel=Meal&Page=ProductDetail&RestaurantId=0&ProductId=5986564",
+                    "active": false,
+                    "directlyAddToBasket": false,
+                    "likingStatus": {
+                        "icon": "https://cdn.tgoapps.com/mobile/meal/reviewedproductthumbsup.png",
+                        "text": "Beğendi",
+                        "textColor": "#0BC15C"
+                    }
+                }
+            ],
+            "deliveryType": "GO",
+            "deliveryLogoUrl": "https://cdn.tgoapps.com/mobile/meal/cwgoicon.png",
+            "tags": [
+                {
+                    "id": 1,
+                    "name": "Ürün Kalitesi"
+                }
+            ],
+            "temiz_metin": "sipariş verirken önce tereddüt ettim ondan sonra ardından yapılan olumsuz yorumların farklı farklı olduğunu görünce denemek istedim iyi ki de denemişim yapanın eline sağlık kesinlikle tavsiye ediyorum"
+        },
+        {
+            "id": "ec6e48f0-c0e3-4f1c-9c6c-148769a5f915",
+            "comment": "O kadar not yazıyorum motordan aşa inip teslimat bile yapmıcak gelmeden 2 dk önce kurye arasa kapıda bekliyor olacağım ama yok siparişi bırakıp gidiyor siparişe yarım saat ulaşamadık buz gibi yedik puding patlamış poşetin içi komple puding olmuş eyvallah hava soğuk şartlar zor vs ama en azından arasa motorundan indirmeden siparişi teslim alacaktım",
+            "date": 1768908912556,
+            "score": {
+                "flavor": 3,
+                "service": 1,
+                "delivery": 1
+            },
+            "userIcon": "https://cdn.tgoapps.com/Assets/t/y/creative/mobile/instantdelivery/meal_profile_icon.png",
+            "restaurantReply": {
+                "restaurantIcon": "https://cdn.tgoapps.com/mobile/meal/restauranticoncommentspage.png",
+                "title": "Restoranın Cevabı",
+                "comment": "Teslimat sürecinde yaşadığınız olumsuz deneyimden dolayı üzgünüz."
+            },
+            "orderItems": [
+                {
+                    "id": 6507624,
+                    "name": "Kanka Menü",
+                    "deeplink": "tgo://?Channel=Meal&Page=ProductDetail&RestaurantId=0&ProductId=6507624",
+                    "active": false,
+                    "directlyAddToBasket": false,
+                    "likingStatus": null
+                },
+                {
+                    "id": 5986598,
+                    "name": "Su (33 Cl)",
+                    "deeplink": "tgo://?Channel=Meal&Page=ProductDetail&RestaurantId=0&ProductId=5986598",
+                    "active": false,
+                    "directlyAddToBasket": false,
+                    "likingStatus": null
+                }
+            ],
+            "deliveryType": "GO",
+            "deliveryLogoUrl": "https://cdn.tgoapps.com/mobile/meal/cwgoicon.png",
+            "tags": [
+                {
+                    "id": 3,
+                    "name": "Teslimat"
+                }
+            ],
+            "temiz_metin": "o kadar not yazıyorum motordan aşa inip teslimat bile yapmıcak gelmeden 2 dk önce kurye arasa kapıda bekliyor olacağım ama yok siparişi bırakıp gidiyor siparişe yarım saat ulaşamadık buz gibi yedik puding patlamış poşetin içi komple puding olmuş eyvallah hava soğuk şartlar zor vs ama en azından arasa motorundan indirmeden siparişi teslim alacaktım"
+        },
+        {
+            "id": "7a8ebfb3-29cb-4abc-a861-4a6c67f91a67",
+            "comment": "hiç ama hiç beğenmedim papates doluydu tavuk var yok arası",
+            "date": 1768758316888,
+            "score": {
+                "flavor": 1,
+                "service": 5,
+                "delivery": 5
+            },
+            "userIcon": "https://cdn.tgoapps.com/Assets/t/y/creative/mobile/instantdelivery/meal_profile_icon.png",
+            "orderItems": [
+                {
+                    "id": 5986567,
+                    "name": "Antakyam Miss Döner (150 Gr)",
+                    "deeplink": "tgo://?Channel=Meal&Page=ProductDetail&RestaurantId=0&ProductId=5986567",
+                    "active": false,
+                    "directlyAddToBasket": false,
+                    "likingStatus": null
+                },
+                {
+                    "id": 6507626,
+                    "name": "Sütaş Puding",
+                    "deeplink": "tgo://?Channel=Meal&Page=ProductDetail&RestaurantId=0&ProductId=6507626",
+                    "active": false,
+                    "directlyAddToBasket": false,
+                    "likingStatus": null
+                }
+            ],
+            "deliveryType": "GO",
+            "deliveryLogoUrl": "https://cdn.tgoapps.com/mobile/meal/cwgoicon.png",
+            "tags": [
+                {
+                    "id": 5,
+                    "name": "Porsiyon"
+                }
+            ],
+            "temiz_metin": "hiç ama hiç beğenmedim papates doluydu tavuk var yok arası"
+        },
+        {
+            "id": "dbf0ebbf-ccfa-40bf-b18b-eafb67e48011",
+            "comment": "Kurye abimin eli üşümüştü hakkını hela etsin bahşişin kralını hakkediyorlar lakin elimde ki kalan param 100 tl helal etsin hakkını",
+            "date": 1768653875973,
+            "score": {
+                "flavor": 5,
+                "service": 5,
+                "delivery": 5
+            },
+            "userIcon": "https://cdn.tgoapps.com/Assets/t/y/creative/mobile/instantdelivery/meal_profile_icon.png",
+            "orderItems": [
+                {
+                    "id": 5986577,
+                    "name": "Antakyam Harboli Miss Döner (100 Gr)",
+                    "deeplink": "tgo://?Channel=Meal&Page=ProductDetail&RestaurantId=0&ProductId=5986577",
+                    "active": false,
+                    "directlyAddToBasket": false,
+                    "likingStatus": {
+                        "icon": "https://cdn.tgoapps.com/mobile/meal/reviewedproductthumbsup.png",
+                        "text": "Beğendi",
+                        "textColor": "#0BC15C"
+                    }
+                },
+                {
+                    "id": 5986594,
+                    "name": "Ayran (33 Cl)",
+                    "deeplink": "tgo://?Channel=Meal&Page=ProductDetail&RestaurantId=0&ProductId=5986594",
+                    "active": false,
+                    "directlyAddToBasket": false,
+                    "likingStatus": {
+                        "icon": "https://cdn.tgoapps.com/mobile/meal/reviewedproductthumbsup.png",
+                        "text": "Beğendi",
+                        "textColor": "#0BC15C"
+                    }
+                }
+            ],
+            "deliveryType": "GO",
+            "deliveryLogoUrl": "https://cdn.tgoapps.com/mobile/meal/cwgoicon.png",
+            "tags": [
+                {
+                    "id": 2,
+                    "name": "Fiyat"
+                }
+            ],
+            "temiz_metin": "kurye abimin eli üşümüştü hakkını hela etsin bahşişin kralını hakkediyorlar lakin elimde ki kalan param 100 tl helal etsin hakkını"
+        },
+        {
+            "id": "53967b99-a05f-447c-ac3b-663848216d14",
+            "comment": "berbat, soğuk, tadı yok, sos sanki hiç eklememişler ve sonuçta kuru lavaşa birlikte tatsız taş yiyorum",
+            "date": 1768652800226,
+            "score": {
+                "flavor": 1,
+                "service": 5,
+                "delivery": 5
+            },
+            "userIcon": "https://cdn.tgoapps.com/Assets/t/y/creative/mobile/instantdelivery/meal_profile_icon.png",
+            "orderItems": [
+                {
+                    "id": 5986575,
+                    "name": "Antakyam Kaşarlı Miss Döner (150 Gr)",
+                    "deeplink": "tgo://?Channel=Meal&Page=ProductDetail&RestaurantId=0&ProductId=5986575",
+                    "active": false,
+                    "directlyAddToBasket": false,
+                    "likingStatus": null
+                },
+                {
+                    "id": 5986598,
+                    "name": "Su (33 Cl)",
+                    "deeplink": "tgo://?Channel=Meal&Page=ProductDetail&RestaurantId=0&ProductId=5986598",
+                    "active": false,
+                    "directlyAddToBasket": false,
+                    "likingStatus": {
+                        "icon": "https://cdn.tgoapps.com/mobile/meal/reviewedproductthumbsup.png",
+                        "text": "Beğendi",
+                        "textColor": "#0BC15C"
+                    }
+                }
+            ],
+            "deliveryType": "GO",
+            "deliveryLogoUrl": "https://cdn.tgoapps.com/mobile/meal/cwgoicon.png",
+            "tags": [
+                {
+                    "id": 3,
+                    "name": "Teslimat"
+                }
+            ],
+            "temiz_metin": "berbat soğuk tadı yok sos sanki hiç eklememişler ve sonuçta kuru lavaşa birlikte tatsız taş yiyorum"
+        },
+        {
+            "id": "31579565-02ee-4d98-a8e5-518559dc1217",
+            "comment": "Çok iyiydi. Abartısız gerçekten tavuk dönerde tavuk olduğuna şahit oldum",
+            "date": 1768638158038,
+            "score": {
+                "flavor": 5,
+                "service": 5,
+                "delivery": 5
+            },
+            "userIcon": "https://cdn.tgoapps.com/Assets/t/y/creative/mobile/instantdelivery/meal_profile_icon.png",
+            "orderItems": [
+                {
+                    "id": 5986567,
+                    "name": "Antakyam Miss Döner (150 Gr)",
+                    "deeplink": "tgo://?Channel=Meal&Page=ProductDetail&RestaurantId=0&ProductId=5986567",
+                    "active": false,
+                    "directlyAddToBasket": false,
+                    "likingStatus": {
+                        "icon": "https://cdn.tgoapps.com/mobile/meal/reviewedproductthumbsup.png",
+                        "text": "Beğendi",
+                        "textColor": "#0BC15C"
+                    }
+                }
+            ],
+            "deliveryType": "GO",
+            "deliveryLogoUrl": "https://cdn.tgoapps.com/mobile/meal/cwgoicon.png",
+            "tags": [
+                {
+                    "id": 1,
+                    "name": "Ürün Kalitesi"
+                }
+            ],
+            "temiz_metin": "çok iyiydi abartısız gerçekten tavuk dönerde tavuk olduğuna şahit oldum"
+        },
+        {
+            "id": "8e9d0aaf-8d24-404a-b0a3-260f37369eee",
+            "comment": "usta elinize sağlık, sizin demirlibahcede bi sube vardi noldu o",
+            "date": 1768589284036,
+            "score": {
+                "flavor": 5,
+                "service": 5,
+                "delivery": 5
+            },
+            "userIcon": "https://cdn.tgoapps.com/Assets/t/y/creative/mobile/instantdelivery/meal_profile_icon.png",
+            "orderItems": [
+                {
+                    "id": 6414210,
+                    "name": "Antakyam Tıka Basa Miss Döner ( 80 Gr )",
+                    "deeplink": "tgo://?Channel=Meal&Page=ProductDetail&RestaurantId=0&ProductId=6414210",
+                    "active": false,
+                    "directlyAddToBasket": false,
+                    "likingStatus": {
+                        "icon": "https://cdn.tgoapps.com/mobile/meal/reviewedproductthumbsup.png",
+                        "text": "Beğendi",
+                        "textColor": "#0BC15C"
+                    }
+                },
+                {
+                    "id": 5986594,
+                    "name": "Ayran (33 Cl)",
+                    "deeplink": "tgo://?Channel=Meal&Page=ProductDetail&RestaurantId=0&ProductId=5986594",
+                    "active": false,
+                    "directlyAddToBasket": false,
+                    "likingStatus": {
+                        "icon": "https://cdn.tgoapps.com/mobile/meal/reviewedproductthumbsup.png",
+                        "text": "Beğendi",
+                        "textColor": "#0BC15C"
+                    }
+                }
+            ],
+            "deliveryType": "GO",
+            "deliveryLogoUrl": "https://cdn.tgoapps.com/mobile/meal/cwgoicon.png",
+            "tags": [
+                {
+                    "id": 1,
+                    "name": "Ürün Kalitesi"
+                }
+            ],
+            "temiz_metin": "usta elinize sağlık sizin demirlibahcede bir sube vardi noldu o"
+        },
+        {
+            "id": "182fc675-a255-466f-9220-803af87bcc00",
+            "comment": "çok lezzetli sosları vs. gerçekten çok kaliteli anlamsız yorumlara takılmayın ilk defa yedim bir daha dönerden daha ne istenebilir",
+            "date": 1768577012376,
+            "score": {
+                "flavor": 5,
+                "service": 5,
+                "delivery": 5
+            },
+            "userIcon": "https://cdn.tgoapps.com/Assets/t/y/creative/mobile/instantdelivery/meal_profile_icon.png",
+            "restaurantReply": {
+                "restaurantIcon": "https://cdn.tgoapps.com/mobile/meal/restauranticoncommentspage.png",
+                "title": "Restoranın Cevabı",
+                "comment": "Yorumunuz için çok teşekkür ederiz ama olumlu veya olumsuz yorum yapan bütün müşterileriniz çok kıymetlidir dolayısıyla başımızın tacıdır afiyet olsun."
+            },
+            "orderItems": [
+                {
+                    "id": 5986564,
+                    "name": "Antakyam Miss Döner (60 Gr)",
+                    "deeplink": "tgo://?Channel=Meal&Page=ProductDetail&RestaurantId=0&ProductId=5986564",
+                    "active": false,
+                    "directlyAddToBasket": false,
+                    "likingStatus": {
+                        "icon": "https://cdn.tgoapps.com/mobile/meal/reviewedproductthumbsup.png",
+                        "text": "Beğendi",
+                        "textColor": "#0BC15C"
+                    }
+                }
+            ],
+            "deliveryType": "GO",
+            "deliveryLogoUrl": "https://cdn.tgoapps.com/mobile/meal/cwgoicon.png",
+            "tags": [
+                {
+                    "id": 1,
+                    "name": "Ürün Kalitesi"
+                }
+            ],
+            "temiz_metin": "çok lezzetli sosları vs gerçekten çok kaliteli anlamsız yorumlara takılmayın ilk defa yedim bir daha dönerden daha ne istenebilir"
+        },
+        {
+            "id": "ca3c100f-1a4f-4cc2-960c-e6b410f5c15f",
+            "comment": "ekmeğiniz inanılmaz bayat ve lezetsiz",
+            "date": 1768575826053,
+            "score": {
+                "flavor": 1,
+                "service": 3,
+                "delivery": 4
+            },
+            "userIcon": "https://cdn.tgoapps.com/Assets/t/y/creative/mobile/instantdelivery/meal_profile_icon.png",
+            "orderItems": [
+                {
+                    "id": 16631183,
+                    "name": "Antakyam Hepsi 1 Arada",
+                    "deeplink": "tgo://?Channel=Meal&Page=ProductDetail&RestaurantId=0&ProductId=16631183",
+                    "active": false,
+                    "directlyAddToBasket": false,
+                    "likingStatus": null
+                }
+            ],
+            "deliveryType": "GO",
+            "deliveryLogoUrl": "https://cdn.tgoapps.com/mobile/meal/cwgoicon.png",
+            "tags": [
+                {
+                    "id": 1,
+                    "name": "Ürün Kalitesi"
+                }
+            ],
+            "temiz_metin": "ekmeğiniz inanılmaz bayat ve lezetsiz"
+        },
+        {
+            "id": "d22b60bf-686b-4606-b5db-8679b9a0ed4b",
+            "comment": "Ürünümü menü olarak seçip ekstra tatlı istemiştim ama sadece dürüm ve tatlı geldi menü içeriğinde ki tatlı  ve içeceğim gelmedi ?",
+            "date": 1768506819429,
+            "score": {
+                "flavor": 4,
+                "service": 1,
+                "delivery": 4
+            },
+            "userIcon": "https://cdn.tgoapps.com/Assets/t/y/creative/mobile/instantdelivery/meal_profile_icon.png",
+            "orderItems": [
+                {
+                    "id": 16631183,
+                    "name": "Antakyam Hepsi 1 Arada",
+                    "deeplink": "tgo://?Channel=Meal&Page=ProductDetail&RestaurantId=0&ProductId=16631183",
+                    "active": false,
+                    "directlyAddToBasket": false,
+                    "likingStatus": null
+                },
+                {
+                    "id": 6507626,
+                    "name": "Sütaş Puding",
+                    "deeplink": "tgo://?Channel=Meal&Page=ProductDetail&RestaurantId=0&ProductId=6507626",
+                    "active": false,
+                    "directlyAddToBasket": false,
+                    "likingStatus": null
+                }
+            ],
+            "deliveryType": "GO",
+            "deliveryLogoUrl": "https://cdn.tgoapps.com/mobile/meal/cwgoicon.png",
+            "tags": [
+                {
+                    "id": 6,
+                    "name": "Eksik/Farklı Ürün"
+                }
+            ],
+            "temiz_metin": "ürünümü menü olarak seçip tatlı istemiştim ama sadece dürüm ve tatlı geldi menü içeriğinde ki tatlı ve içeceğim gelmedi"
+        },
+        {
+            "id": "97f88790-b985-4a8f-9d73-d19a6bd3be23",
+            "comment": "Arkadaşlar aşırı derece de soğuk geldi ürün önermem",
+            "date": 1768408355973,
+            "score": {
+                "flavor": 1,
+                "service": 1,
+                "delivery": 1
+            },
+            "userIcon": "https://cdn.tgoapps.com/Assets/t/y/creative/mobile/instantdelivery/meal_profile_icon.png",
+            "restaurantReply": {
+                "restaurantIcon": "https://cdn.tgoapps.com/mobile/meal/restauranticoncommentspage.png",
+                "title": "Restoranın Cevabı",
+                "comment": "Trendyolgo servisi ile çalışmaktayız siparişin soğuk gelmesi sistemle alaklı bir sıkıntı siparişiniz soğuk gelmesi bizle alakalı olmamakl beraber malumunuz hava -7 derecedir ürünü beğenmemenize saygı duyuyoruz telafi etmeyi çok isteriz fakat bu kadar kesin yargılarla konuşmanız bizi çok üzdü."
+            },
+            "orderItems": [
+                {
+                    "id": 6414213,
+                    "name": "Antakyam Tıka Basa Miss Döner ( 150 Gr )",
+                    "deeplink": "tgo://?Channel=Meal&Page=ProductDetail&RestaurantId=0&ProductId=6414213",
+                    "active": false,
+                    "directlyAddToBasket": false,
+                    "likingStatus": null
+                }
+            ],
+            "deliveryType": "GO",
+            "deliveryLogoUrl": "https://cdn.tgoapps.com/mobile/meal/cwgoicon.png",
+            "tags": [
+                {
+                    "id": 3,
+                    "name": "Teslimat"
+                }
+            ],
+            "temiz_metin": "arkadaşlar aşırı derece de soğuk geldi ürün önermem"
+        },
+        {
+            "id": "0486b29c-209d-445d-aa7d-758f405a0413",
+            "comment": "Soğuk geldi",
+            "date": 1768313539860,
+            "score": {
+                "flavor": 5,
+                "service": 4,
+                "delivery": 3
+            },
+            "userIcon": "https://cdn.tgoapps.com/Assets/t/y/creative/mobile/instantdelivery/meal_profile_icon.png",
+            "orderItems": [
+                {
+                    "id": 5986567,
+                    "name": "Antakyam Miss Döner (150 Gr)",
+                    "deeplink": "tgo://?Channel=Meal&Page=ProductDetail&RestaurantId=0&ProductId=5986567",
+                    "active": false,
+                    "directlyAddToBasket": false,
+                    "likingStatus": {
+                        "icon": "https://cdn.tgoapps.com/mobile/meal/reviewedproductthumbsup.png",
+                        "text": "Beğendi",
+                        "textColor": "#0BC15C"
+                    }
+                }
+            ],
+            "deliveryType": "GO",
+            "deliveryLogoUrl": "https://cdn.tgoapps.com/mobile/meal/cwgoicon.png",
+            "tags": [
+                {
+                    "id": 3,
+                    "name": "Teslimat"
+                }
+            ],
+            "temiz_metin": "soğuk geldi"
+        },
+        {
+            "id": "cc50b4a7-4f77-49cc-bb14-d42a42f35702",
+            "comment": "abicim durum cok lezzetli de biraz daha sıkı sarabilirsiniz çok gevşek be abi :)",
+            "date": 1768161623074,
+            "score": {
+                "flavor": 5,
+                "service": 4,
+                "delivery": 5
+            },
+            "userIcon": "https://cdn.tgoapps.com/Assets/t/y/creative/mobile/instantdelivery/meal_profile_icon.png",
+            "orderItems": [
+                {
+                    "id": 6414210,
+                    "name": "Antakyam Tıka Basa Miss Döner ( 80 Gr )",
+                    "deeplink": "tgo://?Channel=Meal&Page=ProductDetail&RestaurantId=0&ProductId=6414210",
+                    "active": false,
+                    "directlyAddToBasket": false,
+                    "likingStatus": null
+                },
+                {
+                    "id": 5986594,
+                    "name": "Ayran (33 Cl)",
+                    "deeplink": "tgo://?Channel=Meal&Page=ProductDetail&RestaurantId=0&ProductId=5986594",
+                    "active": false,
+                    "directlyAddToBasket": false,
+                    "likingStatus": null
+                }
+            ],
+            "deliveryType": "GO",
+            "deliveryLogoUrl": "https://cdn.tgoapps.com/mobile/meal/cwgoicon.png",
+            "tags": [
+                {
+                    "id": 1,
+                    "name": "Ürün Kalitesi"
+                }
+            ],
+            "temiz_metin": "abicim durum çok lezzetli de biraz daha sarabilirsiniz çok gevşek be abi"
+        },
+        {
+            "id": "c6823599-c12d-4b78-8cb7-8224e30fd359",
+            "comment": "Lavas yırtılmış şekilde geldi, yemedi çok zordu lavaş dağıldığı için.",
+            "date": 1768148710520,
+            "score": {
+                "flavor": 1,
+                "service": 5,
+                "delivery": 5
+            },
+            "userIcon": "https://cdn.tgoapps.com/Assets/t/y/creative/mobile/instantdelivery/meal_profile_icon.png",
+            "restaurantReply": {
+                "restaurantIcon": "https://cdn.tgoapps.com/mobile/meal/restauranticoncommentspage.png",
+                "title": "Restoranın Cevabı",
+                "comment": "Uyarınızı not ettik, özür dileriz bundan sonra daha dikkatli olacağız. Afiyet olsun."
+            },
+            "orderItems": [
+                {
+                    "id": 5986574,
+                    "name": "Antakyam Kaşarlı Miss Döner (120 Gr)",
+                    "deeplink": "tgo://?Channel=Meal&Page=ProductDetail&RestaurantId=0&ProductId=5986574",
+                    "active": false,
+                    "directlyAddToBasket": false,
+                    "likingStatus": null
+                }
+            ],
+            "deliveryType": "GO",
+            "deliveryLogoUrl": "https://cdn.tgoapps.com/mobile/meal/cwgoicon.png",
+            "tags": [
+                {
+                    "id": 4,
+                    "name": "Paketleme"
+                }
+            ],
+            "temiz_metin": "lavas yırtılmış şekilde geldi yemedi çok zordu lavaş dağıldığı için"
+        },
+        {
+            "id": "b1ce75b1-e8cf-44d4-bc9c-f7e7da16cbbb",
+            "comment": "Lezzetliydi",
+            "date": 1768062383479,
+            "score": {
+                "flavor": 5,
+                "service": 5,
+                "delivery": 5
+            },
+            "userIcon": "https://cdn.tgoapps.com/Assets/t/y/creative/mobile/instantdelivery/meal_profile_icon.png",
+            "orderItems": [
+                {
+                    "id": 5986574,
+                    "name": "Antakyam Kaşarlı Miss Döner (120 Gr)",
+                    "deeplink": "tgo://?Channel=Meal&Page=ProductDetail&RestaurantId=0&ProductId=5986574",
+                    "active": false,
+                    "directlyAddToBasket": false,
+                    "likingStatus": null
+                },
+                {
+                    "id": 5986594,
+                    "name": "Ayran (33 Cl)",
+                    "deeplink": "tgo://?Channel=Meal&Page=ProductDetail&RestaurantId=0&ProductId=5986594",
+                    "active": false,
+                    "directlyAddToBasket": false,
+                    "likingStatus": null
+                }
+            ],
+            "deliveryType": "GO",
+            "deliveryLogoUrl": "https://cdn.tgoapps.com/mobile/meal/cwgoicon.png",
+            "tags": [
+                {
+                    "id": 1,
+                    "name": "Ürün Kalitesi"
+                }
+            ],
+            "temiz_metin": "lezzetliydi"
+        },
+        {
+            "id": "66c82da7-2f0c-4349-95f9-892ab02c5fdc",
+            "comment": "maalesef kötüydü yiyemedim",
+            "date": 1768040725217,
+            "score": {
+                "flavor": 2,
+                "service": 3,
+                "delivery": 4
+            },
+            "userIcon": "https://cdn.tgoapps.com/Assets/t/y/creative/mobile/instantdelivery/meal_profile_icon.png",
+            "orderItems": [
+                {
+                    "id": 6414213,
+                    "name": "Antakyam Tıka Basa Miss Döner ( 150 Gr )",
+                    "deeplink": "tgo://?Channel=Meal&Page=ProductDetail&RestaurantId=0&ProductId=6414213",
+                    "active": false,
+                    "directlyAddToBasket": false,
+                    "likingStatus": null
+                },
+                {
+                    "id": 5986594,
+                    "name": "Ayran (33 Cl)",
+                    "deeplink": "tgo://?Channel=Meal&Page=ProductDetail&RestaurantId=0&ProductId=5986594",
+                    "active": false,
+                    "directlyAddToBasket": false,
+                    "likingStatus": null
+                }
+            ],
+            "deliveryType": "GO",
+            "deliveryLogoUrl": "https://cdn.tgoapps.com/mobile/meal/cwgoicon.png",
+            "tags": [
+                {
+                    "id": 1,
+                    "name": "Ürün Kalitesi"
+                }
+            ],
+            "temiz_metin": "maalesef kötüydü yiyemedim"
+        },
+        {
+            "id": "88385319-536f-40a2-b7e3-9a037547269d",
+            "comment": "güzel baya doyurucu",
+            "date": 1767971522276,
+            "score": {
+                "flavor": 5,
+                "service": 5,
+                "delivery": 5
+            },
+            "userIcon": "https://cdn.tgoapps.com/Assets/t/y/creative/mobile/instantdelivery/meal_profile_icon.png",
+            "orderItems": [
+                {
+                    "id": 6507624,
+                    "name": "Kanka Menü",
+                    "deeplink": "tgo://?Channel=Meal&Page=ProductDetail&RestaurantId=0&ProductId=6507624",
+                    "active": false,
+                    "directlyAddToBasket": false,
+                    "likingStatus": null
+                }
+            ],
+            "deliveryType": "GO",
+            "deliveryLogoUrl": "https://cdn.tgoapps.com/mobile/meal/cwgoicon.png",
+            "tags": [
+                {
+                    "id": 5,
+                    "name": "Porsiyon"
+                }
+            ],
+            "temiz_metin": "güzel bayağı doyurucu"
+        },
+        {
+            "id": "dfcaef3a-80fb-4a44-91dc-1b6afef53a76",
+            "comment": "herşey güzeldi memnun kaldım teşekkürler",
+            "date": 1767903140936,
+            "score": {
+                "flavor": 5,
+                "service": 5,
+                "delivery": 5
+            },
+            "userIcon": "https://cdn.tgoapps.com/Assets/t/y/creative/mobile/instantdelivery/meal_profile_icon.png",
+            "orderItems": [
+                {
+                    "id": 6414211,
+                    "name": "Antakyam Tıka Basa Miss Döner ( 120 Gr )",
+                    "deeplink": "tgo://?Channel=Meal&Page=ProductDetail&RestaurantId=0&ProductId=6414211",
+                    "active": false,
+                    "directlyAddToBasket": false,
+                    "likingStatus": null
+                }
+            ],
+            "deliveryType": "GO",
+            "deliveryLogoUrl": "https://cdn.tgoapps.com/mobile/meal/cwgoicon.png",
+            "tags": [
+                {
+                    "id": 1,
+                    "name": "Ürün Kalitesi"
+                }
+            ],
+            "temiz_metin": "her şey güzeldi memnun kaldım teşekkürler"
+        },
+        {
+            "id": "218d8d9a-b564-40c6-b4df-532d850b8b87",
+            "comment": "Tereddüt ile almıştım ama tadı gerçekten güzeldi",
+            "date": 1767889573112,
+            "score": {
+                "flavor": 5,
+                "service": 5,
+                "delivery": 5
+            },
+            "userIcon": "https://cdn.tgoapps.com/Assets/t/y/creative/mobile/instantdelivery/meal_profile_icon.png",
+            "orderItems": [
+                {
+                    "id": 5986566,
+                    "name": "Antakyam Miss Döner (120 Gr)",
+                    "deeplink": "tgo://?Channel=Meal&Page=ProductDetail&RestaurantId=0&ProductId=5986566",
+                    "active": false,
+                    "directlyAddToBasket": false,
+                    "likingStatus": {
+                        "icon": "https://cdn.tgoapps.com/mobile/meal/reviewedproductthumbsup.png",
+                        "text": "Beğendi",
+                        "textColor": "#0BC15C"
+                    }
+                }
+            ],
+            "deliveryType": "GO",
+            "deliveryLogoUrl": "https://cdn.tgoapps.com/mobile/meal/cwgoicon.png",
+            "tags": [
+                {
+                    "id": 1,
+                    "name": "Ürün Kalitesi"
+                }
+            ],
+            "temiz_metin": "tereddüt ile almıştım ama tadı gerçekten güzeldi"
+        }
+    ]
+}
