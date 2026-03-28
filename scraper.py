@@ -213,7 +213,7 @@ def trendyol_veri_cek(urun_linki, max_sayfa):
         except Exception: break
 
     if tum_yorumlar:
-        veri_seti = {"platform": "trendyol", "baslik": urun_adi, "urun_id": urun_id, "gorsel_url": gorsel_url, "yorumlar": tum_yorumlar}
+        veri_seti = {"platform": "trendyol", "baslik": urun_adi, "link": urun_linki, "gorsel_url": gorsel_url, "yorumlar": tum_yorumlar}
 
         # 1. Platforma özel alt klasörü oluştur
         hedef_klasor = "cekilen_veriler/trendyol"
@@ -273,7 +273,7 @@ def hepsiburada_veri_cek(urun_linki, max_sayfa):
         except Exception: break
 
     if tum_yorumlar:
-        veri_seti = {"platform": "hepsiburada", "baslik": urun_adi, "urun_id": urun_sku, "gorsel_url": gorsel_url, "yorumlar": tum_yorumlar}
+        veri_seti = {"platform": "hepsiburada", "baslik": urun_adi, "link": urun_linki, "gorsel_url": gorsel_url, "yorumlar": tum_yorumlar}
 
         # 1. Platforma özel alt klasörü oluştur
         hedef_klasor = "cekilen_veriler/hepsiburada"
@@ -346,8 +346,7 @@ def ciceksepeti_veri_cek(urun_linki, max_sayfa):
         except Exception: break
 
     if tum_yorumlar:
-        veri_seti = {"platform": "ciceksepeti", "baslik": urun_adi, "urun_id": urun_kodu, "gorsel_url": gorsel_url, "yorumlar": tum_yorumlar}
-
+        veri_seti = {"platform": "ciceksepeti", "baslik": urun_adi, "link": urun_linki, "gorsel_url": gorsel_url, "yorumlar": tum_yorumlar}
         # 1. Platforma özel alt klasörü oluştur
         hedef_klasor = "cekilen_veriler/ciceksepeti"
         os.makedirs(hedef_klasor, exist_ok=True)
@@ -400,8 +399,7 @@ def steam_veri_cek(oyun_linki, max_sayfa):
         except Exception: break
 
     if tum_yorumlar:
-        veri_seti = {"platform": "steam", "baslik": urun_adi, "urun_id": app_id, "gorsel_url": gorsel_url, "yorumlar": tum_yorumlar}
-
+        veri_seti = {"platform": "steam", "baslik": urun_adi, "link": oyun_linki, "gorsel_url": gorsel_url, "yorumlar": tum_yorumlar}
         # 1. Platforma özel alt klasörü oluştur
         hedef_klasor = "cekilen_veriler/steam"
         os.makedirs(hedef_klasor, exist_ok=True)
@@ -461,8 +459,7 @@ def etstur_veri_cek(otel_linki, max_sayfa):
         except Exception: break
 
     if tum_yorumlar:
-        veri_seti = {"platform": "etstur", "baslik": urun_adi, "urun_id": hotel_code, "gorsel_url": gorsel_url, "yorumlar": tum_yorumlar}
-
+        veri_seti = {"platform": "etstur", "baslik": urun_adi, "link": otel_linki, "gorsel_url": gorsel_url, "yorumlar": tum_yorumlar}
         # 1. Platforma özel alt klasörü oluştur
         hedef_klasor = "cekilen_veriler/etstur"
         os.makedirs(hedef_klasor, exist_ok=True)
@@ -489,12 +486,26 @@ def airbnb_veri_cek(oda_linki, max_sayfa):
         html_res = requests.get(oda_linki, headers=headers, impersonate="chrome120", timeout=15, verify=False)
         temiz_html = html_res.text.replace('\\u002F', '/')
 
-        # --- YENİ EKLENEN KISIM: İSİM ÇIKARMA ---
-        isim_match = re.search(r'<meta\s+(?:property|name)=["\']og:title["\']\s+content=["\']([^"\']+)["\']', temiz_html, re.IGNORECASE)
-        if isim_match:
-            urun_adi = isim_match.group(1).split(' - ')[0].strip()
+        # --- KURŞUN GEÇİRMEZ İSİM ÇIKARMA KISMI (AIRBNB) ---
+        urun_adi = "Airbnb Evi" # Varsayılan değer
+
+        # 1. Deneme: Sayfa başlığı (Eğer jenerik bot başlığı değilse)
+        title_match = re.search(r'<title>([^<]+)</title>', temiz_html, re.IGNORECASE)
+        if title_match and "Kiralık" not in title_match.group(1) and "Vacation Rentals" not in title_match.group(1) and "Airbnb" not in title_match.group(1):
+            urun_adi = title_match.group(1).split(' - ')[0].strip()
         else:
-            urun_adi = "Airbnb Evi"
+            # 2. Deneme: Airbnb'nin iç JSON verilerinden nokta atışı anahtarlar
+            isim_match = re.search(r'"pdp_listing_title"\s*:\s*"([^"]+)"', temiz_html)
+            if not isim_match:
+                isim_match = re.search(r'"p3_summary_title"\s*:\s*"([^"]+)"', temiz_html)
+            if not isim_match:
+                isim_match = re.search(r'"name"\s*:\s*"([^"]+)"', temiz_html)
+
+            if isim_match:
+                olasi_isim = isim_match.group(1).replace('\\u0026', '&').replace('\\u002F', '/')
+                # İsim çok kısaysa veya saçma bir JSON verisiyse alma
+                if len(olasi_isim) > 3 and "Kiralık" not in olasi_isim:
+                    urun_adi = olasi_isim
         # ----------------------------------------
 
         # İŞTE BURASI SİLİNMİŞTİ! API Key'i HTML'den çıkarıp değişkene atıyoruz:
@@ -546,8 +557,7 @@ def airbnb_veri_cek(oda_linki, max_sayfa):
         except Exception: break
 
     if tum_yorumlar:
-        veri_seti = {"platform": "airbnb", "baslik": urun_adi, "urun_id": oda_id, "gorsel_url": gorsel_url, "yorumlar": tum_yorumlar}
-
+        veri_seti = {"platform": "airbnb", "baslik": urun_adi, "link": oda_linki, "gorsel_url": gorsel_url, "yorumlar": tum_yorumlar}
         # 1. Platforma özel alt klasörü oluştur
         hedef_klasor = "cekilen_veriler/airbnb"
         os.makedirs(hedef_klasor, exist_ok=True)
@@ -583,7 +593,6 @@ def yemeksepeti_veri_cek(restoran_linki, max_sayfa):
     print("🤖 Playwright KALICI PROFIL ile Yemeksepeti'ne sızıyor...")
     try:
         from playwright.sync_api import sync_playwright
-        # SÖZ VERDİĞİM GİBİ BURADA 'import os' YOK! :)
 
         # Yemeksepeti için ayrı bir çerez klasörü oluşturuyoruz
         profil_klasoru = os.path.join(os.getcwd(), "saved_ys_profile")
@@ -593,17 +602,16 @@ def yemeksepeti_veri_cek(restoran_linki, max_sayfa):
             # Maps'te kullandığımız kusursuz kamuflaj ayarları
             context = p.chromium.launch_persistent_context(
                 user_data_dir=profil_klasoru,
-                headless=True, # Bot korumasını aşmak için görünür açıyoruz
+                headless=True, # DİKKAT: Tarayıcıyı görmek için kesinlikle False olmalı!
                 user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36",
                 locale="tr-TR",
-                ignore_default_args=["--enable-automation"], # "Chrome test yazılımı tarafından kontrol ediliyor" yazısını SİLER!
+                ignore_default_args=["--enable-automation"],
                 args=[
                     "--disable-blink-features=AutomationControlled",
-                    "--no-sandbox",
-                    # YENİ HEADLESS MANTIGI:
-                    "--headless=new"
+                    "--no-sandbox"
+                    "--headless=new "
                 ],
-                viewport={'width': 1920, 'height': 1080}
+                viewport={'width': 1920, 'height': 1200}
             )
 
             page = context.pages[0] if context.pages else context.new_page()
@@ -614,37 +622,35 @@ def yemeksepeti_veri_cek(restoran_linki, max_sayfa):
             except Exception:
                 pass
 
-            # Sayfanın ana iskeleti yüklenene kadar bekle
+            # Eğer kendi yazdığınız handle_response fonksiyonunu kullanıyorsanız kalsın:
+            try: page.on("response", handle_response)
+            except: pass
 
-
-            page.on("response", handle_response)
-            page.goto(restoran_linki, wait_until="networkidle", timeout=60000)
+            # SİHİR 1: HATA FIRLATSA BİLE ÇÖKMEYEN YÜKLEME BLOĞU
+            try:
+                # networkidle YERİNE domcontentloaded (Yani sadece iskelet yüklenince dur)
+                page.goto(restoran_linki, wait_until="domcontentloaded", timeout=20000)
+            except Exception as e:
+                print(f"   ⏳ Sayfa tam susmadı ama biz yine de görseli alacağız...")
 
             # --- POP-UP AVCI ---
-            # Yemeksepetindeki olası "Anladım" veya "Kabul Et" butonlarına otomatik basmayı dener
             try:
                 kapat_btn = page.locator('button:has-text("Kabul Et"), button:has-text("Anladım")')
                 if kapat_btn.count() > 0 and kapat_btn.first.is_visible():
                     kapat_btn.first.click(timeout=2000)
             except: pass
 
-            # --- GÖRSEL AVCISI (Senin bulduğun HTML sınıfı) ---
+            # --- GÖRSEL AVCISI ---
             logo_selector = "img.vendor-logo__image"
-
             try:
-                # Logoyu bulması için 15 saniye veriyoruz
-                page.wait_for_selector(logo_selector, timeout=15000)
-                gorsel_url = page.locator(logo_selector).first.get_attribute("src")
-                if gorsel_url:
-                    gorsel_url = gorsel_url.replace('\\u002F', '/')
+                page.wait_for_selector(logo_selector, timeout=10000)
+                bulunan_gorsel = page.locator(logo_selector).first.get_attribute("src")
+                if bulunan_gorsel:
+                    gorsel_url = bulunan_gorsel.replace('\\u002F', '/')
                     print(f"🖼️ Playwright Yemeksepeti Görselini Kopardı: {gorsel_url}")
-                else:
-                    gorsel_url = "Görsel Bulunamadı"
             except Exception:
-                gorsel_url = "Görsel Bulunamadı"
-                print(f"⚠️ Görsel bulunamadı. Ekranda pop-up kalmış olabilir, ilk seferde elinle kapatman gerekebilir.")
+                print(f"⚠️ Görsel bulunamadı veya ekranda pop-up kaldı.")
 
-            # Görseli aldık, Playwright işini bitirdi. Hemen kapatalım.
             page.close()
             context.close()
     except Exception as e:
@@ -690,8 +696,7 @@ def yemeksepeti_veri_cek(restoran_linki, max_sayfa):
     # SİHİR 3: BİRLEŞTİR VE KAYDET
     # ==========================================
     if tum_yorumlar:
-        veri_seti = {"platform": "yemeksepeti", "baslik": urun_adi, "urun_id": vendor_id, "gorsel_url": gorsel_url, "yorumlar": tum_yorumlar}
-
+        veri_seti = {"platform": "yemeksepeti", "baslik": urun_adi, "link": restoran_linki, "gorsel_url": gorsel_url, "yorumlar": tum_yorumlar}
         # 1. Platforma özel alt klasörü oluştur
         hedef_klasor = "cekilen_veriler/yemeksepeti"
         os.makedirs(hedef_klasor, exist_ok=True)
@@ -760,8 +765,7 @@ def trendyol_go_veri_cek(restoran_linki, max_sayfa):
         except Exception: break
 
     if tum_yorumlar:
-        veri_seti = {"platform": "tygo", "baslik": urun_adi, "urun_id": vendor_id, "gorsel_url": gorsel_url, "yorumlar": tum_yorumlar}
-
+        veri_seti = {"platform": "tygo", "baslik": urun_adi, "link": restoran_linki, "gorsel_url": gorsel_url, "yorumlar": tum_yorumlar}
         # 1. Platforma özel alt klasörü oluştur
         hedef_klasor = "cekilen_veriler/tygo"
         os.makedirs(hedef_klasor, exist_ok=True)
@@ -962,8 +966,7 @@ def google_maps_veri_cek(mekan_linki, max_kaydirma):
         print(f"⚠️ Playwright Maps'te bir engele takıldı: {e}")
 
     if tum_yorumlar:
-        veri_seti = {"platform": "google_maps", "baslik": urun_adi, "urun_id": urun_id, "gorsel_url": gorsel_url, "yorumlar": tum_yorumlar}
-
+        veri_seti = {"platform": "google_maps", "baslik": urun_adi, "link": mekan_linki, "gorsel_url": gorsel_url, "yorumlar": tum_yorumlar}
         # 1. Platforma özel alt klasörü oluştur
         hedef_klasor = "cekilen_veriler/maps"
         os.makedirs(hedef_klasor, exist_ok=True)
