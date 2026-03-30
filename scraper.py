@@ -177,7 +177,7 @@ def airbnb_yorum_bul(json_verisi):
 # ==========================================
 # 3. PLATFORM FONKSİYONLARI
 # ==========================================
-def trendyol_veri_cek(urun_linki, max_sayfa):
+def trendyol_veri_cek(urun_linki, max_sayfa) -> str:
     match = re.search(r'-p-(\d+)', urun_linki)
     if not match: return
     urun_id = match.group(1)
@@ -225,7 +225,9 @@ def trendyol_veri_cek(urun_linki, max_sayfa):
 
         print(f"🎉 Kaydedildi: {dosya_yolu} ({len(tum_yorumlar)} yorum)")
 
-def hepsiburada_veri_cek(urun_linki, max_sayfa):
+    return dosya_yolu
+
+def hepsiburada_veri_cek(urun_linki, max_sayfa) -> str:
     match = re.search(r'-p[m]?-([A-Za-z0-9]+)', urun_linki)
     if not match: return
     urun_sku = match.group(1).upper()
@@ -285,7 +287,9 @@ def hepsiburada_veri_cek(urun_linki, max_sayfa):
 
         print(f"🎉 Kaydedildi: {dosya_yolu} ({len(tum_yorumlar)} yorum)")
 
-def ciceksepeti_veri_cek(urun_linki, max_sayfa):
+    return dosya_yolu
+
+def ciceksepeti_veri_cek(urun_linki, max_sayfa) -> str:
     match_code = re.search(r'-([a-zA-Z0-9]+)(?:\?|/|$)', urun_linki)
     urun_kodu = match_code.group(1).lower() if match_code else str(int(time.time()))
     isim_match = re.search(r'/([^/]+)-[a-zA-Z0-9]+(?:\?|/|$)', urun_linki)
@@ -357,7 +361,9 @@ def ciceksepeti_veri_cek(urun_linki, max_sayfa):
 
         print(f"🎉 Kaydedildi: {dosya_yolu} ({len(tum_yorumlar)} yorum)")
 
-def steam_veri_cek(oyun_linki, max_sayfa):
+    return dosya_yolu
+
+def steam_veri_cek(oyun_linki, max_sayfa) -> str:
     match = re.search(r'/app/(\d+)', oyun_linki)
     if not match: return
     app_id = match.group(1)
@@ -410,7 +416,9 @@ def steam_veri_cek(oyun_linki, max_sayfa):
 
         print(f"🎉 Kaydedildi: {dosya_yolu} ({len(tum_yorumlar)} yorum)")
 
-def etstur_veri_cek(otel_linki, max_sayfa):
+    return dosya_yolu
+
+def etstur_veri_cek(otel_linki, max_sayfa) -> str:
     print("🔍 Etstur gizli ID'leri aranıyor...")
     headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) Chrome/120.0.0.0 Safari/537.36"}
     try:
@@ -470,7 +478,9 @@ def etstur_veri_cek(otel_linki, max_sayfa):
 
         print(f"🎉 Kaydedildi: {dosya_yolu} ({len(tum_yorumlar)} yorum)")
 
-def airbnb_veri_cek(oda_linki, max_sayfa):
+    return dosya_yolu
+
+def airbnb_veri_cek(oda_linki, max_sayfa) -> str:
     match = re.search(r'/rooms/(\d+)', oda_linki)
     if not match: return
     oda_id = match.group(1)
@@ -568,8 +578,10 @@ def airbnb_veri_cek(oda_linki, max_sayfa):
 
         print(f"🎉 Kaydedildi: {dosya_yolu} ({len(tum_yorumlar)} yorum)")
 
+    return dosya_yolu
 
-def yemeksepeti_veri_cek(restoran_linki, max_sayfa):
+
+def yemeksepeti_veri_cek(restoran_linki, max_sayfa) -> str:
     match = re.search(r'/restaurant/([a-zA-Z0-9]+)', restoran_linki)
     if not match: return
     vendor_id = match.group(1)
@@ -707,7 +719,9 @@ def yemeksepeti_veri_cek(restoran_linki, max_sayfa):
 
         print(f"🎉 Kaydedildi: {dosya_yolu} ({len(tum_yorumlar)} yorum)")
 
-def trendyol_go_veri_cek(restoran_linki, max_sayfa):
+    return dosya_yolu
+
+def trendyol_go_veri_cek(restoran_linki, max_sayfa) -> str:
     match = re.search(r'(?:-|/)(\d+)(?:/|\?|$)', restoran_linki)
     if not match: return
     vendor_id = match.group(1)
@@ -775,8 +789,9 @@ def trendyol_go_veri_cek(restoran_linki, max_sayfa):
             json.dump(veri_seti, f, ensure_ascii=False, indent=4)
 
         print(f"🎉 Kaydedildi: {dosya_yolu} ({len(tum_yorumlar)} yorum)")
+    return dosya_yolu
 
-def google_maps_veri_cek(mekan_linki, max_kaydirma):
+def google_maps_veri_cek(mekan_linki, max_kaydirma) -> str:
     match = re.search(r'/place/([^/]+)/', mekan_linki)
     if match:
         urun_adi = urllib.parse.unquote(match.group(1)).replace('+', ' ').title()
@@ -976,6 +991,7 @@ def google_maps_veri_cek(mekan_linki, max_kaydirma):
             json.dump(veri_seti, f, ensure_ascii=False, indent=4)
 
         print(f"🎉 Kaydedildi: {dosya_yolu} ({len(tum_yorumlar)} yorum)")
+    return dosya_yolu
 
 # ==========================================
 # 4. EVRENSEL YÖNLENDİRİCİ (ANA MOTOR)
@@ -988,44 +1004,46 @@ def linkten_veri_cek(url, max_sayfa=5, max_kaydirma=10):
     url_lower = url.lower()
 
     try:
-        if "trendyol.com" in url_lower:
-            trendyol_veri_cek(url, max_sayfa=max_sayfa)
-            return "Trendyol verileri başarıyla çekildi."
+        if "tgo" in url_lower or "trendyol-yemek" in url_lower or "/go/" in url_lower:
+            dosya_yolu = trendyol_go_veri_cek(url, max_sayfa=max_sayfa)
+            return "Trendyol Go verileri başarıyla çekildi.", dosya_yolu
+
+        elif "trendyol.com" in url_lower:
+            dosya_yolu = trendyol_veri_cek(url, max_sayfa=max_sayfa)
+            return "Trendyol verileri başarıyla çekildi.", dosya_yolu
 
         elif "hepsiburada.com" in url_lower:
-            hepsiburada_veri_cek(url, max_sayfa=max_sayfa)
-            return "Hepsiburada verileri başarıyla çekildi."
+            dosya_yolu = hepsiburada_veri_cek(url, max_sayfa=max_sayfa)
+            return "Hepsiburada verileri başarıyla çekildi.", dosya_yolu
 
         elif "ciceksepeti.com" in url_lower:
-            ciceksepeti_veri_cek(url, max_sayfa=max_sayfa)
-            return "Çiçeksepeti verileri başarıyla çekildi."
+            dosya_yolu = ciceksepeti_veri_cek(url, max_sayfa=max_sayfa)
+            return "Çiçeksepeti verileri başarıyla çekildi.", dosya_yolu
 
         elif "steampowered.com" in url_lower:
-            steam_veri_cek(url, max_sayfa=max_sayfa)
-            return "Steam verileri başarıyla çekildi."
+            dosya_yolu = steam_veri_cek(url, max_sayfa=max_sayfa)
+            return "Steam verileri başarıyla çekildi.", dosya_yolu
 
         elif "yemeksepeti.com" in url_lower:
-            yemeksepeti_veri_cek(url, max_sayfa=max_sayfa)
-            return "Yemeksepeti verileri başarıyla çekildi."
-
-        elif "tgo" in url_lower or "trendyol-yemek" in url_lower:
-            trendyol_go_veri_cek(url, max_sayfa=max_sayfa)
-            return "Trendyol Go verileri başarıyla çekildi."
+            dosya_yolu = yemeksepeti_veri_cek(url, max_sayfa=max_sayfa)
+            return "Yemeksepeti verileri başarıyla çekildi.", dosya_yolu
 
         elif "etstur.com" in url_lower:
-            etstur_veri_cek(url, max_sayfa=max_sayfa)
-            return "Etstur verileri başarıyla çekildi."
+            dosya_yolu = etstur_veri_cek(url, max_sayfa=max_sayfa)
+            return "Etstur verileri başarıyla çekildi.", dosya_yolu
 
         elif "airbnb.com" in url_lower:
-            airbnb_veri_cek(url, max_sayfa=max_sayfa)
-            return "Airbnb verileri başarıyla çekildi."
+            dosya_yolu = airbnb_veri_cek(url, max_sayfa=max_sayfa)
+            return "Airbnb verileri başarıyla çekildi.", dosya_yolu
 
         elif "googleusercontent.com/maps" in url_lower or "/maps/" in url_lower:
-            google_maps_veri_cek(url, max_kaydirma=max_kaydirma)
-            return "Google Maps verileri başarıyla çekildi."
+            dosya_yolu = google_maps_veri_cek(url, max_kaydirma=max_kaydirma)
+            return "Google Maps verileri başarıyla çekildi.", dosya_yolu
 
         else:
-            return f"❌ Desteklenmeyen veya hatalı link: {url}"
+            # Hatalı link durumunda dosya yolu olmadığı için 'None' dönüyoruz
+            return f"❌ Desteklenmeyen veya hatalı link: {url}", None
 
     except Exception as e:
-        return f"❌ Kazıma işlemi sırasında kritik bir hata oluştu: {str(e)}"
+        # Kod çökerse main.py'nin 'unpack' (iki değişkeni çıkarma) işlemi patlamasın diye 'None' dönüyoruz
+        return f"❌ Kazıma işlemi sırasında kritik bir hata oluştu: {str(e)}", None
