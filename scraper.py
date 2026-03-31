@@ -177,7 +177,7 @@ def airbnb_yorum_bul(json_verisi):
 # ==========================================
 # 3. PLATFORM FONKSİYONLARI
 # ==========================================
-def trendyol_veri_cek(urun_linki, max_sayfa):
+def trendyol_veri_cek(urun_linki, max_sayfa) -> str:
     match = re.search(r'-p-(\d+)', urun_linki)
     if not match: return
     urun_id = match.group(1)
@@ -185,7 +185,9 @@ def trendyol_veri_cek(urun_linki, max_sayfa):
     urun_adi = isim_match.group(1).replace('-', ' ').title() if isim_match else "Trendyol Ürünü"
 
     dosya_yolu = f"cekilen_veriler/trendyol/trendyol_{urun_id}.json"
-    if os.path.exists(dosya_yolu): print("   ⏭️ Veri zaten mevcut, atlanıyor..."); return
+    if os.path.exists(dosya_yolu):
+        print("   ⏭️ Veri zaten mevcut, atlanıyor...")
+        return dosya_yolu
 
     print(f"✅ Trendyol İşleniyor: {urun_id}")
     gorsel_url = get_og_image(urun_linki)
@@ -224,8 +226,13 @@ def trendyol_veri_cek(urun_linki, max_sayfa):
             json.dump(veri_seti, f, ensure_ascii=False, indent=4)
 
         print(f"🎉 Kaydedildi: {dosya_yolu} ({len(tum_yorumlar)} yorum)")
+        return dosya_yolu
+    else:
+        # EĞER YORUM BULUNAMADIYSA VE DOSYA OLUŞTURULMADIYSA UYARI VER VE NONE DÖNDÜR
+        print(f"⚠️ Bu üründe çekilecek yorum bulunamadı: {urun_adi}")
+        return None
 
-def hepsiburada_veri_cek(urun_linki, max_sayfa):
+def hepsiburada_veri_cek(urun_linki, max_sayfa) -> str:
     match = re.search(r'-p[m]?-([A-Za-z0-9]+)', urun_linki)
     if not match: return
     urun_sku = match.group(1).upper()
@@ -233,7 +240,9 @@ def hepsiburada_veri_cek(urun_linki, max_sayfa):
     urun_adi = isim_match.group(1).replace('-', ' ').title() if isim_match else "Hepsiburada Ürünü"
 
     dosya_yolu = f"cekilen_veriler/hepsiburada/hepsiburada_{urun_sku}.json"
-    if os.path.exists(dosya_yolu): print("   ⏭️ Veri zaten mevcut, atlanıyor..."); return
+    if os.path.exists(dosya_yolu):
+        print("   ⏭️ Veri zaten mevcut, atlanıyor...")
+        return dosya_yolu
 
     print(f"✅ Hepsiburada İşleniyor: {urun_sku}")
     gorsel_url = "Görsel Bulunamadı" # Başlangıçta boş
@@ -284,15 +293,21 @@ def hepsiburada_veri_cek(urun_linki, max_sayfa):
             json.dump(veri_seti, f, ensure_ascii=False, indent=4)
 
         print(f"🎉 Kaydedildi: {dosya_yolu} ({len(tum_yorumlar)} yorum)")
+        return dosya_yolu
+    else:
+        print(f"⚠️ Bu üründe çekilecek yorum bulunamadı: {urun_adi}")
+        return None
 
-def ciceksepeti_veri_cek(urun_linki, max_sayfa):
+def ciceksepeti_veri_cek(urun_linki, max_sayfa) -> str:
     match_code = re.search(r'-([a-zA-Z0-9]+)(?:\?|/|$)', urun_linki)
     urun_kodu = match_code.group(1).lower() if match_code else str(int(time.time()))
     isim_match = re.search(r'/([^/]+)-[a-zA-Z0-9]+(?:\?|/|$)', urun_linki)
     urun_adi = isim_match.group(1).replace('-', ' ').title() if isim_match else "Çiçeksepeti Ürünü"
 
     dosya_yolu = f"cekilen_veriler/ciceksepeti/ciceksepeti_{urun_kodu}.json"
-    if os.path.exists(dosya_yolu): print("   ⏭️ Veri zaten mevcut, atlanıyor..."); return
+    if os.path.exists(dosya_yolu):
+        print("   ⏭️ Veri zaten mevcut, atlanıyor...")
+        return dosya_yolu
 
     print(f"✅ Çiçeksepeti İşleniyor: {urun_kodu}")
 
@@ -356,8 +371,12 @@ def ciceksepeti_veri_cek(urun_linki, max_sayfa):
             json.dump(veri_seti, f, ensure_ascii=False, indent=4)
 
         print(f"🎉 Kaydedildi: {dosya_yolu} ({len(tum_yorumlar)} yorum)")
+        return dosya_yolu
+    else:
+        print(f"⚠️ Bu üründe çekilecek yorum bulunamadı: {urun_adi}")
+        return None
 
-def steam_veri_cek(oyun_linki, max_sayfa):
+def steam_veri_cek(oyun_linki, max_sayfa) -> str:
     match = re.search(r'/app/(\d+)', oyun_linki)
     if not match: return
     app_id = match.group(1)
@@ -365,7 +384,9 @@ def steam_veri_cek(oyun_linki, max_sayfa):
     urun_adi = isim_match.group(1).replace('_', ' ').title() if isim_match else "Steam Oyunu"
 
     dosya_yolu = f"cekilen_veriler/steam/steam_{app_id}.json"
-    if os.path.exists(dosya_yolu): print("   ⏭️ Veri zaten mevcut, atlanıyor..."); return
+    if os.path.exists(dosya_yolu):
+        print("   ⏭️ Veri zaten mevcut, atlanıyor...")
+        return dosya_yolu
 
     print(f"✅ Steam İşleniyor: {app_id}")
     gorsel_url = f"https://cdn.akamai.steamstatic.com/steam/apps/{app_id}/header.jpg"
@@ -409,8 +430,12 @@ def steam_veri_cek(oyun_linki, max_sayfa):
             json.dump(veri_seti, f, ensure_ascii=False, indent=4)
 
         print(f"🎉 Kaydedildi: {dosya_yolu} ({len(tum_yorumlar)} yorum)")
+        return dosya_yolu
+    else:
+        print(f"⚠️ Bu üründe çekilecek yorum bulunamadı: {urun_adi}")
+        return None
 
-def etstur_veri_cek(otel_linki, max_sayfa):
+def etstur_veri_cek(otel_linki, max_sayfa) -> str:
     print("🔍 Etstur gizli ID'leri aranıyor...")
     headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) Chrome/120.0.0.0 Safari/537.36"}
     try:
@@ -426,7 +451,9 @@ def etstur_veri_cek(otel_linki, max_sayfa):
     urun_adi = isim_match.group(1).replace('-', ' ').title() if isim_match else "Etstur Oteli"
 
     dosya_yolu = f"cekilen_veriler/etstur/etstur_{hotel_code}.json"
-    if os.path.exists(dosya_yolu): print("   ⏭️ Veri zaten mevcut, atlanıyor..."); return
+    if os.path.exists(dosya_yolu):
+        print("   ⏭️ Veri zaten mevcut, atlanıyor...")
+        return dosya_yolu
 
     print(f"✅ Etstur İşleniyor: {hotel_code}")
 
@@ -469,14 +496,20 @@ def etstur_veri_cek(otel_linki, max_sayfa):
             json.dump(veri_seti, f, ensure_ascii=False, indent=4)
 
         print(f"🎉 Kaydedildi: {dosya_yolu} ({len(tum_yorumlar)} yorum)")
+        return dosya_yolu
+    else:
+        print(f"⚠️ Bu üründe çekilecek yorum bulunamadı: {urun_adi}")
+        return None
 
-def airbnb_veri_cek(oda_linki, max_sayfa):
+def airbnb_veri_cek(oda_linki, max_sayfa) -> str:
     match = re.search(r'/rooms/(\d+)', oda_linki)
     if not match: return
     oda_id = match.group(1)
 
     dosya_yolu = f"cekilen_veriler/airbnb/airbnb_{oda_id}.json"
-    if os.path.exists(dosya_yolu): print("   ⏭️ Veri zaten mevcut, atlanıyor..."); return
+    if os.path.exists(dosya_yolu):
+        print("   ⏭️ Veri zaten mevcut, atlanıyor...")
+        return dosya_yolu
 
     print(f"✅ Airbnb İşleniyor: {oda_id}")
     gorsel_url = "Görsel Bulunamadı"
@@ -567,9 +600,13 @@ def airbnb_veri_cek(oda_linki, max_sayfa):
             json.dump(veri_seti, f, ensure_ascii=False, indent=4)
 
         print(f"🎉 Kaydedildi: {dosya_yolu} ({len(tum_yorumlar)} yorum)")
+        return dosya_yolu
+    else:
+        print(f"⚠️ Bu üründe çekilecek yorum bulunamadı: {urun_adi}")
+        return None
 
 
-def yemeksepeti_veri_cek(restoran_linki, max_sayfa):
+def yemeksepeti_veri_cek(restoran_linki, max_sayfa) -> str:
     match = re.search(r'/restaurant/([a-zA-Z0-9]+)', restoran_linki)
     if not match: return
     vendor_id = match.group(1)
@@ -582,7 +619,9 @@ def yemeksepeti_veri_cek(restoran_linki, max_sayfa):
         urun_adi = "Yemeksepeti Restoranı"
 
     dosya_yolu = f"cekilen_veriler/yemeksepeti/yemeksepeti_{vendor_id}.json"
-    if os.path.exists(dosya_yolu): print("   ⏭️ Veri zaten mevcut, atlanıyor..."); return
+    if os.path.exists(dosya_yolu):
+        print("   ⏭️ Veri zaten mevcut, atlanıyor...")
+        return dosya_yolu
 
     print(f"✅ Yemeksepeti İşleniyor: {vendor_id}")
     gorsel_url = "Görsel Bulunamadı"
@@ -643,7 +682,7 @@ def yemeksepeti_veri_cek(restoran_linki, max_sayfa):
             # --- GÖRSEL AVCISI ---
             logo_selector = "img.vendor-logo__image"
             try:
-                page.wait_for_selector(logo_selector, timeout=10000)
+                page.wait_for_selector(logo_selector, timeout=100000)
                 bulunan_gorsel = page.locator(logo_selector).first.get_attribute("src")
                 if bulunan_gorsel:
                     gorsel_url = bulunan_gorsel.replace('\\u002F', '/')
@@ -706,14 +745,20 @@ def yemeksepeti_veri_cek(restoran_linki, max_sayfa):
             json.dump(veri_seti, f, ensure_ascii=False, indent=4)
 
         print(f"🎉 Kaydedildi: {dosya_yolu} ({len(tum_yorumlar)} yorum)")
+        return dosya_yolu
+    else:
+        print(f"⚠️ Bu üründe çekilecek yorum bulunamadı: {urun_adi}")
+        return None
 
-def trendyol_go_veri_cek(restoran_linki, max_sayfa):
+def trendyol_go_veri_cek(restoran_linki, max_sayfa) -> str:
     match = re.search(r'(?:-|/)(\d+)(?:/|\?|$)', restoran_linki)
     if not match: return
     vendor_id = match.group(1)
 
     dosya_yolu = f"cekilen_veriler/tygo/tygo_{vendor_id}.json"
-    if os.path.exists(dosya_yolu): print("   ⏭️ Veri zaten mevcut, atlanıyor..."); return
+    if os.path.exists(dosya_yolu):
+        print("   ⏭️ Veri zaten mevcut, atlanıyor...")
+        return dosya_yolu
 
     print(f"✅ Trendyol Go İşleniyor: {vendor_id}")
     gorsel_url = "Görsel Bulunamadı"
@@ -765,7 +810,7 @@ def trendyol_go_veri_cek(restoran_linki, max_sayfa):
         except Exception: break
 
     if tum_yorumlar:
-        veri_seti = {"platform": "tygo", "baslik": urun_adi, "link": restoran_linki, "gorsel_url": gorsel_url, "yorumlar": tum_yorumlar}
+        veri_seti = {"platform": "trendyol-go", "baslik": urun_adi, "link": restoran_linki, "gorsel_url": gorsel_url, "yorumlar": tum_yorumlar}
         # 1. Platforma özel alt klasörü oluştur
         hedef_klasor = "cekilen_veriler/tygo"
         os.makedirs(hedef_klasor, exist_ok=True)
@@ -775,8 +820,12 @@ def trendyol_go_veri_cek(restoran_linki, max_sayfa):
             json.dump(veri_seti, f, ensure_ascii=False, indent=4)
 
         print(f"🎉 Kaydedildi: {dosya_yolu} ({len(tum_yorumlar)} yorum)")
+        return dosya_yolu
+    else:
+        print(f"⚠️ Bu üründe çekilecek yorum bulunamadı: {urun_adi}")
+        return None
 
-def google_maps_veri_cek(mekan_linki, max_kaydirma):
+def google_maps_veri_cek(mekan_linki, max_kaydirma) -> str:
     match = re.search(r'/place/([^/]+)/', mekan_linki)
     if match:
         urun_adi = urllib.parse.unquote(match.group(1)).replace('+', ' ').title()
@@ -786,7 +835,9 @@ def google_maps_veri_cek(mekan_linki, max_kaydirma):
         urun_id = str(int(time.time()))
 
     dosya_yolu = f"cekilen_veriler/maps/maps_{urun_id}.json"
-    if os.path.exists(dosya_yolu): print("   ⏭️ Veri zaten mevcut, atlanıyor..."); return
+    if os.path.exists(dosya_yolu):
+        print("   ⏭️ Veri zaten mevcut, atlanıyor...")
+        return dosya_yolu
 
     print(f"✅ Google Maps İşleniyor: {urun_id}")
     gorsel_url = "Görsel Bulunamadı"
@@ -966,7 +1017,7 @@ def google_maps_veri_cek(mekan_linki, max_kaydirma):
         print(f"⚠️ Playwright Maps'te bir engele takıldı: {e}")
 
     if tum_yorumlar:
-        veri_seti = {"platform": "google_maps", "baslik": urun_adi, "link": mekan_linki, "gorsel_url": gorsel_url, "yorumlar": tum_yorumlar}
+        veri_seti = {"platform": "maps", "baslik": urun_adi, "link": mekan_linki, "gorsel_url": gorsel_url, "yorumlar": tum_yorumlar}
         # 1. Platforma özel alt klasörü oluştur
         hedef_klasor = "cekilen_veriler/maps"
         os.makedirs(hedef_klasor, exist_ok=True)
@@ -976,6 +1027,10 @@ def google_maps_veri_cek(mekan_linki, max_kaydirma):
             json.dump(veri_seti, f, ensure_ascii=False, indent=4)
 
         print(f"🎉 Kaydedildi: {dosya_yolu} ({len(tum_yorumlar)} yorum)")
+        return dosya_yolu
+    else:
+        print(f"⚠️ Bu üründe çekilecek yorum bulunamadı: {urun_adi}")
+        return None
 
 # ==========================================
 # 4. EVRENSEL YÖNLENDİRİCİ (ANA MOTOR)
@@ -988,44 +1043,46 @@ def linkten_veri_cek(url, max_sayfa=5, max_kaydirma=10):
     url_lower = url.lower()
 
     try:
-        if "trendyol.com" in url_lower:
-            trendyol_veri_cek(url, max_sayfa=max_sayfa)
-            return "Trendyol verileri başarıyla çekildi."
+        if "tgo" in url_lower or "trendyol-yemek" in url_lower or "/go/" in url_lower:
+            dosya_yolu = trendyol_go_veri_cek(url, max_sayfa=max_sayfa)
+            return "Trendyol Go verileri başarıyla çekildi.", dosya_yolu
+
+        elif "trendyol.com" in url_lower:
+            dosya_yolu = trendyol_veri_cek(url, max_sayfa=max_sayfa)
+            return "Trendyol verileri başarıyla çekildi.", dosya_yolu
 
         elif "hepsiburada.com" in url_lower:
-            hepsiburada_veri_cek(url, max_sayfa=max_sayfa)
-            return "Hepsiburada verileri başarıyla çekildi."
+            dosya_yolu = hepsiburada_veri_cek(url, max_sayfa=max_sayfa)
+            return "Hepsiburada verileri başarıyla çekildi.", dosya_yolu
 
         elif "ciceksepeti.com" in url_lower:
-            ciceksepeti_veri_cek(url, max_sayfa=max_sayfa)
-            return "Çiçeksepeti verileri başarıyla çekildi."
+            dosya_yolu = ciceksepeti_veri_cek(url, max_sayfa=max_sayfa)
+            return "Çiçeksepeti verileri başarıyla çekildi.", dosya_yolu
 
         elif "steampowered.com" in url_lower:
-            steam_veri_cek(url, max_sayfa=max_sayfa)
-            return "Steam verileri başarıyla çekildi."
+            dosya_yolu = steam_veri_cek(url, max_sayfa=max_sayfa)
+            return "Steam verileri başarıyla çekildi.", dosya_yolu
 
         elif "yemeksepeti.com" in url_lower:
-            yemeksepeti_veri_cek(url, max_sayfa=max_sayfa)
-            return "Yemeksepeti verileri başarıyla çekildi."
-
-        elif "tgo" in url_lower or "trendyol-yemek" in url_lower:
-            trendyol_go_veri_cek(url, max_sayfa=max_sayfa)
-            return "Trendyol Go verileri başarıyla çekildi."
+            dosya_yolu = yemeksepeti_veri_cek(url, max_sayfa=max_sayfa)
+            return "Yemeksepeti verileri başarıyla çekildi.", dosya_yolu
 
         elif "etstur.com" in url_lower:
-            etstur_veri_cek(url, max_sayfa=max_sayfa)
-            return "Etstur verileri başarıyla çekildi."
+            dosya_yolu = etstur_veri_cek(url, max_sayfa=max_sayfa)
+            return "Etstur verileri başarıyla çekildi.", dosya_yolu
 
         elif "airbnb.com" in url_lower:
-            airbnb_veri_cek(url, max_sayfa=max_sayfa)
-            return "Airbnb verileri başarıyla çekildi."
+            dosya_yolu = airbnb_veri_cek(url, max_sayfa=max_sayfa)
+            return "Airbnb verileri başarıyla çekildi.", dosya_yolu
 
         elif "googleusercontent.com/maps" in url_lower or "/maps/" in url_lower:
-            google_maps_veri_cek(url, max_kaydirma=max_kaydirma)
-            return "Google Maps verileri başarıyla çekildi."
+            dosya_yolu = google_maps_veri_cek(url, max_kaydirma=max_kaydirma)
+            return "Google Maps verileri başarıyla çekildi.", dosya_yolu
 
         else:
-            return f"❌ Desteklenmeyen veya hatalı link: {url}"
+            # Hatalı link durumunda dosya yolu olmadığı için 'None' dönüyoruz
+            return f"❌ Desteklenmeyen veya hatalı link: {url}", None
 
     except Exception as e:
-        return f"❌ Kazıma işlemi sırasında kritik bir hata oluştu: {str(e)}"
+        # Kod çökerse main.py'nin 'unpack' (iki değişkeni çıkarma) işlemi patlamasın diye 'None' dönüyoruz
+        return f"❌ Kazıma işlemi sırasında kritik bir hata oluştu: {str(e)}", None
