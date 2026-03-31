@@ -3,7 +3,6 @@ import time
 
 # İstediğin platformdan, istediğin kadar linki buraya alt alta ekle
 link_listesi = [
-"https://www.yemeksepeti.com/restaurant/ug2z/tasty-tenders-ug2z"
 
 
 ]
