@@ -44,7 +44,7 @@ class ReviewPreprocessor:
 
         text = self.lowercase_turkish(text)
         text = re.sub(r'[^\w\s]', ' ', text)
-        text = re.sub(r'([a-zçğıöşü])\1{2,}', r'\1', text)
+        text = re.sub(r'([a-zçğıöşü])\1{2,}', r'\1', text)  #"Mükemmeeeeel" yazısını "Mükemmel" yapar.
 
         words = text.split()
         text = " ".join([self.typo_mapping.get(word, word) for word in words])
@@ -62,13 +62,14 @@ class ReviewPreprocessor:
 # 2. YARDIMCI VE DEDEKTİF FONKSİYONLAR
 # ==========================================
 def get_og_image(url):
-    """Verilen URL'nin kaynak koduna girip sosyal medya (og:image) görselini çeker."""
+    """Verilen URL'nin kaynak koduna girip sosyal medya (og:image) görselini çeker.
+       re.search kısmında og.image etiketini arayıp, görsel urlsini yakalıyor."""
     headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) Chrome/120.0.0.0 Safari/537.36"}
     try:
         res = requests.get(url, headers=headers, impersonate="chrome120", timeout=10, verify=False)
         match = re.search(r'<meta\s+(?:property|name)=["\']og:image["\']\s+content=["\']([^"\']+)["\']', res.text, re.IGNORECASE)
-        return match.group(1) if match else "Görsel Bulunamadı"
-    except: return "Görsel Bulunamadı"
+        return match.group(1) if match else "Görsel Bulunamadı"   #match.group(1) ile urlyi donduruyor.
+    except: return "Görsel Bulunamadı"   #request.get kısmında da hata olursa yine gorsel bulunamadı bastır.
 
 def yorum_metnini_bul(yorum):
     """Farklı JSON formatlarındaki asıl yorum metnini otomatik bulur."""
@@ -90,7 +91,7 @@ def yemeksepeti_gorsel_bul(json_verisi):
             val = json_verisi.get(key)
             # Değerin geçerli bir Yemeksepeti/DeliveryHero resim linki olduğundan emin olalım
             if isinstance(val, str) and val.startswith("http") and ("deliveryhero" in val or "yemeksepeti" in val):
-                return val
+                return val   #deliveryhero(yemeksepeti ana şirketi ve görsel sunucusu) bunun da kontrolu gerekli!
 
         # Bulamazsa alt sözlüklere in (Recursive)
         for _, deger in json_verisi.items():
@@ -132,13 +133,13 @@ def yemeksepeti_yorum_bul(json_verisi):
 
 
 def handle_response(response):
-    if "vendor" in response.url and response.status == 200:
+    if "vendor" in response.url and response.status == 200: #içinde vendor geçen ve başarılı(200) inen dosyaları durdur.
         try:
             data = response.json()
             # Buradaki JSON içinde görsel linkini ara
             potential_img = yemeksepeti_gorsel_bul(data)
             if potential_img:
-                print(f"🎯 API'den Görsel Yakalandı: {potential_img}")
+                print(f" API'den Görsel Yakalandı: {potential_img}")
         except: pass
 
 def trendyol_go_yorum_bul(json_verisi):
@@ -185,9 +186,9 @@ def trendyol_veri_cek(urun_linki, max_sayfa) -> str:
     urun_adi = isim_match.group(1).replace('-', ' ').title() if isim_match else "Trendyol Ürünü"
 
     dosya_yolu = f"cekilen_veriler/trendyol/trendyol_{urun_id}.json"
-    if os.path.exists(dosya_yolu): print("   ⏭️ Veri zaten mevcut, atlanıyor..."); return
+    if os.path.exists(dosya_yolu): print("   Veri zaten mevcut, atlanıyor..."); return
 
-    print(f"✅ Trendyol İşleniyor: {urun_id}")
+    print(f" Trendyol İşleniyor: {urun_id}")
     gorsel_url = get_og_image(urun_linki)
 
     preprocessor = ReviewPreprocessor()
@@ -195,10 +196,11 @@ def trendyol_veri_cek(urun_linki, max_sayfa) -> str:
     headers = {"Accept": "application/json", "Origin": "https://www.trendyol.com", "Referer": urun_linki}
 
     for sayfa in range(max_sayfa):
+        #dinamik olarak url olusturuyoruz api_url kısmında
         api_url = f"https://apigw.trendyol.com/discovery-storefront-trproductgw-service/api/review-read/product-reviews/detailed?channelId=1&contentId={urun_id}&page={sayfa}"
         try:
             res = requests.get(api_url, headers=headers, impersonate="chrome120", timeout=10, verify=False)
-            if res.status_code != 200: break
+            if res.status_code != 200: break   #200 OK dönmezse sayfa bitmiş ya da engellenmişizdir.
 
             yorum_listesi = trendyol_yorum_bul(res.json())
             if not yorum_listesi: break
@@ -223,7 +225,7 @@ def trendyol_veri_cek(urun_linki, max_sayfa) -> str:
         with open(dosya_yolu, "w", encoding="utf-8") as f:
             json.dump(veri_seti, f, ensure_ascii=False, indent=4)
 
-        print(f"🎉 Kaydedildi: {dosya_yolu} ({len(tum_yorumlar)} yorum)")
+        print(f" Kaydedildi: {dosya_yolu} ({len(tum_yorumlar)} yorum)")
 
     return dosya_yolu
 
@@ -235,9 +237,9 @@ def hepsiburada_veri_cek(urun_linki, max_sayfa) -> str:
     urun_adi = isim_match.group(1).replace('-', ' ').title() if isim_match else "Hepsiburada Ürünü"
 
     dosya_yolu = f"cekilen_veriler/hepsiburada/hepsiburada_{urun_sku}.json"
-    if os.path.exists(dosya_yolu): print("   ⏭️ Veri zaten mevcut, atlanıyor..."); return
+    if os.path.exists(dosya_yolu): print("    Veri zaten mevcut, atlanıyor..."); return
 
-    print(f"✅ Hepsiburada İşleniyor: {urun_sku}")
+    print(f" Hepsiburada İşleniyor: {urun_sku}")
     gorsel_url = "Görsel Bulunamadı" # Başlangıçta boş
 
     preprocessor = ReviewPreprocessor()
@@ -285,7 +287,7 @@ def hepsiburada_veri_cek(urun_linki, max_sayfa) -> str:
         with open(dosya_yolu, "w", encoding="utf-8") as f:
             json.dump(veri_seti, f, ensure_ascii=False, indent=4)
 
-        print(f"🎉 Kaydedildi: {dosya_yolu} ({len(tum_yorumlar)} yorum)")
+        print(f" Kaydedildi: {dosya_yolu} ({len(tum_yorumlar)} yorum)")
 
     return dosya_yolu
 
@@ -296,9 +298,9 @@ def ciceksepeti_veri_cek(urun_linki, max_sayfa) -> str:
     urun_adi = isim_match.group(1).replace('-', ' ').title() if isim_match else "Çiçeksepeti Ürünü"
 
     dosya_yolu = f"cekilen_veriler/ciceksepeti/ciceksepeti_{urun_kodu}.json"
-    if os.path.exists(dosya_yolu): print("   ⏭️ Veri zaten mevcut, atlanıyor..."); return
+    if os.path.exists(dosya_yolu): print("    Veri zaten mevcut, atlanıyor..."); return
 
-    print(f"✅ Çiçeksepeti İşleniyor: {urun_kodu}")
+    print(f" Çiçeksepeti İşleniyor: {urun_kodu}")
 
     # Görseli yine evrensel metodla alıyoruz!
     gorsel_url = get_og_image(urun_linki)
@@ -359,7 +361,7 @@ def ciceksepeti_veri_cek(urun_linki, max_sayfa) -> str:
         with open(dosya_yolu, "w", encoding="utf-8") as f:
             json.dump(veri_seti, f, ensure_ascii=False, indent=4)
 
-        print(f"🎉 Kaydedildi: {dosya_yolu} ({len(tum_yorumlar)} yorum)")
+        print(f" Kaydedildi: {dosya_yolu} ({len(tum_yorumlar)} yorum)")
 
     return dosya_yolu
 
@@ -371,9 +373,9 @@ def steam_veri_cek(oyun_linki, max_sayfa) -> str:
     urun_adi = isim_match.group(1).replace('_', ' ').title() if isim_match else "Steam Oyunu"
 
     dosya_yolu = f"cekilen_veriler/steam/steam_{app_id}.json"
-    if os.path.exists(dosya_yolu): print("   ⏭️ Veri zaten mevcut, atlanıyor..."); return
+    if os.path.exists(dosya_yolu): print("   ️ Veri zaten mevcut, atlanıyor..."); return
 
-    print(f"✅ Steam İşleniyor: {app_id}")
+    print(f" Steam İşleniyor: {app_id}")
     gorsel_url = f"https://cdn.akamai.steamstatic.com/steam/apps/{app_id}/header.jpg"
 
     preprocessor = ReviewPreprocessor()
@@ -414,12 +416,12 @@ def steam_veri_cek(oyun_linki, max_sayfa) -> str:
         with open(dosya_yolu, "w", encoding="utf-8") as f:
             json.dump(veri_seti, f, ensure_ascii=False, indent=4)
 
-        print(f"🎉 Kaydedildi: {dosya_yolu} ({len(tum_yorumlar)} yorum)")
+        print(f" Kaydedildi: {dosya_yolu} ({len(tum_yorumlar)} yorum)")
 
     return dosya_yolu
 
 def etstur_veri_cek(otel_linki, max_sayfa) -> str:
-    print("🔍 Etstur gizli ID'leri aranıyor...")
+    print(" Etstur gizli ID'leri aranıyor...")
     headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) Chrome/120.0.0.0 Safari/537.36"}
     try:
         html_res = requests.get(otel_linki, headers=headers, impersonate="chrome120", timeout=15, verify=False)
@@ -434,9 +436,9 @@ def etstur_veri_cek(otel_linki, max_sayfa) -> str:
     urun_adi = isim_match.group(1).replace('-', ' ').title() if isim_match else "Etstur Oteli"
 
     dosya_yolu = f"cekilen_veriler/etstur/etstur_{hotel_code}.json"
-    if os.path.exists(dosya_yolu): print("   ⏭️ Veri zaten mevcut, atlanıyor..."); return
+    if os.path.exists(dosya_yolu): print("   ️ Veri zaten mevcut, atlanıyor..."); return
 
-    print(f"✅ Etstur İşleniyor: {hotel_code}")
+    print(f" Etstur İşleniyor: {hotel_code}")
 
     # HTML'i zaten çektik, o halde görseli de evrensel fonksiyonumuzla alalım
     gorsel_url = get_og_image(otel_linki)
@@ -454,7 +456,7 @@ def etstur_veri_cek(otel_linki, max_sayfa) -> str:
 
             data = response.json()
             yorum_listesi = data.get("reviews", [])
-            if not yorum_listesi: yorum_listesi = etstur_yorum_bul(data)
+            if not yorum_listesi: yorum_listesi = etstur_yorum_bul(data) #reviews anahtarı boş [] döndüyse etstur_yorum_bul fonksiyonu ile yorumu yakalar
             if not yorum_listesi: break
 
             for yrm in yorum_listesi:
@@ -476,7 +478,7 @@ def etstur_veri_cek(otel_linki, max_sayfa) -> str:
         with open(dosya_yolu, "w", encoding="utf-8") as f:
             json.dump(veri_seti, f, ensure_ascii=False, indent=4)
 
-        print(f"🎉 Kaydedildi: {dosya_yolu} ({len(tum_yorumlar)} yorum)")
+        print(f" Kaydedildi: {dosya_yolu} ({len(tum_yorumlar)} yorum)")
 
     return dosya_yolu
 
@@ -486,9 +488,9 @@ def airbnb_veri_cek(oda_linki, max_sayfa) -> str:
     oda_id = match.group(1)
 
     dosya_yolu = f"cekilen_veriler/airbnb/airbnb_{oda_id}.json"
-    if os.path.exists(dosya_yolu): print("   ⏭️ Veri zaten mevcut, atlanıyor..."); return
+    if os.path.exists(dosya_yolu): print("   ️ Veri zaten mevcut, atlanıyor..."); return
 
-    print(f"✅ Airbnb İşleniyor: {oda_id}")
+    print(f" Airbnb İşleniyor: {oda_id}")
     gorsel_url = "Görsel Bulunamadı"
 
     headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) Chrome/120.0.0.0 Safari/537.36", "Accept-Language": "tr-TR,tr;q=0.9"}
@@ -529,7 +531,7 @@ def airbnb_veri_cek(oda_linki, max_sayfa) -> str:
         for pic in pic_match:
             if any(x in pic for x in ["/hosting/", "/miso/", "/pro/", "/prohost/"]):
                 gorsel_url = pic
-                print(f"🖼️ Airbnb Ev Görseli Nokta Atışı Çekildi: {gorsel_url}")
+                print(f" Airbnb Ev Görseli Nokta Atışı Çekildi: {gorsel_url}")
                 break
 
     except Exception: return
@@ -576,7 +578,7 @@ def airbnb_veri_cek(oda_linki, max_sayfa) -> str:
         with open(dosya_yolu, "w", encoding="utf-8") as f:
             json.dump(veri_seti, f, ensure_ascii=False, indent=4)
 
-        print(f"🎉 Kaydedildi: {dosya_yolu} ({len(tum_yorumlar)} yorum)")
+        print(f" Kaydedildi: {dosya_yolu} ({len(tum_yorumlar)} yorum)")
 
     return dosya_yolu
 
@@ -584,7 +586,7 @@ def airbnb_veri_cek(oda_linki, max_sayfa) -> str:
 def yemeksepeti_veri_cek(restoran_linki, max_sayfa) -> str:
     match = re.search(r'/restaurant/([a-zA-Z0-9]+)', restoran_linki)
     if not match: return
-    vendor_id = match.group(1)
+    vendor_id = match.group(1)   #urun_id kısmı (benzersiz kısım)
     isim_match = re.search(r'/restaurant/[^/]+/([^/?]+)', restoran_linki)
     if isim_match:
         ham_isim = isim_match.group(1).replace('-', ' ').title()
@@ -594,15 +596,14 @@ def yemeksepeti_veri_cek(restoran_linki, max_sayfa) -> str:
         urun_adi = "Yemeksepeti Restoranı"
 
     dosya_yolu = f"cekilen_veriler/yemeksepeti/yemeksepeti_{vendor_id}.json"
-    if os.path.exists(dosya_yolu): print("   ⏭️ Veri zaten mevcut, atlanıyor..."); return
+    if os.path.exists(dosya_yolu): print("  Veri zaten mevcut, atlanıyor..."); return
 
-    print(f"✅ Yemeksepeti İşleniyor: {vendor_id}")
-    gorsel_url = "Görsel Bulunamadı"
+    print(f" Yemeksepeti İşleniyor: {vendor_id}")
+    gorsel_url = "Görsel Bulunamadı" # bu varsayılan bir değerdir, sistemin çökmesini engeller. Bu sayede gorsel_url alanı jsonda boş kalmaz.
 
     # ==========================================
-    # SİHİR 1: PLAYWRIGHT (KALICI PROFIL İLE GÖRSEL ÇALMA)
-    # ==========================================
-    print("🤖 Playwright KALICI PROFIL ile Yemeksepeti'ne sızıyor...")
+    # PLAYWRIGHT (KALICI PROFIL İLE GÖRSEL ÇALMA)
+    print(" Playwright KALICI PROFIL ile Yemeksepeti'ne sızıyor...")
     try:
         from playwright.sync_api import sync_playwright
 
@@ -614,7 +615,7 @@ def yemeksepeti_veri_cek(restoran_linki, max_sayfa) -> str:
             # Maps'te kullandığımız kusursuz kamuflaj ayarları
             context = p.chromium.launch_persistent_context(
                 user_data_dir=profil_klasoru,
-                headless=True, # DİKKAT: Tarayıcıyı görmek için kesinlikle False olmalı!
+                headless=True, # DİKKAT: Tarayıcı arka planda ben görmeden çalışacağı anlamına geliyor.
                 user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36",
                 locale="tr-TR",
                 ignore_default_args=["--enable-automation"],
@@ -626,7 +627,8 @@ def yemeksepeti_veri_cek(restoran_linki, max_sayfa) -> str:
                 viewport={'width': 1920, 'height': 1200}
             )
 
-            page = context.pages[0] if context.pages else context.new_page()
+            page = context.pages[0] if context.pages else context.new_page() # sekme yönetimi için
+            #  ( launch_persisten_context kullanıldığında genellikle otomatik boş sekme açar eğer açmazsa da bu kontrolle bir açarız.)
 
             try:
                 from playwright_stealth import stealth_sync
@@ -638,41 +640,45 @@ def yemeksepeti_veri_cek(restoran_linki, max_sayfa) -> str:
             try: page.on("response", handle_response)
             except: pass
 
-            # SİHİR 1: HATA FIRLATSA BİLE ÇÖKMEYEN YÜKLEME BLOĞU
+
+        # ========================================================================
+            # HATA FIRLATSA BİLE ÇÖKMEYEN TRY CATCH BLOKLARI
+
             try:
-                # networkidle YERİNE domcontentloaded (Yani sadece iskelet yüklenince dur)
+                # networkidle YERİNE domcontentloaded (Yani sadece sayfa iskelet yüklenmesini bekler.)
                 page.goto(restoran_linki, wait_until="domcontentloaded", timeout=20000)
             except Exception as e:
-                print(f"   ⏳ Sayfa tam susmadı ama biz yine de görseli alacağız...")
+                print(f"    Sayfa tam susmadı ama biz yine de görseli alacağız...")
 
-            # --- POP-UP AVCI ---
+
+            # --- POP-UP AVCISI : SAYFADAKİ ÇEREZLERİ KAPATMAK İÇİN KABUL ET VB. BUTONLARIN YERİNİ BULAN---
             try:
                 kapat_btn = page.locator('button:has-text("Kabul Et"), button:has-text("Anladım")')
                 if kapat_btn.count() > 0 and kapat_btn.first.is_visible():
                     kapat_btn.first.click(timeout=2000)
             except: pass
 
+
             # --- GÖRSEL AVCISI ---
-            logo_selector = "img.vendor-logo__image"
+            logo_selector = "img.vendor-logo__image" #Sitenin html kodları arasında restoran logosu buradadır etiketi için
             try:
                 page.wait_for_selector(logo_selector, timeout=10000)
                 bulunan_gorsel = page.locator(logo_selector).first.get_attribute("src")
                 if bulunan_gorsel:
                     gorsel_url = bulunan_gorsel.replace('\\u002F', '/')
-                    print(f"🖼️ Playwright Yemeksepeti Görselini Kopardı: {gorsel_url}")
+                    print(f" Playwright Yemeksepeti Görselini Kopardı: {gorsel_url}")
             except Exception:
-                print(f"⚠️ Görsel bulunamadı veya ekranda pop-up kaldı.")
+                print(f" Görsel bulunamadı veya ekranda pop-up kaldı.")
 
             page.close()
             context.close()
     except Exception as e:
-        print(f"⚠️ Playwright işlemi sırasında hata: {e}")
+        print(f" Playwright işlemi sırasında hata: {e}")
 
 
     # ==========================================
-    # SİHİR 2: YORUMLARI API'DEN IŞIK HIZINDA ÇEKME
-    # (Bu kısım zaten sende kusursuz çalışıyordu, dokunmuyoruz)
-    # ==========================================
+    # 2. ADIM: YORUMLARI API'DEN ÇEKME
+
     preprocessor = ReviewPreprocessor()
     tum_yorumlar = []
     next_page_key = ""
@@ -705,7 +711,7 @@ def yemeksepeti_veri_cek(restoran_linki, max_sayfa) -> str:
         except Exception: break
 
     # ==========================================
-    # SİHİR 3: BİRLEŞTİR VE KAYDET
+    # 3. ADIM: BİRLEŞTİR VE KAYDET(GORSEL + YORUM)
     # ==========================================
     if tum_yorumlar:
         veri_seti = {"platform": "yemeksepeti", "baslik": urun_adi, "link": restoran_linki, "gorsel_url": gorsel_url, "yorumlar": tum_yorumlar}
@@ -717,7 +723,7 @@ def yemeksepeti_veri_cek(restoran_linki, max_sayfa) -> str:
         with open(dosya_yolu, "w", encoding="utf-8") as f:
             json.dump(veri_seti, f, ensure_ascii=False, indent=4)
 
-        print(f"🎉 Kaydedildi: {dosya_yolu} ({len(tum_yorumlar)} yorum)")
+        print(f" Kaydedildi: {dosya_yolu} ({len(tum_yorumlar)} yorum)")
 
     return dosya_yolu
 
@@ -727,9 +733,9 @@ def trendyol_go_veri_cek(restoran_linki, max_sayfa) -> str:
     vendor_id = match.group(1)
 
     dosya_yolu = f"cekilen_veriler/tygo/tygo_{vendor_id}.json"
-    if os.path.exists(dosya_yolu): print("   ⏭️ Veri zaten mevcut, atlanıyor..."); return
+    if os.path.exists(dosya_yolu): print("   ️ Veri zaten mevcut, atlanıyor..."); return
 
-    print(f"✅ Trendyol Go İşleniyor: {vendor_id}")
+    print(f" Trendyol Go İşleniyor: {vendor_id}")
     gorsel_url = "Görsel Bulunamadı"
     headers_main = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) Chrome/120.0.0.0 Safari/537.36"}
 
@@ -751,9 +757,10 @@ def trendyol_go_veri_cek(restoran_linki, max_sayfa) -> str:
         cdn_match = re.search(r'(https://cdn\.tgoapps\.com/[^"\']+\.(?:jpeg|jpg|png|webp))', html_res.text, re.IGNORECASE)
         if cdn_match:
             gorsel_url = cdn_match.group(1)
-            print(f"🖼️ Trendyol Go Görseli Bulundu: {gorsel_url}")
+            print(f"️ Trendyol Go Görseli Bulundu: {gorsel_url}")
     except Exception:
         urun_adi = "Trendyol Go Restoranı" # Hata olursa varsayılan isim
+
     preprocessor = ReviewPreprocessor()
     tum_yorumlar = []
     headers = {"Accept": "application/json", "Origin": "https://www.trendyol.com", "Referer": restoran_linki}
@@ -779,7 +786,7 @@ def trendyol_go_veri_cek(restoran_linki, max_sayfa) -> str:
         except Exception: break
 
     if tum_yorumlar:
-        veri_seti = {"platform": "tygo", "baslik": urun_adi, "link": restoran_linki, "gorsel_url": gorsel_url, "yorumlar": tum_yorumlar}
+        veri_seti = {"platform": "trendyol-go", "baslik": urun_adi, "link": restoran_linki, "gorsel_url": gorsel_url, "yorumlar": tum_yorumlar}
         # 1. Platforma özel alt klasörü oluştur
         hedef_klasor = "cekilen_veriler/tygo"
         os.makedirs(hedef_klasor, exist_ok=True)
@@ -788,7 +795,7 @@ def trendyol_go_veri_cek(restoran_linki, max_sayfa) -> str:
         with open(dosya_yolu, "w", encoding="utf-8") as f:
             json.dump(veri_seti, f, ensure_ascii=False, indent=4)
 
-        print(f"🎉 Kaydedildi: {dosya_yolu} ({len(tum_yorumlar)} yorum)")
+        print(f" Kaydedildi: {dosya_yolu} ({len(tum_yorumlar)} yorum)")
     return dosya_yolu
 
 def google_maps_veri_cek(mekan_linki, max_kaydirma) -> str:
@@ -801,15 +808,15 @@ def google_maps_veri_cek(mekan_linki, max_kaydirma) -> str:
         urun_id = str(int(time.time()))
 
     dosya_yolu = f"cekilen_veriler/maps/maps_{urun_id}.json"
-    if os.path.exists(dosya_yolu): print("   ⏭️ Veri zaten mevcut, atlanıyor..."); return
+    if os.path.exists(dosya_yolu): print("   ️ Veri zaten mevcut, atlanıyor..."); return
 
-    print(f"✅ Google Maps İşleniyor: {urun_id}")
+    print(f" Google Maps İşleniyor: {urun_id}")
     gorsel_url = "Görsel Bulunamadı"
 
     preprocessor = ReviewPreprocessor()
     tum_yorumlar = []
 
-    print("🤖 Playwright Google Maps'in dinamik labirentine giriyor...")
+    print(" Playwright Google Maps'in dinamik labirentine giriyor...")
     try:
         from playwright.sync_api import sync_playwright
 
@@ -872,11 +879,11 @@ def google_maps_veri_cek(mekan_linki, max_kaydirma) -> str:
 
                 if gorsel_url != "Görsel Bulunamadı":
                     gorsel_url = re.sub(r'=w\d+-h\d+.*', '=w800-h800-k-no', gorsel_url)
-                    print(f"🖼️ Maps Mekan Görseli EKRANDAN Koparıldı: {gorsel_url}")
+                    print(f" Maps Mekan Görseli EKRANDAN Koparıldı: {gorsel_url}")
                 else:
-                    print("⚠️ Maps mekan görseli DOM'da bulunamadı.")
+                    print(" Maps mekan görseli DOM'da bulunamadı.")
             except Exception as e:
-                print(f"⚠️ Görsel çekilirken hata: {e}")
+                print(f" Görsel çekilirken hata: {e}")
 
             # --- SİHİR 2: KURŞUN GEÇİRMEZ SEKME TIKLAYICI ---
             try:
@@ -887,7 +894,7 @@ def google_maps_veri_cek(mekan_linki, max_kaydirma) -> str:
                         if sekme.count() > 0 and sekme.first.is_visible():
                             sekme.first.click(timeout=3000)
                             sekme_bulundu = True
-                            print(f"   👉 Yorumlar sekmesine tıklandı (Taktik 1: {rol}).")
+                            print(f"    Yorumlar sekmesine tıklandı (Taktik 1: {rol}).")
                             break
                     if sekme_bulundu: break
 
@@ -895,7 +902,7 @@ def google_maps_veri_cek(mekan_linki, max_kaydirma) -> str:
                     yedek_sekme = page.locator('button:has-text("Yorumlar"), div[role="tab"]:has-text("Yorumlar")').first
                     if yedek_sekme.count() > 0 and yedek_sekme.is_visible():
                         yedek_sekme.click(timeout=3000)
-                        print("   👉 Yorumlar sekmesine tıklandı (Taktik 2: Yedek Seçici).")
+                        print("    Yorumlar sekmesine tıklandı (Taktik 2: Yedek Seçici).")
                 time.sleep(2)
             except Exception: pass
 
@@ -909,7 +916,7 @@ def google_maps_veri_cek(mekan_linki, max_kaydirma) -> str:
                         if(mainPanel) mainPanel.scrollBy(0, 10000);
                     }''')
                     time.sleep(1.5)
-                    print(f"   ⬇️ Panel kaydırıldı ({i+1}/{max_kaydirma})")
+                    print(f"   Panel kaydırıldı ({i+1}/{max_kaydirma})")
             except Exception: pass
 
             # --- SİHİR 4: VERİLERİ DETAYLI TOPLAMA (İSİM, TARİH, PUAN, METİN) ---
@@ -978,7 +985,7 @@ def google_maps_veri_cek(mekan_linki, max_kaydirma) -> str:
             page.close() # Sekmeyi zorla kapat (takılmayı önler)
             context.close() # Tarayıcıyı kapat
     except Exception as e:
-        print(f"⚠️ Playwright Maps'te bir engele takıldı: {e}")
+        print(f" Playwright Maps'te bir engele takıldı: {e}")
 
     if tum_yorumlar:
         veri_seti = {"platform": "google_maps", "baslik": urun_adi, "link": mekan_linki, "gorsel_url": gorsel_url, "yorumlar": tum_yorumlar}
@@ -990,7 +997,7 @@ def google_maps_veri_cek(mekan_linki, max_kaydirma) -> str:
         with open(dosya_yolu, "w", encoding="utf-8") as f:
             json.dump(veri_seti, f, ensure_ascii=False, indent=4)
 
-        print(f"🎉 Kaydedildi: {dosya_yolu} ({len(tum_yorumlar)} yorum)")
+        print(f" Kaydedildi: {dosya_yolu} ({len(tum_yorumlar)} yorum)")
     return dosya_yolu
 
 # ==========================================
@@ -1042,8 +1049,8 @@ def linkten_veri_cek(url, max_sayfa=5, max_kaydirma=10):
 
         else:
             # Hatalı link durumunda dosya yolu olmadığı için 'None' dönüyoruz
-            return f"❌ Desteklenmeyen veya hatalı link: {url}", None
+            return f" Desteklenmeyen veya hatalı link: {url}", None
 
     except Exception as e:
         # Kod çökerse main.py'nin 'unpack' (iki değişkeni çıkarma) işlemi patlamasın diye 'None' dönüyoruz
-        return f"❌ Kazıma işlemi sırasında kritik bir hata oluştu: {str(e)}", None
+        return f" Kazıma işlemi sırasında kritik bir hata oluştu: {str(e)}", None

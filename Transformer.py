@@ -3,159 +3,195 @@ from uuid import uuid4
 import hashlib
 import os
 import json
+import re
+import urllib.parse
+from typing import Tuple, List, Dict
 
-def process_airbnb_data(raw_json: dict) -> tuple[dict, list[dict]]:
-    bizim_urun_id = str(uuid4())
-    orj_link = raw_json.get("link")
-    if orj_link:
-        link_hash = hashlib.sha256(orj_link.encode("utf-8")).hexdigest()
-    else:
-        link_hash = None
-
-    ham_yorumlar = raw_json.get("yorumlar", [])
-
-    gecerli_puanlar = [y.get("rating") for y in ham_yorumlar if y.get("rating") is not None]
-    hesaplanan_orj_puan = sum(gecerli_puanlar) / len(gecerli_puanlar) if gecerli_puanlar else None
-
-    urun_paket = {
-        "id": bizim_urun_id,
-        "platform":raw_json.get("platform","airbnb"),
-        "urun_adi":raw_json.get("baslik"),
-        "urun_url_orj":orj_link,
-        "urun_url_hash": link_hash, # Gerçek url de hashlib kullanacağız #
-        "image_url": raw_json.get("gorsel_url"),
-        "orj_puan": round(hesaplanan_orj_puan, 1) if hesaplanan_orj_puan else None,
-        "kategori":None,
-        "hesaplanan_puan":None,
-        "guncel_ozet":None,
-        "ozet_embedding":None,
-        "click_count":0,
-        "created_at":datetime.now(),
-        "updated_at":datetime.now(),
-        "like_rate":None
+def extract_platform_product_id(url, platform):
+    """
+    URL'den platformun kendi ürün ID'sini (External ID) ayıklar.
+    Deduplication (tekilleştirme) için hayati önem taşır.
+    """
+    if not url: return "unknown"
+    patterns = {
+        "trendyol": r"-p-(\d+)",
+        "hepsiburada": r"-p[m]?-([A-Za-z0-9]+)",
+        "ciceksepeti": r"-([a-zA-Z0-9]+)(?:\?|/|$)",
+        "steam": r"/app/(\d+)",
+        "airbnb": r"/rooms/(\d+)",
+        "yemeksepeti": r"/restaurant/([a-zA-Z0-9]+)",
+        "trendyol_go": r"(?:-|/)(\d+)(?:/|\?|$)",
+        "etstur": r"etstur\.com/([^/?]+)"  # Etstur'da genelde otel adı ID yerine geçer
     }
 
-    yorumlar_paket = []
+    # Google Maps için URL yapısı çok değişken olduğu için özel kontrol
+    if platform == "maps":
+        match = re.search(r'/place/([^/]+)/', url)
+        return urllib.parse.unquote(match.group(1)) if match else "unknown"
 
+    pattern = patterns.get(platform)
+    if pattern:
+        match = re.search(pattern, url)
+        return match.group(1) if match else "unknown"
+
+    return "unknown"
+
+
+def process_airbnb_data(raw_json: dict) -> tuple[dict, list[dict]]:
+    product_uuid = str(uuid4())
+    orijinal_url = raw_json.get("link", "")
+    platform = "airbnb"
+
+    urun_paket = {
+        "id": product_uuid,
+        "platform": platform,
+        "platform_id": extract_platform_product_id(orijinal_url, platform),
+        "product_name": raw_json.get("baslik"),
+        "image_url": raw_json.get("gorsel_url"),
+        "category": None,
+        "original_url": orijinal_url,
+        "url_hash": hashlib.sha256(orijinal_url.encode('utf-8')).hexdigest() if orijinal_url else None,
+        "status": "active",
+        "click_count": 0,
+        "avg_orj_score": None, # altta hesaplamasını yapıldı(halit-fero)!
+        "avg_model_score": None,
+        "guncel_ozet": None,
+        "created_at": datetime.now(),
+        "last_updated_at": datetime.now()
+    }
+
+    ham_yorumlar = raw_json.get("yorumlar", [])
+    ratings = [y.get("rating") for y in ham_yorumlar if isinstance(y.get("rating"), (int, float))]
+    if ratings:
+        urun_paket["avg_orj_score"] = round(sum(ratings) / len(ratings), 2)
+
+    review_packets = []
     for raw_review in ham_yorumlar:
-
         metadata = {
-            "verilen_puan":raw_review.get("rating"),
-            "misafir_ulkesi": raw_review.get("localizedReviewerLocation"),
+            "rate": raw_review.get("rating"),
+            "misafirin_ulkesi": raw_review.get("localizedReviewerLocation"),
             "konaklama_tipi": raw_review.get("reviewHighlight"),
         }
 
-        tekil_yorum = {
-            "id": str(uuid4()),
-            "urun_id": bizim_urun_id,
-            "yorum_metni":raw_review.get("temiz_metin"),
-            "metadata":metadata,
-            "dinamik_kategori_parcalari":None,
-            "created_at":datetime.now(),
-            "embedding":None,
-        }
-        yorumlar_paket.append(tekil_yorum)
+        review_packets.append({
+            "product_id": product_uuid,
+            "original_rating": raw_review.get("rating"),
+            "predicted_score": None,
+            "raw_text": raw_review.get("comment"),
+            "clean_text": raw_review.get("temiz_metin"),
+            "metadata": metadata,
+            "created_at": datetime.now()
+        })
 
-    return urun_paket,yorumlar_paket
+    return urun_paket, review_packets
 
-def process_ciceksepeti_data(raw_json:dict) -> tuple[dict, list[dict]]:
-    bizim_urun_id = str(uuid4())
-    orj_link = raw_json.get("link")
-    if orj_link:
-        link_hash = hashlib.sha256(orj_link.encode("utf-8")).hexdigest()
-    else:
-        link_hash = None
 
-    ham_yorumlar = raw_json.get("yorumlar", [])
-
-    gecerli_puanlar = [int(y.get("rating")[0])
-                       for y in ham_yorumlar
-                       if y.get("rating") and y.get("rating")[0].isdigit()
-                       ]
-    hesaplanan_orj_puan = sum(gecerli_puanlar) / len(gecerli_puanlar) if gecerli_puanlar else None
+def process_ciceksepeti_data(raw_json: dict) -> tuple[dict, list[dict]]:
+    product_uuid = str(uuid4())
+    orijinal_url = raw_json.get("link", "")
+    platform = "ciceksepeti"
 
     urun_paket = {
-        "id": bizim_urun_id,
-        "platform": raw_json.get("platform", "ciceksepeti"),
-        "urun_adi": raw_json.get("baslik"),
-        "urun_url_orj": orj_link,
-        "urun_url_hash":link_hash,
+        "id": product_uuid,
+        "platform": platform,
+        "platform_id": extract_platform_product_id(orijinal_url, platform),
+        "product_name": raw_json.get("baslik"),
         "image_url": raw_json.get("gorsel_url"),
-        "orj_puan": round(hesaplanan_orj_puan, 1) if hesaplanan_orj_puan else None,
-        "kategori": None,
-        "hesaplanan_orj_puan": None,
-        "guncel_ozet": None,
-        "ozet_embedding": None,
+        "category": None,  # SetFit ile dolacak
+        "original_url": orijinal_url,
+        "url_hash": hashlib.sha256(orijinal_url.encode('utf-8')).hexdigest() if orijinal_url else None,
+        "status": "active",
         "click_count": 0,
+        "avg_orj_score": None,  # Altta hesaplanacak
+        "avg_model_score": None,
+        "guncel_ozet": None,
         "created_at": datetime.now(),
-        "updated_at": datetime.now(),
-        "like_rate": None
+        "last_updated_at": datetime.now()
     }
-
-    yorumlar_paket = []
-
-    for raw_review in ham_yorumlar:
-        tekil_yorum = {
-            "id": str(uuid4()),
-            "urun_id": bizim_urun_id,
-            "yorum_metni":raw_review.get("temiz_metin"),
-            "metadata":None,
-            "created_at":datetime.now(),
-            "dinamik_kategori_parcalari":None,
-            "embedding":None,
-        }
-        yorumlar_paket.append(tekil_yorum)
-
-    return urun_paket,yorumlar_paket
-
-def process_etstur_data(raw_json: dict) -> tuple[dict, list[dict]]:
-    bizim_urun_id = str(uuid4())
-    orj_link = raw_json.get("link")
-    if orj_link:
-        link_hash = hashlib.sha256(orj_link.encode("utf-8")).hexdigest()
-    else:
-        link_hash = None
 
     ham_yorumlar = raw_json.get("yorumlar", [])
 
-    gecerli_puanlar = [
-        round((float(y.get("score")) / 20) * 2) / 2
-        for y in ham_yorumlar
-        if isinstance(y.get("score"), (int, float))
+    # Çiçeksepeti'nde puan "5 Yıldız" şeklinde geldiği için ilk karakteri alıp int'e çeviriyoruz
+    ratings = []
+    for y in ham_yorumlar:
+        puan_str = y.get("puan") or y.get("rating")
+        if puan_str and puan_str[0].isdigit():
+            ratings.append(int(puan_str[0]))
+
+    if ratings:
+        urun_paket["avg_orj_score"] = round(sum(ratings) / len(ratings), 2)
+
+    review_packets = []
+    for raw_review in ham_yorumlar:
+        # Çiçeksepeti'ne özel metadata bilgileri
+        metadata = {
+            "kullanici_adi": raw_review.get("isim"),
+            "yorum_tarihi": raw_review.get("tarih"),
+            "verilen_puan_str": raw_review.get("puan")
+        }
+
+        # Puanı sayısal olarak da review bazlı saklayalım
+        current_rating = None
+        if raw_review.get("puan") and raw_review.get("puan")[0].isdigit():
+            current_rating = int(raw_review.get("puan")[0])
+
+        review_packets.append({
+            "product_id": product_uuid,
+            "original_rating": current_rating,
+            "predicted_score": None,  # NLP modelinden gelecek
+            "raw_text": raw_review.get("orijinal_metin"),  # Scraper'daki ham metin
+            "clean_text": raw_review.get("temiz_metin"),  # Preprocessor'dan geçmiş metin
+            "metadata": metadata,
+            "created_at": datetime.now()
+        })
+
+    return urun_paket, review_packets
+
+
+
+"""
+tuple[dict, list[dict]] örneği:
+(
+  {"id": "...", "urun_adi": "...", ...},      ===========> dict yapısı
+  [ {"id": "...", "yorum_metni": "...", ...}, {"id": "...", ...} ]   ======> list[dict] yapısı
+)
+
+"""
+def process_etstur_data(raw_json: dict) -> tuple[dict, list[dict]]:
+    product_uuid = str(uuid4())           #her calıstırıldıgında tamamen yeni ve bagımsız üretiliyor
+    orijinal_url = raw_json.get("link", "")
+    platform = "etstur"
+
+    urun_paket = {
+        "id": product_uuid,
+        "platform": platform,
+        "platform_id": extract_platform_product_id(orijinal_url, platform),
+        "product_name": raw_json.get("baslik"),
+        "image_url": raw_json.get("gorsel_url"),
+        "category": None,  # SetFit ile dolacak
+        "original_url": orijinal_url,  # Diğerleriyle uyumlu olması için 'orginal' (typo) haliyle bıraktım
+        "url_hash": hashlib.sha256(orijinal_url.encode('utf-8')).hexdigest() if orijinal_url else None,
+        "status": "active",
+        "click_count": 0,
+        "avg_orj_score": None,  # Altta hesaplanacak
+        "avg_model_score": None,
+        "guncel_ozet": None,
+        "created_at": datetime.now(),
+        "last_updated_at": datetime.now()
+    }
+
+    ham_yorumlar = raw_json.get("yorumlar", [])
+
+    # Etstur 100 üzerinden puan verdiği için standardımız olan 5'li sisteme çeviriyoruz (puan / 20)
+    ratings = [float(y.get("score")) / 20 for y in ham_yorumlar if isinstance(y.get("score"), (int, float))
     ]
 
+    if ratings:
+        urun_paket["avg_orj_score"] = round(sum(ratings) / len(ratings), 2)
 
-    if gecerli_puanlar:
-        ham_ortalama = sum(gecerli_puanlar) / len(gecerli_puanlar)
-        hesaplanan_orj_puan = round(ham_ortalama * 2) / 2
-    else:
-        hesaplanan_orj_puan = None
-
-    urun_paket = {
-        "id": bizim_urun_id,
-        "platform": raw_json.get("platform", "etstur"),
-        "urun_adi": raw_json.get("baslik"),
-        "urun_url_orj": orj_link,
-        "urun_url_hash":link_hash,
-        "image_url": raw_json.get("gorsel_url"),
-        "orj_puan": round(hesaplanan_orj_puan, 1) if hesaplanan_orj_puan else None,
-        "kategori": None,
-        "hesaplanan_orj_puan": None,
-        "guncel_ozet": None,
-        "ozet_embedding": None,
-        "click_count": 0,
-        "created_at": datetime.now(),
-        "updated_at": datetime.now(),
-        "like_rate": None
-    }
-
-    yorumlar_paket = []
-
+    review_packets = []
     for raw_review in ham_yorumlar:
-
-        orijinal_score = raw_review.get("score")
-        normalizce_ana_puan = float(orijinal_score) / 20 if isinstance(orijinal_score, (int,float)) else None
-
+        # Etstur'un detaylı alt puanlarını (Temizlik, Hizmet vb.) çekiyoruz
         alt_puanlar_listesi = raw_review.get("ratingTypes") or []
         alt_kategori_puanlari = {
             item.get("name"): (float(item.get("score")) / 2 if isinstance(item.get("score"), (int, float)) else None)
@@ -163,407 +199,397 @@ def process_etstur_data(raw_json: dict) -> tuple[dict, list[dict]]:
         }
 
         metadata = {
-            "verilen_puan":normalizce_ana_puan,
-            "is_recommened":raw_review.get("recommendation"),
-            "guest_type":raw_review.get("guestType"),
-            "oda_tipi":raw_review.get("roomName"),
-            "alt_kategori_puanlari":alt_kategori_puanlari
+            "verilen_puan_100": raw_review.get("score"),
+            "tavsiye_ediyor_mu": raw_review.get("recommendation"),
+            "misafir_tipi": raw_review.get("guestType"),  # Aile, Tek, Çift vb.
+            "oda_tipi": raw_review.get("roomName"),
+            "detaylı_puanlar": alt_kategori_puanlari
         }
 
-        tekil_yorum = {
-            "id": str(uuid4()),
-            "urun_id": bizim_urun_id,
-            "yorum_metni": raw_review.get("temiz_metin"),
+        # Bireysel yorum puanını da 5 üzerinden normalize ederek saklayalım
+        current_rating = float(raw_review.get("score")) / 20 if isinstance(raw_review.get("score"),
+                                                                           (int, float)) else None
+
+        review_packets.append({
+            "product_id": product_uuid,
+            "original_rating": current_rating,
+            "predicted_score": None,  # NLP modelinden gelecek
+            "raw_text": raw_review.get("temiz_metin"),  # Etstur API genelde temiz metin döner
+            "clean_text": raw_review.get("temiz_metin"),
             "metadata": metadata,
-            "created_at": datetime.now(),
-            "dinamik_kategori_parcalari": None,
-            "embedding": None,
-        }
-        yorumlar_paket.append(tekil_yorum)
+            "created_at": datetime.now()
+        })
 
-    return urun_paket, yorumlar_paket
+    return urun_paket, review_packets
 
 def process_hepsiburada_data(raw_json: dict) -> tuple[dict, list[dict]]:
-    bizim_urun_id = str(uuid4())
-    orijinal_link = raw_json.get("link")
-    link_hash = hashlib.sha256(orijinal_link.encode('utf-8')).hexdigest() if orijinal_link else None
-
-    ham_yorumlar = raw_json.get("yorumlar", [])
-
-    gecerli_puanlar = [
-        y.get("star")
-        for y in ham_yorumlar
-        if isinstance(y.get("star"), (int, float))
-    ]
-
-    hesaplanan_orj_puan = sum(gecerli_puanlar) / len(gecerli_puanlar) if gecerli_puanlar else None
+    product_uuid = str(uuid4())
+    orijinal_url = raw_json.get("link", "")
+    platform = "hepsiburada"
 
     urun_paket = {
-        "id": bizim_urun_id,
-        "platform": raw_json.get("platform", "hepsiburada"),
-        "urun_adi": raw_json.get("baslik"),
-        "urun_url_orj": orijinal_link,
-        "urun_url_hash": link_hash,
+        "id": product_uuid,
+        "platform": platform,
+        "platform_id": extract_platform_product_id(orijinal_url, platform),
+        "product_name": raw_json.get("baslik"),
         "image_url": raw_json.get("gorsel_url"),
-        "orj_puan": hesaplanan_orj_puan,
-        "kategori": None,
-        "hesaplanan_puan": None,
-        "guncel_ozet": None,
-        "ozet_embedding": None,
+        "category": None,
+        "original_url": orijinal_url,
+        "url_hash": hashlib.sha256(orijinal_url.encode('utf-8')).hexdigest() if orijinal_url else None,
+        "status": "active",
         "click_count": 0,
+        "avg_orj_score": None,
+        "avg_model_score": None,
+        "guncel_ozet": None,
         "created_at": datetime.now(),
-        "updated_at": datetime.now(),
-        "like_rate": None
+        "last_updated_at": datetime.now()
     }
 
-    yorumlar_paket = []
+    ham_yorumlar = raw_json.get("yorumlar", [])
+    ratings = [y.get("star") for y in ham_yorumlar if isinstance(y.get("star"), (int, float))]
+    if ratings:
+        urun_paket["avg_orj_score"] = round(sum(ratings) / len(ratings), 2)
 
+    review_packets = []
     for raw_review in ham_yorumlar:
         order_info = raw_review.get("order") or {}
         reaction_info = raw_review.get("reactions") or {}
-        media_list = raw_review.get("media") or []
 
         metadata = {
-            "satici_adi":order_info.get("merchantName"),
-            "dogrulanmis_satin_alim":raw_review.get("isPurchaseVerified"),
-            "beden_kalibi":raw_review.get("mould"),
-            "faydali_bulma_sayisi":reaction_info.get("clap", 0),
+            "satici_adi": order_info.get("merchantName"),
+            "dogrulanmis_satin_alim": raw_review.get("isPurchaseVerified"),
+            "beden_kalibi": raw_review.get("mould"),
+            "faydali_bulma_sayisi": reaction_info.get("clap", 0),
         }
 
-        tekil_yorum = {
-            "id": str(uuid4()),
-            "urun_id": bizim_urun_id,
-            "yorum_metni": raw_review.get("temiz_metin"),
+        review_packets.append({
+            "product_id": product_uuid,
+            "original_rating": raw_review.get("star"),
+            "predicted_score": None,
+            "raw_text": raw_review.get("review", {}).get("content", ""), # Scraper yapına göre
+            "clean_text": raw_review.get("temiz_metin"),
             "metadata": metadata,
-            "dinamik_kategori_parcalari": None,
-            "created_at": datetime.now(),
-            "embedding": None,
-        }
-        yorumlar_paket.append(tekil_yorum)
+            "created_at": datetime.now()
+        })
 
-    return urun_paket, yorumlar_paket
+    return urun_paket, review_packets
 
 def process_maps_data(raw_json: dict) -> tuple[dict, list[dict]]:
-    bizim_urun_id = str(uuid4())
-
-    orijinal_link = raw_json.get("link")
-    link_hash = hashlib.sha256(orijinal_link.encode('utf-8')).hexdigest() if orijinal_link else None
-
-    ham_yorumlar = raw_json.get("yorumlar", [])
-
-    gecerli_puanlar = [int(y.get("puan", "")[0])
-                       for y in ham_yorumlar
-                       if y.get("puan") and y.get("puan")[0].isdigit()
-                       ]
-
-    hesaplanan_orj_puan = (sum(gecerli_puanlar) / len(gecerli_puanlar)) if gecerli_puanlar else None
+    product_uuid = str(uuid4())
+    orijinal_url = raw_json.get("link", "")
+    platform = "maps"
 
     urun_paket = {
-        "id": bizim_urun_id,
-        "platform": raw_json.get("platform", "maps"),
-        "urun_adi": raw_json.get("baslik"),
-        "urun_url_orj": orijinal_link,
-        "urun_url_hash": link_hash,
+        "id": product_uuid,
+        "platform": platform,
+        "platform_id": extract_platform_product_id(orijinal_url, platform),
+        "product_name": raw_json.get("baslik"),
         "image_url": raw_json.get("gorsel_url"),
-        "orj_puan": hesaplanan_orj_puan,
-        "kategori": None,
-        "hesaplanan_puan": None,
-        "guncel_ozet": None,
-        "ozet_embedding": None,
+        "category": None,
+        "original_url": orijinal_url,
+        "url_hash": hashlib.sha256(orijinal_url.encode('utf-8')).hexdigest() if orijinal_url else None,
+        "status": "active",
         "click_count": 0,
+        "avg_orj_score": None,
+        "avg_model_score": None,
+        "guncel_ozet": None,
         "created_at": datetime.now(),
-        "updated_at": datetime.now(),
-        "like_rate": None
+        "last_updated_at": datetime.now()
     }
 
-    yorumlar_paket = []
+    ham_yorumlar = raw_json.get("yorumlar", [])
+    ratings = []
+    for y in ham_yorumlar:
+        puan_str = y.get("puan", "")
+        if puan_str and puan_str[0].isdigit():
+            ratings.append(int(puan_str[0]))
 
+    if ratings:
+        urun_paket["avg_orj_score"] = round(sum(ratings) / len(ratings), 2)
+
+    review_packets = []
     for raw_review in ham_yorumlar:
-
-        tekil_yorum = {
-            "id": str(uuid4()),
-            "urun_id": bizim_urun_id,
-            "yorum_metni": raw_review.get("temiz_metin"),
-            "metadata": None,
-            "dinamik_kategori_parcalari": None,
-            "created_at": datetime.now(),
-            "embedding": None,
+        # Maps metadata'sı bazen boş olabilir ama yapıyı bozmamak için tutuyoruz
+        metadata = {
+            "isim": raw_review.get("isim"),
+            "tarih_metni": raw_review.get("tarih"),
+            "ham_puan_metni": raw_review.get("puan")
         }
-        yorumlar_paket.append(tekil_yorum)
 
-    return urun_paket, yorumlar_paket
+        current_rating = None
+        if raw_review.get("puan") and raw_review.get("puan")[0].isdigit():
+            current_rating = int(raw_review.get("puan")[0])
+
+        review_packets.append({
+            "product_id": product_uuid,
+            "original_rating": current_rating,
+            "predicted_score": None,
+            "raw_text": raw_review.get("orijinal_metin"),
+            "clean_text": raw_review.get("temiz_metin"),
+            "metadata": metadata,
+            "created_at": datetime.now()
+        })
+
+    return urun_paket, review_packets
+
 
 def process_steam_data(raw_json: dict) -> tuple[dict, list[dict]]:
-    bizim_urun_id = str(uuid4())
+    product_uuid = str(uuid4())
+    orijinal_url = raw_json.get("link", "")
+    platform = "steam"
 
-    orijinal_link = raw_json.get("link")
-    link_hash = hashlib.sha256(orijinal_link.encode('utf-8')).hexdigest() if orijinal_link else None
+    urun_paket = {
+        "id": product_uuid,
+        "platform": platform,
+        "platform_id": extract_platform_product_id(orijinal_url, platform),
+        "product_name": raw_json.get("baslik"),
+        "image_url": raw_json.get("gorsel_url"),
+        "category": "Oyun",  # Steam her zaman oyun olduğu için statik verebiliriz
+        "original_url": orijinal_url,
+        "url_hash": hashlib.sha256(orijinal_url.encode('utf-8')).hexdigest() if orijinal_url else None,
+        "status": "active",
+        "click_count": 0,
+        "avg_orj_score": None,
+        "avg_model_score": None,
+        "guncel_ozet": None,
+        "created_at": datetime.now(),
+        "last_updated_at": datetime.now()
+    }
 
     ham_yorumlar = raw_json.get("yorumlar", [])
 
+    # Senin zekice kurguladığın oranlama mantığı:
     if ham_yorumlar:
         olumlu_sayisi = sum(1 for y in ham_yorumlar if y.get("voted_up") is True)
         oran = olumlu_sayisi / len(ham_yorumlar)
-        hesaplanan_orj_puan = round((oran * 5) * 2) / 2
+        # Oranı 5'lik sisteme çekip 0.5 katlarına yuvarlıyoruz
+        urun_paket["avg_orj_score"] = round((oran * 5) * 2) / 2
     else:
-        hesaplanan_orj_puan = None
+        urun_paket["avg_orj_score"] = None
 
-    urun_paket = {
-        "id": bizim_urun_id,
-        "platform": raw_json.get("platform", "steam"),
-        "urun_adi": raw_json.get("baslik"),
-        "urun_url_orj": orijinal_link,
-        "urun_url_hash": link_hash,
-        "image_url": raw_json.get("gorsel_url"),
-        "orj_puan": hesaplanan_orj_puan,
-        "kategori": None,
-        "hesaplanan_puan": None,
-        "guncel_ozet": None,
-        "ozet_embedding": None,
-        "click_count": 0,
-        "created_at": datetime.now(),
-        "updated_at": datetime.now(),
-        "like_rate": None
-    }
-
-    yorumlar_paket = []
-
+    review_packets = []
     for raw_review in ham_yorumlar:
         author_info = raw_review.get("author") or {}
 
         metadata = {
+            "voted_up": raw_review.get("voted_up"),  # True/False
             "oynanma_suresi_dakika": author_info.get("playtime_forever"),
+            "faydali_bulma_sayisi": raw_review.get("votes_up", 0)
         }
-        tekil_yorum = {
-            "id": str(uuid4()),
-            "urun_id": bizim_urun_id,
-            "yorum_metni": raw_review.get("temiz_metin"),
-            "metadata": metadata,
-            "dinamik_kategori_parcalari": None,
-            "created_at": datetime.now(),
-            "embedding": None,
-        }
-        yorumlar_paket.append(tekil_yorum)
 
-    return urun_paket, yorumlar_paket
+        # Bireysel yorum puanı Steam'de 5 veya 1 olarak (T/F) tutulabilir
+        individual_rating = 5 if raw_review.get("voted_up") else 1
+
+        review_packets.append({
+            "product_id": product_uuid,
+            "original_rating": individual_rating,
+            "predicted_score": None,
+            "raw_text": raw_review.get("review"),  # Steam API'de yorum genelde 'review' anahtarındadır
+            "clean_text": raw_review.get("temiz_metin"),
+            "metadata": metadata,
+            "created_at": datetime.now()
+        })
+
+    return urun_paket, review_packets
 
 def process_trendyol_data(raw_json:dict) -> tuple[dict, list[dict]]:
-    bizim_urun_id = str(uuid4())
-
-    orijinal_link = raw_json.get("link")
-    link_hash = hashlib.sha256(orijinal_link.encode('utf-8')).hexdigest() if orijinal_link else None
-
-    ham_yorumlar = raw_json.get("yorumlar", [])
-
-    gecerli_puanlar = [
-        y.get("rate")
-        for y in ham_yorumlar
-        if isinstance(y.get("rate"), (int, float))
-    ]
-
-    hesaplanan_orj_puan = sum(gecerli_puanlar) / len(gecerli_puanlar)
+    product_uuid = str(uuid4())
+    orijinal_url = raw_json.get("link","")
+    platform="trendyol"
 
     urun_paket = {
-        "id": bizim_urun_id,
-        "platform": raw_json.get("platform", "trendyol"),
-        "urun_adi": raw_json.get("baslik"),
-        "urun_url_orj": orijinal_link,
-        "urun_url_hash": link_hash,
+        "id": product_uuid,
+        "platform": platform,
+        "platform_id":extract_platform_product_id(orijinal_url, platform),  #bu olmazsa aynı ürünü kazısam bile uuidleri farklı olur
+        "product_name": raw_json.get("baslik"),
         "image_url": raw_json.get("gorsel_url"),
-        "orj_puan": hesaplanan_orj_puan,
-        "kategori": None,
-        "hesaplanan_puan": None,
-        "guncel_ozet": None,
-        "ozet_embedding": None,
+        "category": None, #setfit ile dolacak
+        "original_url": orijinal_url,
+        "url_hash": hashlib.sha256(orijinal_url.encode('utf-8')).hexdigest() if orijinal_url else None,
+        "status":"active",
         "click_count": 0,
+        "avg_orj_score": None,   #aşagıda hesaplanacak
+        "avg_model_score": None, #modelimizin skoru
+        "guncel_ozet": None,
         "created_at": datetime.now(),
-        "updated_at": datetime.now(),
-        "like_rate": None
+        "last_updated_at": datetime.now()
     }
 
-    yorumlar_paket = []
+    ham_yorumlar = raw_json.get("yorumlar", [])
+    ratings = [y.get("rate") for y in ham_yorumlar if isinstance(y.get("rate"), (int, float))]
+    if ratings:
+        urun_paket["avg_orj_score"] = round(sum(ratings) / len(ratings), 2) #vt de decimal(3,2) olarak bekliyoruz.
 
+    review_packets = []
     for raw_review in ham_yorumlar:
-        satici_bilgisi = raw_review.get("seller") or {}
-        medya_dosyasi = raw_review.get("mediaFiles") or []
-
         metadata = {
-            "satici_adi": raw_review.get("name"),
-            "dogrulanmis_alim_mi": raw_review.get("trusted"),
-            "faydali_bulan_sayisi": raw_review.get("likesCount"),
+            "media_files": raw_review.get("mediaFiles"),   #yorum yapan kişinin fotoğraf paylaşıp paylaşmadığı
+            "seller_info": raw_review.get("seller"),
+            "rate": raw_review.get("rate"),
+            "is_trusted": raw_review.get("trusted"),
+            "likesCount": raw_review.get("likesCount"),
         }
 
-        tekil_yorum = {
-            "id": str(uuid4()),
-            "urun_id": bizim_urun_id,
-            "yorum_metni": raw_review.get("temiz_metin"),
+        review_packets.append({
+            "product_id": product_uuid,
+            "original_rating": raw_review.get("rate"),
+            "predicted_score": None,  # NLP modelinden gelecek
+            "raw_text": raw_review.get("metin") or raw_review.get("comment"),  # Scraper'daki ham alan
+            "clean_text": raw_review.get("temiz_metin"),
             "metadata": metadata,
-            "dinamik_kategori_parcalari": None,
-            "created_at": datetime.now(),
-            "embedding": None,
-        }
-        yorumlar_paket.append(tekil_yorum)
+            "created_at": datetime.now()
+        })
 
-    return urun_paket, yorumlar_paket
+    return urun_paket, review_packets
 
-def process_tygo_data(raw_json:dict) -> tuple[dict, list[dict]]:
-    bizim_urun_id = str(uuid4())
+def process_tygo_data(raw_json: dict) -> tuple[dict, list[dict]]:
+    product_uuid = str(uuid4())
+    orijinal_url = raw_json.get("link", "")
+    platform = "trendyol-go"
 
-    orijinal_link = raw_json.get("link")
-    link_hash = hashlib.sha256(orijinal_link.encode('utf-8')).hexdigest() if orijinal_link else None
+    urun_paket = {
+        "id": product_uuid,
+        "platform": platform,
+        "platform_id": extract_platform_product_id(orijinal_url, platform),
+        "product_name": raw_json.get("baslik"),
+        "image_url": raw_json.get("gorsel_url"),
+        "category": "Restoran", # TyGo genelde yemek odaklıdır
+        "original_url": orijinal_url,
+        "url_hash": hashlib.sha256(orijinal_url.encode('utf-8')).hexdigest() if orijinal_url else None,
+        "status": "active",
+        "click_count": 0,
+        "avg_orj_score": None, # Altta hesaplanacak
+        "avg_model_score": None,
+        "guncel_ozet": None,
+        "created_at": datetime.now(),
+        "last_updated_at": datetime.now()
+    }
 
     ham_yorumlar = raw_json.get("yorumlar", [])
-
     tum_yorum_puanlari = []
 
     for y in ham_yorumlar:
         score_dict = y.get("score") or {}
-        puanlar = [v for k, v in score_dict.items() if isinstance(v, (int, float))]
-        if puanlar:
-            yorum_ort = sum(puanlar) / len(puanlar)
-            tum_yorum_puanlari.append(yorum_ort)
+        # Hız, Lezzet, Servis puanlarının ortalamasını alıyoruz
+        sub_puanlar = [v for k, v in score_dict.items() if isinstance(v, (int, float))]
+        if sub_puanlar:
+            tum_yorum_puanlari.append(sum(sub_puanlar) / len(sub_puanlar))
 
-    hesaplanan_orj_puan = sum(tum_yorum_puanlari) / len(tum_yorum_puanlari)if tum_yorum_puanlari else None
+    if tum_yorum_puanlari:
+        urun_paket["avg_orj_score"] = round(sum(tum_yorum_puanlari) / len(tum_yorum_puanlari), 2)
 
-    urun_paket = {
-        "id": bizim_urun_id,
-        "platform": raw_json.get("platform", "trendyol-go"),
-        "urun_adi": raw_json.get("baslik"),
-        "urun_url_orj": orijinal_link,
-        "urun_url_hash": link_hash,
-        "image_url": raw_json.get("gorsel_url"),
-        "orj_puan": hesaplanan_orj_puan,
-        "kategori": None,
-        "hesaplanan_puan": None,
-        "guncel_ozet": None,
-        "ozet_embedding": None,
-        "click_count": 0,
-        "created_at": datetime.now(),
-        "updated_at": datetime.now(),
-        "like_rate": None
-    }
-
-    yorumlar_paket = []
-
+    review_packets = []
     for raw_review in ham_yorumlar:
         order_items = raw_review.get("orderItems") or []
-
         alinan_urunler = [item.get("name") for item in order_items if item.get("name")]
 
         metadata = {
             "siparis_edilen_urunler": alinan_urunler,
-            "teslimat_tipi": raw_review.get("deliveryType")
+            "teslimat_tipi": raw_review.get("deliveryType"),
+            "detayli_puanlar": raw_review.get("score") # Hız:5, Lezzet:4 gibi
         }
 
-        tekil_yorum = {
-            "id": str(uuid4()),
-            "urun_id": bizim_urun_id,
-            "yorum_metni": raw_review.get("temiz_metin"),
+        # Bireysel yorum puanı olarak genel ortalamasını alalım
+        score_dict = raw_review.get("score") or {}
+        puanlar = [v for v in score_dict.values() if isinstance(v, (int, float))]
+        individual_rating = sum(puanlar) / len(puanlar) if puanlar else None
+
+        review_packets.append({
+            "product_id": product_uuid,
+            "original_rating": individual_rating,
+            "predicted_score": None,
+            "raw_text": raw_review.get("comment"),
+            "clean_text": raw_review.get("temiz_metin"),
             "metadata": metadata,
-            "dinamik_kategori_parcalari": None,
-            "created_at": datetime.now(),
-            "embedding": None,
-        }
-        yorumlar_paket.append(tekil_yorum)
+            "created_at": datetime.now()
+        })
 
-    return urun_paket, yorumlar_paket
+    return urun_paket, review_packets
 
 
 def process_yemeksepeti_data(raw_json: dict) -> tuple[dict, list[dict]]:
-    bizim_urun_id = str(uuid4())
-    orijinal_link = raw_json.get("link")
-
-    link_hash = hashlib.sha256(orijinal_link.encode('utf-8')).hexdigest()
-
-    ham_yorumlar = raw_json.get("yorumlar", [])
-
-    tum_yorum_puanlari = []
-    for y in ham_yorumlar:
-        ratings = y.get("ratings", [])
-        overall_score = next((r.get("score") for r in ratings if
-                              r.get("topic") == "overall" and isinstance(r.get("score"), (int, float))), None)
-
-        if overall_score is not None:
-            tum_yorum_puanlari.append(overall_score)
-
-    hesaplanan_orj_puan = sum(tum_yorum_puanlari) / len(tum_yorum_puanlari)if tum_yorum_puanlari else None
+    product_uuid = str(uuid4())
+    orijinal_url = raw_json.get("link", "")
+    platform = "yemeksepeti"
 
     urun_paket = {
-        "id": bizim_urun_id,
-        "platform": raw_json.get("platform", "yemeksepeti"),
-        "urun_adi": raw_json.get("baslik"),
-        "urun_url_orj": orijinal_link,
-        "urun_url_hash": link_hash,
+        "id": product_uuid,
+        "platform": platform,
+        "platform_id": extract_platform_product_id(orijinal_url, platform),
+        "product_name": raw_json.get("baslik"),
         "image_url": raw_json.get("gorsel_url"),
-        "orj_puan": hesaplanan_orj_puan,
-        "kategori": None,
-        "hesaplanan_puan": None,
-        "guncel_ozet": None,
-        "ozet_embedding": None,
+        "category": "Restoran",
+        "original_url": orijinal_url,
+        "url_hash": hashlib.sha256(orijinal_url.encode('utf-8')).hexdigest() if orijinal_url else None,
+        "status": "active",
         "click_count": 0,
+        "avg_orj_score": None,
+        "avg_model_score": None,
+        "guncel_ozet": None,
         "created_at": datetime.now(),
-        "updated_at": datetime.now(),
-        "like_rate": None
+        "last_updated_at": datetime.now()
     }
 
-    yorumlar_paket = []
+    ham_yorumlar = raw_json.get("yorumlar", [])
+    tum_yorum_puanlari = []
 
+    for y in ham_yorumlar:
+        ratings = y.get("ratings", [])
+        overall = next((r.get("score") for r in ratings if r.get("topic") == "overall"), None)
+        if isinstance(overall, (int, float)):
+            tum_yorum_puanlari.append(overall)
+
+    if tum_yorum_puanlari:
+        urun_paket["avg_orj_score"] = round(sum(tum_yorum_puanlari) / len(tum_yorum_puanlari), 2)
+
+    review_packets = []
     for raw_review in ham_yorumlar:
         ratings = raw_review.get("ratings", [])
 
-        # Puanları topic'lere (konulara) göre ayrıştırıyoruz
+        # Detaylı Puanlar
         overall_score = next((r.get("score") for r in ratings if r.get("topic") == "overall"), None)
         food_score = next((r.get("score") for r in ratings if r.get("topic") == "restaurant_food"), None)
         rider_score = next((r.get("score") for r in ratings if r.get("topic") == "rider"), None)
 
-        # Sipariş edilen ürünleri (isimleri) listeleme ve TOPLAM SEPET TUTARINI hesaplama
+        # Sepet Analizi
         product_variations = raw_review.get("productVariations", [])
-        alinan_urunler = []
-        tahmini_sepet_tutari = 0
-
-        for item in product_variations:
-            urun_adi = item.get("defaultTitle")
-            fiyat = item.get("unitPrice", 0)
-
-            if urun_adi:
-                alinan_urunler.append(urun_adi)
-            if isinstance(fiyat, (int, float)):
-                tahmini_sepet_tutari += fiyat
+        alinan_urunler = [item.get("defaultTitle") for item in product_variations if item.get("defaultTitle")]
+        sepet_tutari = sum(
+            item.get("unitPrice", 0) for item in product_variations if isinstance(item.get("unitPrice"), (int, float)))
 
         metadata = {
-            "verilen_puan": overall_score,
             "lezzet_puani": food_score,
-            "kurye_puani": rider_score,  # Kurye performansı NLP için çok değerlidir
-            "siparis_edilen_urunler": alinan_urunler,  # ["Coni Çıtır...", "Tavuk Kanat..."]
-            "tahmini_sepet_tutari": tahmini_sepet_tutari,  # Analitik altını: Örn 1370 TL
+            "kurye_puani": rider_score,  # Lojistik analizi için
+            "siparis_edilen_urunler": alinan_urunler,
+            "tahmini_sepet_tutari": sepet_tutari,
             "faydali_bulan_sayisi": raw_review.get("likeCount", 0),
-            "anonim_mi": raw_review.get("isAnonymous")  # True/False
+            "anonim_mi": raw_review.get("isAnonymous")
         }
 
-        tekil_yorum = {
-            "id": str(uuid4()),
-            "urun_id": bizim_urun_id,
-            "yorum_metni": raw_review.get("temiz_metin") or raw_review.get("text"),
+        review_packets.append({
+            "product_id": product_uuid,
+            "original_rating": overall_score,
+            "predicted_score": None,
+            "raw_text": raw_review.get("text"),  # Scraper'da 'text' olarak geliyor
+            "clean_text": raw_review.get("temiz_metin"),
             "metadata": metadata,
-            "dinamik_kategori_parcalari": None,
-            "embedding": None,
             "created_at": datetime.now()
-        }
-        yorumlar_paket.append(tekil_yorum)
+        })
 
-    return urun_paket, yorumlar_paket
+    return urun_paket, review_packets
 
 
-def donustur_ve_kaydet(ham_json_yolu: str) -> str:
+def donustur_ve_kaydet(ham_json_yolu: str) -> Tuple[Dict, List[Dict]]:
     try:
         with open(ham_json_yolu, 'r', encoding='utf-8') as f:
             raw_data = json.load(f)
     except Exception as e:
-        return f"json okuma hatası ({ham_json_yolu}): {e}"
+        # String döndürmek yerine hata fırlatıyoruz
+        raise Exception(f"JSON okuma hatası ({ham_json_yolu}): {e}")
 
     platform = raw_data.get("platform")
     if not platform:
-        return f"Platform bilgisi bulunamadı: {ham_json_yolu}"
+        raise ValueError(f"Platform bilgisi bulunamadı: {ham_json_yolu}")
 
     hedef_klasor = os.path.join("Transformed_datas",platform)
     os.makedirs(hedef_klasor, exist_ok=True)
@@ -587,7 +613,7 @@ def donustur_ve_kaydet(ham_json_yolu: str) -> str:
     elif platform == "maps":
         urun_paket, yorumlar_paket = process_maps_data(raw_data)
     else:
-        return f"⚠️ Dönüştürücü Hatası: Bilinmeyen platform '{platform}'"
+        return f" Dönüştürücü Hatası: Bilinmeyen platform '{platform}'"
 
 
     temiz_veri = {
@@ -601,7 +627,7 @@ def donustur_ve_kaydet(ham_json_yolu: str) -> str:
     with open(yeni_dosya_yolu, "w", encoding='utf-8') as f:
         json.dump(temiz_veri, f, ensure_ascii=False, indent=4, default=str)
 
-    return f"Temiz veri klasöre kaydedildi: {yeni_dosya_yolu}"
+    return urun_paket, yorumlar_paket
 
 
 

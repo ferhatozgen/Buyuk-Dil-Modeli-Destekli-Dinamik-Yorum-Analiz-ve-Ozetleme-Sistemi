@@ -14,6 +14,39 @@ etstur linkleri
 "https://www.etstur.com/Voyage-Kundu?_gl=1*10fxvef*_up*MQ..*_gs*MQ.."
 
 
+
+
+
+
+DBDE TEST İÇİN FARKLI PLATFORMLARDA KULLANDIGIM LİNKLER:
+"https://www.airbnb.com.tr/rooms/1291862018725960465?check_in=2026-04-24&check_out=2026-04-26&photo_id=2031561735&source_impression_id=p3_1776421392_P3eSj_HzFRRNUtFj&previous_page_section_name=1000",
+    "https://www.ciceksepeti.com/sari-kurdeleli-yesil-vazoda-rengarenk-gerberalar-at5801",
+    "https://www.etstur.com/Spice-Hotel-Spa?check_in=22.04.2026&check_out=25.04.2026&adult_1=1&child_1=0",
+    "https://www.hepsiburada.com/urban-care-rosemary-clove-biberiye-ve-karanfil-suyu-99-5-dogal-ve-saf-150-ml-p-HBCV00006ROFV0",
+    "https://www.trendyol.com/madame-coco/klimali-yastik-beyaz-acik-gri-50x70-cm-p-35312545",
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 steam linkleri
 ""
 ""
