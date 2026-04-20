@@ -83,13 +83,13 @@ function Dashboard() {
 
     return (
         <div className="modern-root">
-            {/* ARKA PLANDAKİ BEYAZ ÇİZGİLER VE IŞIKLAR */}
+
             <div className="bg-grid"></div>
             <div className="bg-glow glow-1"></div>
             <div className="bg-glow glow-2"></div>
 
             <header className="modern-nav">
-                {/* --- HOME SAYFASINDAKİ LOGONUN BİREBİR AYNISI --- */}
+
                 <Link to="/" className="logo-wrap" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center', zIndex: 100 }}>
                     <div className="premium-logo-container">
                         <div className="logo-halo"></div>
