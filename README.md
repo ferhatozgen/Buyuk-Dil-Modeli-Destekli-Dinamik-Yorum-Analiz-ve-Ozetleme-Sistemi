@@ -1,16 +1,22 @@
-# React + Vite
+#  VividAI - Yapay Zeka Destekli Dinamik Yorum Analiz Sistemi
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+VividAI, e-ticaret platformlarındaki kullanıcı yorumlarını Büyük Dil Modelleri (LLM) kullanarak analiz eden ve anlamlı özetler sunan fütüristik bir web platformudur.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+##  Kurulum ve Çalıştırma
 
-## React Compiler
+Projeyi yerel makinenizde çalıştırmak için aşağıdaki adımları sırasıyla takip edin:
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+### 1. Gereksinimler
+Sisteminizde **Node.js** (v14 veya üzeri) yüklü olduğundan emin olun.
 
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+### 2. Projeyi Klonlayın
+Önce repoyu bilgisayarınıza indirin ve frontend klasörüne gidin:
+```bash
+git clone [https://github.com/ferhatozgen/Buyuk-Dil-Modeli-Destekli-Dinamik-Yorum-Analiz-ve-Ozetleme-Sistemi.git](https://github.com/ferhatozgen/Buyuk-Dil-Modeli-Destekli-Dinamik-Yorum-Analiz-ve-Ozetleme-Sistemi.git)
+cd Buyuk-Dil-Modeli-Destekli-Dinamik-Yorum-Analiz-ve-Ozetleme-Sistemi/frontend
+Projenin çalışması için gerekli olan kütüphanelerin (React, Router vb.) yüklenmesi gerekir. Terminale şu komutu yazın:
+npm install
+Geliştirme sunucusunu ayağa kaldırmak için aşağıdaki komutu kullanın:
+npm run dev
