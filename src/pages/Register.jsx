@@ -6,7 +6,7 @@ function Register() {
 
     const handleRegister = (e) => {
         e.preventDefault();
-        // Kayıt işlemleri burada simüle edilebilir
+
         navigate('/login');
     };
 

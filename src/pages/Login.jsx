@@ -11,14 +11,14 @@ function Login() {
 
     return (
         <div className="modern-auth-wrapper">
-            {/* Arka planda yumuşak ışık oyunları */}
+
             <div className="ambient-light light-purple"></div>
             <div className="ambient-light light-blue"></div>
             <div className="bg-mesh"></div>
 
             <div className="auth-container">
                 <div className="auth-visual-side">
-                    {/* Görsel tarafta sanatsal bir dokunuş */}
+
                     <div className="visual-content">
                         <div className="abstract-shape"></div>
 
@@ -58,7 +58,7 @@ function Login() {
 
                         <footer>
                             <span>Hesabınız yok mu?</span>
-                            {/* Link etiketini kullanarak /register sayfasına yönlendiriyoruz */}
+
                             <Link to="/register" className="signup-link">Hemen Kaydolun</Link>
                         </footer>
                     </div>
