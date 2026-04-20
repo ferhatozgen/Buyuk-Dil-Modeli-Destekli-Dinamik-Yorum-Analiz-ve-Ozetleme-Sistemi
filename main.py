@@ -5,12 +5,7 @@ from db_manager import DatabaseManager  # Veritabanı yöneticimizi dahil ediyor
 
 # İşlenecek linklerin listesi (links.txt dosyasından da okutabilirsin)
 link_listesi = [
-    "https://www.google.com/maps/place/ER-VET+VETER%C4%B0NER+KL%C4%B0N%C4%B0K/@40.656557,29.2773589,18.01z/data=!4m6!3m5!1s0x14cae529f19ddcef:0x9f2f6df25573435f!8m2!3d40.6569338!4d29.2771099!16s%2Fg%2F11dfjb8qtw?entry=ttu&g_ep=EgoyMDI2MDQxNC4wIKXMDSoASAFQAw%3D%3D",
-    "https://www.ciceksepeti.com/sari-kurdeleli-yesil-vazoda-rengarenk-gerberalar-at5801",
-    "https://www.yemeksepeti.com/restaurant/vqv7/kofteci-yusuf-vqv7",
-    "https://tgoyemek.com/restoranlar/145132",
-    "https://store.steampowered.com/app/730/CounterStrike_2/"
-
+"etstur.com/Abant-Yayla-Dagevi?check_in=22.04.2026&check_out=25.04.2026&adult_1=1"
 ]
 
 def baslat():

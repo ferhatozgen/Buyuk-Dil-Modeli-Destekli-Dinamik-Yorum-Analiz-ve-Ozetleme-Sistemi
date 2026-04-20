@@ -12,21 +12,19 @@ class DatabaseManager:
             "dbname": os.getenv("DB_NAME"),
             "user": os.getenv("DB_USER"),
             "password": os.getenv("DB_PASSWORD"),
-            "host": "localhost",
-            "port": "5432"
+            "host": os.getenv("DB_HOST"), # <--- BURASI os.getenv OLMALI!
+            "port": os.getenv("DB_PORT"),
+            "sslmode": "require" # Neon gibi bulut servisler için bu ŞART
         }
 
     def save_product_and_reviews(self, urun_paketi, yorum_paketleri):
-        """
-        (products ve reviews tablolarını doldurur.)
-        """
         conn = None
         try:
             conn = psycopg2.connect(**self.config)
             cur = conn.cursor()
 
-            # 1. Products Tablosuna Kayıt (Veya Güncelleme)
-            # dbde 'url_hash' UNIQUE olduğu için ON CONFLICT kullanıyoruz bu sayede eğer aynı link giriliyorsa hata demek yerine o ürünün puanını güncelliyor.
+            # 1. Products Tablosuna Kayıt ve GERÇEK ID'yi Alma
+            # RETURNING id ekledik, çünkü ürün zaten varsa DB'deki gerçek UUID'yi almamız lazım.
             product_query = """
                 INSERT INTO products (
                     id, platform, platform_id, product_name, image_url, 
@@ -35,40 +33,40 @@ class DatabaseManager:
                 ON CONFLICT (url_hash) DO UPDATE SET         
                     avg_orj_score = EXCLUDED.avg_orj_score,
                     last_updated_at = CURRENT_TIMESTAMP,
-                    status = 'active';
+                    status = 'active'
+                RETURNING id; 
             """
 
             cur.execute(product_query, (
-                urun_paketi['id'],
-                urun_paketi['platform'],
-                urun_paketi['platform_id'],
-                urun_paketi['product_name'],
-                urun_paketi['image_url'],
-                urun_paketi['original_url'],
-                urun_paketi['url_hash'],
-                urun_paketi['avg_orj_score'],
-                urun_paketi['status'],
+                urun_paketi['id'], urun_paketi['platform'], urun_paketi['platform_id'],
+                urun_paketi['product_name'], urun_paketi['image_url'],
+                urun_paketi['original_url'], urun_paketi['url_hash'],
+                urun_paketi['avg_orj_score'], urun_paketi['status'],
                 urun_paketi['last_updated_at']
             ))
 
+            # DB'deki gerçek ID'yi yakalıyoruz (UUID uyuşmazlığını çözer)
+            db_actual_id = cur.fetchone()[0]
 
+            # 2. Eski Yorumları Temizleme (Opsiyonel ama Tavsiye Edilir)
+            # Aynı ürünü tekrar çekiyorsak mükerrer yorum olmaması için eskileri siliyoruz.
+            # (İleride yorum bazlı 'id' üzerinden kontrol de yapabilirsin)
+            cur.execute("DELETE FROM reviews WHERE product_id = %s", (db_actual_id,))
 
-            # 2. Reviews Tablosuna Toplu Kayıt
-            # Senin şemanda reviews.id SERIAL olduğu için onu göndermiyoruz, DB kendisi oluşturacak.
+            # 3. Reviews Tablosuna Toplu Kayıt
             review_query = """
                 INSERT INTO reviews (
                     product_id, original_rating, raw_text, clean_text, metadata
                 ) VALUES %s
             """
 
-            # Veriyi executemany yerine daha hızlı olan execute_values formatına getiriyoruz
             review_values = [
                 (
-                    y['product_id'],
+                    db_actual_id,  # Transformer'dan gelen değil, DB'den aldığımız ID'yi kullanıyoruz!
                     y['original_rating'],
                     y['raw_text'],
                     y['clean_text'],
-                    Json(y['metadata'])  # Python dict -> PostgreSQL JSONB
+                    Json(y['metadata'])
                 ) for y in yorum_paketleri
             ]
 
@@ -78,7 +76,7 @@ class DatabaseManager:
             print(f"--- [DB BAŞARILI] --- {urun_paketi['product_name']} kaydedildi.")
 
         except Exception as e:
-            if conn: conn.rollback()   #eğer yorum kaydederken hata çıkarsa yarım yamalak kalmasın diye tüm işlemleri geri alır(ATOMİCİTY)
-            print(f"!!! [DB HATASI] !!! : {e}")
+            if conn: conn.rollback()
+            raise Exception(f"Veritabanı kayıt hatası: {e}")  # Hatayı yukarı (main'e) fırlatıyoruz
         finally:
             if conn: cur.close(); conn.close()

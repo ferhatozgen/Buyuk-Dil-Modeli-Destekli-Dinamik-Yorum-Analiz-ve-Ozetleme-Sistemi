@@ -20,14 +20,25 @@ def extract_platform_product_id(url, platform):
         "steam": r"/app/(\d+)",
         "airbnb": r"/rooms/(\d+)",
         "yemeksepeti": r"/restaurant/([a-zA-Z0-9]+)",
-        "trendyol_go": r"(?:-|/)(\d+)(?:/|\?|$)",
+        "trendyol-go": r"(?:-|/)(\d+)(?:/|\?|$)",
         "etstur": r"etstur\.com/([^/?]+)"  # Etstur'da genelde otel adı ID yerine geçer
     }
 
     # Google Maps için URL yapısı çok değişken olduğu için özel kontrol
-    if platform == "maps":
-        match = re.search(r'/place/([^/]+)/', url)
-        return urllib.parse.unquote(match.group(1)) if match else "unknown"
+    if platform == "google_maps" or platform == "maps":
+        # 1. YOL: Standart /place/ araması
+        match = re.search(r'/place/([^/?]+)', url)
+        if match:
+            return urllib.parse.unquote(match.group(1))
+
+        # 2. YOL (YEDEK): Eğer /place/ yoksa linki parçala ve son anlamlı kısmı al
+        # Örn: http://.../maps.google.com/0 linkinden '0'ı çeker.
+        path_segments = url.strip('/').split('/')
+        if path_segments:
+            last_segment = path_segments[-1]
+            # Eğer son segment çok uzunsa (parametreler varsa) temizleyelim
+            clean_id = last_segment.split('?')[0]
+            return clean_id if clean_id else "unknown"
 
     pattern = patterns.get(platform)
     if pattern:
@@ -610,10 +621,10 @@ def donustur_ve_kaydet(ham_json_yolu: str) -> Tuple[Dict, List[Dict]]:
         urun_paket, yorumlar_paket = process_etstur_data(raw_data)
     elif platform == "airbnb":
         urun_paket, yorumlar_paket = process_airbnb_data(raw_data)
-    elif platform == "maps":
+    elif platform == "google_maps":
         urun_paket, yorumlar_paket = process_maps_data(raw_data)
     else:
-        return f" Dönüştürücü Hatası: Bilinmeyen platform '{platform}'"
+        raise ValueError(f"Dönüştürücü Hatası: Bilinmeyen platform '{platform}'")      #HATA FIRLATMA KISMINDA BEKLENEN TİP YÜZÜNDEN SARI OLMUYOR.
 
 
     temiz_veri = {

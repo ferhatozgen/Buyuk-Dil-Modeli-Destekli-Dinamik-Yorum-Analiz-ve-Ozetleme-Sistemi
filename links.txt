@@ -26,6 +26,18 @@ DBDE TEST İÇİN FARKLI PLATFORMLARDA KULLANDIGIM LİNKLER:
     "https://www.trendyol.com/madame-coco/klimali-yastik-beyaz-acik-gri-50x70-cm-p-35312545",
 
 
+"https://www.ciceksepeti.com/sari-kurdeleli-yesil-vazoda-rengarenk-gerberalar-at5801",
+    "https://www.yemeksepeti.com/restaurant/vqv7/kofteci-yusuf-vqv7",
+    "https://tgoyemek.com/restoranlar/145132",
+    "https://store.steampowered.com/app/730/CounterStrike_2/",
+    "https://www.etstur.com/Spice-Hotel-Spa?check_in=22.04.2026&check_out=25.04.2026&adult_1=1&child_1=0",
+    "https://www.hepsiburada.com/urban-care-rosemary-clove-biberiye-ve-karanfil-suyu-99-5-dogal-ve-saf-150-ml-p-HBCV00006ROFV0",
+    "https://www.trendyol.com/madame-coco/klimali-yastik-beyaz-acik-gri-50x70-cm-p-35312545"
+    "https://www.google.com/maps/place/ER-VET+VETER%C4%B0NER+KL%C4%B0N%C4%B0K/@40.656557,29.2773589,18.01z/data=!4m6!3m5!1s0x14cae529f19ddcef:0x9f2f6df25573435f!8m2!3d40.6569338!4d29.2771099!16s%2Fg%2F11dfjb8qtw?entry=ttu&g_ep=EgoyMDI2MDQxNC4wIKXMDSoASAFQAw%3D%3D",
+
+
+"https://www.google.com/maps/place/Beyda+Unlu+Mam%C3%BClleri/@40.6529001,29.2634287,17z/data=!4m6!3m5!1s0x14cafbfaff7c5bf3:0xe54986dcfa477f77!8m2!3d40.6544191!4d29.2635233!16s%2Fg%2F11fn628mtg?entry=ttu&g_ep=EgoyMDI2MDQxNS4wIKXMDSoASAFQAw%3D%3D",
+"https://tgoyemek.com/restoranlar/126650"
 
 
 

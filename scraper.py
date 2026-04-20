@@ -178,7 +178,7 @@ def airbnb_yorum_bul(json_verisi):
 # ==========================================
 # 3. PLATFORM FONKSİYONLARI
 # ==========================================
-def trendyol_veri_cek(urun_linki, max_sayfa) -> str:
+def trendyol_veri_cek(urun_linki, max_sayfa) -> str | None:
     match = re.search(r'-p-(\d+)', urun_linki)
     if not match: return
     urun_id = match.group(1)
@@ -186,7 +186,7 @@ def trendyol_veri_cek(urun_linki, max_sayfa) -> str:
     urun_adi = isim_match.group(1).replace('-', ' ').title() if isim_match else "Trendyol Ürünü"
 
     dosya_yolu = f"cekilen_veriler/trendyol/trendyol_{urun_id}.json"
-    if os.path.exists(dosya_yolu): print("   Veri zaten mevcut, atlanıyor..."); return
+    if os.path.exists(dosya_yolu): print("   Veri zaten mevcut, atlanıyor..."); return dosya_yolu
 
     print(f" Trendyol İşleniyor: {urun_id}")
     gorsel_url = get_og_image(urun_linki)
@@ -226,10 +226,12 @@ def trendyol_veri_cek(urun_linki, max_sayfa) -> str:
             json.dump(veri_seti, f, ensure_ascii=False, indent=4)
 
         print(f" Kaydedildi: {dosya_yolu} ({len(tum_yorumlar)} yorum)")
+        return dosya_yolu
+    else:
+        print(f"   ⚠️ Uyarı: {urun_id} için yorum bulunamadı, dosya oluşturulmadı.")
+        return None  # Hata/Boş durumu - main.py bunu görünce Transform'a geçmeyecek
 
-    return dosya_yolu
-
-def hepsiburada_veri_cek(urun_linki, max_sayfa) -> str:
+def hepsiburada_veri_cek(urun_linki, max_sayfa) -> str | None:
     match = re.search(r'-p[m]?-([A-Za-z0-9]+)', urun_linki)
     if not match: return
     urun_sku = match.group(1).upper()
@@ -237,7 +239,7 @@ def hepsiburada_veri_cek(urun_linki, max_sayfa) -> str:
     urun_adi = isim_match.group(1).replace('-', ' ').title() if isim_match else "Hepsiburada Ürünü"
 
     dosya_yolu = f"cekilen_veriler/hepsiburada/hepsiburada_{urun_sku}.json"
-    if os.path.exists(dosya_yolu): print("    Veri zaten mevcut, atlanıyor..."); return
+    if os.path.exists(dosya_yolu): print("    Veri zaten mevcut, atlanıyor..."); return dosya_yolu
 
     print(f" Hepsiburada İşleniyor: {urun_sku}")
     gorsel_url = "Görsel Bulunamadı" # Başlangıçta boş
@@ -288,17 +290,19 @@ def hepsiburada_veri_cek(urun_linki, max_sayfa) -> str:
             json.dump(veri_seti, f, ensure_ascii=False, indent=4)
 
         print(f" Kaydedildi: {dosya_yolu} ({len(tum_yorumlar)} yorum)")
+        return dosya_yolu
+    else:
+        print(f"   ⚠️ Uyarı: {urun_sku} için yorum bulunamadı, dosya oluşturulmadı.")
+        return None  # Hata/Boş durumu - main.py bunu görünce Transform'a geçmeyecek
 
-    return dosya_yolu
-
-def ciceksepeti_veri_cek(urun_linki, max_sayfa) -> str:
+def ciceksepeti_veri_cek(urun_linki, max_sayfa) -> str | None:
     match_code = re.search(r'-([a-zA-Z0-9]+)(?:\?|/|$)', urun_linki)
     urun_kodu = match_code.group(1).lower() if match_code else str(int(time.time()))
     isim_match = re.search(r'/([^/]+)-[a-zA-Z0-9]+(?:\?|/|$)', urun_linki)
     urun_adi = isim_match.group(1).replace('-', ' ').title() if isim_match else "Çiçeksepeti Ürünü"
 
     dosya_yolu = f"cekilen_veriler/ciceksepeti/ciceksepeti_{urun_kodu}.json"
-    if os.path.exists(dosya_yolu): print("    Veri zaten mevcut, atlanıyor..."); return
+    if os.path.exists(dosya_yolu): print("    Veri zaten mevcut, atlanıyor..."); return dosya_yolu
 
     print(f" Çiçeksepeti İşleniyor: {urun_kodu}")
 
@@ -362,10 +366,12 @@ def ciceksepeti_veri_cek(urun_linki, max_sayfa) -> str:
             json.dump(veri_seti, f, ensure_ascii=False, indent=4)
 
         print(f" Kaydedildi: {dosya_yolu} ({len(tum_yorumlar)} yorum)")
+        return dosya_yolu
+    else:
+        print(f"   ⚠️ Uyarı: {urun_kodu} için yorum bulunamadı, dosya oluşturulmadı.")
+        return None  # Hata/Boş durumu - main.py bunu görünce Transform'a geçmeyecek
 
-    return dosya_yolu
-
-def steam_veri_cek(oyun_linki, max_sayfa) -> str:
+def steam_veri_cek(oyun_linki, max_sayfa) -> str | None:
     match = re.search(r'/app/(\d+)', oyun_linki)
     if not match: return
     app_id = match.group(1)
@@ -373,7 +379,7 @@ def steam_veri_cek(oyun_linki, max_sayfa) -> str:
     urun_adi = isim_match.group(1).replace('_', ' ').title() if isim_match else "Steam Oyunu"
 
     dosya_yolu = f"cekilen_veriler/steam/steam_{app_id}.json"
-    if os.path.exists(dosya_yolu): print("   ️ Veri zaten mevcut, atlanıyor..."); return
+    if os.path.exists(dosya_yolu): print("   ️ Veri zaten mevcut, atlanıyor..."); return dosya_yolu
 
     print(f" Steam İşleniyor: {app_id}")
     gorsel_url = f"https://cdn.akamai.steamstatic.com/steam/apps/{app_id}/header.jpg"
@@ -417,10 +423,12 @@ def steam_veri_cek(oyun_linki, max_sayfa) -> str:
             json.dump(veri_seti, f, ensure_ascii=False, indent=4)
 
         print(f" Kaydedildi: {dosya_yolu} ({len(tum_yorumlar)} yorum)")
+        return dosya_yolu
+    else:
+        print(f"   ⚠️ Uyarı: {app_id} için yorum bulunamadı, dosya oluşturulmadı.")
+        return None  # Hata/Boş durumu - main.py bunu görünce Transform'a geçmeyecek
 
-    return dosya_yolu
-
-def etstur_veri_cek(otel_linki, max_sayfa) -> str:
+def etstur_veri_cek(otel_linki, max_sayfa) -> str | None:
     print(" Etstur gizli ID'leri aranıyor...")
     headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) Chrome/120.0.0.0 Safari/537.36"}
     try:
@@ -436,7 +444,7 @@ def etstur_veri_cek(otel_linki, max_sayfa) -> str:
     urun_adi = isim_match.group(1).replace('-', ' ').title() if isim_match else "Etstur Oteli"
 
     dosya_yolu = f"cekilen_veriler/etstur/etstur_{hotel_code}.json"
-    if os.path.exists(dosya_yolu): print("   ️ Veri zaten mevcut, atlanıyor..."); return
+    if os.path.exists(dosya_yolu): print("   ️ Veri zaten mevcut, atlanıyor..."); return dosya_yolu
 
     print(f" Etstur İşleniyor: {hotel_code}")
 
@@ -479,16 +487,18 @@ def etstur_veri_cek(otel_linki, max_sayfa) -> str:
             json.dump(veri_seti, f, ensure_ascii=False, indent=4)
 
         print(f" Kaydedildi: {dosya_yolu} ({len(tum_yorumlar)} yorum)")
+        return dosya_yolu
+    else:
+        print(f"   ⚠️ Uyarı: {urun_adi} için yorum bulunamadı, dosya oluşturulmadı.")
+        return None  # Hata/Boş durumu - main.py bunu görünce Transform'a geçmeyecek
 
-    return dosya_yolu
-
-def airbnb_veri_cek(oda_linki, max_sayfa) -> str:
+def airbnb_veri_cek(oda_linki, max_sayfa) -> str | None:
     match = re.search(r'/rooms/(\d+)', oda_linki)
     if not match: return
     oda_id = match.group(1)
 
     dosya_yolu = f"cekilen_veriler/airbnb/airbnb_{oda_id}.json"
-    if os.path.exists(dosya_yolu): print("   ️ Veri zaten mevcut, atlanıyor..."); return
+    if os.path.exists(dosya_yolu): print("   ️ Veri zaten mevcut, atlanıyor..."); return dosya_yolu
 
     print(f" Airbnb İşleniyor: {oda_id}")
     gorsel_url = "Görsel Bulunamadı"
@@ -579,106 +589,105 @@ def airbnb_veri_cek(oda_linki, max_sayfa) -> str:
             json.dump(veri_seti, f, ensure_ascii=False, indent=4)
 
         print(f" Kaydedildi: {dosya_yolu} ({len(tum_yorumlar)} yorum)")
+        return dosya_yolu
+    else:
+        print(f"   ⚠️ Uyarı: {oda_id} için yorum bulunamadı, dosya oluşturulmadı.")
+        return None  # Hata/Boş durumu - main.py bunu görünce Transform'a geçmeyecek
 
-    return dosya_yolu
 
-
-def yemeksepeti_veri_cek(restoran_linki, max_sayfa) -> str:
+def yemeksepeti_veri_cek(restoran_linki, max_sayfa) -> str | None:
     match = re.search(r'/restaurant/([a-zA-Z0-9]+)', restoran_linki)
-    if not match: return
-    vendor_id = match.group(1)   #urun_id kısmı (benzersiz kısım)
+    if not match: return None
+
+    vendor_id = match.group(1)
     isim_match = re.search(r'/restaurant/[^/]+/([^/?]+)', restoran_linki)
     if isim_match:
         ham_isim = isim_match.group(1).replace('-', ' ').title()
-        # İsmin sonundaki satıcı ID'sini temizle
         urun_adi = ham_isim.replace(f" {vendor_id.title()}", "").strip()
     else:
         urun_adi = "Yemeksepeti Restoranı"
 
     dosya_yolu = f"cekilen_veriler/yemeksepeti/yemeksepeti_{vendor_id}.json"
-    if os.path.exists(dosya_yolu): print("  Veri zaten mevcut, atlanıyor..."); return
+    if os.path.exists(dosya_yolu):
+        print(f"   ⏭ Veri zaten mevcut, mevcut dosya kullanılıyor...")
+        return dosya_yolu
 
     print(f" Yemeksepeti İşleniyor: {vendor_id}")
-    gorsel_url = "Görsel Bulunamadı" # bu varsayılan bir değerdir, sistemin çökmesini engeller. Bu sayede gorsel_url alanı jsonda boş kalmaz.
+    gorsel_url = "Görsel Bulunamadı"
 
     # ==========================================
-    # PLAYWRIGHT (KALICI PROFIL İLE GÖRSEL ÇALMA)
-    print(" Playwright KALICI PROFIL ile Yemeksepeti'ne sızıyor...")
+    # PLAYWRIGHT (GÖRSEL ÇALMA OPERASYONU)
+    # ==========================================
     try:
         from playwright.sync_api import sync_playwright
 
-        # Yemeksepeti için ayrı bir çerez klasörü oluşturuyoruz
         profil_klasoru = os.path.join(os.getcwd(), "saved_ys_profile")
         os.makedirs(profil_klasoru, exist_ok=True)
 
         with sync_playwright() as p:
-            # Maps'te kullandığımız kusursuz kamuflaj ayarları
             context = p.chromium.launch_persistent_context(
                 user_data_dir=profil_klasoru,
-                headless=True, # DİKKAT: Tarayıcı arka planda ben görmeden çalışacağı anlamına geliyor.
-                user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36",
+                headless=True,  # Debug için False yapabilirsin
+                user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
                 locale="tr-TR",
                 ignore_default_args=["--enable-automation"],
-                args=[
-                    "--disable-blink-features=AutomationControlled",
-                    "--no-sandbox"
-                    "--headless=new "
-                ],
+                args=["--disable-blink-features=AutomationControlled", "--no-sandbox"],
                 viewport={'width': 1920, 'height': 1200}
             )
 
-            page = context.pages[0] if context.pages else context.new_page() # sekme yönetimi için
-            #  ( launch_persisten_context kullanıldığında genellikle otomatik boş sekme açar eğer açmazsa da bu kontrolle bir açarız.)
+            page = context.pages[0] if context.pages else context.new_page()
 
+            # Sayfaya gidiş
             try:
-                from playwright_stealth import stealth_sync
-                stealth_sync(page)
-            except Exception:
-                pass
-
-            # Eğer kendi yazdığınız handle_response fonksiyonunu kullanıyorsanız kalsın:
-            try: page.on("response", handle_response)
-            except: pass
-
-
-        # ========================================================================
-            # HATA FIRLATSA BİLE ÇÖKMEYEN TRY CATCH BLOKLARI
-
-            try:
-                # networkidle YERİNE domcontentloaded (Yani sadece sayfa iskelet yüklenmesini bekler.)
-                page.goto(restoran_linki, wait_until="domcontentloaded", timeout=20000)
+                page.goto(restoran_linki, wait_until="domcontentloaded", timeout=25000)
+                # Çerez vb. kapatıcı
+                kapat_btn = page.locator(
+                    'button:has-text("Kabul Et"), button:has-text("Anladım"), button:has-text("Kapat")')
+                if kapat_btn.count() > 0:
+                    kapat_btn.first.click(timeout=3000)
             except Exception as e:
-                print(f"    Sayfa tam susmadı ama biz yine de görseli alacağız...")
+                print(f"   [Uyarı] Sayfa tam durulmadı: {e}")
 
+            # --- GÖRSEL AVCISI (AKILLI ARAMA) ---
+            page.mouse.wheel(0, 500)
+            time.sleep(3)
 
-            # --- POP-UP AVCISI : SAYFADAKİ ÇEREZLERİ KAPATMAK İÇİN KABUL ET VB. BUTONLARIN YERİNİ BULAN---
             try:
-                kapat_btn = page.locator('button:has-text("Kabul Et"), button:has-text("Anladım")')
-                if kapat_btn.count() > 0 and kapat_btn.first.is_visible():
-                    kapat_btn.first.click(timeout=2000)
-            except: pass
+                # JavaScript ile DOM içinde logo/vendor içeren resimleri tara
+                bulunan_resim = page.evaluate('''() => {
+                    const images = Array.from(document.querySelectorAll('img'));
+                    const logo = images.find(img => {
+                        const src = img.src.toLowerCase();
+                        const alt = img.alt.toLowerCase();
+                        return src.includes('deliveryhero') || src.includes('logo') || alt.includes('logo');
+                    });
+                    return logo ? (logo.src || logo.dataset.src) : null;
+                }''')
 
+                if bulunan_resim:
+                    if bulunan_resim.startswith("//"):
+                        bulunan_resim = "https:" + bulunan_resim
+                    gorsel_url = bulunan_resim.replace('\\u002F', '/')
+                    print(f" ✅ Görsel Yakalandı: {gorsel_url}")
+                else:
+                    # B Planı: Klasik seçici
+                    element = page.locator("img[data-testid='vendor-logo'], img.vendor-logo__image").first
+                    if element.count() > 0:
+                        gorsel_url = element.get_attribute("src") or element.get_attribute("data-src")
+                        print(f" ✅ Görsel (B Planı) Yakalandı: {gorsel_url}")
 
-            # --- GÖRSEL AVCISI ---
-            logo_selector = "img.vendor-logo__image" #Sitenin html kodları arasında restoran logosu buradadır etiketi için
-            try:
-                page.wait_for_selector(logo_selector, timeout=10000)
-                bulunan_gorsel = page.locator(logo_selector).first.get_attribute("src")
-                if bulunan_gorsel:
-                    gorsel_url = bulunan_gorsel.replace('\\u002F', '/')
-                    print(f" Playwright Yemeksepeti Görselini Kopardı: {gorsel_url}")
-            except Exception:
-                print(f" Görsel bulunamadı veya ekranda pop-up kaldı.")
+            except Exception as img_err:
+                print(f"   [Hata] Görsel aranırken sorun oluştu: {img_err}")
 
             page.close()
             context.close()
-    except Exception as e:
-        print(f" Playwright işlemi sırasında hata: {e}")
 
+    except Exception as py_err:
+        print(f" ❌ Playwright ana işlem hatası: {py_err}")
 
     # ==========================================
-    # 2. ADIM: YORUMLARI API'DEN ÇEKME
-
+    # API'DEN YORUMLARI ÇEKME
+    # ==========================================
     preprocessor = ReviewPreprocessor()
     tum_yorumlar = []
     next_page_key = ""
@@ -694,7 +703,6 @@ def yemeksepeti_veri_cek(restoran_linki, max_sayfa) -> str:
 
             data = res.json()
             yorum_listesi = data.get("data", [])
-            if not yorum_listesi: yorum_listesi = yemeksepeti_yorum_bul(data)
             if not yorum_listesi: break
 
             for yrm in yorum_listesi:
@@ -704,36 +712,32 @@ def yemeksepeti_veri_cek(restoran_linki, max_sayfa) -> str:
                     yrm["temiz_metin"] = temiz_metin
                     tum_yorumlar.append(yrm)
 
-            yeni_next_page_key = data.get("pageKey")
-            if not yeni_next_page_key or yeni_next_page_key == next_page_key: break
-            next_page_key = yeni_next_page_key
+            next_page_key = data.get("pageKey")
+            if not next_page_key: break
             time.sleep(0.5)
-        except Exception: break
+        except:
+            break
 
-    # ==========================================
-    # 3. ADIM: BİRLEŞTİR VE KAYDET(GORSEL + YORUM)
-    # ==========================================
     if tum_yorumlar:
-        veri_seti = {"platform": "yemeksepeti", "baslik": urun_adi, "link": restoran_linki, "gorsel_url": gorsel_url, "yorumlar": tum_yorumlar}
-        # 1. Platforma özel alt klasörü oluştur
-        hedef_klasor = "cekilen_veriler/yemeksepeti"
-        os.makedirs(hedef_klasor, exist_ok=True)
-
-        # 2. Dosyayı kaydet
+        veri_seti = {"platform": "yemeksepeti", "baslik": urun_adi, "link": restoran_linki, "gorsel_url": gorsel_url,
+                     "yorumlar": tum_yorumlar}
+        os.makedirs("cekilen_veriler/yemeksepeti", exist_ok=True)
         with open(dosya_yolu, "w", encoding="utf-8") as f:
             json.dump(veri_seti, f, ensure_ascii=False, indent=4)
-
         print(f" Kaydedildi: {dosya_yolu} ({len(tum_yorumlar)} yorum)")
+        return dosya_yolu
 
-    return dosya_yolu
+    return None
 
-def trendyol_go_veri_cek(restoran_linki, max_sayfa) -> str:
+def trendyol_go_veri_cek(restoran_linki, max_sayfa) -> str | None:
     match = re.search(r'(?:-|/)(\d+)(?:/|\?|$)', restoran_linki)
     if not match: return
     vendor_id = match.group(1)
 
     dosya_yolu = f"cekilen_veriler/tygo/tygo_{vendor_id}.json"
-    if os.path.exists(dosya_yolu): print("   ️ Veri zaten mevcut, atlanıyor..."); return
+    if os.path.exists(dosya_yolu):
+        print("   ️ Veri zaten mevcut, atlanıyor...");
+        return dosya_yolu
 
     print(f" Trendyol Go İşleniyor: {vendor_id}")
     gorsel_url = "Görsel Bulunamadı"
@@ -796,9 +800,12 @@ def trendyol_go_veri_cek(restoran_linki, max_sayfa) -> str:
             json.dump(veri_seti, f, ensure_ascii=False, indent=4)
 
         print(f" Kaydedildi: {dosya_yolu} ({len(tum_yorumlar)} yorum)")
-    return dosya_yolu
+        return dosya_yolu
+    else:
+        print(f"   ⚠️ Uyarı: {vendor_id} için yorum bulunamadı, dosya oluşturulmadı.")
+        return None  # Hata/Boş durumu - main.py bunu görünce Transform'a geçmeyecek
 
-def google_maps_veri_cek(mekan_linki, max_kaydirma) -> str:
+def google_maps_veri_cek(mekan_linki, max_kaydirma) -> str | None:
     match = re.search(r'/place/([^/]+)/', mekan_linki)
     if match:
         urun_adi = urllib.parse.unquote(match.group(1)).replace('+', ' ').title()
@@ -808,7 +815,7 @@ def google_maps_veri_cek(mekan_linki, max_kaydirma) -> str:
         urun_id = str(int(time.time()))
 
     dosya_yolu = f"cekilen_veriler/maps/maps_{urun_id}.json"
-    if os.path.exists(dosya_yolu): print("   ️ Veri zaten mevcut, atlanıyor..."); return
+    if os.path.exists(dosya_yolu): print("   ️ Veri zaten mevcut, atlanıyor..."); return dosya_yolu
 
     print(f" Google Maps İşleniyor: {urun_id}")
     gorsel_url = "Görsel Bulunamadı"
@@ -998,7 +1005,10 @@ def google_maps_veri_cek(mekan_linki, max_kaydirma) -> str:
             json.dump(veri_seti, f, ensure_ascii=False, indent=4)
 
         print(f" Kaydedildi: {dosya_yolu} ({len(tum_yorumlar)} yorum)")
-    return dosya_yolu
+        return dosya_yolu
+    else:
+        print(f"   ⚠️ Uyarı: {urun_id} için yorum bulunamadı, dosya oluşturulmadı.")
+        return None  # Hata/Boş durumu - main.py bunu görünce Transform'a geçmeyecek
 
 # ==========================================
 # 4. EVRENSEL YÖNLENDİRİCİ (ANA MOTOR)
