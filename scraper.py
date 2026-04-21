@@ -632,68 +632,79 @@ def yemeksepeti_veri_cek(restoran_linki, max_sayfa) -> str:
     print("🤖 Playwright KALICI PROFIL ile Yemeksepeti'ne sızıyor...")
     try:
         from playwright.sync_api import sync_playwright
+        from playwright_stealth import Stealth  # 1. YENİ İÇE AKTARMA ŞEKLİ
 
-        # Yemeksepeti için ayrı bir çerez klasörü oluşturuyoruz
         profil_klasoru = os.path.join(os.getcwd(), "saved_ys_profile")
         os.makedirs(profil_klasoru, exist_ok=True)
 
-        with sync_playwright() as p:
-            # Maps'te kullandığımız kusursuz kamuflaj ayarları
+        # 2. ZIRHI EN BAŞTAN TÜM SİSTEME GİYDİRİYORUZ
+        with Stealth().use_sync(sync_playwright()) as p:
             context = p.chromium.launch_persistent_context(
                 user_data_dir=profil_klasoru,
-                headless=True, # DİKKAT: Tarayıcıyı görmek için kesinlikle False olmalı!
-                user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36",
+                headless=False,  # Yemeksepeti Datadome'u için mecburen False
+                user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
                 locale="tr-TR",
                 ignore_default_args=["--enable-automation"],
-                args=[
-                    "--disable-blink-features=AutomationControlled",
-                    "--no-sandbox"
-                    "--headless=new "
-                ],
-                viewport={'width': 1920, 'height': 1200}
+                args=["--disable-blink-features=AutomationControlled", "--no-sandbox"],
+                viewport={'width': 1600, 'height': 900}
             )
 
             page = context.pages[0] if context.pages else context.new_page()
 
-            try:
-                from playwright_stealth import stealth_sync
-                stealth_sync(page)
-            except Exception:
-                pass
+            # stealth_sync(page) SATIRINI SİLDİK! Artık her şey otomatik gizli.
 
-            # Eğer kendi yazdığınız handle_response fonksiyonunu kullanıyorsanız kalsın:
-            try: page.on("response", handle_response)
-            except: pass
-
-            # SİHİR 1: HATA FIRLATSA BİLE ÇÖKMEYEN YÜKLEME BLOĞU
+            # Sayfaya gidiş
             try:
-                # networkidle YERİNE domcontentloaded (Yani sadece iskelet yüklenince dur)
-                page.goto(restoran_linki, wait_until="domcontentloaded", timeout=20000)
+                page.goto(restoran_linki, wait_until="domcontentloaded", timeout=90000)
+
+                print("   ⏳ Sayfa yüklendi. Captcha/Güvenlik ekranı varsa çözmeniz için 90 saniye bekleniyor...")
+
+                # AKILLI BEKLEME: 90 Saniye boyunca görselin ekrana düşmesini bekler
+                page.wait_for_selector("img[data-testid='vendor-logo'], img.vendor-logo__image", timeout=90000)
+
+                # Çerez vb. kapatıcı
+                kapat_btn = page.locator(
+                    'button:has-text("Kabul Et"), button:has-text("Anladım"), button:has-text("Kapat")')
+                if kapat_btn.count() > 0:
+                    kapat_btn.first.click(timeout=3000)
+
             except Exception as e:
-                print(f"   ⏳ Sayfa tam susmadı ama biz yine de görseli alacağız...")
+                print(f"   [Uyarı] 90 saniye içinde Captcha çözülemedi veya görsel yüklenemedi: {e}")
 
-            # --- POP-UP AVCI ---
-            try:
-                kapat_btn = page.locator('button:has-text("Kabul Et"), button:has-text("Anladım")')
-                if kapat_btn.count() > 0 and kapat_btn.first.is_visible():
-                    kapat_btn.first.click(timeout=2000)
-            except: pass
+            # --- GÖRSEL AVCISI (AKILLI ARAMA) ---
+            page.mouse.wheel(0, 500)
+            time.sleep(1.5)
 
-            # --- GÖRSEL AVCISI ---
-            logo_selector = "img.vendor-logo__image"
             try:
-                page.wait_for_selector(logo_selector, timeout=100000)
-                bulunan_gorsel = page.locator(logo_selector).first.get_attribute("src")
-                if bulunan_gorsel:
-                    gorsel_url = bulunan_gorsel.replace('\\u002F', '/')
-                    print(f"🖼️ Playwright Yemeksepeti Görselini Kopardı: {gorsel_url}")
-            except Exception:
-                print(f"⚠️ Görsel bulunamadı veya ekranda pop-up kaldı.")
+                bulunan_resim = page.evaluate('''() => {
+                    const images = Array.from(document.querySelectorAll('img'));
+                    const logo = images.find(img => {
+                        const src = img.src.toLowerCase();
+                        const alt = img.alt.toLowerCase();
+                        return src.includes('deliveryhero') || src.includes('logo') || alt.includes('logo');
+                    });
+                    return logo ? (logo.src || logo.dataset.src) : null;
+                }''')
+
+                if bulunan_resim:
+                    if bulunan_resim.startswith("//"):
+                        bulunan_resim = "https:" + bulunan_resim
+                    gorsel_url = bulunan_resim.replace('\\u002F', '/')
+                    print(f" ✅ Görsel Yakalandı: {gorsel_url}")
+                else:
+                    element = page.locator("img[data-testid='vendor-logo'], img.vendor-logo__image").first
+                    if element.count() > 0:
+                        gorsel_url = element.get_attribute("src") or element.get_attribute("data-src")
+                        print(f" ✅ Görsel (B Planı) Yakalandı: {gorsel_url}")
+
+            except Exception as img_err:
+                print(f"   [Hata] Görsel aranırken sorun oluştu: {img_err}")
 
             page.close()
             context.close()
-    except Exception as e:
-        print(f"⚠️ Playwright işlemi sırasında hata: {e}")
+
+    except Exception as py_err:
+        print(f" ❌ Playwright ana işlem hatası: {py_err}")
 
 
     # ==========================================

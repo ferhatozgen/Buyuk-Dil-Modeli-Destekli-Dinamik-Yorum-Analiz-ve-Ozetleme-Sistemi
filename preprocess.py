@@ -9,7 +9,7 @@ from pathlib import Path
 # ==========================================
 def yorum_metnini_bul(yorum):
     """Farklı API'lerden gelen karmaşık JSON formatlarındaki asıl yorum metnini otomatik bulur."""
-    if isinstance(yorum, str):
+    if isinstance(yorum, str):  #eğer olurda bir gün ben bu fonksiyonu kullanırsam string bir değer verdiğimde çalışsın diye yazdım
         return yorum
 
     olasi_anahtarlar = ["metin", "comment", "review", "text", "customerDescription", "comments", "reviewText", "content"]
@@ -23,7 +23,7 @@ def yorum_metnini_bul(yorum):
         # 2. Aşama: Bulunamazsa, sözlükteki en uzun metni (string) yorum olarak kabul et
         string_degerler = [v for v in yorum.values() if isinstance(v, str) and len(v) > 5]
         if string_degerler:
-            return max(string_degerler, key=len)
+            return max(string_degerler, key=len)   #key=len kullanımı
 
     return ""
 
@@ -43,8 +43,8 @@ class ReviewPreprocessor:
                 with open(path, "r", encoding="utf-8") as f:
                     return json.load(f)
             except Exception as e:
-                print(f"⚠️ {filename} okunamadı: {e}")
-        return default_type()
+                print(f" {filename} okunamadı: {e}")
+        return default_type()    #bu şekilde  default_type dondurme sebebimiz yüklenemez ve beklediğimiz çıktıyı vermezse boş o nitelikte döndürsünki hata almayalım
 
     # --- ALT TEMİZLİK MODÜLLERİ ---
     def lowercase_turkish(self, text):
@@ -59,8 +59,8 @@ class ReviewPreprocessor:
         return text
 
     def remove_keysmash(self, text):
-        vowels_pattern = r'[aeıioöuü]{3,}'
-        consonants_pattern = r'[bcçdfgğhjklmnprsştvyz]{4,}'
+        vowels_pattern = r'[aeıioöuü]{3,}'  # 3 veya daha fazla ardışık sesli harf var mı
+        consonants_pattern = r'[bcçdfgğhjklmnprsştvyz]{4,}' # 4 veya daha fazla ardışık sessiz harf var mı
         words = text.split()
         clean_words = [w for w in words if not (re.search(vowels_pattern, w) or re.search(consonants_pattern, w))]
         return " ".join(clean_words)
@@ -76,12 +76,12 @@ class ReviewPreprocessor:
         if not self.bad_words: return text
         for bad_word in self.bad_words:
             pattern = r'\b' + re.escape(bad_word) + r'\b'
-            text = re.sub(pattern, '', text, flags=re.IGNORECASE)
+            text = re.sub(pattern, '', text, flags=re.IGNORECASE)#re.IGNORECASE:büyük küçük harf farkını yok say
         return text
 
     # --- ANA PIPELINE (Boru Hattı) ---
-    def clean_text(self, text, platform="general"):
-        if not isinstance(text, str) or not text.strip():
+    def clean_text(self, text, platform="general"):     #bu yapı scability(genişletilebilirlik) sağlaması için
+        if not isinstance(text, str) or not text.strip():     #eğer gelen veri str yapıda değilse direkt geç(None olabilir)
             return ""
 
         # 1. URL, HTML ve Emojileri Sil
@@ -115,7 +115,7 @@ def process_all_data():
     )
 
     if not os.path.exists(ANA_KLASOR):
-        print(f"❌ '{ANA_KLASOR}' klasörü bulunamadı! Önce scraper.py'yi çalıştırın.")
+        print(f" '{ANA_KLASOR}' klasörü bulunamadı! Önce scraper.py'yi çalıştırın.")
         return
 
     # Tüm platform klasörlerini gez
@@ -155,10 +155,10 @@ def process_all_data():
                         if temizlenen_veriler:
                             with open(hedef_dosya, "w", encoding="utf-8") as f:
                                 json.dump(temizlenen_veriler, f, ensure_ascii=False, indent=4)
-                            print(f"✅ Temizlendi: {platform_adi} -> {dosya_adi} ({len(temizlenen_veriler)} nitelikli yorum)")
+                            print(f" Temizlendi: {platform_adi} -> {dosya_adi} ({len(temizlenen_veriler)} nitelikli yorum)")
 
                     except Exception as e:
-                        print(f"❌ Hata ({dosya_adi}): {e}")
+                        print(f" Hata ({dosya_adi}): {e}")
 
 if __name__ == "__main__":
     print("🚀 Veri Ön İşleme (Pre-processing) Başlıyor...\n")

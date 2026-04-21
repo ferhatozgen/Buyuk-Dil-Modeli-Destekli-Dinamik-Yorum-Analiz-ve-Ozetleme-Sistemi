@@ -1,7 +1,10 @@
 .venv/
+myenv/
 google_otomasyon_profili/
 __pycache__/
 saved_maps_profile/
 saved_ys_profile/
 cekilen_veriler/
 Transformed_datas/
+notes.md
+.env
