@@ -213,9 +213,9 @@ function Home() {
                 <section id="features" className="feature-section" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                     <div className="section-head">
                         <div className="section-tag">Nasıl Çalışır?</div>
-                        <h2>3 Adımda İçgörüye Ulaş</h2>
+                        <h2>3 Adımda Sonuca Ulaş</h2>
                         <p style={{ marginTop: '10px', color: 'var(--muted)' }}>
-                            YorumNet, karmaşık verileri saniyeler içinde sizin için kristalize eder.
+                            VividAİ, karmaşık verileri saniyeler içinde sizin için analiz eder.
                         </p>
                     </div>
 
@@ -248,7 +248,7 @@ function Home() {
                     </div>
                     <div style={{ maxWidth: '800px', margin: '0 auto', display: 'flex', flexDirection: 'column', gap: '15px' }}>
                         {[
-                            { q: "Hangi platformları destekliyor?", a: "Trendyol, Amazon, Steam, Airbnb ve Google Maps dahil 20+ platformu destekliyoruz." },
+                            { q: "Hangi platformları destekliyor?", a: "Trendyol, Amazon, Steam, Airbnb ve Google Maps dahil 10+ platformu destekliyoruz." },
                             { q: "Yorumları nasıl analiz ediyorsunuz?", a: "En güncel Büyük Dil Modellerini (LLM) kullanarak metinlerdeki anlam ve duygu tonunu ayrıştırıyoruz." },
                             { q: "Veriler gerçek zamanlı mı?", a: "Evet, siz linki yapıştırdığınız an platformdaki en güncel yorumlar taranır." }
                         ].map((item, index) => (
@@ -274,7 +274,7 @@ function Home() {
                                 <span className="gradient-text">hazır mısın?</span>
                             </h2>
                             <p className="cta-subtext">
-                                Binlerce kullanıcı deneyimini saniyeler içinde kristalize edin.
+                                Binlerce kullanıcı deneyimini saniyeler içinde analiz edin.
                                 Karmaşayı netliğe dönüştürmek için sadece bir adım kaldı.
                             </p>
 
@@ -296,7 +296,7 @@ function Home() {
             </main>
 
             <footer style={{ textAlign: 'center', padding: '60px 0', opacity: 0.4 }}>
-                © 2026 YorumNet - Smart Review Engine
+                © 2026 VividAİ - Smart Review Engine
             </footer>
         </div>
     );
