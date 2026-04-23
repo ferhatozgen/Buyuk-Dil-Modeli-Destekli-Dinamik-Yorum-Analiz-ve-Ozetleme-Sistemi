@@ -5,6 +5,7 @@ from db_manager import DatabaseManager  # Veritabanı yöneticimizi dahil ediyor
 
 # İşlenecek linklerin listesi (links.txt dosyasından da okutabilirsin)
 link_listesi = [
+
 ]
 
 def baslat():

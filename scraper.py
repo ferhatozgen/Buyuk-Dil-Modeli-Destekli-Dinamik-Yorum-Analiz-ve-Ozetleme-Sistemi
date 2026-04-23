@@ -1,17 +1,42 @@
 from bs4 import BeautifulSoup
 from curl_cffi import requests
 from pathlib import Path
+from langdetect import detect
 import urllib.parse
 import json
-import time
 import os
 import re
 import emoji
 import base64
 
+import urllib.parse
+import time
 # ==========================================
 # 1. VERİ TEMİZLEME SINIFI (PREPROCESSOR)
 # ==========================================
+def kaliteli_yorum_mu(temiz_metin, gorulen_yorumlar_seti, min_kelime=4):
+    """
+    Yorumun veritabanına girmeye hak kazanıp kazanmadığını test eder.
+    True dönerse yorum kalitelidir, False dönerse çöptür.
+    """
+    # 1. Kelime Sayısı Filtresi
+    if len(temiz_metin.split()) < min_kelime:
+        return False
+
+    # 2. Tekrar Eden (Duplicate) Yorum Filtresi
+    if temiz_metin in gorulen_yorumlar_seti:
+        return False
+
+    # 3. Yabancı Dil Filtresi
+    try:
+        if detect(temiz_metin) != 'tr':
+            return False
+    except:
+        return False # Dil anlaşılamayacak kadar bozuksa direkt ele
+
+    # Bütün zorlu testleri geçtiyse onay ver
+    return True
+
 class ReviewPreprocessor:
     def __init__(self, typo_file="duzeltmeler.json", bad_words_file="bad_words.json"):
         self.typo_mapping = self._load_json(typo_file, dict)
@@ -194,9 +219,17 @@ def trendyol_veri_cek(urun_linki, max_sayfa) -> str:
 
     preprocessor = ReviewPreprocessor()
     tum_yorumlar = []
+    gorulen_yorumlar = set() # Tekrar kontrolü için hafıza
+    MAX_YORUM_SINIRI = 500   # Hedef limit
+
     headers = {"Accept": "application/json", "Origin": "https://www.trendyol.com", "Referer": urun_linki}
 
     for sayfa in range(max_sayfa):
+        # HEDEF KONTROLÜ
+        if len(tum_yorumlar) >= MAX_YORUM_SINIRI:
+            print(f" 🎯 Hedeflenen {MAX_YORUM_SINIRI} kaliteli yoruma ulaşıldı.")
+            break
+
         api_url = f"https://apigw.trendyol.com/discovery-storefront-trproductgw-service/api/review-read/product-reviews/detailed?channelId=1&contentId={urun_id}&page={sayfa}"
         try:
             res = requests.get(api_url, headers=headers, impersonate="chrome120", timeout=10, verify=False)
@@ -206,29 +239,34 @@ def trendyol_veri_cek(urun_linki, max_sayfa) -> str:
             if not yorum_listesi: break
 
             for yrm in yorum_listesi:
+                # İÇ DÖNGÜ KONTROLÜ
+                if len(tum_yorumlar) >= MAX_YORUM_SINIRI:
+                    break
+
                 ham_metin = yorum_metnini_bul(yrm)
                 temiz_metin = preprocessor.clean_text(ham_metin, "trendyol")
-                if len(temiz_metin) >= 3:
-                    yrm["temiz_metin"] = temiz_metin # Orijinal JSON'a temiz metni ekliyoruz
+
+                # KALİTE KONTROL
+                if kaliteli_yorum_mu(temiz_metin, gorulen_yorumlar):
+                    gorulen_yorumlar.add(temiz_metin)
+                    yrm["temiz_metin"] = temiz_metin
                     tum_yorumlar.append(yrm)
+
             time.sleep(0.5)
         except Exception: break
 
     if tum_yorumlar:
         veri_seti = {"platform": "trendyol", "baslik": urun_adi, "link": urun_linki, "gorsel_url": gorsel_url, "yorumlar": tum_yorumlar}
 
-        # 1. Platforma özel alt klasörü oluştur
         hedef_klasor = "cekilen_veriler/trendyol"
         os.makedirs(hedef_klasor, exist_ok=True)
 
-        # 2. Dosyayı kaydet
         with open(dosya_yolu, "w", encoding="utf-8") as f:
             json.dump(veri_seti, f, ensure_ascii=False, indent=4)
 
         print(f"🎉 Kaydedildi: {dosya_yolu} ({len(tum_yorumlar)} yorum)")
         return dosya_yolu
     else:
-        # EĞER YORUM BULUNAMADIYSA VE DOSYA OLUŞTURULMADIYSA UYARI VER VE NONE DÖNDÜR
         print(f"⚠️ Bu üründe çekilecek yorum bulunamadı: {urun_adi}")
         return None
 
@@ -249,9 +287,14 @@ def hepsiburada_veri_cek(urun_linki, max_sayfa) -> str:
 
     preprocessor = ReviewPreprocessor()
     tum_yorumlar = []
+    gorulen_yorumlar = set() # Tekrar kontrolü için hafıza
+    MAX_YORUM_SINIRI = 500   # Limitimiz
     headers = {"Accept": "application/json", "Origin": "https://www.hepsiburada.com", "Referer": urun_linki}
 
     for sayfa in range(max_sayfa):
+        if len(tum_yorumlar) >= MAX_YORUM_SINIRI:
+            print(f" 🎯 Hedeflenen {MAX_YORUM_SINIRI} kaliteli yoruma ulaşıldı.")
+            break
         offset = sayfa * 20
         api_url = f"https://user-content-gw-hermes.hepsiburada.com/queryapi/v2/ApprovedUserContents?sku={urun_sku}&from={offset}&size=20"
         try:
@@ -271,12 +314,15 @@ def hepsiburada_veri_cek(urun_linki, max_sayfa) -> str:
                     gorsel_url = img_raw.replace("{size}", "500") # {size} yerine 500 piksel yazıyoruz
 
             for yrm in yorum_listesi:
-                # SİHİR 2: Dedektifi iptal ettik, metni tam yerinden (review -> content) alıyoruz
-                ham_metin = yrm.get("review", {}).get("content", "")
+                if len(tum_yorumlar) >= MAX_YORUM_SINIRI:
+                    break
 
+                ham_metin = yrm.get("review", {}).get("content", "")
                 temiz_metin = preprocessor.clean_text(ham_metin, "hepsiburada")
-                if len(temiz_metin) >= 3:
-                    yrm["temiz_metin"] = temiz_metin # Orijinal JSON'a temiz metni ekliyoruz
+
+                if kaliteli_yorum_mu(temiz_metin, gorulen_yorumlar):
+                    gorulen_yorumlar.add(temiz_metin) # Bir daha gelirse diye hafızaya kazı
+                    yrm["temiz_metin"] = temiz_metin
                     tum_yorumlar.append(yrm)
             time.sleep(1)
         except Exception: break
@@ -311,10 +357,9 @@ def ciceksepeti_veri_cek(urun_linki, max_sayfa) -> str:
 
     print(f"✅ Çiçeksepeti İşleniyor: {urun_kodu}")
 
-    # Görseli yine evrensel metodla alıyoruz!
     gorsel_url = get_og_image(urun_linki)
-
     headers_main = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) Chrome/120.0.0.0 Safari/537.36"}
+
     try:
         res = requests.get(urun_linki, headers=headers_main, impersonate="chrome120", timeout=15, verify=False)
         if res.status_code != 200: return
@@ -325,9 +370,17 @@ def ciceksepeti_veri_cek(urun_linki, max_sayfa) -> str:
 
     preprocessor = ReviewPreprocessor()
     tum_yorumlar = []
+    gorulen_yorumlar = set() # Tekrar kontrolü
+    MAX_YORUM_SINIRI = 500   # Hedef limit
+
     api_headers = {"X-Requested-With": "XMLHttpRequest", "User-Agent": headers_main["User-Agent"]}
 
     for sayfa in range(1, max_sayfa + 1):
+        # HEDEF KONTROLÜ
+        if len(tum_yorumlar) >= MAX_YORUM_SINIRI:
+            print(f" 🎯 Hedeflenen {MAX_YORUM_SINIRI} kaliteli yoruma ulaşıldı.")
+            break
+
         api_url = f"https://www.ciceksepeti.com/Review/GetReviews?productId={gercek_urun_id}&page={sayfa}"
         try:
             response = requests.get(api_url, headers=api_headers, impersonate="chrome120", timeout=10, verify=False)
@@ -338,12 +391,18 @@ def ciceksepeti_veri_cek(urun_linki, max_sayfa) -> str:
             if not yorum_kutulari: break
 
             for kutu in yorum_kutulari:
+                # İÇ DÖNGÜ KONTROLÜ
+                if len(tum_yorumlar) >= MAX_YORUM_SINIRI:
+                    break
+
                 metin_span = kutu.find("span", class_="js-review-detail")
                 ham_metin = metin_span.get("data-value", "").strip() if metin_span else ""
-
                 temiz_metin = preprocessor.clean_text(ham_metin, "ciceksepeti")
-                if len(temiz_metin) >= 3:
-                    # Orijinal metni ve yapıyı korumak için sözlük oluşturuyoruz
+
+                # KALİTE KONTROL
+                if kaliteli_yorum_mu(temiz_metin, gorulen_yorumlar):
+                    gorulen_yorumlar.add(temiz_metin)
+
                     isim_p = kutu.find("p", class_="js-review-name")
                     tarih_p = kutu.find("p", class_="js-review-date")
                     yildiz_alani = kutu.find("div", class_="js-review-stars")
@@ -362,11 +421,10 @@ def ciceksepeti_veri_cek(urun_linki, max_sayfa) -> str:
 
     if tum_yorumlar:
         veri_seti = {"platform": "ciceksepeti", "baslik": urun_adi, "link": urun_linki, "gorsel_url": gorsel_url, "yorumlar": tum_yorumlar}
-        # 1. Platforma özel alt klasörü oluştur
+
         hedef_klasor = "cekilen_veriler/ciceksepeti"
         os.makedirs(hedef_klasor, exist_ok=True)
 
-        # 2. Dosyayı kaydet
         with open(dosya_yolu, "w", encoding="utf-8") as f:
             json.dump(veri_seti, f, ensure_ascii=False, indent=4)
 
@@ -393,9 +451,16 @@ def steam_veri_cek(oyun_linki, max_sayfa) -> str:
 
     preprocessor = ReviewPreprocessor()
     tum_yorumlar = []
+    gorulen_yorumlar = set() # Tekrar kontrolü
+    MAX_YORUM_SINIRI = 500   # Hedef limit
     cursor = "*"
 
     for sayfa in range(max_sayfa):
+        # HEDEF KONTROLÜ
+        if len(tum_yorumlar) >= MAX_YORUM_SINIRI:
+            print(f" 🎯 Hedeflenen {MAX_YORUM_SINIRI} kaliteli yoruma ulaşıldı.")
+            break
+
         encoded_cursor = urllib.parse.quote(cursor)
         api_url = f"https://store.steampowered.com/appreviews/{app_id}?json=1&language=turkish&filter=recent&num_per_page=100&cursor={encoded_cursor}"
         try:
@@ -407,10 +472,17 @@ def steam_veri_cek(oyun_linki, max_sayfa) -> str:
             if not yorum_listesi: break
 
             for yrm in yorum_listesi:
+                # İÇ DÖNGÜ KONTROLÜ
+                if len(tum_yorumlar) >= MAX_YORUM_SINIRI:
+                    break
+
                 ham_metin = yorum_metnini_bul(yrm)
                 temiz_metin = preprocessor.clean_text(ham_metin, "steam")
-                if len(temiz_metin) >= 3:
-                    yrm["temiz_metin"] = temiz_metin # Orijinal JSON'a temiz metni ekliyoruz
+
+                # KALİTE KONTROL
+                if kaliteli_yorum_mu(temiz_metin, gorulen_yorumlar):
+                    gorulen_yorumlar.add(temiz_metin)
+                    yrm["temiz_metin"] = temiz_metin
                     tum_yorumlar.append(yrm)
 
             yeni_cursor = data.get("cursor")
@@ -421,11 +493,10 @@ def steam_veri_cek(oyun_linki, max_sayfa) -> str:
 
     if tum_yorumlar:
         veri_seti = {"platform": "steam", "baslik": urun_adi, "link": oyun_linki, "gorsel_url": gorsel_url, "yorumlar": tum_yorumlar}
-        # 1. Platforma özel alt klasörü oluştur
+
         hedef_klasor = "cekilen_veriler/steam"
         os.makedirs(hedef_klasor, exist_ok=True)
 
-        # 2. Dosyayı kaydet
         with open(dosya_yolu, "w", encoding="utf-8") as f:
             json.dump(veri_seti, f, ensure_ascii=False, indent=4)
 
@@ -447,6 +518,7 @@ def etstur_veri_cek(otel_linki, max_sayfa) -> str:
         hotel_code = hotel_code_match.group(1)
         hotel_id = hotel_id_match.group(1)
     except Exception: return
+
     isim_match = re.search(r'etstur\.com/([^/?]+)', otel_linki)
     urun_adi = isim_match.group(1).replace('-', ' ').title() if isim_match else "Etstur Oteli"
 
@@ -457,15 +529,22 @@ def etstur_veri_cek(otel_linki, max_sayfa) -> str:
 
     print(f"✅ Etstur İşleniyor: {hotel_code}")
 
-    # HTML'i zaten çektik, o halde görseli de evrensel fonksiyonumuzla alalım
     gorsel_url = get_og_image(otel_linki)
 
     preprocessor = ReviewPreprocessor()
     tum_yorumlar = []
+    gorulen_yorumlar = set() # Tekrar kontrolü için hafıza
+    MAX_YORUM_SINIRI = 500   # Hedef limit
+
     api_url = "https://www.etstur.com/services/api/review"
     api_headers = {"Content-Type": "application/json", "Origin": "https://www.etstur.com", "Referer": otel_linki}
 
     for sayfa in range(max_sayfa):
+        # DIŞ KONTROL
+        if len(tum_yorumlar) >= MAX_YORUM_SINIRI:
+            print(f" 🎯 Hedeflenen {MAX_YORUM_SINIRI} kaliteli yoruma ulaşıldı.")
+            break
+
         payload = {"hotelCode": hotel_code, "hotelId": hotel_id, "offset": sayfa, "sort": "BOOKING_DESC", "period": "", "categoryType": "OVERALL", "searchText": ""}
         try:
             response = requests.post(api_url, headers=api_headers, json=payload, impersonate="chrome120", timeout=15, verify=False)
@@ -477,21 +556,28 @@ def etstur_veri_cek(otel_linki, max_sayfa) -> str:
             if not yorum_listesi: break
 
             for yrm in yorum_listesi:
+                # İÇ KONTROL
+                if len(tum_yorumlar) >= MAX_YORUM_SINIRI:
+                    break
+
                 ham_metin = yorum_metnini_bul(yrm)
                 temiz_metin = preprocessor.clean_text(ham_metin, "etstur")
-                if len(temiz_metin) >= 3:
-                    yrm["temiz_metin"] = temiz_metin # Orijinal yoruma temiz metni gömüyoruz
+
+                # KALİTE KONTROL
+                if kaliteli_yorum_mu(temiz_metin, gorulen_yorumlar):
+                    gorulen_yorumlar.add(temiz_metin)
+                    yrm["temiz_metin"] = temiz_metin
                     tum_yorumlar.append(yrm)
+
             time.sleep(0.5)
         except Exception: break
 
     if tum_yorumlar:
         veri_seti = {"platform": "etstur", "baslik": urun_adi, "link": otel_linki, "gorsel_url": gorsel_url, "yorumlar": tum_yorumlar}
-        # 1. Platforma özel alt klasörü oluştur
+
         hedef_klasor = "cekilen_veriler/etstur"
         os.makedirs(hedef_klasor, exist_ok=True)
 
-        # 2. Dosyayı kaydet
         with open(dosya_yolu, "w", encoding="utf-8") as f:
             json.dump(veri_seti, f, ensure_ascii=False, indent=4)
 
@@ -519,15 +605,12 @@ def airbnb_veri_cek(oda_linki, max_sayfa) -> str:
         html_res = requests.get(oda_linki, headers=headers, impersonate="chrome120", timeout=15, verify=False)
         temiz_html = html_res.text.replace('\\u002F', '/')
 
-        # --- KURŞUN GEÇİRMEZ İSİM ÇIKARMA KISMI (AIRBNB) ---
-        urun_adi = "Airbnb Evi" # Varsayılan değer
+        urun_adi = "Airbnb Evi"
 
-        # 1. Deneme: Sayfa başlığı (Eğer jenerik bot başlığı değilse)
         title_match = re.search(r'<title>([^<]+)</title>', temiz_html, re.IGNORECASE)
         if title_match and "Kiralık" not in title_match.group(1) and "Vacation Rentals" not in title_match.group(1) and "Airbnb" not in title_match.group(1):
             urun_adi = title_match.group(1).split(' - ')[0].strip()
         else:
-            # 2. Deneme: Airbnb'nin iç JSON verilerinden nokta atışı anahtarlar
             isim_match = re.search(r'"pdp_listing_title"\s*:\s*"([^"]+)"', temiz_html)
             if not isim_match:
                 isim_match = re.search(r'"p3_summary_title"\s*:\s*"([^"]+)"', temiz_html)
@@ -536,17 +619,13 @@ def airbnb_veri_cek(oda_linki, max_sayfa) -> str:
 
             if isim_match:
                 olasi_isim = isim_match.group(1).replace('\\u0026', '&').replace('\\u002F', '/')
-                # İsim çok kısaysa veya saçma bir JSON verisiyse alma
                 if len(olasi_isim) > 3 and "Kiralık" not in olasi_isim:
                     urun_adi = olasi_isim
-        # ----------------------------------------
 
-        # İŞTE BURASI SİLİNMİŞTİ! API Key'i HTML'den çıkarıp değişkene atıyoruz:
         api_key_match = re.search(r'"api_config"\s*:\s*{[^}]*"key"\s*:\s*"([^"]+)"', temiz_html)
         if not api_key_match: return
         api_key = api_key_match.group(1)
 
-        # TAKTİK 1: OG Tag TAMAMEN İPTAL! Botlara sahte çadır resmi veriyor.
         pic_match = re.findall(r'(https://a0\.muscache\.com/im/pictures/[^"\'\?\\]+\.(?:jpg|jpeg|png|webp))', temiz_html)
 
         for pic in pic_match:
@@ -559,11 +638,19 @@ def airbnb_veri_cek(oda_linki, max_sayfa) -> str:
 
     preprocessor = ReviewPreprocessor()
     tum_yorumlar = []
+    gorulen_yorumlar = set() # Tekrar kontrolü
+    MAX_YORUM_SINIRI = 500   # Hedef limit
+
     base64_id = base64.b64encode(f"StayListing:{oda_id}".encode('utf-8')).decode('utf-8')
     sha256Hash = "2ed951bfedf71b87d9d30e24a419e15517af9fbed7ac560a8d1cc7feadfa22e6"
     api_headers = {"Accept": "application/json", "x-airbnb-api-key": api_key, "User-Agent": headers["User-Agent"], "Origin": "https://www.airbnb.com.tr", "Referer": oda_linki}
 
     for sayfa in range(max_sayfa):
+        # DIŞ KONTROL
+        if len(tum_yorumlar) >= MAX_YORUM_SINIRI:
+            print(f" 🎯 Hedeflenen {MAX_YORUM_SINIRI} kaliteli yoruma ulaşıldı.")
+            break
+
         limit = 24 if sayfa == 0 else 10
         offset = 0 if sayfa == 0 else 24 + ((sayfa - 1) * 10)
         variables = {"id": base64_id, "pdpReviewsRequest": {"fieldSelector": "for_p3_translation_only", "forPreview": False, "limit": limit, "offset": str(offset), "showingTranslationButton": False, "first": limit, "sortingPreference": "BEST_QUALITY"}}
@@ -580,9 +667,16 @@ def airbnb_veri_cek(oda_linki, max_sayfa) -> str:
             if not yorum_listesi: break
 
             for yrm in yorum_listesi:
+                # İÇ KONTROL
+                if len(tum_yorumlar) >= MAX_YORUM_SINIRI:
+                    break
+
                 ham_metin = yorum_metnini_bul(yrm)
                 temiz_metin = preprocessor.clean_text(ham_metin, "airbnb")
-                if len(temiz_metin) >= 3:
+
+                # KALİTE KONTROLÜ
+                if kaliteli_yorum_mu(temiz_metin, gorulen_yorumlar):
+                    gorulen_yorumlar.add(temiz_metin)
                     yrm["temiz_metin"] = temiz_metin
                     tum_yorumlar.append(yrm)
 
@@ -591,11 +685,10 @@ def airbnb_veri_cek(oda_linki, max_sayfa) -> str:
 
     if tum_yorumlar:
         veri_seti = {"platform": "airbnb", "baslik": urun_adi, "link": oda_linki, "gorsel_url": gorsel_url, "yorumlar": tum_yorumlar}
-        # 1. Platforma özel alt klasörü oluştur
+
         hedef_klasor = "cekilen_veriler/airbnb"
         os.makedirs(hedef_klasor, exist_ok=True)
 
-        # 2. Dosyayı kaydet
         with open(dosya_yolu, "w", encoding="utf-8") as f:
             json.dump(veri_seti, f, ensure_ascii=False, indent=4)
 
@@ -632,16 +725,15 @@ def yemeksepeti_veri_cek(restoran_linki, max_sayfa) -> str:
     print("🤖 Playwright KALICI PROFIL ile Yemeksepeti'ne sızıyor...")
     try:
         from playwright.sync_api import sync_playwright
-        from playwright_stealth import Stealth  # 1. YENİ İÇE AKTARMA ŞEKLİ
+        from playwright_stealth import Stealth
 
         profil_klasoru = os.path.join(os.getcwd(), "saved_ys_profile")
         os.makedirs(profil_klasoru, exist_ok=True)
 
-        # 2. ZIRHI EN BAŞTAN TÜM SİSTEME GİYDİRİYORUZ
         with Stealth().use_sync(sync_playwright()) as p:
             context = p.chromium.launch_persistent_context(
                 user_data_dir=profil_klasoru,
-                headless=False,  # Yemeksepeti Datadome'u için mecburen False
+                headless=False,
                 user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
                 locale="tr-TR",
                 ignore_default_args=["--enable-automation"],
@@ -651,27 +743,17 @@ def yemeksepeti_veri_cek(restoran_linki, max_sayfa) -> str:
 
             page = context.pages[0] if context.pages else context.new_page()
 
-            # stealth_sync(page) SATIRINI SİLDİK! Artık her şey otomatik gizli.
-
-            # Sayfaya gidiş
             try:
                 page.goto(restoran_linki, wait_until="domcontentloaded", timeout=90000)
-
                 print("   ⏳ Sayfa yüklendi. Captcha/Güvenlik ekranı varsa çözmeniz için 90 saniye bekleniyor...")
-
-                # AKILLI BEKLEME: 90 Saniye boyunca görselin ekrana düşmesini bekler
                 page.wait_for_selector("img[data-testid='vendor-logo'], img.vendor-logo__image", timeout=90000)
 
-                # Çerez vb. kapatıcı
-                kapat_btn = page.locator(
-                    'button:has-text("Kabul Et"), button:has-text("Anladım"), button:has-text("Kapat")')
+                kapat_btn = page.locator('button:has-text("Kabul Et"), button:has-text("Anladım"), button:has-text("Kapat")')
                 if kapat_btn.count() > 0:
                     kapat_btn.first.click(timeout=3000)
-
             except Exception as e:
                 print(f"   [Uyarı] 90 saniye içinde Captcha çözülemedi veya görsel yüklenemedi: {e}")
 
-            # --- GÖRSEL AVCISI (AKILLI ARAMA) ---
             page.mouse.wheel(0, 500)
             time.sleep(1.5)
 
@@ -706,17 +788,22 @@ def yemeksepeti_veri_cek(restoran_linki, max_sayfa) -> str:
     except Exception as py_err:
         print(f" ❌ Playwright ana işlem hatası: {py_err}")
 
-
     # ==========================================
     # SİHİR 2: YORUMLARI API'DEN IŞIK HIZINDA ÇEKME
-    # (Bu kısım zaten sende kusursuz çalışıyordu, dokunmuyoruz)
     # ==========================================
     preprocessor = ReviewPreprocessor()
     tum_yorumlar = []
+    gorulen_yorumlar = set() # Tekrar kontrolü
+    MAX_YORUM_SINIRI = 500   # Hedef limit
     next_page_key = ""
     headers = {"Accept": "application/json", "Origin": "https://www.yemeksepeti.com", "Referer": restoran_linki}
 
     for sayfa in range(max_sayfa):
+        # DIŞ KONTROL
+        if len(tum_yorumlar) >= MAX_YORUM_SINIRI:
+            print(f" 🎯 Hedeflenen {MAX_YORUM_SINIRI} kaliteli yoruma ulaşıldı.")
+            break
+
         api_url = f"https://reviews-api-tr.fd-api.com/reviews/vendor/{vendor_id}?global_entity_id=YS_TR&limit=50&has_dish=true"
         if next_page_key: api_url += f"&nextPageKey={urllib.parse.quote(next_page_key)}"
 
@@ -730,9 +817,16 @@ def yemeksepeti_veri_cek(restoran_linki, max_sayfa) -> str:
             if not yorum_listesi: break
 
             for yrm in yorum_listesi:
+                # İÇ KONTROL
+                if len(tum_yorumlar) >= MAX_YORUM_SINIRI:
+                    break
+
                 ham_metin = yorum_metnini_bul(yrm)
                 temiz_metin = preprocessor.clean_text(ham_metin, "yemeksepeti")
-                if len(temiz_metin) >= 3:
+
+                # KALİTE KONTROLÜ
+                if kaliteli_yorum_mu(temiz_metin, gorulen_yorumlar):
+                    gorulen_yorumlar.add(temiz_metin)
                     yrm["temiz_metin"] = temiz_metin
                     tum_yorumlar.append(yrm)
 
@@ -747,11 +841,10 @@ def yemeksepeti_veri_cek(restoran_linki, max_sayfa) -> str:
     # ==========================================
     if tum_yorumlar:
         veri_seti = {"platform": "yemeksepeti", "baslik": urun_adi, "link": restoran_linki, "gorsel_url": gorsel_url, "yorumlar": tum_yorumlar}
-        # 1. Platforma özel alt klasörü oluştur
+
         hedef_klasor = "cekilen_veriler/yemeksepeti"
         os.makedirs(hedef_klasor, exist_ok=True)
 
-        # 2. Dosyayı kaydet
         with open(dosya_yolu, "w", encoding="utf-8") as f:
             json.dump(veri_seti, f, ensure_ascii=False, indent=4)
 
@@ -775,32 +868,33 @@ def trendyol_go_veri_cek(restoran_linki, max_sayfa) -> str:
     gorsel_url = "Görsel Bulunamadı"
     headers_main = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) Chrome/120.0.0.0 Safari/537.36"}
 
-    # SİHİR 2: HTML Regex Avcılığı (Trendyol Go CDN Linklerini Bulma)
-    # SİHİR 2: HTML Regex Avcılığı (Görsel ve İsim Bulma)
     try:
         html_res = requests.get(restoran_linki, headers=headers_main, impersonate="chrome120", timeout=10, verify=False)
-
-        # --- YENİ EKLENEN KISIM: İSİM ÇIKARMA ---
         isim_match = re.search(r'<title>([^<]+)</title>', html_res.text, re.IGNORECASE)
         if isim_match:
-            # İsim genelde "KFC Sipariş | Trendyol Go" gibi gelir. Ekstra kelimeleri temizleyelim:
             urun_adi = isim_match.group(1).split('|')[0].replace('Sipariş', '').strip()
         else:
             urun_adi = "Trendyol Go Restoranı"
-        # ----------------------------------------
 
-        # Görseli Bulma (Eski kodun aynısı)
         cdn_match = re.search(r'(https://cdn\.tgoapps\.com/[^"\']+\.(?:jpeg|jpg|png|webp))', html_res.text, re.IGNORECASE)
         if cdn_match:
             gorsel_url = cdn_match.group(1)
             print(f"🖼️ Trendyol Go Görseli Bulundu: {gorsel_url}")
     except Exception:
-        urun_adi = "Trendyol Go Restoranı" # Hata olursa varsayılan isim
+        urun_adi = "Trendyol Go Restoranı"
+
     preprocessor = ReviewPreprocessor()
     tum_yorumlar = []
+    gorulen_yorumlar = set() # Tekrar kontrolü
+    MAX_YORUM_SINIRI = 500   # Hedef limit
     headers = {"Accept": "application/json", "Origin": "https://www.trendyol.com", "Referer": restoran_linki}
 
     for sayfa in range(1, max_sayfa + 1):
+        # DIŞ KONTROL
+        if len(tum_yorumlar) >= MAX_YORUM_SINIRI:
+            print(f" 🎯 Hedeflenen {MAX_YORUM_SINIRI} kaliteli yoruma ulaşıldı.")
+            break
+
         api_url = f"https://api.tgoapis.com/web-restaurant-apirestaurant-santral/restaurants/{vendor_id}/comments?page={sayfa}&pageSize=20&latitude=41.07087&longitude=28.996586&tagVersion=2"
         try:
             res = requests.get(api_url, headers=headers, impersonate="chrome120", timeout=10, verify=False)
@@ -811,22 +905,28 @@ def trendyol_go_veri_cek(restoran_linki, max_sayfa) -> str:
             if not yorum_listesi: break
 
             for yrm in yorum_listesi:
+                # İÇ KONTROL
+                if len(tum_yorumlar) >= MAX_YORUM_SINIRI:
+                    break
+
                 ham_metin = yorum_metnini_bul(yrm)
                 temiz_metin = preprocessor.clean_text(ham_metin, "trendyol_go")
 
-                if len(temiz_metin) >= 3:
+                # KALİTE KONTROLÜ
+                if kaliteli_yorum_mu(temiz_metin, gorulen_yorumlar):
+                    gorulen_yorumlar.add(temiz_metin)
                     yrm["temiz_metin"] = temiz_metin
                     tum_yorumlar.append(yrm)
+
             time.sleep(0.5)
         except Exception: break
 
     if tum_yorumlar:
         veri_seti = {"platform": "trendyol-go", "baslik": urun_adi, "link": restoran_linki, "gorsel_url": gorsel_url, "yorumlar": tum_yorumlar}
-        # 1. Platforma özel alt klasörü oluştur
+
         hedef_klasor = "cekilen_veriler/tygo"
         os.makedirs(hedef_klasor, exist_ok=True)
 
-        # 2. Dosyayı kaydet
         with open(dosya_yolu, "w", encoding="utf-8") as f:
             json.dump(veri_seti, f, ensure_ascii=False, indent=4)
 
@@ -855,6 +955,8 @@ def google_maps_veri_cek(mekan_linki, max_kaydirma) -> str:
 
     preprocessor = ReviewPreprocessor()
     tum_yorumlar = []
+    gorulen_yorumlar = set() # Tekrar kontrolü için hafıza
+    MAX_YORUM_SINIRI = 500   # Hedef limit
 
     print("🤖 Playwright Google Maps'in dinamik labirentine giriyor...")
     try:
@@ -905,8 +1007,8 @@ def google_maps_veri_cek(mekan_linki, max_kaydirma) -> str:
                                !src.includes('staticmap') && 
                                !src.includes('streetview') &&
                                !src.includes('/mo/') && 
-                               !src.includes('/profile/') && // Kullanıcı fotoğraflarını sildik
-                               !src.includes('/a/') &&       // Kullanıcı avatarlarını sildik
+                               !src.includes('/profile/') && 
+                               !src.includes('/a/') &&       
                                img.width > 120; 
                     });
                     
@@ -959,38 +1061,29 @@ def google_maps_veri_cek(mekan_linki, max_kaydirma) -> str:
                     print(f"   ⬇️ Panel kaydırıldı ({i+1}/{max_kaydirma})")
             except Exception: pass
 
-            # --- SİHİR 4: VERİLERİ DETAYLI TOPLAMA (İSİM, TARİH, PUAN, METİN) ---
-
-            # 4.1 Önce uzun yorumları aç
+            # --- SİHİR 4: VERİLERİ DETAYLI TOPLAMA ---
             more_buttons = page.locator("button.w8nwRe")
             for i in range(more_buttons.count()):
                 try: more_buttons.nth(i).click(timeout=500)
                 except: pass
             time.sleep(1)
 
-            # 4.2 JavaScript ile yapısal (structured) veriyi söküp al
             ham_yorumlar = page.evaluate('''() => {
                 let results = [];
                 let seenSignatures = new Set(); 
 
-                // Yorum bloklarını bul
                 let reviewBlocks = document.querySelectorAll('.jftiEf, div[data-review-id]');
 
                 for(let block of reviewBlocks) {
-                    // 1. İsim elementini bul ve metni al
                     let nameEl = block.querySelector('.d4r55') || block.querySelector('.WNxzHc');
                     let isim = nameEl ? nameEl.innerText.trim() : "Bilinmiyor";
 
-                    // 2. Yorum metni elementini bul ve metni al
                     let textEl = block.querySelector('.wiI7pd');
                     let metin = textEl ? textEl.innerText.trim() : "";
 
-                    // 3. İMZA OLUŞTURMA (Hatanın olduğu yer burasıydı, değişkenler tanımlandıktan sonra olmalı)
                     let imza = isim + "_" + metin;
 
-                    // 4. EĞER metin boş değilse VE daha önce görülmediyse listeye ekle
                     if(metin.length > 0 && !seenSignatures.has(imza)) {
-                        // Tarih ve Puanı çek
                         let dateEl = block.querySelector('.rsqaWe');
                         let tarih = dateEl ? dateEl.innerText.trim() : "Bilinmiyor";
 
@@ -1006,34 +1099,38 @@ def google_maps_veri_cek(mekan_linki, max_kaydirma) -> str:
                             puan: puan, 
                             orijinal_metin: metin
                         });
-
-                        // Bu imzayı "görüldü" olarak işaretle
                         seenSignatures.add(imza);
                     }
                 }
                 return results;
             }''')
 
-            # 4.3 Python tarafında preprocessor temizliğini yap ve kaydet
+            # 4.3 Python tarafında MÜHENDİSLİK ZIRHI ile temizliği yap ve kaydet
             for yrm in ham_yorumlar:
+                # KONTROL 1: Limit doldu mu?
+                if len(tum_yorumlar) >= MAX_YORUM_SINIRI:
+                    print(f" 🎯 Hedeflenen {MAX_YORUM_SINIRI} kaliteli yoruma ulaşıldı.")
+                    break
+
                 temiz_metin = preprocessor.clean_text(yrm["orijinal_metin"], "maps")
-                if len(temiz_metin) >= 3:
+
+                # KONTROL 2: Kalite testlerini geçiyor mu?
+                if kaliteli_yorum_mu(temiz_metin, gorulen_yorumlar):
+                    gorulen_yorumlar.add(temiz_metin)
                     yrm["temiz_metin"] = temiz_metin
                     tum_yorumlar.append(yrm)
 
-            # --- HIZLI KAPANIŞ ---
-            page.close() # Sekmeyi zorla kapat (takılmayı önler)
-            context.close() # Tarayıcıyı kapat
+            page.close()
+            context.close()
     except Exception as e:
         print(f"⚠️ Playwright Maps'te bir engele takıldı: {e}")
 
     if tum_yorumlar:
         veri_seti = {"platform": "maps", "baslik": urun_adi, "link": mekan_linki, "gorsel_url": gorsel_url, "yorumlar": tum_yorumlar}
-        # 1. Platforma özel alt klasörü oluştur
+
         hedef_klasor = "cekilen_veriler/maps"
         os.makedirs(hedef_klasor, exist_ok=True)
 
-        # 2. Dosyayı kaydet
         with open(dosya_yolu, "w", encoding="utf-8") as f:
             json.dump(veri_seti, f, ensure_ascii=False, indent=4)
 
