@@ -1,6 +1,5 @@
 from datetime import datetime
 from uuid import uuid4
-import hashlib
 import os
 import json
 import re
@@ -55,13 +54,13 @@ def process_airbnb_data(raw_json: dict) -> tuple[dict, list[dict]]:
 
     urun_paket = {
         "id": product_uuid,
-        "platform": platform,
-        "platform_id": extract_platform_product_id(orijinal_url, platform),
+        "platform": None,
+        "platform_id": None,
         "product_name": raw_json.get("baslik"),
         "image_url": raw_json.get("gorsel_url"),
         "category": None,
-        "original_url": orijinal_url,
-        "url_hash": hashlib.sha256(orijinal_url.encode('utf-8')).hexdigest() if orijinal_url else None,
+        "original_url": None,
+        "url_hash": None,
         "status": "active",
         "click_count": 0,
         "avg_orj_score": None, # altta hesaplamasını yapıldı(halit-fero)!
@@ -104,13 +103,13 @@ def process_ciceksepeti_data(raw_json: dict) -> tuple[dict, list[dict]]:
 
     urun_paket = {
         "id": product_uuid,
-        "platform": platform,
-        "platform_id": extract_platform_product_id(orijinal_url, platform),
+        "platform": None,
+        "platform_id": None,
         "product_name": raw_json.get("baslik"),
         "image_url": raw_json.get("gorsel_url"),
         "category": None,  # SetFit ile dolacak
-        "original_url": orijinal_url,
-        "url_hash": hashlib.sha256(orijinal_url.encode('utf-8')).hexdigest() if orijinal_url else None,
+        "original_url": None,
+        "url_hash": None,
         "status": "active",
         "click_count": 0,
         "avg_orj_score": None,  # Altta hesaplanacak
@@ -175,13 +174,13 @@ def process_etstur_data(raw_json: dict) -> tuple[dict, list[dict]]:
 
     urun_paket = {
         "id": product_uuid,
-        "platform": platform,
-        "platform_id": extract_platform_product_id(orijinal_url, platform),
+        "platform": None,
+        "platform_id": None,
         "product_name": raw_json.get("baslik"),
         "image_url": raw_json.get("gorsel_url"),
         "category": None,  # SetFit ile dolacak
-        "original_url": orijinal_url,  # Diğerleriyle uyumlu olması için 'orginal' (typo) haliyle bıraktım
-        "url_hash": hashlib.sha256(orijinal_url.encode('utf-8')).hexdigest() if orijinal_url else None,
+        "original_url": None,
+        "url_hash": None,
         "status": "active",
         "click_count": 0,
         "avg_orj_score": None,  # Altta hesaplanacak
@@ -240,13 +239,13 @@ def process_hepsiburada_data(raw_json: dict) -> tuple[dict, list[dict]]:
 
     urun_paket = {
         "id": product_uuid,
-        "platform": platform,
-        "platform_id": extract_platform_product_id(orijinal_url, platform),
+        "platform": None,
+        "platform_id": None,
         "product_name": raw_json.get("baslik"),
         "image_url": raw_json.get("gorsel_url"),
         "category": None,
-        "original_url": orijinal_url,
-        "url_hash": hashlib.sha256(orijinal_url.encode('utf-8')).hexdigest() if orijinal_url else None,
+        "original_url": None,
+        "url_hash": None,
         "status": "active",
         "click_count": 0,
         "avg_orj_score": None,
@@ -292,13 +291,13 @@ def process_maps_data(raw_json: dict) -> tuple[dict, list[dict]]:
 
     urun_paket = {
         "id": product_uuid,
-        "platform": platform,
-        "platform_id": extract_platform_product_id(orijinal_url, platform),
+        "platform": None,
+        "platform_id": None,
         "product_name": raw_json.get("baslik"),
         "image_url": raw_json.get("gorsel_url"),
         "category": None,
-        "original_url": orijinal_url,
-        "url_hash": hashlib.sha256(orijinal_url.encode('utf-8')).hexdigest() if orijinal_url else None,
+        "original_url": None,
+        "url_hash": None,
         "status": "active",
         "click_count": 0,
         "avg_orj_score": None,
@@ -351,13 +350,13 @@ def process_steam_data(raw_json: dict) -> tuple[dict, list[dict]]:
 
     urun_paket = {
         "id": product_uuid,
-        "platform": platform,
-        "platform_id": extract_platform_product_id(orijinal_url, platform),
+        "platform": None,
+        "platform_id": None,
         "product_name": raw_json.get("baslik"),
         "image_url": raw_json.get("gorsel_url"),
         "category": "Oyun",  # Steam her zaman oyun olduğu için statik verebiliriz
-        "original_url": orijinal_url,
-        "url_hash": hashlib.sha256(orijinal_url.encode('utf-8')).hexdigest() if orijinal_url else None,
+        "original_url": None,
+        "url_hash": None,
         "status": "active",
         "click_count": 0,
         "avg_orj_score": None,
@@ -410,13 +409,13 @@ def process_trendyol_data(raw_json:dict) -> tuple[dict, list[dict]]:
 
     urun_paket = {
         "id": product_uuid,
-        "platform": platform,
-        "platform_id":extract_platform_product_id(orijinal_url, platform),  #bu olmazsa aynı ürünü kazısam bile uuidleri farklı olur
+        "platform": None,
+        "platform_id": None,
         "product_name": raw_json.get("baslik"),
         "image_url": raw_json.get("gorsel_url"),
         "category": None, #setfit ile dolacak
-        "original_url": orijinal_url,
-        "url_hash": hashlib.sha256(orijinal_url.encode('utf-8')).hexdigest() if orijinal_url else None,
+        "original_url": None,
+        "url_hash": None,
         "status":"active",
         "click_count": 0,
         "avg_orj_score": None,   #aşagıda hesaplanacak
@@ -460,13 +459,13 @@ def process_tygo_data(raw_json: dict) -> tuple[dict, list[dict]]:
 
     urun_paket = {
         "id": product_uuid,
-        "platform": platform,
-        "platform_id": extract_platform_product_id(orijinal_url, platform),
+        "platform": None,
+        "platform_id": None,
         "product_name": raw_json.get("baslik"),
         "image_url": raw_json.get("gorsel_url"),
         "category": "Restoran", # TyGo genelde yemek odaklıdır
-        "original_url": orijinal_url,
-        "url_hash": hashlib.sha256(orijinal_url.encode('utf-8')).hexdigest() if orijinal_url else None,
+        "original_url": None,
+        "url_hash": None,
         "status": "active",
         "click_count": 0,
         "avg_orj_score": None, # Altta hesaplanacak
@@ -521,17 +520,16 @@ def process_tygo_data(raw_json: dict) -> tuple[dict, list[dict]]:
 def process_yemeksepeti_data(raw_json: dict) -> tuple[dict, list[dict]]:
     product_uuid = str(uuid4())
     orijinal_url = raw_json.get("link", "")
-    platform = "yemeksepeti"
 
     urun_paket = {
         "id": product_uuid,
-        "platform": platform,
-        "platform_id": extract_platform_product_id(orijinal_url, platform),
+        "platform": None,
+        "platform_id": None,
         "product_name": raw_json.get("baslik"),
         "image_url": raw_json.get("gorsel_url"),
         "category": "Restoran",
-        "original_url": orijinal_url,
-        "url_hash": hashlib.sha256(orijinal_url.encode('utf-8')).hexdigest() if orijinal_url else None,
+        "original_url": None,
+        "url_hash": None,
         "status": "active",
         "click_count": 0,
         "avg_orj_score": None,
@@ -590,18 +588,15 @@ def process_yemeksepeti_data(raw_json: dict) -> tuple[dict, list[dict]]:
     return urun_paket, review_packets
 
 
-def donustur_ve_kaydet(ham_json_yolu: str) -> Tuple[Dict, List[Dict]]:
+def donustur_ve_kaydet(ham_json_yolu: str, platform: str, platform_id: str, temiz_url: str, url_hash: str) -> tuple[dict, list[dict]]:
     try:
         with open(ham_json_yolu, 'r', encoding='utf-8') as f:
             raw_data = json.load(f)
     except Exception as e:
-        # String döndürmek yerine hata fırlatıyoruz
         raise Exception(f"JSON okuma hatası ({ham_json_yolu}): {e}")
 
-    platform = raw_data.get("platform")
     if not platform:
-        raise ValueError(f"Platform bilgisi bulunamadı: {ham_json_yolu}")
-
+        raise ValueError("Dönüştürücü Hatası: Platform bilgisi eksik.")
     hedef_klasor = os.path.join("Transformed_datas",platform)
     os.makedirs(hedef_klasor, exist_ok=True)
 
@@ -621,10 +616,15 @@ def donustur_ve_kaydet(ham_json_yolu: str) -> Tuple[Dict, List[Dict]]:
         urun_paket, yorumlar_paket = process_etstur_data(raw_data)
     elif platform == "airbnb":
         urun_paket, yorumlar_paket = process_airbnb_data(raw_data)
-    elif platform == "google_maps":
+    elif platform == "maps":
         urun_paket, yorumlar_paket = process_maps_data(raw_data)
     else:
-        raise ValueError(f"Dönüştürücü Hatası: Bilinmeyen platform '{platform}'")      #HATA FIRLATMA KISMINDA BEKLENEN TİP YÜZÜNDEN SARI OLMUYOR.
+        raise ValueError(f"Dönüştürücü Hatası: Bilinmeyen platform '{platform}'")
+
+    urun_paket["platform"] = platform
+    urun_paket["platform_id"] = platform_id
+    urun_paket["original_url"] = temiz_url
+    urun_paket["url_hash"] = url_hash
 
 
     temiz_veri = {
