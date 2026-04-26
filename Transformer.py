@@ -5,46 +5,10 @@ import json
 import re
 import urllib.parse
 from typing import Tuple, List, Dict
+from logger import setup_logger
 
-def extract_platform_product_id(url, platform):
-    """
-    URL'den platformun kendi ürün ID'sini (External ID) ayıklar.
-    Deduplication (tekilleştirme) için hayati önem taşır.
-    """
-    if not url: return "unknown"
-    patterns = {
-        "trendyol": r"-p-(\d+)",
-        "hepsiburada": r"-p[m]?-([A-Za-z0-9]+)",
-        "ciceksepeti": r"-([a-zA-Z0-9]+)(?:\?|/|$)",
-        "steam": r"/app/(\d+)",
-        "airbnb": r"/rooms/(\d+)",
-        "yemeksepeti": r"/restaurant/([a-zA-Z0-9]+)",
-        "trendyol-go": r"(?:-|/)(\d+)(?:/|\?|$)",
-        "etstur": r"etstur\.com/([^/?]+)"  # Etstur'da genelde otel adı ID yerine geçer
-    }
 
-    # Google Maps için URL yapısı çok değişken olduğu için özel kontrol
-    if platform == "google_maps" or platform == "maps":
-        # 1. YOL: Standart /place/ araması
-        match = re.search(r'/place/([^/?]+)', url)
-        if match:
-            return urllib.parse.unquote(match.group(1))
 
-        # 2. YOL (YEDEK): Eğer /place/ yoksa linki parçala ve son anlamlı kısmı al
-        # Örn: http://.../maps.google.com/0 linkinden '0'ı çeker.
-        path_segments = url.strip('/').split('/')
-        if path_segments:
-            last_segment = path_segments[-1]
-            # Eğer son segment çok uzunsa (parametreler varsa) temizleyelim
-            clean_id = last_segment.split('?')[0]
-            return clean_id if clean_id else "unknown"
-
-    pattern = patterns.get(platform)
-    if pattern:
-        match = re.search(pattern, url)
-        return match.group(1) if match else "unknown"
-
-    return "unknown"
 
 
 def process_airbnb_data(raw_json: dict) -> tuple[dict, list[dict]]:

@@ -10,3 +10,5 @@ notes.md
 .env
 /linkler.txt
 /.idea/
+/logs/
+/migration.py
