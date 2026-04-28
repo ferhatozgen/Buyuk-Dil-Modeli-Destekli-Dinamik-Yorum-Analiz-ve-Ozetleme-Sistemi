@@ -3,7 +3,7 @@ import os
 from datetime import datetime
 
 def setup_logger(name="ETL_pipeline"):
-    log_dir = "logs"
+    log_dir = "../logs"
     os.makedirs(log_dir, exist_ok=True)
 
     log_file = os.path.join(log_dir, f"etl_{datetime.now().strftime('%Y-%m-%d')}.log")
@@ -24,4 +24,3 @@ def setup_logger(name="ETL_pipeline"):
         logger.addHandler(file_handler)
 
     return logger
-

@@ -5,7 +5,6 @@ import json
 import re
 import urllib.parse
 from typing import Tuple, List, Dict
-from logger import setup_logger
 
 
 
@@ -561,7 +560,7 @@ def donustur_ve_kaydet(ham_json_yolu: str, platform: str, platform_id: str, temi
 
     if not platform:
         raise ValueError("Dönüştürücü Hatası: Platform bilgisi eksik.")
-    hedef_klasor = os.path.join("Transformed_datas",platform)
+    hedef_klasor = os.path.join("../Transformed_datas", platform)
     os.makedirs(hedef_klasor, exist_ok=True)
 
     if platform == "trendyol":
