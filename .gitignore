@@ -12,3 +12,4 @@ notes.md
 /.idea/
 /logs/
 /migration.py
+/gold_dataset.jsonl

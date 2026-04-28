@@ -8,8 +8,7 @@ import os
 import re
 import emoji
 import base64
-from logger import setup_logger
-import urllib.parse
+from functions.logger import setup_logger
 import time
 
 logger = setup_logger()
@@ -705,7 +704,7 @@ def yemeksepeti_veri_cek(restoran_linki, max_sayfa) -> str:
         from playwright.sync_api import sync_playwright
         from playwright_stealth import Stealth
 
-        profil_klasoru = os.path.join(os.getcwd(), "saved_ys_profile")
+        profil_klasoru = os.path.join(os.getcwd(), "../saved_ys_profile")
         os.makedirs(profil_klasoru, exist_ok=True)
 
         with Stealth().use_sync(sync_playwright()) as p:
@@ -933,7 +932,7 @@ def google_maps_veri_cek(mekan_linki, max_kaydirma) -> str:
     try:
         from playwright.sync_api import sync_playwright
 
-        profil_klasoru = os.path.join(os.getcwd(), "saved_maps_profile")
+        profil_klasoru = os.path.join(os.getcwd(), "../saved_maps_profile")
         os.makedirs(profil_klasoru, exist_ok=True)
 
         with sync_playwright() as p:

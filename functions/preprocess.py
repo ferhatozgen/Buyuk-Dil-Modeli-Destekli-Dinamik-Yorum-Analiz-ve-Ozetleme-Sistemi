@@ -110,8 +110,8 @@ def process_all_data():
     os.makedirs(TEMIZ_KLASOR, exist_ok=True)
 
     preprocessor = ReviewPreprocessor(
-        typo_file="duzeltmeler.json",
-        bad_words_file="bad_words.json"
+        typo_file="dicts/duzeltmeler.json",
+        bad_words_file="dicts/bad_words.json"
     )
 
     if not os.path.exists(ANA_KLASOR):
