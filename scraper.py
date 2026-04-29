@@ -578,7 +578,7 @@ def airbnb_veri_cek(oda_linki, max_sayfa) -> str:
 
     dosya_yolu = f"cekilen_veriler/airbnb/airbnb_{oda_id}.json"
 
-    logger.info(f"🔍 Airbnb ID Çözümleniyor: {oda_id}")
+    logger.info(f" Airbnb ID Çözümleniyor: {oda_id}")
     gorsel_url = "Görsel Bulunamadı"
 
     headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) Chrome/120.0.0.0 Safari/537.36", "Accept-Language": "tr-TR,tr;q=0.9"}
@@ -1113,7 +1113,7 @@ def google_maps_veri_cek(mekan_linki, max_kaydirma) -> str:
 # ==========================================
 # 4. EVRENSEL YÖNLENDİRİCİ (ANA MOTOR)
 # ==========================================
-def linkten_veri_cek(url, platform, max_sayfa=5, max_kaydirma=15):
+def linkten_veri_cek(url, platform, max_sayfa=15, max_kaydirma=15):
     try:
         if platform == "trendyol-go":
             dosya_yolu = trendyol_go_veri_cek(url, max_sayfa=max_sayfa)
