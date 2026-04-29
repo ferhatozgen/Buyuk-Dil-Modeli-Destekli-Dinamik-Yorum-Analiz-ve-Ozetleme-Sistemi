@@ -1,11 +1,10 @@
-import time
-from scraper import linkten_veri_cek
-from Transformer import donustur_ve_kaydet
-from db_manager import DatabaseManager
-from utils import url_cleaning, url_hashing, url_cozumle
+from functions.scraper import linkten_veri_cek
+from functions.Transformer import donustur_ve_kaydet
+from functions.db_manager import DatabaseManager
+from functions.utils import url_cleaning, url_hashing, url_cozumle
 import os
 import concurrent.futures
-from logger import setup_logger
+from functions.logger import setup_logger
 
 logger = setup_logger()
 
@@ -66,7 +65,7 @@ def baslat(link_listesi):
     logger.info(f"Toplam {len(link_listesi)} link sıraya alındı. ETL Operasyonu başlıyor...")
     db = DatabaseManager()
 
-    MAX_WORKERS = 4
+    MAX_WORKERS = 1
 
     #--- Paralel işleme için ThreadPoolExecutor kullanarak her linki tek_link_isle fonksiyonuna gönderiyoruz ---
     with concurrent.futures.ThreadPoolExecutor(max_workers=MAX_WORKERS) as executor:
