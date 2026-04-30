@@ -94,7 +94,7 @@ def baslat(link_listesi):
 if __name__ == "__main__":
     manuel_liste = [
     ]
-    txt_dosya_yolu = "linkler.txt"
+    txt_dosya_yolu = ""
 
     print("\n" + "*" * 50)
     print("  BÜYÜK DİL MODELİ DESTEKLİ ETL BORU HATTI")

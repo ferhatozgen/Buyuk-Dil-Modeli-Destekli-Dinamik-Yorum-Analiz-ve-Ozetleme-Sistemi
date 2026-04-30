@@ -204,7 +204,7 @@ def airbnb_yorum_bul(json_verisi):
 # 3. PLATFORM FONKSİYONLARI
 # ==========================================
 def trendyol_veri_cek(urun_linki, max_sayfa) -> str:
-    match = re.search(r'-p-(\d+)', urun_linki)
+    match = re.search(r'-p-(\d+)', urun_linki)   #bu kısım utils urunid kısmına ait bir checkpoint gorevi gorur (double check durumu)
     if not match: return
     urun_id = match.group(1)
     isim_match = re.search(r'/([^/]+)-p-\d+', urun_linki)
@@ -228,9 +228,14 @@ def trendyol_veri_cek(urun_linki, max_sayfa) -> str:
             logger.info(f" 🎯 Hedeflenen {MAX_YORUM_SINIRI} kaliteli yoruma ulaşıldı.")
             break
 
+        """
+        api_url: kısmı trendyolun gateway adesi basındaki api.gw.trendyol.com kısmı gelen tüm istekelri karsılayan ve hangi birime(mikroservice) gideceğine karar verir.
+        channelid=1 web sitesinden geliyorum mesajını verir. genelde mobil uygulamada 2-3 olur.
+        Yorumlar binlerce olabilir ondan trendyol yorumları page page (paket paket) gönderir.
+        """
         api_url = f"https://apigw.trendyol.com/discovery-storefront-trproductgw-service/api/review-read/product-reviews/detailed?channelId=1&contentId={urun_id}&page={sayfa}"
         try:
-            res = requests.get(api_url, headers=headers, impersonate="chrome120", timeout=10, verify=False)
+            res = requests.get(api_url, headers=headers, impersonate="chrome120", timeout=10, verify=False)   #chrome120 ben chrome kullanan gercek insanım der (bunun varlıgı kritik)
             if res.status_code != 200: break
 
             yorum_listesi = trendyol_yorum_bul(res.json())
@@ -602,9 +607,18 @@ def airbnb_veri_cek(oda_linki, max_sayfa) -> str:
                 if len(olasi_isim) > 3 and "Kiralık" not in olasi_isim:
                     urun_adi = olasi_isim
 
-        api_key_match = re.search(r'"api_config"\s*:\s*{[^}]*"key"\s*:\s*"([^"]+)"', temiz_html)
-        if not api_key_match: return
-        api_key = api_key_match.group(1)
+        # Daha esnek bir Regex
+        api_key_match = re.search(r'("key"|"apiKey")\s*:\s*"([^"]+)"', temiz_html)
+        if not api_key_match:
+            # B Planı: Sayfa içinde başka bir yerden yakalamaya çalış
+            api_key_match = re.search(r'commonConfig\s*:\s*{[^}]*"apiKey"\s*:\s*"([^"]+)"', temiz_html)
+
+        if api_key_match:
+            # Regex grubuna göre key'i al
+            api_key = api_key_match.group(2) if '"' in api_key_match.group(1) else api_key_match.group(1)
+        else:
+            logger.error(f"❌ Airbnb API Key Bulunamadı: {oda_id}")
+            raise ValueError("Airbnb API KEY Bulunamadı.")  # main.py'a hatayı bildir   None, None
 
         pic_match = re.findall(r'(https://a0\.muscache\.com/im/pictures/[^"\'\?\\]+\.(?:jpg|jpeg|png|webp))', temiz_html)
 
@@ -631,18 +645,33 @@ def airbnb_veri_cek(oda_linki, max_sayfa) -> str:
             logger.info(f" 🎯 Hedeflenen {MAX_YORUM_SINIRI} kaliteli yoruma ulaşıldı.")
             break
 
-        limit = 24 if sayfa == 0 else 10
-        offset = 0 if sayfa == 0 else 24 + ((sayfa - 1) * 10)
-        variables = {"id": base64_id, "pdpReviewsRequest": {"fieldSelector": "for_p3_translation_only", "forPreview": False, "limit": limit, "offset": str(offset), "showingTranslationButton": False, "first": limit, "sortingPreference": "BEST_QUALITY"}}
+        limit = 50  # Sabit 50 yaparak daha büyük paketler isteyelim
+        offset = sayfa * limit
+        variables = {
+            "id": base64_id,
+            "pdpReviewsRequest": {
+                "fieldSelector": "for_p3_translation_only",
+                "forPreview": False,
+                "limit": limit,
+                "offset": str(offset),
+                "showingTranslationButton": False,
+                "sortingPreference": "MOST_RECENT"  # En güncelden başla ki veri taze olsun
+            }
+        }
         extensions = {"persistedQuery": {"version": 1, "sha256Hash": sha256Hash}}
         params = {"operationName": "StaysPdpReviewsQuery", "locale": "tr", "currency": "TRY", "variables": json.dumps(variables, separators=(',', ':')), "extensions": json.dumps(extensions, separators=(',', ':'))}
         full_url = f"https://www.airbnb.com.tr/api/v3/StaysPdpReviewsQuery/{sha256Hash}?{urllib.parse.urlencode(params)}"
 
         try:
             response = requests.get(full_url, headers=api_headers, impersonate="chrome120", timeout=15, verify=False)
-            if response.status_code != 200: break
+            if response.status_code != 200:
+                logger.error(f"❌ Airbnb API Hatası (Kod: {response.status_code}) - Sayfa: {sayfa}")
+                break  # Hata aldıysan döngüyü kır
 
             data = response.json()
+            if "errors" in data:
+                logger.warning(f"⚠️ Airbnb API Hatası Mesajı: {data['errors'][0].get('message')}")
+                break
             yorum_listesi = airbnb_yorum_bul(data)
             if not yorum_listesi: break
 
@@ -1057,10 +1086,18 @@ def google_maps_veri_cek(mekan_linki, max_kaydirma) -> str:
                         let dateEl = block.querySelector('.rsqaWe');
                         let tarih = dateEl ? dateEl.innerText.trim() : "Bilinmiyor";
 
+                        // Eski 'let ratingEl' ile başlayan bloğu sil ve bunu yapıştır:
                         let ratingEl = block.querySelector('.kvMYJc') || block.querySelector('span[role="img"]');
-                        let puan = "Bilinmiyor";
-                        if(ratingEl && ratingEl.getAttribute('aria-label')) {
-                            puan = ratingEl.getAttribute('aria-label');
+                        let puan = "0"; // Varsayılanı 0 yapalım ki NULL olmasın
+                        
+                        if (ratingEl) {
+                            let label = ratingEl.getAttribute('aria-label') || "";
+                            // Regex kullanarak "4,7 yıldız" içindeki 4,7 kısmını yakalıyoruz
+                            let match = label.match(/[\d,.]+/); 
+                            if (match) {
+                                // Virgülü noktaya çevir (4,7 -> 4.7) ki Python bunu float yapabilsin
+                                puan = match[0].replace(',', '.');
+                            }
                         }
 
                         results.push({
