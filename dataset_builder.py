@@ -29,7 +29,7 @@ def create_chatml_line(system_prompt, user_prompt, assistant_response):
 def analyse_w_gemini(system_prompt, user_prompt):
     try:
         response = client.models.generate_content(
-            model="gemini-2.0-flash",
+            model="gemini-2.5-flash",
             contents=user_prompt,
             config=types.GenerateContentConfig(
                 system_instruction=system_prompt,
@@ -48,20 +48,55 @@ def analyse_w_gemini(system_prompt, user_prompt):
 def gold_dataset_creator():
     db = DatabaseManager()
     query = """
-    WITH RastgeleUrunler AS (
-        SELECT id as product_id, product_name
-        FROM (
-            SELECT id, product_name,
-                   ROW_NUMBER() OVER(PARTITION BY platform ORDER BY RANDOM()) as rnk
-            FROM products
-            WHERE id IN (SELECT DISTINCT product_id FROM reviews)
-        ) ranked_products
-        WHERE rnk <= 2 
-    )
-    SELECT ru.product_name, r.clean_text
-    FROM RastgeleUrunler ru
-    JOIN reviews r ON ru.product_id = r.product_id;
-    """
+        WITH CeliskiliUrunler AS (
+            SELECT 
+                product_id, 
+                p.product_name, 
+                p.platform
+            FROM reviews r
+            JOIN products p ON r.product_id = p.id
+            WHERE r.clean_text IS NOT NULL
+            GROUP BY product_id, p.product_name, p.platform
+            -- Ürünün en az 3 pozitif ve en az 3 negatif yorumu olmak zorunda
+            HAVING 
+                SUM(CASE WHEN original_rating >= 4.0 THEN 1 ELSE 0 END) >= 3 AND
+                SUM(CASE WHEN original_rating < 3.0 THEN 1 ELSE 0 END) >= 3
+        ),
+        SecilenUrunler AS (
+            SELECT product_id, product_name, platform
+            FROM (
+                SELECT product_id, product_name, platform,
+                       ROW_NUMBER() OVER(PARTITION BY platform ORDER BY RANDOM()) as rnk
+                FROM CeliskiliUrunler
+            )
+            WHERE rnk <= 2 -- TEST İÇİN: Her platformdan 2 ürün
+        ),
+        YorumlariSirala AS (
+            SELECT 
+                su.product_name,
+                r.clean_text,
+                r.original_rating,
+                CASE 
+                    WHEN r.original_rating >= 4.0 THEN 'Pozitif'
+                    WHEN r.original_rating >= 3.0 AND r.original_rating < 4.0 THEN 'Notr'
+                    WHEN r.original_rating < 3.0 THEN 'Negatif'
+                END as duygu_sinifi,
+                ROW_NUMBER() OVER(PARTITION BY su.product_id, 
+                    CASE WHEN r.original_rating >= 4.0 THEN 'Pozitif' WHEN r.original_rating >= 3.0 AND r.original_rating < 4.0 THEN 'Notr' ELSE 'Negatif' END 
+                ORDER BY RANDOM()) as yorum_sirasi
+            FROM SecilenUrunler su
+            JOIN reviews r ON su.product_id = r.product_id
+            WHERE r.clean_text IS NOT NULL
+        )
+        SELECT 
+            product_name, 
+            duygu_sinifi, 
+            original_rating, 
+            clean_text
+        FROM YorumlariSirala
+        WHERE yorum_sirasi <= 3 -- Her sınıftan maks 3 yorum (Ürün başı maks 9)
+        ORDER BY product_name, duygu_sinifi;
+        """
     urunler_ve_yorumlari = {}
 
     try:
@@ -69,7 +104,10 @@ def gold_dataset_creator():
             with conn.cursor() as cur:
                 cur.execute(query)
 
-                for product_name, yorum in cur.fetchall():
+                for row in cur.fetchall():
+                    product_name = row[0]
+                    yorum = row[3]
+
                     if not yorum or len(yorum.strip()) < 5:
                         continue
                     if product_name not in urunler_ve_yorumlari:
@@ -81,12 +119,18 @@ def gold_dataset_creator():
         logger.error(f"Veritabanı sorgu hatası: {e}")
         return
 
-    logger.info(f"Veritabanından {len(urunler_ve_yorumlari)} yorum çekildi. Gemini ile analiz başlıyor...")
+    logger.info(f"Veritabanından {len(urunler_ve_yorumlari)} ürün çekildi. Gemini ile analiz başlıyor...")
 
     sys_gorev_1 = "Görev 1: Sen bir duygu analizi modelisin. Verilen yoruma 1.0 ile 5.0 arasında objektif bir puan ver. Sadece rakam dön."
     sys_gorev_2 = "Görev 2: Sana bir ürüne ait BİRDEN FAZLA müşteri yorumu verilecek. Bu yorumların genelini analiz et ve en çok bahsedilen 3 veya 4 profesyonel kategori başlığını çıkar. SADECE geçerli bir JSON array dön. (Örn: [\"Hız\", \"Lezzet\"])"
     sys_gorev_3 = "Görev 3: Sana verilen yorumu anlamsal bütünlüğe göre parçalara ayır. Her parçayı, sana önceden verilmiş Kategori Havuzuyla eşleştir. SADECE geçerli bir JSON dön: [{\"parca\": \"...\", \"kategori\": \"...\"}]"
-    sys_gorev_4 = "Görev 4: Sana bir ürüne ait onlarca yorumun parçalanmış/kategorize edilmiş hali devasa bir JSON listesi olarak verilecek. Buna bakarak profesyonel, akıcı bir genel özet ve kategori bazlı özetler çıkar. SADECE JSON dön: {\"genel_ozet\": \"...\", \"kategori_ozetleri\": {\"kategori1\": \"özet\"}}"
+    sys_gorev_4 = """Görev 4: Sana bir ürüne ait müşteri yorumlarının parçalanmış ve kategorize edilmiş hali devasa bir JSON listesi olarak verilecek. Buna bakarak profesyonel, akıcı bir genel özet ve kategori bazlı özetler çıkar.
+
+    KESİN KURALLAR:
+    1. UZUNLUK LİMİTİ: 'genel_ozet' kısmı maksimum 4-5 cümleden oluşmalı, gereksiz laf kalabalığı yapılmadan en vurucu noktalar yazılmalıdır.
+    2. DUYGU ORANTISI (ÇOK ÖNEMLİ): Yorumların genel ağırlığına dikkat et. Eğer yorumların çoğu olumluysa, özete "Müşteriler genel olarak üründen/hizmetten çok memnundur..." gibi net bir ifadeyle başla. Sadece birkaç tane olumsuz yorum varsa bunu "karışık bir tablo" olarak YANSITMA; "Bununla birlikte nadiren X konusunda şikayetler de görülmüştür" şeklinde azınlıkta olduğunu belirterek aktar. Çoğunluk ne diyorsa, özetin ana tonu o olmalıdır.
+
+    SADECE geçerli bir JSON formatında dön: {"genel_ozet": "...", "kategori_ozetleri": {"kategori1": "özet", "kategori2": "özet"}}"""
 
     output_file = "gold_dataset.jsonl"
     basarili_satir = 0
