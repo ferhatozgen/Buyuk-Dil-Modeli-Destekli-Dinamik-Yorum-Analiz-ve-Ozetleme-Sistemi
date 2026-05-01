@@ -144,7 +144,7 @@ def process_all_data():
                             # Preprocessor metni temizliyor
                             temiz_metin = preprocessor.clean_text(ham_metin, platform=platform_adi)
 
-                            if len(temiz_metin) > 3: # En az 3 harfli mantıklı yorumlar kalsın
+                            if len(temiz_metin.split()) > 3:
                                 if isinstance(yorum, dict):
                                     yorum["temiz_metin"] = temiz_metin
                                     temizlenen_veriler.append(yorum)
