@@ -11,6 +11,7 @@ import emoji
 import base64
 from functions.logger import setup_logger
 import time
+import random
 
 
 logger = setup_logger()
@@ -735,10 +736,12 @@ def steam_veri_cek(oyun_linki, max_sayfa) -> str:
 
 def etstur_veri_cek(otel_linki, max_sayfa) -> str:
     logger.info(f"🔍 Etstur ID'leri Çözümleniyor: {otel_linki}")
-    headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) Chrome/124.0.0.0 Safari/537.36"}
+
+    session = curl_requests.Session(impersonate="chrome124")
     try:
-        html_res = curl_requests.get(otel_linki, headers=headers, impersonate="chrome124", timeout=15, verify=False)
+        html_res = session.get(otel_linki, timeout=15, verify=False)
         if html_res.status_code != 200: return
+
         hotel_id_match = re.search(r'data-hotel-id=["\']([^"\']+)["\']', html_res.text) or re.search(r'"hotelId"\s*:\s*["\']([^"\']+)["\']', html_res.text)
         hotel_code_match = re.search(r'data-vendor-code=["\']([^"\']+)["\']', html_res.text) or re.search(r'"vndCode"\s*:\s*["\']([^"\']+)["\']', html_res.text)
         if not hotel_code_match or not hotel_id_match: return
@@ -771,14 +774,18 @@ def etstur_veri_cek(otel_linki, max_sayfa) -> str:
 
         payload = {"hotelCode": hotel_code, "hotelId": hotel_id, "offset": sayfa, "sort": "BOOKING_DESC", "period": "", "categoryType": "OVERALL", "searchText": ""}
         try:
-            response = curl_requests.post(api_url, headers=api_headers, json=payload, impersonate="chrome124", timeout=15, verify=False)
-            if response.status_code != 200: break
+            response = session.post(api_url, headers=api_headers, json=payload, timeout=20, verify=False)
+            if response.status_code != 200:
+                logger.warning(f"🛑 Etstur Bot Engeli! Status Code: {response.status_code} (Sayfa: {sayfa})")
+                break
 
             data = response.json()
             yorum_listesi = data.get("reviews", [])
             if not yorum_listesi: yorum_listesi = etstur_yorum_bul(data)
-            if not yorum_listesi: break
-
+            if not yorum_listesi:
+                logger.info(f"ℹ️ Etstur'da daha fazla yorum kalmadı veya bitti. (Sayfa: {sayfa})")
+                break
+            logger.info(f"📄 Sayfa {sayfa} - API'den {len(yorum_listesi)} ham yorum geldi.")
             for yrm in yorum_listesi:
                 # İÇ KONTROL
                 if len(tum_yorumlar) >= MAX_YORUM_SINIRI:
@@ -793,9 +800,14 @@ def etstur_veri_cek(otel_linki, max_sayfa) -> str:
                     yrm["temiz_metin"] = temiz_metin
                     tum_yorumlar.append(yrm)
 
-            time.sleep(0.5)
-        except Exception: break
+            bekleme = random.uniform(2.5, 5.2)
+            time.sleep(bekleme)
 
+        except Exception as e:
+            logger.error(f"❌ Etstur API Hatası (Sayfa {sayfa}): {e}")
+            break
+
+    session.close()
     if tum_yorumlar:
         veri_seti = {"platform": "etstur", "baslik": urun_adi, "link": otel_linki, "gorsel_url": gorsel_url, "yorumlar": tum_yorumlar}
 
@@ -1477,7 +1489,7 @@ def linkten_veri_cek(url, platform, max_sayfa=15, max_kaydirma=15):
             return "Yemeksepeti verileri başarıyla çekildi.", dosya_yolu
 
         elif platform == "etstur":
-            dosya_yolu = etstur_veri_cek(url, max_sayfa=max_sayfa)
+            dosya_yolu = etstur_veri_cek(url, max_sayfa=40)
             return "Etstur verileri başarıyla çekildi.", dosya_yolu
 
         elif platform == "airbnb":
