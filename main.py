@@ -65,7 +65,7 @@ def baslat(link_listesi):
     logger.info(f"Toplam {len(link_listesi)} link sıraya alındı. ETL Operasyonu başlıyor...")
     db = DatabaseManager()
 
-    MAX_WORKERS = 1
+    MAX_WORKERS = 3
 
     #--- Paralel işleme için ThreadPoolExecutor kullanarak her linki tek_link_isle fonksiyonuna gönderiyoruz ---
     with concurrent.futures.ThreadPoolExecutor(max_workers=MAX_WORKERS) as executor:
@@ -94,7 +94,7 @@ def baslat(link_listesi):
 if __name__ == "__main__":
     manuel_liste = [
     ]
-    txt_dosya_yolu = ""
+    txt_dosya_yolu = "linkler.txt"
 
     print("\n" + "*" * 50)
     print("  BÜYÜK DİL MODELİ DESTEKLİ ETL BORU HATTI")
