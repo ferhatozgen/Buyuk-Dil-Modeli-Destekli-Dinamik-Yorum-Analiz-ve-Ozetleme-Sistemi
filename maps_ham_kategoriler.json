@@ -143,6 +143,11 @@
             "kuru temizleme",
             "oto sanayi",
             "servis"
+        ],
+        "otel": [
+            "otel",
+            "motel",
+            "hotel"
         ]
     },
     "varsayilan_kategori": "Diğer"
