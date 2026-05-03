@@ -1,6 +1,6 @@
 {
     "ana_kategori_haritasi": {
-        "Yeme - İçme": [
+        "Yemek": [
             "restoran",
             "lokanta",
             "kafe",
@@ -27,9 +27,13 @@
             "salonu",
             "sütlüce",
             "künefe",
-            "çikolata"
+            "çikolata",
+            "dondurma",
+            "meyve",
+            "çiğköfte",
+            "köfte"
         ],
-        "Kültür, Turizm & Din": [
+        "Gezilecek Yer": [
             "müze",
             "museum",
             "tarihi",
@@ -66,7 +70,7 @@
             "doktor",
             "bakım"
         ],
-        "Alışveriş & Ticaret": [
+        "Alışveriş": [
             "avm",
             "alışveriş",
             "merkezi",
@@ -86,9 +90,11 @@
             "gelin",
             "sarayı",
             "toptan",
-            "gurme"
+            "gurme",
+            "pazar",
+            "tedarik"
         ],
-        "Kamu & Kurumsal": [
+        "Kurumsal": [
             "bakanlığı",
             "müdürlüğü",
             "vergi",
@@ -105,7 +111,7 @@
             "iş merkezi",
             "genel müdürlük"
         ],
-        "Eğitim, Spor & Eğlence": [
+        "Eğitim & Eğlence": [
             "üniversite",
             "kursu",
             "okulu",
@@ -124,7 +130,7 @@
             "stadyum",
             "yüzme"
         ],
-        "Kişisel Bakım & Hizmet": [
+        "Hizmet": [
             "berber",
             "kuaför",
             "güzellik",
