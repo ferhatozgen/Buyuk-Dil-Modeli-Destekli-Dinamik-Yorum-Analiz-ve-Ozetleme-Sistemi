@@ -65,7 +65,7 @@ def baslat(link_listesi):
     logger.info(f"Toplam {len(link_listesi)} link sıraya alındı. ETL Operasyonu başlıyor...")
     db = DatabaseManager()
 
-    MAX_WORKERS = 3
+    MAX_WORKERS = 1
 
     #--- Paralel işleme için ThreadPoolExecutor kullanarak her linki tek_link_isle fonksiyonuna gönderiyoruz ---
     with concurrent.futures.ThreadPoolExecutor(max_workers=MAX_WORKERS) as executor:

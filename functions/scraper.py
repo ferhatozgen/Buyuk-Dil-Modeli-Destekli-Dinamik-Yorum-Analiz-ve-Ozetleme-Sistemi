@@ -1,5 +1,6 @@
+import random
 from bs4 import BeautifulSoup
-from curl_cffi import requests
+from curl_cffi import requests as curl_requests
 from pathlib import Path
 from langdetect import detect
 import urllib.parse
@@ -10,6 +11,7 @@ import emoji
 import base64
 from functions.logger import setup_logger
 import time
+
 
 logger = setup_logger()
 # ==========================================
@@ -89,9 +91,9 @@ class ReviewPreprocessor:
 # ==========================================
 def get_og_image(url):
     """Verilen URL'nin kaynak koduna girip sosyal medya (og:image) görselini çeker."""
-    headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) Chrome/120.0.0.0 Safari/537.36"}
+    headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) Chrome/124.0.0.0 Safari/537.36"}
     try:
-        res = requests.get(url, headers=headers, impersonate="chrome120", timeout=10, verify=False)
+        res = curl_requests.get(url, headers=headers, impersonate="chrome124", timeout=10, verify=False)
         match = re.search(r'<meta\s+(?:property|name)=["\']og:image["\']\s+content=["\']([^"\']+)["\']', res.text, re.IGNORECASE)
         return match.group(1) if match else "Görsel Bulunamadı"
     except: return "Görsel Bulunamadı"
@@ -234,7 +236,7 @@ def trendyol_veri_cek(urun_linki, max_sayfa) -> str:
     # --- GÜNCELLENEN KISIM: Kategori Çekme (Trendyol - Akıllı Temizleme) ---
     kategori_agaci = []
     try:
-        html_res = requests.get(urun_linki, headers={"User-Agent": "Mozilla/5.0"}, timeout=10)
+        html_res = curl_requests.get(urun_linki, headers={"User-Agent": "Mozilla/5.0"}, timeout=10)
         soup = BeautifulSoup(html_res.text, 'html.parser')
 
         kategori_etiketleri = soup.find_all('li', class_='product-detail-breadcrumbs-item')
@@ -281,7 +283,7 @@ def trendyol_veri_cek(urun_linki, max_sayfa) -> str:
     preprocessor = ReviewPreprocessor()
     tum_yorumlar = []
     gorulen_yorumlar = set()
-    MAX_YORUM_SINIRI = 500
+    MAX_YORUM_SINIRI = 200
 
     headers = {"Accept": "application/json", "Origin": "https://www.trendyol.com", "Referer": urun_linki}
 
@@ -292,7 +294,7 @@ def trendyol_veri_cek(urun_linki, max_sayfa) -> str:
 
         api_url = f"https://apigw.trendyol.com/discovery-storefront-trproductgw-service/api/review-read/product-reviews/detailed?channelId=1&contentId={urun_id}&page={sayfa}"
         try:
-            res = requests.get(api_url, headers=headers, impersonate="chrome120", timeout=10, verify=False)
+            res = curl_requests.get(api_url, headers=headers, impersonate="chrome124", timeout=10, verify=False)
             if res.status_code != 200: break
 
             yorum_listesi = trendyol_yorum_bul(res.json())
@@ -351,11 +353,11 @@ def hepsiburada_veri_cek(urun_linki, max_sayfa) -> str:
     # --- SADECE BU KISIM GÜNCELLENDİ: Kategori Çekme (Hepsiburada - Gelişmiş Hibrit Çözüm) ---
     kategori_agaci = [] # Boş liste ile başlatıyoruz
     try:
-        html_res = requests.get(
+        html_res = curl_requests.get(
             urun_linki,
-            headers={"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"},
+            headers={"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36"},
             timeout=15,
-            impersonate="chrome120",
+            impersonate="chrome124",
             verify=False
         )
         soup = BeautifulSoup(html_res.text, 'html.parser')
@@ -430,7 +432,7 @@ def hepsiburada_veri_cek(urun_linki, max_sayfa) -> str:
     preprocessor = ReviewPreprocessor()
     tum_yorumlar = []
     gorulen_yorumlar = set() # Tekrar kontrolü için hafıza
-    MAX_YORUM_SINIRI = 500   # Limitimiz
+    MAX_YORUM_SINIRI = 200   # Limitimiz
     headers = {"Accept": "application/json", "Origin": "https://www.hepsiburada.com", "Referer": urun_linki}
 
     for sayfa in range(max_sayfa):
@@ -440,7 +442,7 @@ def hepsiburada_veri_cek(urun_linki, max_sayfa) -> str:
         offset = sayfa * 20
         api_url = f"https://user-content-gw-hermes.hepsiburada.com/queryapi/v2/ApprovedUserContents?sku={urun_sku}&from={offset}&size=20"
         try:
-            res = requests.get(api_url, headers=headers, impersonate="chrome120", timeout=10, verify=False)
+            res = curl_requests.get(api_url, headers=headers, impersonate="chrome124", timeout=10, verify=False)
             if res.status_code != 200: break
 
             data = res.json()
@@ -490,58 +492,96 @@ def hepsiburada_veri_cek(urun_linki, max_sayfa) -> str:
         return None
 
 def ciceksepeti_veri_cek(urun_linki, max_sayfa) -> str:
+    # 1. URL'den ürün kodu ve ismini çıkar
     match_code = re.search(r'-([a-zA-Z0-9]+)(?:\?|/|$)', urun_linki)
     urun_kodu = match_code.group(1).lower() if match_code else str(int(time.time()))
+
     isim_match = re.search(r'/([^/]+)-[a-zA-Z0-9]+(?:\?|/|$)', urun_linki)
     urun_adi = isim_match.group(1).replace('-', ' ').title() if isim_match else "Çiçeksepeti Ürünü"
 
-    dosya_yolu = f"cekilen_veriler/ciceksepeti/ciceksepeti_{urun_kodu}.json"
+    # Dosya yolu yapılandırması
+    hedef_klasor = "cekilen_veriler/ciceksepeti"
+    os.makedirs(hedef_klasor, exist_ok=True)
+    dosya_yolu = os.path.join(hedef_klasor, f"ciceksepeti_{urun_kodu}.json")
 
     logger.info(f"🔍 Çiçeksepeti Kodu Çözümleniyor: {urun_kodu}")
 
-    gorsel_url = get_og_image(urun_linki)
-    headers_main = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) Chrome/120.0.0.0 Safari/537.36"}
+    # 2. Session (Oturum) Başlatma
+    session = curl_requests.Session()
+    headers_main = {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36",
+        "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8",
+        "Accept-Language": "tr-TR,tr;q=0.9,en-US;q=0.8,en;q=0.7",
+    }
 
     try:
-        res = requests.get(urun_linki, headers=headers_main, impersonate="chrome120", timeout=15, verify=False)
-        if res.status_code != 200: return
-        id_match = re.search(r'data-productid=["\'](\d+)["\']', res.text, re.IGNORECASE) or re.search(r'"productId"\s*:\s*(\d+)', res.text, re.IGNORECASE)
-        if not id_match: return
+        # Ana sayfadan Product ID'yi çek
+        res = session.get(urun_linki, headers=headers_main, impersonate="chrome124", timeout=20, verify=False)
+        if res.status_code != 200:
+            logger.error(f"❌ Ürün sayfasına ulaşılamadı. Statü: {res.status_code}")
+            return None
+
+        id_match = re.search(r'data-productid=["\'](\d+)["\']', res.text, re.IGNORECASE) or \
+                   re.search(r'"productId"\s*:\s*(\d+)', res.text, re.IGNORECASE)
+        if not id_match:
+            logger.error(f"❌ Product ID bulunamadı!")
+            return None
         gercek_urun_id = id_match.group(1)
-    except Exception: return
+        logger.info(f"🆔 Gerçek Ürün ID Tespit Edildi: {gercek_urun_id}")
+    except Exception as e:
+        logger.error(f"❌ Bağlantı Hatası: {e}")
+        return None
+
+    gorsel_url = "Görsel Bulunamadı"
+    try: gorsel_url = get_og_image(urun_linki)
+    except: pass
 
     preprocessor = ReviewPreprocessor()
     tum_yorumlar = []
-    gorulen_yorumlar = set() # Tekrar kontrolü
-    MAX_YORUM_SINIRI = 500   # Hedef limit
+    gorulen_yorumlar = set()
+    MAX_YORUM_SINIRI = 200
 
-    api_headers = {"X-Requested-With": "XMLHttpRequest", "User-Agent": headers_main["User-Agent"]}
+    api_headers = {
+        "X-Requested-With": "XMLHttpRequest",
+        "Referer": urun_linki,
+        "Accept": "*/*"
+    }
 
+    # --- SİHİRLİ ANAHTAR: BAŞLANGIÇ CURSOR'I ---
+    cursor = ""
+
+    # 3. Döngü: Yorumları Sayfa Sayfa Çek
     for sayfa in range(1, max_sayfa + 1):
-        # HEDEF KONTROLÜ
         if len(tum_yorumlar) >= MAX_YORUM_SINIRI:
             logger.info(f" 🎯 Hedeflenen {MAX_YORUM_SINIRI} kaliteli yoruma ulaşıldı.")
             break
 
-        api_url = f"https://www.ciceksepeti.com/Review/GetReviews?productId={gercek_urun_id}&page={sayfa}"
-        try:
-            response = requests.get(api_url, headers=api_headers, impersonate="chrome120", timeout=10, verify=False)
-            if response.status_code != 200: break
+        # Cursor URL encode edilerek API linkine ekleniyor!
+        cursor_param = urllib.parse.quote(cursor) if cursor else ""
+        api_url = f"https://www.ciceksepeti.com/Review/GetReviews?productId={gercek_urun_id}&page={sayfa}&cursor={cursor_param}&hideRatingandOrderButtons=false"
 
-            soup = BeautifulSoup(response.text, 'html.parser')
+        try:
+            response = session.get(api_url, headers=api_headers, impersonate="chrome124", timeout=20, verify=False)
+
+            if response.status_code != 200:
+                logger.error(f"❌ Sayfa {sayfa} çekilemedi. Statü: {response.status_code}")
+                break
+
+            html_text = response.text
+            soup = BeautifulSoup(html_text, 'html.parser')
             yorum_kutulari = soup.find_all("div", class_="ns-reviews--item-wrapper")
-            if not yorum_kutulari: break
+
+            if not yorum_kutulari:
+                logger.warning(f"⚠️ Sayfa {sayfa} boş döndü. Yorumlar bitti.")
+                break
 
             for kutu in yorum_kutulari:
-                # İÇ DÖNGÜ KONTROLÜ
-                if len(tum_yorumlar) >= MAX_YORUM_SINIRI:
-                    break
+                if len(tum_yorumlar) >= MAX_YORUM_SINIRI: break
 
                 metin_span = kutu.find("span", class_="js-review-detail")
                 ham_metin = metin_span.get("data-value", "").strip() if metin_span else ""
                 temiz_metin = preprocessor.clean_text(ham_metin, "ciceksepeti")
 
-                # KALİTE KONTROL
                 if kaliteli_yorum_mu(temiz_metin, gorulen_yorumlar):
                     gorulen_yorumlar.add(temiz_metin)
 
@@ -558,21 +598,42 @@ def ciceksepeti_veri_cek(urun_linki, max_sayfa) -> str:
                         "temiz_metin": temiz_metin
                     }
                     tum_yorumlar.append(yrm)
-            time.sleep(0.5)
-        except Exception: break
 
+            # --- SİHİR 2: HTML İÇİNDEKİ SONRAKİ SAYFA CURSOR'INI YAKALAMA ---
+            cursor_match = re.search(r'data-cursor=["\']([^"\']+)["\']', html_text, re.IGNORECASE)
+            if cursor_match:
+                cursor = cursor_match.group(1)
+            else:
+                logger.info("📄 Sonraki sayfa için imleç (cursor) bulunamadı. Yorumların sonu.")
+                break # Yeni cursor yoksa sayfalama bitmiştir!
+
+            # İnsani davranış için bekleme
+            time.sleep(random.uniform(1.5, 3.0))
+
+        except Exception as e:
+            logger.error(f"⚠️ Sayfa {sayfa} çekilirken hata oluştu: {e}")
+            break
+
+    # 4. Dosyayı Kaydet
     if tum_yorumlar:
-        veri_seti = {"platform": "ciceksepeti", "baslik": urun_adi, "link": urun_linki, "gorsel_url": gorsel_url, "yorumlar": tum_yorumlar}
+        veri_seti = {
+            "platform": "ciceksepeti",
+            "baslik": urun_adi,
+            "link": urun_linki,
+            "gorsel_url": gorsel_url,
+            "yorumlar": tum_yorumlar
+        }
 
-        hedef_klasor = "cekilen_veriler/ciceksepeti"
-        os.makedirs(hedef_klasor, exist_ok=True)
-
-        with open(dosya_yolu, "w", encoding="utf-8") as f:
-            json.dump(veri_seti, f, ensure_ascii=False, indent=4)
-        logger.info(f"🎉 Kaydedildi: {dosya_yolu} ({len(tum_yorumlar)} yorum)")
-        return dosya_yolu
+        try:
+            with open(dosya_yolu, "w", encoding="utf-8") as f:
+                json.dump(veri_seti, f, ensure_ascii=False, indent=4)
+            logger.info(f"🎉 Kaydedildi: {dosya_yolu} ({len(tum_yorumlar)} yorum)")
+            return dosya_yolu
+        except Exception as e:
+            logger.error(f"❌ Dosya yazma hatası: {e}")
+            return None
     else:
-        logger.warning(f"⚠️ Bu üründe çekilecek yorum bulunamadı: {urun_adi}")
+        logger.warning(f"⚠️ Çekilecek yorum bulunamadı: {urun_adi}")
         return None
 
 def steam_veri_cek(oyun_linki, max_sayfa) -> str:
@@ -590,7 +651,7 @@ def steam_veri_cek(oyun_linki, max_sayfa) -> str:
     preprocessor = ReviewPreprocessor()
     tum_yorumlar = []
     gorulen_yorumlar = set() # Tekrar kontrolü
-    MAX_YORUM_SINIRI = 500   # Hedef limit
+    MAX_YORUM_SINIRI = 200   # Hedef limit
     cursor = "*"
 
     for sayfa in range(max_sayfa):
@@ -602,7 +663,7 @@ def steam_veri_cek(oyun_linki, max_sayfa) -> str:
         encoded_cursor = urllib.parse.quote(cursor)
         api_url = f"https://store.steampowered.com/appreviews/{app_id}?json=1&language=turkish&filter=recent&num_per_page=100&cursor={encoded_cursor}"
         try:
-            res = requests.get(api_url, impersonate="chrome120", timeout=10, verify=False)
+            res = curl_requests.get(api_url, impersonate="chrome124", timeout=10, verify=False)
             if res.status_code != 200: break
 
             data = res.json()
@@ -645,9 +706,9 @@ def steam_veri_cek(oyun_linki, max_sayfa) -> str:
 
 def etstur_veri_cek(otel_linki, max_sayfa) -> str:
     logger.info(f"🔍 Etstur ID'leri Çözümleniyor: {otel_linki}")
-    headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) Chrome/120.0.0.0 Safari/537.36"}
+    headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) Chrome/124.0.0.0 Safari/537.36"}
     try:
-        html_res = requests.get(otel_linki, headers=headers, impersonate="chrome120", timeout=15, verify=False)
+        html_res = curl_requests.get(otel_linki, headers=headers, impersonate="chrome124", timeout=15, verify=False)
         if html_res.status_code != 200: return
         hotel_id_match = re.search(r'data-hotel-id=["\']([^"\']+)["\']', html_res.text) or re.search(r'"hotelId"\s*:\s*["\']([^"\']+)["\']', html_res.text)
         hotel_code_match = re.search(r'data-vendor-code=["\']([^"\']+)["\']', html_res.text) or re.search(r'"vndCode"\s*:\s*["\']([^"\']+)["\']', html_res.text)
@@ -668,7 +729,7 @@ def etstur_veri_cek(otel_linki, max_sayfa) -> str:
     preprocessor = ReviewPreprocessor()
     tum_yorumlar = []
     gorulen_yorumlar = set() # Tekrar kontrolü için hafıza
-    MAX_YORUM_SINIRI = 500   # Hedef limit
+    MAX_YORUM_SINIRI = 200   # Hedef limit
 
     api_url = "https://www.etstur.com/services/api/review"
     api_headers = {"Content-Type": "application/json", "Origin": "https://www.etstur.com", "Referer": otel_linki}
@@ -681,7 +742,7 @@ def etstur_veri_cek(otel_linki, max_sayfa) -> str:
 
         payload = {"hotelCode": hotel_code, "hotelId": hotel_id, "offset": sayfa, "sort": "BOOKING_DESC", "period": "", "categoryType": "OVERALL", "searchText": ""}
         try:
-            response = requests.post(api_url, headers=api_headers, json=payload, impersonate="chrome120", timeout=15, verify=False)
+            response = curl_requests.post(api_url, headers=api_headers, json=payload, impersonate="chrome124", timeout=15, verify=False)
             if response.status_code != 200: break
 
             data = response.json()
@@ -723,18 +784,35 @@ def etstur_veri_cek(otel_linki, max_sayfa) -> str:
 
 def airbnb_veri_cek(oda_linki, max_sayfa) -> str:
     match = re.search(r'/rooms/(\d+)', oda_linki)
-    if not match: return
+    if not match: return None
     oda_id = match.group(1)
 
     dosya_yolu = f"cekilen_veriler/airbnb/airbnb_{oda_id}.json"
 
-    logger.info(f" Airbnb ID Çözümleniyor: {oda_id}")
+    logger.info(f" 🔍 Airbnb ID Çözümleniyor: {oda_id}")
     gorsel_url = "Görsel Bulunamadı"
 
-    headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) Chrome/120.0.0.0 Safari/537.36", "Accept-Language": "tr-TR,tr;q=0.9"}
+    headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) Chrome/124.0.0.0 Safari/537.36", "Accept-Language": "tr-TR,tr;q=0.9"}
     try:
-        html_res = requests.get(oda_linki, headers=headers, impersonate="chrome120", timeout=15, verify=False)
+        from curl_cffi import requests as curl_requests
+
+        # --- YENİ EKLENEN KISIM: ZAMAN AŞIMI VE TEKRAR DENEME MEKANİZMASI ---
+        max_deneme = 3
+        html_res = None
+        for deneme in range(max_deneme):
+            try:
+                # Timeout süresini 15'ten 30'a çıkardık
+                html_res = curl_requests.get(oda_linki, headers=headers, impersonate="chrome124", timeout=30, verify=False)
+                break  # Başarılı olursa döngüyü kır ve devam et
+            except Exception as e:
+                if deneme < max_deneme - 1:
+                    logger.warning(f"⚠️ Airbnb sayfası yanıt vermedi (Zaman Aşımı). Tekrar deneniyor ({deneme+1}/{max_deneme})...")
+                    time.sleep(3) # 3 saniye bekle ve tekrar dene
+                else:
+                    raise e # 3 denemede de başarısız olursa asıl hatayı fırlat
+
         temiz_html = html_res.text.replace('\\u002F', '/')
+        # -------------------------------------------------------------------
 
         urun_adi = "Airbnb Evi"
 
@@ -753,83 +831,109 @@ def airbnb_veri_cek(oda_linki, max_sayfa) -> str:
                 if len(olasi_isim) > 3 and "Kiralık" not in olasi_isim:
                     urun_adi = olasi_isim
 
-        # Daha esnek bir Regex
-        api_key_match = re.search(r'("key"|"apiKey")\s*:\s*"([^"]+)"', temiz_html)
+        # API KEY'i dinamik bulma
+        api_key_match = re.search(r'"api_config"\s*:\s*{[^}]*"key"\s*:\s*"([^"]+)"', temiz_html)
         if not api_key_match:
-            # B Planı: Sayfa içinde başka bir yerden yakalamaya çalış
-            api_key_match = re.search(r'commonConfig\s*:\s*{[^}]*"apiKey"\s*:\s*"([^"]+)"', temiz_html)
+            api_key_match = re.search(r'("key"|"apiKey")\s*:\s*"([^"]+)"', temiz_html)
 
         if api_key_match:
-            # Regex grubuna göre key'i al
-            api_key = api_key_match.group(2) if '"' in api_key_match.group(1) else api_key_match.group(1)
+            api_key = api_key_match.group(2) if len(api_key_match.groups()) > 1 else api_key_match.group(1)
         else:
             logger.error(f"❌ Airbnb API Key Bulunamadı: {oda_id}")
-            raise ValueError("Airbnb API KEY Bulunamadı.")  # main.py'a hatayı bildir   None, None
+            return None
+
+        # sha256Hash Değerini Dinamik Bulma (Yedekli)
+        sha256Hash = "2ed951bfedf71b87d9d30e24a419e15517af9fbed7ac560a8d1cc7feadfa22e6"
+        hash_match = re.search(r'StaysPdpReviewsQuery.*?sha256Hash":"([^"]+)"', temiz_html)
+        if hash_match:
+            sha256Hash = hash_match.group(1)
 
         pic_match = re.findall(r'(https://a0\.muscache\.com/im/pictures/[^"\'\?\\]+\.(?:jpg|jpeg|png|webp))', temiz_html)
 
         for pic in pic_match:
             if any(x in pic for x in ["/hosting/", "/miso/", "/pro/", "/prohost/"]):
                 gorsel_url = pic
-                logger.info(f"🖼️ Airbnb Ev Görseli Nokta Atışı Çekildi: {gorsel_url}")
                 break
 
-    except Exception: return
+    except Exception as e:
+        logger.error(f"❌ Airbnb Sayfa Hatası: {e}")
+        return None
 
     preprocessor = ReviewPreprocessor()
     tum_yorumlar = []
-    gorulen_yorumlar = set() # Tekrar kontrolü
-    MAX_YORUM_SINIRI = 200   # Hedef limit
+    gorulen_yorumlar = set()
+    MAX_YORUM_SINIRI = 200
 
     base64_id = base64.b64encode(f"StayListing:{oda_id}".encode('utf-8')).decode('utf-8')
-    sha256Hash = "2ed951bfedf71b87d9d30e24a419e15517af9fbed7ac560a8d1cc7feadfa22e6"
-    api_headers = {"Accept": "application/json", "x-airbnb-api-key": api_key, "User-Agent": headers["User-Agent"], "Origin": "https://www.airbnb.com.tr", "Referer": oda_linki}
+    api_headers = {"Accept": "application/json", "x-airbnb-api-key": api_key, "User-Agent": headers["User-Agent"], "Origin": "https://www.airbnb.com.tr"}
 
     for sayfa in range(max_sayfa):
-        # DIŞ KONTROL
         if len(tum_yorumlar) >= MAX_YORUM_SINIRI:
             logger.info(f" 🎯 Hedeflenen {MAX_YORUM_SINIRI} kaliteli yoruma ulaşıldı.")
             break
 
-        limit = 50  # Sabit 50 yaparak daha büyük paketler isteyelim
+        limit = 24 # Airbnb'nin teşhis dosyasında gördüğümüz sınırı
         offset = sayfa * limit
+
+        # --- YENİ EKLENEN KISIM: 'first' PARAMETRESİ ---
         variables = {
             "id": base64_id,
             "pdpReviewsRequest": {
                 "fieldSelector": "for_p3_translation_only",
                 "forPreview": False,
                 "limit": limit,
+                "first": limit, # Eksik olan ve API'yi bozan kritik değer
                 "offset": str(offset),
                 "showingTranslationButton": False,
-                "sortingPreference": "MOST_RECENT"  # En güncelden başla ki veri taze olsun
+                "sortingPreference": "MOST_RECENT"
             }
         }
+
         extensions = {"persistedQuery": {"version": 1, "sha256Hash": sha256Hash}}
-        params = {"operationName": "StaysPdpReviewsQuery", "locale": "tr", "currency": "TRY", "variables": json.dumps(variables, separators=(',', ':')), "extensions": json.dumps(extensions, separators=(',', ':'))}
+        params = {
+            "operationName": "StaysPdpReviewsQuery",
+            "locale": "tr",
+            "currency": "TRY",
+            "variables": json.dumps(variables, separators=(',', ':')),
+            "extensions": json.dumps(extensions, separators=(',', ':'))
+        }
         full_url = f"https://www.airbnb.com.tr/api/v3/StaysPdpReviewsQuery/{sha256Hash}?{urllib.parse.urlencode(params)}"
 
         try:
-            response = requests.get(full_url, headers=api_headers, impersonate="chrome120", timeout=15, verify=False)
+            from curl_cffi import requests as curl_requests
+            response = curl_requests.get(full_url, headers=api_headers, impersonate="chrome124", timeout=15, verify=False)
+
             if response.status_code != 200:
-                logger.error(f"❌ Airbnb API Hatası (Kod: {response.status_code}) - Sayfa: {sayfa}")
-                break  # Hata aldıysan döngüyü kır
+                logger.error(f"❌ Airbnb API Hatası (Kod: {response.status_code})")
+                break
 
             data = response.json()
+            # --- TEŞHİS İÇİN EKLENDİ (GERÇEK HATAYI GÖRECEĞİZ) ---
             if "errors" in data:
-                logger.warning(f"⚠️ Airbnb API Hatası Mesajı: {data['errors'][0].get('message')}")
-                break
+                logger.error(f"⚠️ Airbnb API İçi Hata: {data['errors']}")
+
             yorum_listesi = airbnb_yorum_bul(data)
-            if not yorum_listesi: break
+
+            if not yorum_listesi:
+                # Airbnb bize yorum listesi yerine ne gönderdi, ekranda görelim!
+                logger.warning(f"⚠️ API'den yorum gelmedi. Gelen ham veri: {str(data)[:500]}")
+                break
+            # ---------------------------------------------------
+            yorum_listesi = airbnb_yorum_bul(data)
+
+            # Eğer sayfa boş gelirse API verileri bitirmiş demektir
+            if not yorum_listesi:
+                break
 
             for yrm in yorum_listesi:
-                # İÇ KONTROL
                 if len(tum_yorumlar) >= MAX_YORUM_SINIRI:
                     break
 
                 ham_metin = yorum_metnini_bul(yrm)
+                if not ham_metin: continue
+
                 temiz_metin = preprocessor.clean_text(ham_metin, "airbnb")
 
-                # KALİTE KONTROLÜ
                 if kaliteli_yorum_mu(temiz_metin, gorulen_yorumlar):
                     gorulen_yorumlar.add(temiz_metin)
                     yrm["temiz_metin"] = temiz_metin
@@ -886,7 +990,7 @@ def yemeksepeti_veri_cek(restoran_linki, max_sayfa) -> str:
             context = p.chromium.launch_persistent_context(
                 user_data_dir=profil_klasoru,
                 headless=False,
-                user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+                user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36",
                 locale="tr-TR",
                 ignore_default_args=["--enable-automation"],
                 args=["--disable-blink-features=AutomationControlled", "--no-sandbox"],
@@ -946,7 +1050,7 @@ def yemeksepeti_veri_cek(restoran_linki, max_sayfa) -> str:
     preprocessor = ReviewPreprocessor()
     tum_yorumlar = []
     gorulen_yorumlar = set() # Tekrar kontrolü
-    MAX_YORUM_SINIRI = 500   # Hedef limit
+    MAX_YORUM_SINIRI = 200   # Hedef limit
     next_page_key = ""
     headers = {"Accept": "application/json", "Origin": "https://www.yemeksepeti.com", "Referer": restoran_linki}
 
@@ -960,7 +1064,7 @@ def yemeksepeti_veri_cek(restoran_linki, max_sayfa) -> str:
         if next_page_key: api_url += f"&nextPageKey={urllib.parse.quote(next_page_key)}"
 
         try:
-            res = requests.get(api_url, headers=headers, impersonate="chrome120", timeout=15, verify=False)
+            res = curl_requests.get(api_url, headers=headers, impersonate="chrome124", timeout=15, verify=False)
             if res.status_code != 200: break
 
             data = res.json()
@@ -1015,10 +1119,10 @@ def trendyol_go_veri_cek(restoran_linki, max_sayfa) -> str:
 
     logger.info(f"🔍 Trendyol Go Vendor ID Çözümleniyor: {vendor_id}")
     gorsel_url = "Görsel Bulunamadı"
-    headers_main = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) Chrome/120.0.0.0 Safari/537.36"}
+    headers_main = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) Chrome/124.0.0.0 Safari/537.36"}
 
     try:
-        html_res = requests.get(restoran_linki, headers=headers_main, impersonate="chrome120", timeout=10, verify=False)
+        html_res = curl_requests.get(restoran_linki, headers=headers_main, impersonate="chrome124", timeout=10, verify=False)
         isim_match = re.search(r'<title>([^<]+)</title>', html_res.text, re.IGNORECASE)
         if isim_match:
             urun_adi = isim_match.group(1).split('|')[0].replace('Sipariş', '').strip()
@@ -1035,7 +1139,7 @@ def trendyol_go_veri_cek(restoran_linki, max_sayfa) -> str:
     preprocessor = ReviewPreprocessor()
     tum_yorumlar = []
     gorulen_yorumlar = set() # Tekrar kontrolü
-    MAX_YORUM_SINIRI = 500   # Hedef limit
+    MAX_YORUM_SINIRI = 200   # Hedef limit
     headers = {"Accept": "application/json", "Origin": "https://www.trendyol.com", "Referer": restoran_linki}
 
     for sayfa in range(1, max_sayfa + 1):
@@ -1046,7 +1150,7 @@ def trendyol_go_veri_cek(restoran_linki, max_sayfa) -> str:
 
         api_url = f"https://api.tgoapis.com/web-restaurant-apirestaurant-santral/restaurants/{vendor_id}/comments?page={sayfa}&pageSize=20&latitude=41.07087&longitude=28.996586&tagVersion=2"
         try:
-            res = requests.get(api_url, headers=headers, impersonate="chrome120", timeout=10, verify=False)
+            res = curl_requests.get(api_url, headers=headers, impersonate="chrome124", timeout=10, verify=False)
             if res.status_code != 200: break
 
             data = res.json()
@@ -1101,7 +1205,7 @@ def google_maps_veri_cek(mekan_linki, max_kaydirma) -> str:
     preprocessor = ReviewPreprocessor()
     tum_yorumlar = []
     gorulen_yorumlar = set() # Tekrar kontrolü için hafıza
-    MAX_YORUM_SINIRI = 500   # Hedef limit
+    MAX_YORUM_SINIRI = 200   # Hedef limit
 
     logger.info("🔍 Google Maps yorumlarına erişmek için Playwright başlatılıyor...")
     try:
