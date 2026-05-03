@@ -147,7 +147,19 @@
         "otel": [
             "otel",
             "motel",
-            "hotel"
+            "hotel",
+            "pansiyon",
+            "konaklama",
+            "resort",
+            "apart",
+            "hostel",
+            "butik",
+            "suit",
+            "suite",
+            "termal",
+            "tatil köyü",
+            "bungalov",
+            "lodge"
         ]
     },
     "varsayilan_kategori": "Diğer"
