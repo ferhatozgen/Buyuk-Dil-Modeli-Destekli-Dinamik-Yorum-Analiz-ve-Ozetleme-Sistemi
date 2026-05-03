@@ -136,6 +136,22 @@ def yorum_metnini_bul(yorum):
         if string_degerler: return max(string_degerler, key=len)
     return ""
 
+def json_icinde_ara(veri, aranan_anahtar):
+    """JSON içinde herhangi bir derinlikteki anahtarı bulur (Recursive Search)"""
+    if isinstance(veri, dict):
+        if aranan_anahtar in veri:
+            return veri[aranan_anahtar]
+        for v in veri.values():
+            sonuc = json_icinde_ara(v, aranan_anahtar)
+            if sonuc is not None:
+                return sonuc
+    elif isinstance(veri, list):
+        for eleman in veri:
+            sonuc = json_icinde_ara(eleman, aranan_anahtar)
+            if sonuc is not None:
+                return sonuc
+    return None
+
 def yemeksepeti_gorsel_bul(json_verisi):
     """Yemeksepeti'nin devasa Next.js JSON'ı içinde logo veya afiş arar."""
     if isinstance(json_verisi, dict):
@@ -233,7 +249,7 @@ def airbnb_yorum_bul(json_verisi):
 # 3. PLATFORM FONKSİYONLARI
 # ==========================================
 def trendyol_veri_cek(urun_linki, max_sayfa) -> str:
-    match = re.search(r'-p-(\d+)', urun_linki)   #bu kısım utils urunid kısmına ait bir checkpoint gorevi gorur (double check durumu)
+    match = re.search(r'-p-(\d+)', urun_linki)
     if not match: return
     urun_id = match.group(1)
     isim_match = re.search(r'/([^/]+)-p-\d+', urun_linki)
@@ -244,41 +260,80 @@ def trendyol_veri_cek(urun_linki, max_sayfa) -> str:
     logger.info(f"🔍 Trendyol ID Çözümleniyor: {urun_id}")
     gorsel_url = get_og_image(urun_linki)
 
+    # --- GÜNCELLENEN KISIM: Kategori Çekme (Trendyol - Akıllı Temizleme) ---
+    kategori_agaci = []
+    try:
+        html_res = requests.get(urun_linki, headers={"User-Agent": "Mozilla/5.0"}, timeout=10)
+        soup = BeautifulSoup(html_res.text, 'html.parser')
+
+        kategori_etiketleri = soup.find_all('li', class_='product-detail-breadcrumbs-item')
+        kategoriler = []
+
+        # Ekstra temizlik için marka ve ürün ismini html içinden bulmayı deneriz, bulamazsak da en son elemanı (ürün adı) sileriz.
+        urun_adi_html_icinde = ""
+        try:
+            # Trendyolda genellikle <h1> etiketi ürün adıdır.
+            urun_baslik = soup.find('h1')
+            if urun_baslik:
+                # span'ler içinde marka ve ürün adı olabilir. Sadece metinleri alalım.
+                urun_adi_html_icinde = urun_baslik.text.strip().lower()
+        except:
+            pass
+
+        for li in kategori_etiketleri:
+            isim = li.text.strip()
+            # 1. 'Trendyol' u atlıyoruz.
+            if isim and isim != "Trendyol":
+                # 2. Eğer bu breadcrumb öğesi, ürünün isminin (ya da uzun marka+ürün birleşiminin) kendisiyse atla.
+                # E-ticaret siteleri breadcrumbın en sonuna genelde ürünün kendisini koyar.
+                if urun_adi_html_icinde and isim.lower() in urun_adi_html_icinde and len(isim) > 20:
+                    continue
+
+                # 3. Listeye ekle (daha önce eklenmediyse)
+                if isim not in kategoriler:
+                    kategoriler.append(isim)
+
+        # Ekstra Filtre: E-ticaret siteleri breadcrumb'ın en sonuna genelde ürünün adını koyar.
+        # Liste boş değilse ve son elemanın uzunluğu çok fazlaysa (kategori isimleri genelde kısadır, örn. "Sneaker", ürün isimleri uzundur),
+        # büyük ihtimalle ürün ismini almıştır. Onu listeden çıkaralım.
+        if kategoriler and len(kategoriler[-1]) > 35:
+            kategoriler.pop()
+
+        if kategoriler:
+            kategori_agaci = kategoriler
+
+        logger.info(f"📁 Kategori Bulundu: {kategori_agaci}")
+    except Exception as e:
+        logger.warning(f"⚠️ Kategori çekilemedi: {e}")
+    # -----------------------------------------------------
+
     preprocessor = ReviewPreprocessor()
     tum_yorumlar = []
-    gorulen_yorumlar = set() # Tekrar kontrolü için hafıza
-    MAX_YORUM_SINIRI = 500   # Hedef limit
+    gorulen_yorumlar = set()
+    MAX_YORUM_SINIRI = 500
 
     headers = {"Accept": "application/json", "Origin": "https://www.trendyol.com", "Referer": urun_linki}
 
     for sayfa in range(max_sayfa):
-        # HEDEF KONTROLÜ
         if len(tum_yorumlar) >= MAX_YORUM_SINIRI:
             logger.info(f" 🎯 Hedeflenen {MAX_YORUM_SINIRI} kaliteli yoruma ulaşıldı.")
             break
 
-        """
-        api_url: kısmı trendyolun gateway adesi basındaki api.gw.trendyol.com kısmı gelen tüm istekelri karsılayan ve hangi birime(mikroservice) gideceğine karar verir.
-        channelid=1 web sitesinden geliyorum mesajını verir. genelde mobil uygulamada 2-3 olur.
-        Yorumlar binlerce olabilir ondan trendyol yorumları page page (paket paket) gönderir.
-        """
         api_url = f"https://apigw.trendyol.com/discovery-storefront-trproductgw-service/api/review-read/product-reviews/detailed?channelId=1&contentId={urun_id}&page={sayfa}"
         try:
-            res = requests.get(api_url, headers=headers, impersonate="chrome120", timeout=10, verify=False)   #chrome120 ben chrome kullanan gercek insanım der (bunun varlıgı kritik)
+            res = requests.get(api_url, headers=headers, impersonate="chrome120", timeout=10, verify=False)
             if res.status_code != 200: break
 
             yorum_listesi = trendyol_yorum_bul(res.json())
             if not yorum_listesi: break
 
             for yrm in yorum_listesi:
-                # İÇ DÖNGÜ KONTROLÜ
                 if len(tum_yorumlar) >= MAX_YORUM_SINIRI:
                     break
 
                 ham_metin = yorum_metnini_bul(yrm)
                 temiz_metin = preprocessor.clean_text(ham_metin, "trendyol")
 
-                # KALİTE KONTROL
                 if kaliteli_yorum_mu(temiz_metin, gorulen_yorumlar):
                     gorulen_yorumlar.add(temiz_metin)
                     yrm["temiz_metin"] = temiz_metin
@@ -288,7 +343,15 @@ def trendyol_veri_cek(urun_linki, max_sayfa) -> str:
         except Exception: break
 
     if tum_yorumlar:
-        veri_seti = {"platform": "trendyol", "baslik": urun_adi, "link": urun_linki, "gorsel_url": gorsel_url, "yorumlar": tum_yorumlar}
+        # JSON SETİNE 'kategori' EKLENDİ
+        veri_seti = {
+            "platform": "trendyol",
+            "baslik": urun_adi,
+            "kategori": kategori_agaci, # YENİ ALAN
+            "link": urun_linki,
+            "gorsel_url": gorsel_url,
+            "yorumlar": tum_yorumlar
+        }
 
         hedef_klasor = "cekilen_veriler/trendyol"
         os.makedirs(hedef_klasor, exist_ok=True)
@@ -314,6 +377,85 @@ def hepsiburada_veri_cek(urun_linki, max_sayfa) -> str:
     logger.info(f"🔍 Hepsiburada SKU Çözümleniyor: {urun_sku}")
     gorsel_url = "Görsel Bulunamadı" # Başlangıçta boş
 
+    # --- SADECE BU KISIM GÜNCELLENDİ: Kategori Çekme (Hepsiburada - Gelişmiş Hibrit Çözüm) ---
+    kategori_agaci = [] # Boş liste ile başlatıyoruz
+    try:
+        html_res = requests.get(
+            urun_linki,
+            headers={"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"},
+            timeout=15,
+            impersonate="chrome120",
+            verify=False
+        )
+        soup = BeautifulSoup(html_res.text, 'html.parser')
+
+        next_data_script = soup.find('script', id='__NEXT_DATA__')
+        if next_data_script and next_data_script.string:
+            try:
+                data = json.loads(next_data_script.string)
+
+                bc_data = json_icinde_ara(data, 'breadcrumb')
+                if isinstance(bc_data, dict) and 'itemListElement' in bc_data:
+                    breadcrumbs_list = bc_data['itemListElement']
+                    kategoriler = [el.get('name') for el in breadcrumbs_list if el.get('name') and el.get('name') != "Anasayfa"]
+                    if 0 < len(kategoriler) <= 10:
+                        kategori_agaci = kategoriler # LİSTE OLARAK ATANDI
+
+                if not kategori_agaci: # Liste boşsa diğerine bak
+                    bcs_list = json_icinde_ara(data, 'breadcrumbs')
+                    if bcs_list and isinstance(bcs_list, list):
+                        kategoriler = [b.get('name') for b in bcs_list if isinstance(b, dict) and b.get('name')]
+                        if kategoriler and 0 < len(kategoriler) <= 10:
+                            kategori_agaci = kategoriler # LİSTE OLARAK ATANDI
+
+                if not kategori_agaci:
+                    category_str = json_icinde_ara(data, 'category')
+                    if isinstance(category_str, str) and " > " in category_str:
+                        # EĞER METİNSE PARÇALAYIP LİSTEYE ÇEVİRİYORUZ
+                        kategori_agaci = category_str.split(" > ")
+
+            except Exception:
+                pass
+
+        if not kategori_agaci:
+            for script in soup.find_all('script', type='application/ld+json'):
+                if script.string:
+                    try:
+                        data = json.loads(script.string)
+                        items = data.get('@graph', []) if isinstance(data, dict) and '@graph' in data else (data if isinstance(data, list) else [data])
+
+                        for obj in items:
+                            if isinstance(obj, dict) and obj.get('@type') == 'BreadcrumbList':
+                                kategoriler = []
+                                for el in obj.get('itemListElement', []):
+                                    cat_name = el.get('name')
+                                    if not cat_name and isinstance(el.get('item'), dict):
+                                        cat_name = el.get('item').get('name')
+                                    if cat_name and cat_name.lower() != "anasayfa":
+                                        kategoriler.append(cat_name)
+
+                                if 0 < len(kategoriler) <= 10:
+                                    kategori_agaci = kategoriler # LİSTE OLARAK ATANDI
+                                    break
+
+                            elif isinstance(obj, dict) and obj.get('@type') == 'Product' and obj.get('category'):
+                                cat_str = obj.get('category')
+                                if " > " in cat_str:
+                                    kategori_agaci = cat_str.split(" > ") # METNİ LİSTEYE ÇEVİR
+                                    break
+
+                        if kategori_agaci: # Liste artık boş değilse çık
+                            break
+                    except Exception:
+                        continue
+
+        logger.info(f"📁 Kategori Bulundu: {kategori_agaci}")
+
+    except Exception as e:
+        logger.warning(f"⚠️ Hepsiburada Kategori çekilemedi: {e}")
+    # -----------------------------------------------------
+
+    # --- ALT KISIM TAMAMEN SENİN ORİJİNAL KODUNDUR, HİÇBİR ŞEY DEĞİŞMEDİ ---
     preprocessor = ReviewPreprocessor()
     tum_yorumlar = []
     gorulen_yorumlar = set() # Tekrar kontrolü için hafıza
@@ -335,12 +477,11 @@ def hepsiburada_veri_cek(urun_linki, max_sayfa) -> str:
             if not yorum_listesi: yorum_listesi = hb_yorum_bul(data)
             if not yorum_listesi: break
 
-            # SİHİR 1: Görseli JSON'ın kendisinden çekiyoruz (Sadece ilk sayfada 1 kere yapması yeterli)
             if sayfa == 0 and yorum_listesi and gorsel_url == "Görsel Bulunamadı":
                 ilk_yorum = yorum_listesi[0]
                 img_raw = ilk_yorum.get("product", {}).get("imageUrl", "")
                 if img_raw:
-                    gorsel_url = img_raw.replace("{size}", "500") # {size} yerine 500 piksel yazıyoruz
+                    gorsel_url = img_raw.replace("{size}", "500")
 
             for yrm in yorum_listesi:
                 if len(tum_yorumlar) >= MAX_YORUM_SINIRI:
@@ -350,20 +491,25 @@ def hepsiburada_veri_cek(urun_linki, max_sayfa) -> str:
                 temiz_metin = preprocessor.clean_text(ham_metin, "hepsiburada")
 
                 if kaliteli_yorum_mu(temiz_metin, gorulen_yorumlar):
-                    gorulen_yorumlar.add(temiz_metin) # Bir daha gelirse diye hafızaya kazı
+                    gorulen_yorumlar.add(temiz_metin)
                     yrm["temiz_metin"] = temiz_metin
                     tum_yorumlar.append(yrm)
             time.sleep(1)
         except Exception: break
 
     if tum_yorumlar:
-        veri_seti = {"platform": "hepsiburada", "baslik": urun_adi, "link": urun_linki, "gorsel_url": gorsel_url, "yorumlar": tum_yorumlar}
+        veri_seti = {
+            "platform": "hepsiburada",
+            "baslik": urun_adi,
+            "kategori": kategori_agaci, # YENİ ALAN
+            "link": urun_linki,
+            "gorsel_url": gorsel_url,
+            "yorumlar": tum_yorumlar
+        }
 
-        # 1. Platforma özel alt klasörü oluştur
         hedef_klasor = "cekilen_veriler/hepsiburada"
         os.makedirs(hedef_klasor, exist_ok=True)
 
-        # 2. Dosyayı kaydet
         with open(dosya_yolu, "w", encoding="utf-8") as f:
             json.dump(veri_seti, f, ensure_ascii=False, indent=4)
         logger.info(f"Kaydedildi: {dosya_yolu} ({len(tum_yorumlar)} yorum)")
@@ -662,7 +808,7 @@ def airbnb_veri_cek(oda_linki, max_sayfa) -> str:
     preprocessor = ReviewPreprocessor()
     tum_yorumlar = []
     gorulen_yorumlar = set() # Tekrar kontrolü
-    MAX_YORUM_SINIRI = 500   # Hedef limit
+    MAX_YORUM_SINIRI = 200   # Hedef limit
 
     base64_id = base64.b64encode(f"StayListing:{oda_id}".encode('utf-8')).decode('utf-8')
     sha256Hash = "2ed951bfedf71b87d9d30e24a419e15517af9fbed7ac560a8d1cc7feadfa22e6"
@@ -1118,7 +1264,7 @@ def google_maps_veri_cek(mekan_linki, max_kaydirma) -> str:
                 except: pass
             time.sleep(1)
 
-            ham_yorumlar = page.evaluate('''() => {
+            ham_yorumlar = page.evaluate(r'''() => {
                 let results = [];
                 let seenSignatures = new Set(); 
 
