@@ -262,7 +262,7 @@ def process_maps_data(raw_json: dict) -> tuple[dict, list[dict]]:
         "platform_id": None,
         "product_name": raw_json.get("baslik"),
         "image_url": raw_json.get("gorsel_url"),
-        "category": None,
+        "category": raw_json.get("kategori"),
         "original_url": None,
         "url_hash": None,
         "status": "active",

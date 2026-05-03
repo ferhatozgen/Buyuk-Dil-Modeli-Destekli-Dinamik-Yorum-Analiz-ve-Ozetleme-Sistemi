@@ -12,6 +12,35 @@ from functions.logger import setup_logger
 import time
 
 logger = setup_logger()
+
+
+def kategori_verilerini_yukle(dosya_yolu="kategori_haritasi.json"):
+    try:
+        with open(dosya_yolu, "r", encoding="utf-8") as f:
+            data = json.load(f)
+        return data["ana_kategori_haritasi"], data["varsayilan_kategori"]
+    except Exception as e:
+        print(f"⚠️ Kategori haritası yüklenemedi: {e}")
+        return {}, "Diğer"
+
+
+# Sadece 1 kere çalışır ve hafızada tutar
+KATEGORI_HARITASI, VARSAYILAN_KATEGORI = kategori_verilerini_yukle()
+
+
+def kategoriyi_eslestir(ham_kategori, urun_adi):
+    # Türkçe karakterleri tolere etmek için basit temizlik
+    aranacak_metin = f"{ham_kategori} {urun_adi}".lower()
+    aranacak_metin = aranacak_metin.replace('i̇', 'i').replace('ı', 'i').replace('I', 'ı')
+
+    for ana_kategori, kelimeler in KATEGORI_HARITASI.items():
+        for kelime in kelimeler:
+            if kelime in aranacak_metin:
+                return ana_kategori
+
+    return VARSAYILAN_KATEGORI
+
+
 # ==========================================
 # 1. VERİ TEMİZLEME SINIFI (PREPROCESSOR)
 # ==========================================
@@ -951,6 +980,7 @@ def google_maps_veri_cek(mekan_linki, max_kaydirma) -> str:
 
     logger.info(f"🔍 Google Maps ID Çözümleniyor: {urun_id}")
     gorsel_url = "Görsel Bulunamadı"
+    mekan_kategorisi = "Diğer"
 
     preprocessor = ReviewPreprocessor()
     tum_yorumlar = []
@@ -1025,6 +1055,27 @@ def google_maps_veri_cek(mekan_linki, max_kaydirma) -> str:
                     logger.warning("⚠️ Maps mekan görseli bulunamadı, alternatif yöntemler denenebilir.")
             except Exception as e:
                 logger.warning(f"   [Uyarı] Maps görseli çekilirken sorun oluştu: {e}")
+
+            # --- KATEGORİ ÇEKME ---
+
+            try:
+                category_selector = 'button[jsaction*="category"]'
+                page.wait_for_selector(category_selector, timeout=5000, state="attached")
+                category_element = page.locator(category_selector)
+                if category_element.count() > 0:
+
+                    ham_kategori = category_element.first.inner_text().strip()
+                    logger.info(f"📌 Mekan kategorisi çekildi: {ham_kategori}")
+
+                    mekan_kategorisi = kategoriyi_eslestir(ham_kategori, urun_adi)
+                    logger.info(f"📌 Mekan kategorisi eşleştirildi: '{ham_kategori}' -> '{mekan_kategorisi}'")
+                else:
+                    mekan_kategorisi = VARSAYILAN_KATEGORI
+                    logger.warning(f"⚠️ Mekan kategorisi bulunamadı, varsayılan '{mekan_kategorisi}' olarak atandı.")
+            except Exception as e:
+                mekan_kategorisi = VARSAYILAN_KATEGORI
+                logger.warning(f"   [Uyarı] Mekan kategorisi çekilirken sorun oluştu: {e}")
+
 
             # --- SİHİR 2: KURŞUN GEÇİRMEZ SEKME TIKLAYICI ---
             try:
@@ -1133,7 +1184,7 @@ def google_maps_veri_cek(mekan_linki, max_kaydirma) -> str:
         logger.warning(f"   [Uyarı] Playwright Maps'te bir engele takıldı veya beklenmedik bir hata oluştu: {e}")
 
     if tum_yorumlar:
-        veri_seti = {"platform": "maps", "baslik": urun_adi, "link": mekan_linki, "gorsel_url": gorsel_url, "yorumlar": tum_yorumlar}
+        veri_seti = {"platform": "maps", "baslik": urun_adi, "link": mekan_linki,"ham_kategori":ham_kategori, "kategori": mekan_kategorisi, "gorsel_url": gorsel_url, "yorumlar": tum_yorumlar}
 
         hedef_klasor = "cekilen_veriler/maps"
         os.makedirs(hedef_klasor, exist_ok=True)

@@ -69,7 +69,7 @@ def gold_dataset_creator():
                        ROW_NUMBER() OVER(PARTITION BY platform ORDER BY RANDOM()) as rnk
                 FROM CeliskiliUrunler
             )
-            WHERE rnk <= 2 -- TEST İÇİN: Her platformdan 2 ürün
+            WHERE rnk <= 1 -- TEST İÇİN: Her platformdan 2 ürün
         ),
         YorumlariSirala AS (
             SELECT 

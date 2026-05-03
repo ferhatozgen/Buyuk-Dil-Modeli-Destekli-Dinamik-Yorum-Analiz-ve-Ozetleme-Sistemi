@@ -47,20 +47,21 @@ class DatabaseManager:
                         # 1. Products Tablosuna Kayıt ve GERÇEK ID'yi Alma
                         # RETURNING id ekledik, çünkü ürün zaten varsa DB'deki gerçek UUID'yi almamız lazım.
                         product_query = """
-                            INSERT INTO products (
-                                id, platform, platform_id, product_name, image_url, 
-                                original_url, url_hash, avg_orj_score, status, last_updated_at
-                            ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
-                            ON CONFLICT (url_hash) DO UPDATE SET         
-                                avg_orj_score = EXCLUDED.avg_orj_score,
-                                last_updated_at = CURRENT_TIMESTAMP,
-                                status = 'active'
-                            RETURNING id; 
-                        """
+                        INSERT INTO products (
+                            id, platform, platform_id, product_name, image_url, category,
+                            original_url, url_hash, avg_orj_score, status, last_updated_at
+                        ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+                        ON CONFLICT (url_hash) DO UPDATE SET         
+                            avg_orj_score = EXCLUDED.avg_orj_score,
+                            category = EXCLUDED.category, -- Kategori değişmişse günceller
+                            last_updated_at = CURRENT_TIMESTAMP,
+                            status = 'active'
+                        RETURNING id; 
+                    """
 
                         cur.execute(product_query, (
                             urun_paketi['id'], urun_paketi['platform'], urun_paketi['platform_id'],
-                            urun_paketi['product_name'], urun_paketi['image_url'],
+                            urun_paketi['product_name'], urun_paketi['image_url'], urun_paketi['category'],
                             urun_paketi['original_url'], urun_paketi['url_hash'],
                             urun_paketi['avg_orj_score'], urun_paketi['status'],
                             urun_paketi['last_updated_at']
