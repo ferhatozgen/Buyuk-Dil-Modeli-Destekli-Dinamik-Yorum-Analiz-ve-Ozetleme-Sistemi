@@ -78,7 +78,7 @@ class DatabaseManager:
                         # 3. Reviews Tablosuna Toplu Kayıt
                         review_query = """
                             INSERT INTO reviews (
-                                product_id, original_rating, raw_text, clean_text, metadata
+                                product_id, original_rating, rating_int, raw_text, clean_text, metadata
                             ) VALUES %s
                         """
 
@@ -86,6 +86,7 @@ class DatabaseManager:
                             (
                                 db_actual_id,  # Transformer'dan gelen değil, DB'den aldığımız ID'yi kullanıyoruz!
                                 y['original_rating'],
+                                y["rating_int"],
                                 y['raw_text'],
                                 y['clean_text'],
                                 Json(y['metadata'])

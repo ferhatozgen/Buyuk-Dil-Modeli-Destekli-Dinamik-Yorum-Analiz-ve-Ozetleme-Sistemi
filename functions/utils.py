@@ -10,10 +10,11 @@ def url_cleaning(url: str) -> str:
     cleaned_url = urlunparse((parsed.scheme, parsed.netloc, parsed.path, '', '', '')) # Sadece temel URL'yi alır, query ve fragment'ı atar
     return cleaned_url
 
+# stringi utf-8 formatında byte dizisine çeviriyor çünkü hex fonksiyonları string değil byte dizileriyle çalışır.
 def url_hashing(clean_url: str) -> str:
     return hashlib.sha256(clean_url.encode('utf-8')).hexdigest()
 
-def url_cozumle(url : str) -> tuple[str, str]:
+def url_cozumle(url : str) -> tuple[str, str]  :
     url_lower = url.lower()
     platform = None
 
@@ -36,17 +37,19 @@ def url_cozumle(url : str) -> tuple[str, str]:
     elif "googleusercontent.com/maps" in url_lower or "/maps/" in url_lower:
         platform = "maps"
     else:
-        return None, None
+        raise ValueError("Platform bulunamadı")
 
     if platform == "maps":
+        # regex yöntemiyle id yakalama işlemi (ilk deneme)
         match = re.search(r'/place/([^/?]+)', url)
         if match:
             return platform, urllib.parse.unquote(match.group(1))
 
-        path_segment = url.strip('/').split('/')
+        # string parçalama yöntemiyle urlnin sonundan id yakalama işlemi (ikinci deneme)
+        path_segment = url.strip('/').split('/')  #strip / işaretlerinden temizler,  splitte / işaretlerinden ayırır liste yapar urlyi
         if path_segment:
             last_segment = path_segment[-1]
-            clean_id = last_segment.split('?')[0]
+            clean_id = last_segment.split('?')[0]     #linkin sonunda bazen idden sonra ?authuser=0 gibi uzun parametreler olur bu yazımdan urlyi temizlemek için
             return platform, (clean_id if clean_id else "unknown")
 
     patterns = {

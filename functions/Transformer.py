@@ -49,6 +49,7 @@ def process_airbnb_data(raw_json: dict) -> tuple[dict, list[dict]]:
         review_packets.append({
             "product_id": product_uuid,
             "original_rating": raw_review.get("rating"),
+            "rating_int": round(raw_review.get("rating")),
             "predicted_score": None,
             "raw_text": raw_review.get("comment"),
             "clean_text": raw_review.get("temiz_metin"),
@@ -111,6 +112,7 @@ def process_ciceksepeti_data(raw_json: dict) -> tuple[dict, list[dict]]:
         review_packets.append({
             "product_id": product_uuid,
             "original_rating": current_rating,
+            "rating_int": round(current_rating or 0),
             "predicted_score": None,  # NLP modelinden gelecek
             "raw_text": raw_review.get("orijinal_metin"),  # Scraper'daki ham metin
             "clean_text": raw_review.get("temiz_metin"),  # Preprocessor'dan geçmiş metin
@@ -186,6 +188,7 @@ def process_etstur_data(raw_json: dict) -> tuple[dict, list[dict]]:
         review_packets.append({
             "product_id": product_uuid,
             "original_rating": current_rating,
+            "rating_int": round(current_rating),
             "predicted_score": None,  # NLP modelinden gelecek
             "raw_text": raw_review.get("temiz_metin"),  # Etstur API genelde temiz metin döner
             "clean_text": raw_review.get("temiz_metin"),
@@ -238,6 +241,7 @@ def process_hepsiburada_data(raw_json: dict) -> tuple[dict, list[dict]]:
         review_packets.append({
             "product_id": product_uuid,
             "original_rating": raw_review.get("star"),
+            "rating_int": round(raw_review.get("star")),
             "predicted_score": None,
             "raw_text": raw_review.get("review", {}).get("content", ""), # Scraper yapına göre
             "clean_text": raw_review.get("temiz_metin"),
@@ -289,13 +293,20 @@ def process_maps_data(raw_json: dict) -> tuple[dict, list[dict]]:
             "ham_puan_metni": raw_review.get("puan")
         }
 
-        current_rating = None
-        if raw_review.get("puan") and raw_review.get("puan")[0].isdigit():
-            current_rating = int(raw_review.get("puan")[0])
+        # process_maps_data içindeki puan kısmını şu şekilde modernize et:
+        puan_raw = str(raw_review.get("puan") or "0")
+        # Regex ile içindeki sayıları (4.7 gibi) ayıklayalım
+        match = re.search(r"[\d,.]+", puan_raw)
+        if match:
+            # Virgülü noktaya çevirip float'a çeviriyoruz
+            current_rating = float(match.group().replace(',', '.'))
+        else:
+            current_rating = 0.0
 
         review_packets.append({
             "product_id": product_uuid,
             "original_rating": current_rating,
+            "rating_int": round(current_rating),
             "predicted_score": None,
             "raw_text": raw_review.get("orijinal_metin"),
             "clean_text": raw_review.get("temiz_metin"),
@@ -356,6 +367,7 @@ def process_steam_data(raw_json: dict) -> tuple[dict, list[dict]]:
         review_packets.append({
             "product_id": product_uuid,
             "original_rating": individual_rating,
+            "rating_int": round(individual_rating),
             "predicted_score": None,
             "raw_text": raw_review.get("review"),  # Steam API'de yorum genelde 'review' anahtarındadır
             "clean_text": raw_review.get("temiz_metin"),
@@ -406,6 +418,7 @@ def process_trendyol_data(raw_json:dict) -> tuple[dict, list[dict]]:
         review_packets.append({
             "product_id": product_uuid,
             "original_rating": raw_review.get("rate"),
+            "rating_int": round(raw_review.get("rate") or 0),
             "predicted_score": None,  # NLP modelinden gelecek
             "raw_text": raw_review.get("metin") or raw_review.get("comment"),  # Scraper'daki ham alan
             "clean_text": raw_review.get("temiz_metin"),
@@ -470,6 +483,7 @@ def process_tygo_data(raw_json: dict) -> tuple[dict, list[dict]]:
         review_packets.append({
             "product_id": product_uuid,
             "original_rating": individual_rating,
+            "rating_int": round(individual_rating),
             "predicted_score": None,
             "raw_text": raw_review.get("comment"),
             "clean_text": raw_review.get("temiz_metin"),
@@ -541,6 +555,7 @@ def process_yemeksepeti_data(raw_json: dict) -> tuple[dict, list[dict]]:
         review_packets.append({
             "product_id": product_uuid,
             "original_rating": overall_score,
+            "rating_int": round(overall_score),
             "predicted_score": None,
             "raw_text": raw_review.get("text"),  # Scraper'da 'text' olarak geliyor
             "clean_text": raw_review.get("temiz_metin"),
