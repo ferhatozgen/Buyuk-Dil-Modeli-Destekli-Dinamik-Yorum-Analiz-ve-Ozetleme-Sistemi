@@ -1,3 +1,4 @@
+from rapidfuzz import process, fuzz
 from urllib.parse import urlparse, urlunparse
 import urllib.parse
 import hashlib
@@ -13,6 +14,55 @@ def url_cleaning(url: str) -> str:
 # stringi utf-8 formatında byte dizisine çeviriyor çünkü hex fonksiyonları string değil byte dizileriyle çalışır.
 def url_hashing(clean_url: str) -> str:
     return hashlib.sha256(clean_url.encode('utf-8')).hexdigest()
+
+
+def ciceksepeti_kategori_hibrit(urun_adi):
+    if not urun_adi:
+        return "hediyelik_eşya"
+
+    # 1. ÖN İŞLEME (Normalization)
+    # Küçük harf ve gereksiz boşluk temizliği
+    text = urun_adi.lower().strip()
+
+    # Kategori Anahtarları (Regex için | ile birleştirilmiş, Fuzzy için liste)
+    keywords = {
+        "yenilebilir_çiçek": [
+            "kek", "çikolata", "cikolata", "truf", "trüf", "draje", "kahve",
+            "gurme", "lezzet", "bonnyfood", "atıştırmalık", "atıstırmalık",
+            "atistirmalik", "dondurma", "meyve sepeti", "gurme"
+        ],
+        "çiçek": [
+            "gül", "gul", "papatya", "orkide", "buket", "saksı", "saksi",
+            "aranjman", "teraryum", "gerbera", "lilyum", "bitki", "kalanchoe",
+            "spatifilyum", "husnuyusuf", "hüsnüyusuf", "karanfil"
+        ]
+    }
+
+    # --- KATMAN 1: REGEX (HIZLI YOL) ---
+    # Eğer kelime tam doğru yazılmışsa Fuzzy ile vakit kaybetmeyelim.
+    for cat_name, words in keywords.items():
+        # Kelime köklerini yakalayan regex pattern (kek, kekler, kekli yakalar)
+        pattern = r"\b(" + "|".join(words) + r")"
+        if re.search(pattern, text):
+            return cat_name
+
+    # --- KATMAN 2: FUZZY MATCHING (GÜVENLİ YOL / FALLBACK) ---
+    # Regex bulamadıysa, yazım hatası ihtimaline karşı bulanık eşleme yapalım.
+    # Ürün adını kelimelere bölüp her kelimeyi kontrol ediyoruz.
+    word_list = text.split()
+
+    # Öncelik hiyerarşisini koruyoruz (Önce Yenilebilir)
+    for cat_name in ["yenilebilir_çiçek", "çiçek"]:
+        for target_word in keywords[cat_name]:
+            # extractOne en yakın kelimeyi bulur. [1] skoru verir.
+            # limit=90 yaparak yanlış eşleşmeleri (False Positive) engelliyoruz.
+            match = process.extractOne(target_word, word_list, scorer=fuzz.WRatio)
+            if match and match[1] >= 90:  # 90 yüksek doğruluk için idealdir
+                return cat_name
+
+    # --- KATMAN 3: VARSAYILAN ---
+    return "hediyelik_eşya"
+
 
 def url_cozumle(url : str) -> tuple[str, str]  :
     url_lower = url.lower()

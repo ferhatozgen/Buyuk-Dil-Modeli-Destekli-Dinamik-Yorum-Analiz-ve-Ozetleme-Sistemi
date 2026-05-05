@@ -115,3 +115,24 @@ class DatabaseManager:
             print(f"Veritabanı kontrol hatası: {e}")
             return False
 
+    def fetch_query(self, query, params=None):
+        """Veritabanından veri çekmek (SELECT) için kullanılır."""
+        try:
+            with self.get_connection() as conn:
+                with conn.cursor() as cur:
+                    cur.execute(query, params)
+                    return cur.fetchall()
+        except Exception as e:
+            print(f"Veri çekme hatası: {e}")
+            return []
+
+    def execute_query(self, query, params=None):
+        """Veritabanında güncelleme (UPDATE, DELETE, INSERT) yapmak için kullanılır."""
+        try:
+            with self.get_connection() as conn:
+                with conn.cursor() as cur:
+                    cur.execute(query, params)
+                    conn.commit()
+        except Exception as e:
+            print(f"Sorgu çalıştırma hatası: {e}")
+            raise e
