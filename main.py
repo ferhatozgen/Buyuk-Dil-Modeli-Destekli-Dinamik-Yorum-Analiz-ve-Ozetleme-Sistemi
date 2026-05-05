@@ -92,9 +92,9 @@ def baslat(link_listesi):
 
 
 if __name__ == "__main__":
-    manuel_liste = [
+    manuel_liste = ["https://www.ciceksepeti.com/avon-wish-of-love-bayan-parfumu-50-ml--kc3239884",
     ]
-    txt_dosya_yolu = "linkler.txt"
+    txt_dosya_yolu = "linkler3.txt"
 
     print("\n" + "*" * 50)
     print("  BÜYÜK DİL MODELİ DESTEKLİ ETL BORU HATTI")
