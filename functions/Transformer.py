@@ -6,8 +6,7 @@ import re
 import urllib.parse
 from typing import Tuple, List, Dict
 
-
-
+from functions.utils import ciceksepeti_kategori_hibrit
 
 
 def process_airbnb_data(raw_json: dict) -> tuple[dict, list[dict]]:
@@ -21,7 +20,7 @@ def process_airbnb_data(raw_json: dict) -> tuple[dict, list[dict]]:
         "platform_id": None,
         "product_name": raw_json.get("baslik"),
         "image_url": raw_json.get("gorsel_url"),
-        "category": None,
+        "category": "gunluk_ev",
         "original_url": None,
         "url_hash": None,
         "status": "active",
@@ -71,7 +70,7 @@ def process_ciceksepeti_data(raw_json: dict) -> tuple[dict, list[dict]]:
         "platform_id": None,
         "product_name": raw_json.get("baslik"),
         "image_url": raw_json.get("gorsel_url"),
-        "category": None,  # SetFit ile dolacak
+        "category": ciceksepeti_kategori_hibrit(raw_json.get("baslik")),
         "original_url": None,
         "url_hash": None,
         "status": "active",
@@ -143,7 +142,7 @@ def process_etstur_data(raw_json: dict) -> tuple[dict, list[dict]]:
         "platform_id": None,
         "product_name": raw_json.get("baslik"),
         "image_url": raw_json.get("gorsel_url"),
-        "category": None,  # SetFit ile dolacak
+        "category": "otel",
         "original_url": None,
         "url_hash": None,
         "status": "active",
@@ -328,7 +327,7 @@ def process_steam_data(raw_json: dict) -> tuple[dict, list[dict]]:
         "platform_id": None,
         "product_name": raw_json.get("baslik"),
         "image_url": raw_json.get("gorsel_url"),
-        "category": "Oyun",  # Steam her zaman oyun olduğu için statik verebiliriz
+        "category": "oyun",  # Steam her zaman oyun olduğu için statik verebiliriz
         "original_url": None,
         "url_hash": None,
         "status": "active",
@@ -439,7 +438,7 @@ def process_tygo_data(raw_json: dict) -> tuple[dict, list[dict]]:
         "platform_id": None,
         "product_name": raw_json.get("baslik"),
         "image_url": raw_json.get("gorsel_url"),
-        "category": "Restoran", # TyGo genelde yemek odaklıdır
+        "category": "yemek", # TyGo genelde yemek odaklıdır
         "original_url": None,
         "url_hash": None,
         "status": "active",
@@ -504,7 +503,7 @@ def process_yemeksepeti_data(raw_json: dict) -> tuple[dict, list[dict]]:
         "platform_id": None,
         "product_name": raw_json.get("baslik"),
         "image_url": raw_json.get("gorsel_url"),
-        "category": "Restoran",
+        "category": "yemek",
         "original_url": None,
         "url_hash": None,
         "status": "active",
