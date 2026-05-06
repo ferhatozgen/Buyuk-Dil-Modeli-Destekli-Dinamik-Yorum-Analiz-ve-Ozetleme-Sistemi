@@ -2,19 +2,20 @@ import os
 import psycopg2
 import json
 import time
+import re
 from dotenv import load_dotenv
-from google import genai  # Yeni SDK
+from google import genai
 from psycopg2.extras import RealDictCursor
 
 # .env dosyasını yükle
 load_dotenv()
 
-# Yapılandırma
+# Gemini Yapılandırması
 GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
 client = genai.Client(api_key=GEMINI_API_KEY)
-
-# Gemini 3 Flash: Hem çok ucuz hem de inanılmaz hızlı
 MODEL_NAME = 'models/gemini-3.1-flash-lite-preview'
+
+# Veritabanı Yapılandırması
 db_config = {
     "dbname": os.getenv("DB_NAME"),
     "user": os.getenv("DB_USER"),
@@ -23,7 +24,11 @@ db_config = {
     "port": os.getenv("DB_PORT")
 }
 
+# Çiçeksepeti'nin o meşhur geçersiz metni
+GECERSIZ_METIN = "bu ürün için yalnızca puan verilmiştir yorum yapılmamıştır"
+
 def gemini_puanla(yorum_metni):
+    """Metni analiz eder ve 1-5 arası puan döndürür."""
     prompt = f"""
     Aşağıdaki kullanıcı yorumunu analiz et. 
     Metindeki duygu durumuna göre 1 ile 5 arasında bir puan ver.
@@ -34,87 +39,108 @@ def gemini_puanla(yorum_metni):
     Yorum: "{yorum_metni}"
     """
     try:
-        # Yeni SDK formatı: client.models.generate_content
-        response = client.models.generate_content(
-            model=MODEL_NAME,
-            contents=prompt
-        )
+        response = client.models.generate_content(model=MODEL_NAME, contents=prompt)
         puan = response.text.strip()
-        return int(puan) if puan.isdigit() else None
+        match = re.search(r'[1-5]', puan)
+        return int(match.group()) if match else None
     except Exception as e:
         print(f"⚠️ API Hatası: {e}")
         return None
 
-def etiketleme_operasyonu():
-    etiketli_veriler = []
-    dosya_adi = "etiketli_egitim_verisi.json"
+def eksikleri_tespit_et(dataset):
+    """Mevcut veride her puandan kaç adet olduğunu sayar."""
+    sayac = {1: 0, 2: 0, 3: 0, 4: 0, 5: 0}
+    for veri in dataset:
+        puan = veri.get('orijinal_puan')
+        if puan in sayac:
+            sayac[puan] += 1
 
-    # Eğer önceden kalma bir dosya varsa oradan devam etmek için (isteğe bağlı)
+    eksikler = {puan: 1000 - adet for puan, adet in sayac.items() if adet < 1000}
+    return eksikler
+
+def operasyonu_tamamla():
+    dosya_adi = "temizlenmis_egitim_verisi.json"
+
+    # 1. Mevcut temizlenmiş veriyi yükle
     if os.path.exists(dosya_adi):
         with open(dosya_adi, "r", encoding="utf-8") as f:
-            try:
-                etiketli_veriler = json.load(f)
-                print(f"📂 Mevcut dosya bulundu, {len(etiketli_veriler)} veriden devam ediliyor...")
-            except: pass
+            dataset = json.load(f)
+    else:
+        print("❌ Hata: 'etiketli_egitim_verisi.json' bulunamadı!")
+        return
+
+    # 2. Kaç tane eksik var hesapla
+    eksik_tablosu = eksikleri_tespit_et(dataset)
+    if not eksik_tablosu:
+        print("✅ Veri seti zaten tam (her puandan 1000 adet var).")
+        return
+
+    print(f"📊 Eksik tablosu tespit edildi: {eksik_tablosu}")
+    print("🔄 Eksikler Çiçeksepeti verileriyle tamamlanıyor...")
 
     try:
         conn = psycopg2.connect(**db_config)
         cur = conn.cursor(cursor_factory=RealDictCursor)
 
-        sql = """
-        WITH RankedReviews AS (
-            SELECT p.product_name, p.platform, r.clean_text, r.rating_int,
-            ROW_NUMBER() OVER (PARTITION BY r.rating_int ORDER BY RANDOM()) as sira
-            FROM reviews r
-            JOIN products p ON r.product_id = p.id
-            WHERE r.clean_text IS NOT NULL 
-              AND length(r.clean_text) > 10 
-              AND r.rating_int > 0
-        )
-        SELECT product_name, platform, clean_text, rating_int as orijinal_puan
-        FROM RankedReviews WHERE sira <= 1000;
-        """
+        for puan, miktar in eksik_tablosu.items():
+            if miktar <= 0: continue
 
-        cur.execute(sql)
-        rows = cur.fetchall()
-        print(f"✅ {len(rows)} veri veritabanından çekildi. İşlem başlıyor...")
+            # SQL: Çiçeksepeti'nden, geçersiz metin içermeyen, rastgele veriler
+            sql = """
+            WITH RankedReviews AS (
+                SELECT p.product_name, p.platform, r.clean_text, r.rating_int,
+                ROW_NUMBER() OVER (ORDER BY RANDOM()) as sira
+                FROM reviews r
+                JOIN products p ON r.product_id = p.id
+                WHERE p.platform = 'ciceksepeti'
+                  AND r.rating_int = %s
+                  AND r.clean_text IS NOT NULL
+                  AND length(r.clean_text) > 15
+                  AND r.clean_text NOT ILIKE %s
+            )
+            SELECT product_name, platform, clean_text, rating_int
+            FROM RankedReviews WHERE sira <= %s;
+            """
 
-        for i, row in enumerate(rows):
-            # Eğer bu yorumu daha önce etiketlediysek atlayabiliriz (Basit bir kontrol)
-            # (Gelişmiş projelerde hash kontrolü yapılır)
+            cur.execute(sql, (puan, f"%{GECERSIZ_METIN}%", miktar))
+            rows = cur.fetchall()
 
-            ai_puani = gemini_puanla(row['clean_text'])
+            print(f"📥 {puan} puan için {len(rows)} yeni veri çekildi. Gemini işliyor...")
 
-            if ai_puani is not None:
-                etiketli_veriler.append({
-                    "urun_adi": row['product_name'],
-                    "platform": row['platform'],
-                    "yorum": row['clean_text'],
-                    "orijinal_puan": row['orijinal_puan'],
-                    "gemini_puani": ai_puani
-                })
+            for i, row in enumerate(rows):
+                # Python tarafında son bir güvenlik kontrolü
+                if GECERSIZ_METIN in row['clean_text'].lower():
+                    continue
 
-            # İlerleme Logu ve Her 50 veride bir yedekleme (Auto-Save)
-            if i % 50 == 0 and i > 0:
-                print(f"📊 İlerleme: %{(i/len(rows)*100):.1f} | Etiketlenen: {len(etiketli_veriler)}")
-                with open(dosya_adi, "w", encoding="utf-8") as f:
-                    json.dump(etiketli_veriler, f, ensure_ascii=False, indent=4)
+                ai_puani = gemini_puanla(row['clean_text'])
+                if ai_puani is not None:
+                    dataset.append({
+                        "urun_adi": row['product_name'],
+                        "platform": row['platform'],
+                        "yorum": row['clean_text'],
+                        "orijinal_puan": row['rating_int'],
+                        "gemini_puani": ai_puani
+                    })
 
-            # API Rate Limit için bekleme (Flash için 0.1-0.2 yeterli)
-            time.sleep(0.1)
+                # İlerleme kaydı (Her 10 veride bir)
+                if i % 10 == 0 and i > 0:
+                    with open(dosya_adi, "w", encoding="utf-8") as f:
+                        json.dump(dataset, f, ensure_ascii=False, indent=4)
 
-        # Final Kaydı
+                time.sleep(0.1) # API limit koruması
+
+        # 3. Final Kaydı
         with open(dosya_adi, "w", encoding="utf-8") as f:
-            json.dump(etiketli_veriler, f, ensure_ascii=False, indent=4)
+            json.dump(dataset, f, ensure_ascii=False, indent=4)
 
-        print(f"🎉 İşlem başarıyla tamamlandı. Toplam {len(etiketli_veriler)} veri kaydedildi.")
+        print(f"🎉 Operasyon Başarıyla Tamamlandı! Toplam veri sayısı: {len(dataset)}")
 
     except Exception as e:
-        print(f"❌ Hata: {e}")
+        print(f"❌ Hata oluştu: {e}")
     finally:
         if 'conn' in locals():
             cur.close()
             conn.close()
 
 if __name__ == "__main__":
-    etiketleme_operasyonu()
+    operasyonu_tamamla()

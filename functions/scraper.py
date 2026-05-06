@@ -580,6 +580,10 @@ def ciceksepeti_veri_cek(urun_linki, max_sayfa) -> str:
 
                 metin_span = kutu.find("span", class_="js-review-detail")
                 ham_metin = metin_span.get("data-value", "").strip() if metin_span else ""
+                gecersiz_metin = "bu ürün için yalnızca puan verilmiştir yorum yapılmamıştır"
+                if gecersiz_metin in ham_metin.lower():
+                    continue
+
                 temiz_metin = preprocessor.clean_text(ham_metin, "ciceksepeti")
 
                 if kaliteli_yorum_mu(temiz_metin, gorulen_yorumlar):
