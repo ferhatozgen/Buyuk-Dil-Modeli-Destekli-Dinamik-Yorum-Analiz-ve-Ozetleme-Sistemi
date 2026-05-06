@@ -6,6 +6,7 @@ import re
 import urllib.parse
 from typing import Tuple, List, Dict
 from functions.utils import kategori_grupla
+from functions.utils import ciceksepeti_kategori_hibrit
 
 
 
@@ -22,12 +23,12 @@ def process_airbnb_data(raw_json: dict) -> tuple[dict, list[dict]]:
         "platform_id": None,
         "product_name": raw_json.get("baslik"),
         "image_url": raw_json.get("gorsel_url"),
-        "category": None,
+        "category": "gunluk_ev",
         "original_url": None,
         "url_hash": None,
         "status": "active",
         "click_count": 0,
-        "avg_orj_score": None, # altta hesaplamasını yapıldı(halit-fero)!
+        "avg_orj_score": None, 
         "avg_model_score": None,
         "guncel_ozet": None,
         "created_at": datetime.now(),
@@ -72,7 +73,7 @@ def process_ciceksepeti_data(raw_json: dict) -> tuple[dict, list[dict]]:
         "platform_id": None,
         "product_name": raw_json.get("baslik"),
         "image_url": raw_json.get("gorsel_url"),
-        "category": None,  # SetFit ile dolacak
+        "category": ciceksepeti_kategori_hibrit(raw_json.get("baslik")),
         "original_url": None,
         "url_hash": None,
         "status": "active",
@@ -144,7 +145,7 @@ def process_etstur_data(raw_json: dict) -> tuple[dict, list[dict]]:
         "platform_id": None,
         "product_name": raw_json.get("baslik"),
         "image_url": raw_json.get("gorsel_url"),
-        "category": None,  # SetFit ile dolacak
+        "category": "otel",
         "original_url": None,
         "url_hash": None,
         "status": "active",
@@ -389,7 +390,7 @@ def process_steam_data(raw_json: dict) -> tuple[dict, list[dict]]:
         "platform_id": None,
         "product_name": raw_json.get("baslik"),
         "image_url": raw_json.get("gorsel_url"),
-        "category": "Oyun",  # Steam her zaman oyun olduğu için statik verebiliriz
+        "category": "oyun",
         "original_url": None,
         "url_hash": None,
         "status": "active",
@@ -403,11 +404,11 @@ def process_steam_data(raw_json: dict) -> tuple[dict, list[dict]]:
 
     ham_yorumlar = raw_json.get("yorumlar", [])
 
-    # Senin zekice kurguladığın oranlama mantığı:
+
     if ham_yorumlar:
         olumlu_sayisi = sum(1 for y in ham_yorumlar if y.get("voted_up") is True)
         oran = olumlu_sayisi / len(ham_yorumlar)
-        # Oranı 5'lik sisteme çekip 0.5 katlarına yuvarlıyoruz
+
         urun_paket["avg_orj_score"] = round((oran * 5) * 2) / 2
     else:
         urun_paket["avg_orj_score"] = None
@@ -451,7 +452,7 @@ def process_tygo_data(raw_json: dict) -> tuple[dict, list[dict]]:
         "platform_id": None,
         "product_name": raw_json.get("baslik"),
         "image_url": raw_json.get("gorsel_url"),
-        "category": "Restoran", # TyGo genelde yemek odaklıdır
+        "category": "yemek", 
         "original_url": None,
         "url_hash": None,
         "status": "active",
@@ -516,7 +517,7 @@ def process_yemeksepeti_data(raw_json: dict) -> tuple[dict, list[dict]]:
         "platform_id": None,
         "product_name": raw_json.get("baslik"),
         "image_url": raw_json.get("gorsel_url"),
-        "category": "Restoran",
+        "category": "yemek",
         "original_url": None,
         "url_hash": None,
         "status": "active",
