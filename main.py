@@ -42,8 +42,9 @@ def tek_link_isle(ham_link: str, db: DatabaseManager) -> str:
 
         #--- 1. AŞAMA: ÇEKME (EXTRACT) ---
         kazima_mesaji, ham_dosya_yolu = linkten_veri_cek(temiz_url, platform)
-        if not ham_dosya_yolu:
-            return "   [Atlanıyor] Ham dosya yolu oluşmadı."
+        if not ham_dosya_yolu or not os.path.exists(ham_dosya_yolu):
+            logger.error(f"   [HATA] Veri çekilemedi: {kazima_mesaji}")
+            return "   [Atlanıyor] Ham veri dosyası bulunamadı."
 
         # --- 2. AŞAMA: DÖNÜŞTÜRME (TRANSFORM) ---
         urun_paketi, yorum_paketleri = donustur_ve_kaydet(
