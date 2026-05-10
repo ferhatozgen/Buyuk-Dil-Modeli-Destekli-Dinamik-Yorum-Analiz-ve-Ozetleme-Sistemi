@@ -3,6 +3,10 @@ from urllib.parse import urlparse, urlunparse
 import urllib.parse
 import hashlib
 import re
+import logging
+
+logger = logging.getLogger(__name__)
+
 
 def url_cleaning(url: str) -> str:
     if not url:
@@ -157,3 +161,29 @@ def kategori_grupla(ham_liste):
 
     max_skor = max(skorlar.values())
     return max(skorlar, key=skorlar.get) if max_skor > 0 else "Diğer"
+
+def yorumlara_puan_ver(classifier, yorum_paketleri):
+    if not yorum_paketleri:
+        logger.warning("tahmin yapılacak yorum bulunamadı, boş liste döndürülüyor.")
+        return []
+
+    texts = [yorum.get("clean_text", '') for yorum in yorum_paketleri]
+
+    logger.info(f"MODEL {len(texts)} yorum için tahmin yapıyor...")
+    results = classifier(texts, batch_size=32, truncation=True, max_length=512)
+
+    for i in range(len(yorum_paketleri)):
+        try:
+            raw_label = results[i]['label']
+            score = int(raw_label.split('_')[1]) + 1
+
+            yorum_paketleri[i]['predicted_score'] = score
+        except Exception as e:
+            logger.error(f"Yorum puanlama hatası: {e}. Yorum: {yorum_paketleri[i]}")
+            yorum_paketleri[i]['predicted_score'] = 0  # Hata durumunda puanı 0 yaparak devam ediyoruz
+
+    test_scores = [y.get('predicted_score') for y in yorum_paketleri[:3]]
+    logger.info(f"Örnek tahmin skorları: {test_scores} (ilk 3 yorum)")
+
+    return yorum_paketleri
+
