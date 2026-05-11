@@ -56,7 +56,7 @@ def ciceksepeti_kategori_hibrit(urun_adi):
     word_list = text.split()
 
     # Öncelik hiyerarşisini koruyoruz (Önce Yenilebilir)
-    for cat_name in ["yenilebilir_çiçek", "çiçek"]:
+    for cat_name in ["yenilebilir_cicek", "cicek"]:
         for target_word in keywords[cat_name]:
             # extractOne en yakın kelimeyi bulur. [1] skoru verir.
             # limit=90 yaparak yanlış eşleşmeleri (False Positive) engelliyoruz.
@@ -65,7 +65,7 @@ def ciceksepeti_kategori_hibrit(urun_adi):
                 return cat_name
 
     # --- KATMAN 3: VARSAYILAN ---
-    return "hediyelik_eşya"
+    return "hediyelik_esya"
 
 
 def url_cozumle(url : str) -> tuple[str, str]  :
@@ -128,7 +128,7 @@ def url_cozumle(url : str) -> tuple[str, str]  :
 
 def kategori_grupla(ham_liste):
     if not ham_liste:
-        return "Diğer"
+        return "diger"
         
     tam_metin = " ".join(ham_liste).lower()
     
@@ -136,7 +136,7 @@ def kategori_grupla(ham_liste):
     if any(x in tam_metin for x in ["masa tenisi", "raketi", "futbol forması", "dambıl", "kondisyon"]): return "spor_outdoor"
     if any(x in tam_metin for x in ["akıllı saat", "akilli saat", "apple watch", "galaxy watch"]): return "elektronik_teknoloji"
     if any(x in tam_metin for x in ["bebek", "zıbın", "emzik", "puset", "oyuncak", "lego", "puzzle"]): return "anne_bebek_oyuncak"
-    if any(x in tam_metin for x in ["toka", "kolye", "bileklik", "küpe", "yüzük", "tesbih", "takı","çanta", "cüzdan", "valiz", "bavul"]): return "aksesuar_takı"
+    if any(x in tam_metin for x in ["toka", "kolye", "bileklik", "küpe", "yüzük", "tesbih", "takı","çanta", "cüzdan", "valiz", "bavul"]): return "aksesuar_taki"
     
     gruplar = {
         "giyim_ayakkabi": ["t-shirt", "jean", "pantolon", "ceket", "mont", "sweatshirt", "gömlek", "kazak", "tayt", "bot", "sneaker", "terlik", "ayakkabı", "pijama", "forma", "eşofman", "çorap", "korse", "şal", "bone","elbise","giyim"],
@@ -160,7 +160,7 @@ def kategori_grupla(ham_liste):
                     skorlar[grup] += agirlik
 
     max_skor = max(skorlar.values())
-    return max(skorlar, key=skorlar.get) if max_skor > 0 else "diğer"
+    return max(skorlar, key=skorlar.get) if max_skor > 0 else "diger"
 
 def yorumlara_puan_ver(classifier, yorum_paketleri):
     if not yorum_paketleri:

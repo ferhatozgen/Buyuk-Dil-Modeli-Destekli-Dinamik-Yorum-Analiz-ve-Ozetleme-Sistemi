@@ -24,7 +24,7 @@ def kategori_verilerini_yukle(dosya_yolu="functions/dicts/maps_ham_kategoriler.j
         return data["ana_kategori_haritasi"], data["varsayilan_kategori"]
     except Exception as e:
         print(f"⚠️ Kategori haritası yüklenemedi: {e}")
-        return {}, "Diğer"
+        return {}, "diger"
 
 
 # Sadece 1 kere çalışır ve hafızada tutar
