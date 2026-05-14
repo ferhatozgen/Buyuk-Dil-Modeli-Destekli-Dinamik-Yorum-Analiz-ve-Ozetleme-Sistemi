@@ -1,0 +1,6 @@
+@LLM_Destekli_Ozetleme_HostAddress = http://localhost:5009
+
+GET {{LLM_Destekli_Ozetleme_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
