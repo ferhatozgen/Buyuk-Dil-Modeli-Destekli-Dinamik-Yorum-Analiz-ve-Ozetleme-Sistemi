@@ -5,8 +5,11 @@ using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models; // Kritik namespace
+using LLM_Destekli_Ozetleme.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
+// PostgreSQL için evrensel DateTime UTC eşlemesini aktif ediyoruz
+AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 
 // --- JWT AYARLARI ---
 var jwtSettings = builder.Configuration.GetSection("Jwt");
@@ -37,6 +40,9 @@ builder.Services.AddAuthentication(options =>
 // --- SWAGGER YAPILANDIRMASI ---
 builder.Services.AddControllers();
 builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<IProductRepository, ProductRepository>();
+builder.Services.AddScoped<IReviewRepository, ReviewRepository>();
+builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {

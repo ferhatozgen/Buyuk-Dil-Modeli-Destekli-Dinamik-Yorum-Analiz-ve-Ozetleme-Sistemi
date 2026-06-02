@@ -98,24 +98,28 @@ namespace LLM_Destekli_Ozetleme.Services
         private string CreateAccessToken(User user)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.ASCII.GetBytes(_configuration["Jwt:Key"]); // appsettings.json'dan anahtarı alıyoruz 
             
-            var tokenDescriptop = new SecurityTokenDescriptor
+            // ÇÖZÜM: Eğer Jwt:Key boşsa doğrudan açıklayıcı bir hata fırlatıyoruz, böylece derleyici null ihtimalini eliyor.
+            var jwtKey = _configuration["Jwt:Key"] ?? throw new InvalidOperationException("JWT Gizli Anahtarı (Jwt:Key) appsettings.json içinde bulunamadı!");
+            var key = Encoding.ASCII.GetBytes(jwtKey); 
+            
+            var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(new[]
                 {
                     new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
-                    new Claim(ClaimTypes.Name, user.Username),
-                    new Claim(ClaimTypes.Email, user.Email)
-
+                    new Claim(ClaimTypes.Name, user.Username ?? string.Empty), // Kullanıcı adı null ihtimaline karşı koruma
+                    new Claim(ClaimTypes.Email, user.Email ?? string.Empty)    // E-posta null ihtimaline karşı koruma
                 }),
                 Expires = DateTime.UtcNow.AddMinutes(double.Parse(_configuration["Jwt:DurationInMinutes"] ?? "15")),
-                Issuer = _configuration["Jwt:Issuer"],
-                Audience = _configuration["Jwt:Audience"],
+                
+                // ÇÖZÜM: Nullable alanlar için fallback olarak string.Empty atıyoruz
+                Issuer = _configuration["Jwt:Issuer"] ?? string.Empty,
+                Audience = _configuration["Jwt:Audience"] ?? string.Empty,
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
             };
 
-            var token = tokenHandler.CreateToken(tokenDescriptop);
+            var token = tokenHandler.CreateToken(tokenDescriptor);
             return tokenHandler.WriteToken(token);
         }
 
@@ -129,16 +133,18 @@ namespace LLM_Destekli_Ozetleme.Services
 
         private ClaimsPrincipal? GetPrincipalFromExpiredToken(string token)
         {
+            // ÇÖZÜM: 139. satırdaki el sıkışma anahtarı için de null kontrolü eklendi
+            var jwtKey = _configuration["Jwt:Key"] ?? throw new InvalidOperationException("JWT Gizli Anahtarı (Jwt:Key) appsettings.json içinde bulunamadı!");
+
             var tokenValidationParameters = new TokenValidationParameters
             {
                 ValidateAudience = true,
                 ValidateIssuer = true,
-                ValidIssuer = _configuration["Jwt:Issuer"],
-                ValidAudience = _configuration["Jwt:Audience"],
+                ValidIssuer = _configuration["Jwt:Issuer"] ?? string.Empty,
+                ValidAudience = _configuration["Jwt:Audience"] ?? string.Empty,
                 ValidateIssuerSigningKey = true,
-                IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(_configuration["Jwt:Key"])),
-                ValidateLifetime = false
-                
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(jwtKey)),
+                ValidateLifetime = false // Süresi dolmuş token'ları çözebilmek için burası false kalmalı
             };
 
             var tokenHandler = new JwtSecurityTokenHandler();
