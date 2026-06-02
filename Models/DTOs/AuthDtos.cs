@@ -12,4 +12,9 @@ namespace LLM_Destekli_Ozetleme.Models.DTOs
         public string Email { get; set; } = string.Empty;
         public string Password { get; set; } = string.Empty;
     }
+    public class TokenDto
+    {
+        public string AccessToken { get; set; } = string.Empty;
+        public string RefreshToken { get; set; } = string.Empty;
+    }
 }

@@ -1,4 +1,5 @@
 using LLM_Destekli_Ozetleme.Data;
+using LLM_Destekli_Ozetleme.Services;
 using Microsoft.EntityFrameworkCore;
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -35,6 +36,7 @@ builder.Services.AddAuthentication(options =>
 
 // --- SWAGGER YAPILANDIRMASI ---
 builder.Services.AddControllers();
+builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {

@@ -21,5 +21,11 @@ namespace LLM_Destekli_Ozetleme.Models.Entities
 
         [Column("created_at")]
         public DateTime? CreatedAt { get; set; }
+
+        [Column("refresh_token")]
+        public string? RefreshToken { get; set; }
+
+        [Column("refresh_token_expiry_time")]
+        public DateTime? RefreshTokenExpiryTime { get; set; }
     }
 }
