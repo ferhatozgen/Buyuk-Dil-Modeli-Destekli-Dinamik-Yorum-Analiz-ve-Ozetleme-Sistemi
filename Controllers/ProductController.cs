@@ -84,5 +84,12 @@ namespace LLM_Destekli_Ozetleme.Controllers
 
             return Ok(popularProducts);
         }
+        [Authorize]
+        [HttpGet]
+        public async Task<IActionResult> GetAll([FromQuery] ProductQueryParameters queryParams)
+        {
+            var products = await _productService.GetProductsAsync(queryParams);
+            return Ok(products);
+        }
     }
 }
