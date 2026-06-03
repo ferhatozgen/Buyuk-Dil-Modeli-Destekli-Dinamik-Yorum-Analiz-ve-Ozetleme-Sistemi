@@ -191,14 +191,18 @@ def yorumlara_puan_ver(classifier, yorum_paketleri):
     return yorum_paketleri
 
 
-def bulut_model_analiz_et(yorum_metni: str, urun_grubu: str) -> list:
+def bulut_ayirici_model(yorum_metni: str, urun_grubu: str) -> list:
     """
     Hugging Face Spaces üzerindeki parcalayici modelimize config.py içindeki
     korumalı kategori şemalarını enjekte ederek istek atar.
 
-    :param yorum_metni: Ham müşteri veya mekan yorumu
-    :param urun_grubu: config.py içindeki sözlük anahtarı (Örn: 'aksesuar_taki', 'gezilecek_yer')
-    :return: Modelin parçalayıp eşleştirdiği JSON listesi
+    yorum_metni: Ham müşteri veya mekan yorumu
+    urun_grubu: config.py içindeki sözlük anahtarı (Örn: 'aksesuar_taki', 'gezilecek_yer')
+    return: Modelin parçalayıp eşleştirdiği JSON listesi
+
+
+    ornek_yorum = "çok memnunum yıkaması sesi enerji tüketimi açısından tam fiyat performans ürünü"
+    ornek_urun_grubu = "elektronik_teknoloji"
     """
     if not yorum_metni:
         return []
@@ -216,8 +220,7 @@ def bulut_model_analiz_et(yorum_metni: str, urun_grubu: str) -> list:
 
         response = client.predict(
             yorum=yorum_metni,
-            gecerli_kategoriler=gecerli_sema,
-            api_name="/predict"
+            gecerli_kategoriler=gecerli_sema
         )
 
         # Buluttan gelen JSON'u Python listesine parse et
