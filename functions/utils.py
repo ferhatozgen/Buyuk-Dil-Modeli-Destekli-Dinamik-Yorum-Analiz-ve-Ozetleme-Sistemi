@@ -4,6 +4,9 @@ import urllib.parse
 import hashlib
 import re
 import logging
+import json
+from gradio_client import Client
+from config import URUN_GRUP_SEMALARI
 
 logger = logging.getLogger(__name__)
 
@@ -186,4 +189,45 @@ def yorumlara_puan_ver(classifier, yorum_paketleri):
     logger.info(f"Örnek tahmin skorları: {test_scores} (ilk 3 yorum)")
 
     return yorum_paketleri
+
+
+def bulut_model_analiz_et(yorum_metni: str, urun_grubu: str) -> list:
+    """
+    Hugging Face Spaces üzerindeki parcalayici modelimize config.py içindeki
+    korumalı kategori şemalarını enjekte ederek istek atar.
+
+    :param yorum_metni: Ham müşteri veya mekan yorumu
+    :param urun_grubu: config.py içindeki sözlük anahtarı (Örn: 'aksesuar_taki', 'gezilecek_yer')
+    :return: Modelin parçalayıp eşleştirdiği JSON listesi
+    """
+    if not yorum_metni:
+        return []
+
+    # 1. Sözlükten ürün grubuna ait izin verilen kategorileri çekiyoruz
+    if urun_grubu in URUN_GRUP_SEMALARI:
+        gecerli_sema = URUN_GRUP_SEMALARI[urun_grubu]
+    else:
+        logger.warning(f"'{urun_grubu}' şeması config.py içinde bulunamadı. Genel şema devrede.")
+        gecerli_sema = "Kullanım Kalitesi, Kargo ve Teslimat, Fiyat Performans, Genel"
+
+    try:
+        # Bu kısım bulut köprüsünü kurmak deniyor.
+        client = Client("eroglufurkaan/uzman_parcaliyici")
+
+        response = client.predict(
+            yorum=yorum_metni,
+            gecerli_kategoriler=gecerli_sema,
+            api_name="/predict"
+        )
+
+        # Buluttan gelen JSON'u Python listesine parse et
+        parcalanmis_veri = json.loads(response)
+        return parcalanmis_veri
+
+    except json.JSONDecodeError:
+        logger.error("Buluttan dönen veri geçerli bir JSON formatında değil!")
+        return []
+    except Exception as e:
+        logger.error(f"Bulut model sorgulanırken utils katmanında hata oluştu: {e}")
+        return []
 
