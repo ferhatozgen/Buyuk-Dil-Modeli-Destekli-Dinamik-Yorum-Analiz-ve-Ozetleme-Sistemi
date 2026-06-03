@@ -84,5 +84,28 @@ namespace LLM_Destekli_Ozetleme.Controllers
 
             return Ok(popularProducts);
         }
+
+        [Authorize]
+        [HttpPost("scrape-and-predict")]
+        public async Task<IActionResult> ScrapeAndPredict([FromBody] AnalyzeRequestDto request)
+        {
+            if (request == null || string.IsNullOrEmpty(request.Url))
+                return BadRequest("İstek gövdesi veya Ürün URL'i boş olamaz.");
+
+            var result = await _productService.ScrapeAndPredictAsync(request.Url);
+
+            if (!result.Success)
+            {
+                // 500 Internal Server Error fırlatarak frontend'e detayları paslıyoruz
+                return StatusCode(500, new { message = result.Message });
+            }
+
+            return Ok(new 
+            { 
+                success = true, 
+                message = result.Message, 
+                productId = result.ProductId 
+            });
+        }
     }
 }
