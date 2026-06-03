@@ -1,8 +1,10 @@
+using Microsoft.Extensions.Configuration;
 using System.Security.Cryptography;
 using System.Text;
 using LLM_Destekli_Ozetleme.Models.Entities;
 using LLM_Destekli_Ozetleme.Models.DTOs;
 using LLM_Destekli_Ozetleme.Repositories;
+using System.Diagnostics; // Process sınıfı için zorunlu
 
 namespace LLM_Destekli_Ozetleme.Services
 {
@@ -10,12 +12,14 @@ namespace LLM_Destekli_Ozetleme.Services
     {
         private readonly IProductRepository _productRepository;
         private readonly IReviewRepository _reviewRepository;
+        private readonly IConfiguration _configuration; 
 
         // DbContext bitti, ambar görevlilerini (repositories) çağırıyoruz
-        public ProductService(IProductRepository productRepository, IReviewRepository reviewRepository)
+        public ProductService(IProductRepository productRepository, IReviewRepository reviewRepository, IConfiguration configuration)
         {
             _productRepository = productRepository;
-                _reviewRepository = reviewRepository;
+            _reviewRepository = reviewRepository;
+            _configuration = configuration; 
         }
 
         public async Task<(bool Exists, string Message, Product? Product)> CheckUrlAsync(string url)
@@ -102,6 +106,89 @@ namespace LLM_Destekli_Ozetleme.Services
                 AvgModelScore = p.AvgModelScore,
                 GuncelOzet = p.GuncelOzet
             }).ToList();
+        }
+
+        public async Task<(bool Success, string Message, Guid? ProductId)> ScrapeAndPredictAsync(string url)
+        {
+            try
+            {
+                // 1. Önce bu link daha önce işlenmiş mi kontrol et
+                string generatedHash = GenerateSHA256Hash(url);
+                var existingProduct = await _productRepository.GetByUrlOrHashAsync(url, generatedHash);
+
+                if (existingProduct != null)
+                {
+                    return (true, "Bu ürün zaten veritabanında mevcut.", existingProduct.Id);
+                }
+
+                // 2. Python Yapılandırma Ayarları (api_runner.py'yi hedefliyoruz)
+                var pythonExe = _configuration["PythonSettings:PythonExePath"] ?? throw new InvalidOperationException("Python exe yolu appsettings.json dosyasında bulunamadı.");
+                var pythonScript = _configuration["PythonSettings:ScriptPath"] ?? throw new InvalidOperationException("Python script yolu appsettings.json dosyasında bulunamadı.");
+
+                var startInfo = new ProcessStartInfo
+                {
+                    FileName = pythonExe,
+                    // DİKKAT: Burada pythonScript ve url parametrelerini doğru formatta gönderiyoruz
+                    Arguments = $"\"{pythonScript}\" --url \"{url}\"", 
+                    UseShellExecute = false,
+                    RedirectStandardOutput = true, // Python print'lerini yakala
+                    RedirectStandardError = true,  // Python exception'larını yakala
+                    CreateNoWindow = true
+                };
+
+                // 3. İşlemi Başlat ve Zaman Aşımı (Timeout) Koruması Ekle
+                using (var process = Process.Start(startInfo))
+                {
+                    if (process == null)
+                        return (false, "Python ETL alt süreci başlatılamadı.", null);
+
+                    // 3 dakikalık bekleme sınırı koyuyoruz
+                    using (var cts = new CancellationTokenSource(TimeSpan.FromMinutes(3)))
+                    {
+                        try
+                        {
+                            // Hem normal çıktıları hem de hataları asenkron okuyalım
+                            string output = await process.StandardOutput.ReadToEndAsync(cts.Token);
+                            string errors = await process.StandardError.ReadToEndAsync(cts.Token);
+                            await process.WaitForExitAsync(cts.Token);
+
+                            // VITAL ADIM: Python gizlice hata verdiyse bunu VS Code Terminaline basıyoruz!
+                            Console.WriteLine($"\n=== PYTHON BİLGİ MESAJLARI ===\n{output}");
+                            if (!string.IsNullOrWhiteSpace(errors))
+                            {
+                                Console.WriteLine($"\n=== PYTHON HATA MESAJLARI ===\n{errors}");
+                            }
+
+                            // Python 0 dışında bir kodla (örneğin 1) kapandıysa hata fırlat
+                            if (process.ExitCode != 0)
+                            {
+                                return (false, $"Python işlemi başarısız oldu (Kod: {process.ExitCode}). Lütfen VS Code terminalindeki loglara bakın.", null);
+                            }
+                        }
+                        catch (OperationCanceledException)
+                        {
+                            // 3 dakika dolduysa süreci zorla öldür
+                            if (!process.HasExited)
+                            {
+                                process.Kill(); 
+                            }
+                            return (false, "İşlem 3 dakikayı aştığı için iptal edildi (Timeout).", null);
+                        }
+                    }
+                }
+
+                // 4. Veritabanı Doğrulaması
+                var newProduct = await _productRepository.GetByUrlOrHashAsync(url, generatedHash);
+                
+                if (newProduct == null)
+                    return (false, "Python işlemi hatasız tamamlandı ancak ürün veritabanında doğrulanamadı.", null);
+
+                return (true, "Ürün yorumları başarıyla kazındı ve BERTurk modeli ile puanlandı!", newProduct.Id);
+            }
+            catch (Exception ex)
+            {
+                return (false, $"Arka plan süreci yürütülürken sistem hatası: {ex.Message}", null);
+            }
         }
 
         private string GenerateSHA256Hash(string rawData)
