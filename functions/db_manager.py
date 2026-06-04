@@ -54,12 +54,13 @@ class DatabaseManager:
                         product_query = """
                         INSERT INTO products (
                             id, platform, platform_id, product_name, image_url, category,
-                            original_url, url_hash, avg_orj_score, avg_model_score, status, last_updated_at
-                        ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+                            original_url, url_hash, avg_orj_score, avg_model_score,celiski_score status, last_updated_at
+                        ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
                         ON CONFLICT (url_hash) DO UPDATE SET         
                             avg_orj_score = EXCLUDED.avg_orj_score,
                             avg_model_score = EXCLUDED.avg_model_score,
                             category = EXCLUDED.category, -- Kategori değişmişse günceller
+                            celiski_score = EXCLUDED.celiski_score
                             last_updated_at = CURRENT_TIMESTAMP,
                             status = 'active'
                         RETURNING id; 
@@ -69,7 +70,7 @@ class DatabaseManager:
                             urun_paketi['id'], urun_paketi['platform'], urun_paketi['platform_id'],
                             urun_paketi['product_name'], urun_paketi['image_url'], urun_paketi['category'],
                             urun_paketi['original_url'], urun_paketi['url_hash'],
-                            urun_paketi['avg_orj_score'],urun_paketi['avg_model_score'], urun_paketi['status'],
+                            urun_paketi['avg_orj_score'],urun_paketi['avg_model_score'], urun_paketi["celiski_score"], urun_paketi['status'],
                             urun_paketi['last_updated_at']
                         ))
 
