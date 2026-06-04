@@ -303,7 +303,7 @@
     color: #dc2626;
 }
 
-/* ── 5. HERO (İLK ATTIĞINIZ ORİJİNAL LAYOUT: SOL BAŞLIK, SAĞ İSTATİSTİK) ── */
+/* ── 5. HERO BÖLÜMÜ ── */
 .vivid-hero-section {
     background: #ffffff;
     border: 1px solid rgba(15, 23, 42, 0.06);
@@ -319,9 +319,23 @@
 
 .hero-top {
     display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
+    flex-direction: column;
+    /* Yan yana durmaları yerine alt alta dizilmelerini sağlar */
+    align-items: center;
+    /* Yatayda tam merkeze alır */
+    justify-content: center;
+    text-align: center;
+    /* İçindeki tüm metinleri ortalar */
     margin-bottom: 48px;
+    gap: 32px;
+    /* Başlık ile (eğer duruyorsa) istatistik kutusu arasına nefes aldırır */
+}
+
+.hero-text {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
 }
 
 .hero-text h1 {
@@ -331,6 +345,7 @@
     line-height: 1.15;
     margin: 0 0 16px 0;
     letter-spacing: -1px;
+    text-align: center;
 }
 
 .hero-text h1 span {
@@ -342,15 +357,19 @@
 .hero-text p {
     font-size: 16px;
     color: #64748b;
-    margin: 0;
+    margin: 0 auto;
     font-weight: 400;
-    max-width: 80%;
+    max-width: 500px;
+    /* Metnin sağa sola çok uzamamasını, derli toplu durmasını sağlar */
     line-height: 1.6;
+    text-align: center;
 }
 
+/* Eğer istatistik kutusu (12.4K yazan yer) kodlarında hala duruyorsa, onun da ortada şık durması için: */
 .hero-stats {
     display: flex;
-    gap: 16px;
+    justify-content: center;
+    width: 100%;
 }
 
 .stat-box {
@@ -378,7 +397,6 @@
     letter-spacing: 0.5px;
 }
 
-/* DEVASA ANALİZ BARI */
 .search-glow-wrap {
     position: relative;
     z-index: 10;
@@ -444,7 +462,6 @@
     box-shadow: 0 8px 20px rgba(15, 23, 42, 0.25);
 }
 
-/* Neon Pulse Efekti */
 .pulse-glow {
     position: relative;
     overflow: hidden;
@@ -475,7 +492,6 @@
     }
 }
 
-/* Adım Adım Rehber (Orijinal Kodundaki Gibi) */
 .flow-steps-row {
     display: flex;
     align-items: center;
@@ -518,10 +534,10 @@
     font-weight: 400;
 }
 
-/* ── 6. KATEGORİLER (Süzülen Haplar) ── */
+/* ── 6. KATEGORİLER (YUVARLAK APP STİLİ) ── */
 .system-nav-section {
     max-width: 1240px;
-    margin: 0 auto 32px auto;
+    margin: 0 auto 40px auto;
     position: relative;
     z-index: 2;
     width: 100%;
@@ -530,133 +546,170 @@
 .cat-scroll-container {
     width: 100%;
     overflow-x: auto;
-    padding: 10px 0;
+    padding: 10px 0 20px 0;
     scrollbar-width: none;
-    text-align: center;
-    white-space: nowrap;
+    -ms-overflow-style: none;
 }
 
-.cat-row {
+.cat-scroll-container::-webkit-scrollbar {
+    display: none;
+}
+
+.cat-tile-row {
     display: inline-flex;
-    background: transparent;
-    padding: 4px;
-    gap: 12px;
+    gap: 32px;
+    /* Yuvarlaklar arası geniş boşluk */
+    padding: 0 10px;
     margin: 0 auto;
 }
 
-.cat-pill {
-    background: rgba(255, 255, 255, 0.6);
-    backdrop-filter: blur(8px);
-    border: 2px solid rgba(15, 23, 42, 0.05);
-    color: #64748b;
-    padding: 10px 22px;
-    border-radius: 14px;
-    font-size: 14.5px;
-    font-weight: 600;
+.cat-tile-btn {
+    background: transparent;
+    border: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    cursor: pointer;
+    min-width: 76px;
+    padding: 0;
+}
+
+/* Yuvarlak İkon Kutusu */
+.cat-circle {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background: #ffffff;
+    border: 1px solid rgba(15, 23, 42, 0.08);
     display: flex;
     align-items: center;
-    gap: 8px;
-    cursor: pointer;
+    justify-content: center;
+    color: #64748b;
+    box-shadow: 0 4px 10px rgba(15, 23, 42, 0.02);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.cat-text {
+    font-size: 13.5px;
+    font-weight: 600;
+    color: #64748b;
+    text-align: center;
     transition: all 0.3s ease;
+    white-space: nowrap;
 }
 
-.cat-pill:hover {
-    border-color: rgba(124, 58, 237, 0.3);
+/* Fareyle Üzerine Gelince (Hover) */
+.cat-tile-btn:hover .cat-circle {
+    transform: translateY(-4px) scale(1.05);
+    border-color: #cbd5e1;
+    box-shadow: 0 12px 24px rgba(15, 23, 42, 0.08);
     color: #0f172a;
-    transform: translateY(-2px);
-    background: rgba(255, 255, 255, 0.9);
 }
 
-.cat-pill.active {
-    background: rgba(124, 58, 237, 0.08);
-    border: 2px solid #7c3aed;
-    color: #7c3aed;
-    box-shadow: 0 8px 20px rgba(124, 58, 237, 0.15);
+.cat-tile-btn:hover .cat-text {
+    color: #0f172a;
 }
 
-.cat-pill.active svg {
-    color: #7c3aed;
+/* Aktif (Seçili) Kategori - VividAI Renkleri */
+.cat-tile-btn.active .cat-circle {
+    background: linear-gradient(135deg, #7c3aed 0%, #ec4899 100%);
+    border: none;
+    color: #ffffff;
+    box-shadow: 0 12px 24px rgba(124, 58, 237, 0.25);
+    transform: translateY(-6px) scale(1.05);
 }
 
-/* ── 7. SEKMELER VE KÜÇÜK SİSTEM ARAMASI BİR ARADA ── */
+.cat-tile-btn.active .cat-circle svg {
+    color: #ffffff;
+}
+
+.cat-tile-btn.active .cat-text {
+    color: #0f172a;
+    font-weight: 800;
+}
+
+
+/* ── 7. SEKMELER VE ARAMA (HAVADA SÜZÜLEN RENKLİ BUTONLAR) ── */
 .tab-search-wrapper {
     max-width: 1240px;
-    margin: 0 auto 24px auto;
+    margin: 0 auto 32px auto;
     display: flex;
     justify-content: space-between;
-    /* Sekmeler solda, arama sağda */
-    align-items: flex-end;
+    align-items: center;
     position: relative;
     z-index: 2;
     width: 100%;
-    border-bottom: 2px solid rgba(15, 23, 42, 0.06);
-    padding-bottom: 0;
 }
 
 .tab-bar {
-    display: inline-flex;
-    background: transparent;
-    padding: 0;
-    gap: 48px;
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    padding-left: 10px;
 }
 
 .tab-btn {
-    background: transparent;
-    border: none;
-    padding: 0 0 16px 0;
-    font-size: 16px;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    padding: 10px 24px;
+    border-radius: 50px;
+    font-size: 14px;
     font-weight: 600;
     color: #64748b;
     cursor: pointer;
     display: flex;
     align-items: center;
-    gap: 10px;
-    margin-bottom: -2px;
-    border-bottom: 2px solid transparent;
-    transition: all 0.3s ease;
+    gap: 8px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 2px 6px rgba(15, 23, 42, 0.02);
 }
 
 .tab-btn:hover {
+    background: #f8fafc;
+    border-color: #cbd5e1;
     color: #0f172a;
+    transform: translateY(-2px);
 }
 
+/* Aktif Sekme: VividAI Gradyan Rengi ile Parlar */
 .tab-btn.active {
-    color: #ec4899;
+    background: linear-gradient(135deg, #7c3aed 0%, #ec4899 100%);
+    border: none;
+    color: #ffffff;
+    box-shadow: 0 6px 16px rgba(124, 58, 237, 0.25);
+    transform: translateY(-2px);
     font-weight: 700;
-    border-bottom-color: #ec4899;
 }
 
 .tab-btn.active svg {
-    color: #ec4899 !important;
-    stroke: #ec4899 !important;
+    color: #ffffff !important;
+    stroke: #ffffff !important;
 }
 
-/* KÜÇÜK, AYRI BUTONLU SİSTEM ARAMASI (Sağ Tarafta) */
+/* Şık ve Yuvarlak Arama Kutusu */
 .compact-search-box {
     display: flex;
     align-items: center;
-    background: rgba(255, 255, 255, 0.7);
-    backdrop-filter: blur(12px);
-    border: 1px solid rgba(15, 23, 42, 0.1);
-    padding: 6px 6px 6px 16px;
-    border-radius: 100px;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    padding: 6px 6px 6px 20px;
+    border-radius: 50px;
     width: 320px;
-    margin-bottom: 10px;
-    /* Çizginin üstüne hizalamak için */
     transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(15, 23, 42, 0.04);
 }
 
 .compact-search-box:focus-within {
     border-color: #ec4899;
-    background: #ffffff;
-    box-shadow: 0 4px 12px rgba(236, 72, 153, 0.1);
+    box-shadow: 0 0 0 4px rgba(236, 72, 153, 0.1);
 }
 
 .compact-search-box input {
     flex: 1;
     border: none;
     background: transparent;
-    font-size: 13.5px;
+    font-size: 14px;
     color: #0f172a;
     outline: none;
 }
@@ -665,13 +718,12 @@
     color: #94a3b8;
 }
 
-/* SADECE SİSTEM İÇİN ARAMA BUTONU */
 .compact-search-btn {
-    background: #0f172a;
-    color: #fff;
+    background: #f1f5f9;
+    color: #0f172a;
     border: none;
-    padding: 8px 16px;
-    border-radius: 100px;
+    padding: 8px 18px;
+    border-radius: 50px;
     font-size: 13px;
     font-weight: 700;
     cursor: pointer;
@@ -682,7 +734,8 @@
 }
 
 .compact-search-btn:hover {
-    background: #ec4899;
+    background: #0f172a;
+    color: #ffffff;
 }
 
 /* ── 8. İÇERİK VE KARTLARIN SİMETRİK DİZİLİMİ ── */
@@ -706,39 +759,13 @@
     font-weight: 500;
 }
 
+/* E-TİCARET KART DİZİLİMİ (IZGARA) */
 .card-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-    gap: 20px;
-    justify-content: start;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 24px;
     width: 100%;
-}
-
-.product-card {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    background: #ffffff;
-    border-radius: 16px;
-    overflow: hidden;
-    border: 1px solid rgba(15, 23, 42, 0.08);
-    transition: all 0.3s ease;
-}
-
-.product-card img,
-.product-card .p-img-box img {
-    width: 100% !important;
-    height: 200px !important;
-    object-fit: cover !important;
-    object-position: center !important;
-    border-bottom: 1px solid rgba(15, 23, 42, 0.05);
-    display: block;
-}
-
-.product-card:hover {
-    box-shadow: 0 20px 40px rgba(15, 23, 42, 0.08);
-    transform: translateY(-6px);
-    border-color: rgba(124, 58, 237, 0.3);
+    align-items: stretch;
 }
 
 /* ── 9. TREND LİSTESİ ── */
@@ -902,6 +929,7 @@
     background: #fafbfc;
 }
 
+/* ── MOBİL UYUM ── */
 @media (max-width: 768px) {
     .hero-top {
         flex-direction: column;
@@ -929,18 +957,189 @@
     .tab-search-wrapper {
         flex-direction: column;
         align-items: center;
-        gap: 16px;
-        border-bottom: none;
+        gap: 20px;
     }
 
     .tab-bar {
-        border-bottom: 2px solid rgba(15, 23, 42, 0.06);
         width: 100%;
-        justify-content: center;
+        overflow-x: auto;
+        justify-content: flex-start;
+        padding: 6px 10px;
+    }
+
+    .tab-btn {
+        white-space: nowrap;
     }
 
     .compact-search-box {
         width: 100%;
         margin-bottom: 0;
+    }
+}
+
+/* ── YAPAY ZEKA ANALİZ YÜKLEME EKRANI ── */
+.vivid-ai-loader-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(15, 23, 42, 0.7);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: fadeIn 0.3s ease;
+}
+
+.vivid-ai-loader-card {
+    background: #ffffff;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 24px;
+    padding: 48px 40px;
+    width: 90%;
+    max-width: 420px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    box-shadow: 0 24px 48px rgba(0, 0, 0, 0.2), 0 0 0 1px rgba(124, 58, 237, 0.1);
+    animation: scaleUp 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Çift Halkalı Orbital Animasyon */
+.loader-orbit-container {
+    position: relative;
+    width: 80px;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 24px;
+}
+
+.loader-orbit-ring {
+    position: absolute;
+    border-radius: 50%;
+    border: 2px solid transparent;
+}
+
+.ring-1 {
+    width: 100%;
+    height: 100%;
+    border-top-color: #7c3aed;
+    border-right-color: #ec4899;
+    animation: spin 1.2s linear infinite;
+}
+
+.ring-2 {
+    width: 70%;
+    height: 70%;
+    border-bottom-color: #3b82f6;
+    border-left-color: #7c3aed;
+    animation: spinReverse 1.5s linear infinite;
+}
+
+.loader-core {
+    width: 48px;
+    height: 48px;
+    background: linear-gradient(135deg, #7c3aed, #ec4899);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 20px rgba(124, 58, 237, 0.5);
+    animation: pulseCore 2s ease-in-out infinite;
+}
+
+.loader-title {
+    font-size: 20px;
+    font-weight: 800;
+    color: #0f172a;
+    margin: 0 0 8px 0;
+    letter-spacing: -0.5px;
+}
+
+.loader-step-text {
+    font-size: 14px;
+    font-weight: 500;
+    color: #64748b;
+    margin-bottom: 24px;
+    min-height: 20px;
+    /* Metin değiştiğinde zıplamayı önler */
+    animation: fadeText 0.85s infinite alternate;
+}
+
+.loader-progress-wrap {
+    width: 100%;
+    height: 6px;
+    background: #f1f5f9;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.loader-progress-bar {
+    height: 100%;
+    background: linear-gradient(90deg, #7c3aed, #ec4899);
+    border-radius: 10px;
+    transition: width 0.85s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Keyframes (Animasyon Kuralları) */
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes spinReverse {
+    0% {
+        transform: rotate(360deg);
+    }
+
+    100% {
+        transform: rotate(0deg);
+    }
+}
+
+@keyframes pulseCore {
+    0% {
+        transform: scale(0.95);
+        box-shadow: 0 0 10px rgba(124, 58, 237, 0.3);
+    }
+
+    50% {
+        transform: scale(1.05);
+        box-shadow: 0 0 25px rgba(236, 72, 153, 0.6);
+    }
+
+    100% {
+        transform: scale(0.95);
+        box-shadow: 0 0 10px rgba(124, 58, 237, 0.3);
+    }
+}
+
+@keyframes scaleUp {
+    0% {
+        transform: scale(0.9);
+        opacity: 0;
+    }
+
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+@keyframes fadeText {
+    0% {
+        opacity: 0.6;
+    }
+
+    100% {
+        opacity: 1;
     }
 }

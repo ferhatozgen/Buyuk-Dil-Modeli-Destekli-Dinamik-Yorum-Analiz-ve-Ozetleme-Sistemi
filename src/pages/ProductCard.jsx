@@ -2,19 +2,22 @@ import React from 'react';
 import { Heart, Star } from 'lucide-react';
 import './ProductCard.css';
 
-// ── PLATFORM RENK ALGORTİMASI ──
+// ── PLATFORM GERÇEK MARKA RENK ALGORTİMASI ──
 export const getPlatformColor = (platName) => {
     if (!platName) return '#8b5cf6'; // Default VividAI Moru
     const str = platName.toLowerCase().replace(/\s+/g, '');
-    if (str.includes('trendyolgo')) return '#f27a1a';
-    if (str.includes('trendyol')) return '#f27a1a';
-    if (str.includes('yemeksepeti')) return '#ea004b';
-    if (str.includes('google')) return '#34a853';
-    if (str.includes('airbnb')) return '#ff5a5f';
-    if (str.includes('hepsiburada')) return '#ff6000';
-    if (str.includes('steam')) return '#14396e';
-    if (str.includes('etstur')) return '#0ea5e9';
-    if (str.includes('çiçeksepeti') || str.includes('ciceksepeti')) return '#16a34a';
+
+    // Gerçek Marka Renk Kodları (Brand Colors)
+    if (str.includes('trendyolgo')) return '#0cc167'; // Trendyol Turuncusu
+    if (str.includes('trendyol')) return '#F27A1A';   // Trendyol Turuncusu
+    if (str.includes('yemeksepeti')) return '#EA004B';// Yemeksepeti Pembesi
+    if (str.includes('google')) return '#4285F4';    // Google Yeşili
+    if (str.includes('airbnb')) return '#FF5A5F';     // Airbnb Rausch (Kırmızı/Mercan)
+    if (str.includes('hepsiburada')) return '#FF6000';// Hepsiburada Orijinal Turuncu
+    if (str.includes('steam')) return '#2A475E';      // Steam Laciverti
+    if (str.includes('etstur')) return '#009FDF';     // Etstur Orijinal Turkuaz
+    if (str.includes('çiçeksepeti') || str.includes('ciceksepeti')) return '#028139'; // Çiçeksepeti Koyu Yeşili
+
     return '#8b5cf6';
 };
 
@@ -29,15 +32,14 @@ function ProductCard({ item, isFav, onFav, onClick, userRating }) {
                     e.stopPropagation();
                     onFav(item);
                 }}
-                // Favori seçiliyken arkaplanı ve çerçeveyi platform rengine boyar
                 style={{
-                    ...(isFav ? { borderColor: platColor, background: `${platColor}20` } : {})
+                    ...(isFav ? { borderColor: platColor, background: `${platColor}15` } : {})
                 }}
             >
                 <Heart
-                    size={14}
+                    size={16}
                     fill={isFav ? platColor : 'none'}
-                    color={isFav ? platColor : 'var(--card-subtext, #94a3b8)'}
+                    color={isFav ? platColor : '#94a3b8'}
                 />
             </button>
 
@@ -47,21 +49,27 @@ function ProductCard({ item, isFav, onFav, onClick, userRating }) {
                     alt={item.name}
                     className="p-img"
                     onError={(e) => {
-                        e.target.src = 'https://via.placeholder.com/180x180/111027/8b5cf6?text=N/A';
+                        e.target.src = 'https://via.placeholder.com/200x200/111027/8b5cf6?text=Görsel+Yok';
                     }}
                 />
             </div>
 
             <div className="p-body">
-                {/* Platform Adı Dinamik Renk */}
                 <div className="p-plat" style={{ color: platColor }}>{item.plat}</div>
-                <h4 className="p-name">{item.name}</h4>
+                <h4 className="p-name" title={item.name}>{item.name}</h4>
+
                 <div className="p-footer">
-                    <span className="p-cat">{item.category}</span>
-                    {/* Yıldız ve Puan Dinamik Renk */}
-                    <span className="p-score" style={{ color: platColor }}>
-                        <Star size={11} fill={platColor} color={platColor} />
-                        {' '}{userRating || item.avgScore}
+                    {/* Kategori için dinamik renkli şık badge */}
+                    <span
+                        className="p-cat"
+                        style={{ backgroundColor: `${platColor}15`, color: platColor, border: `1px solid ${platColor}30` }}
+                    >
+                        {item.category}
+                    </span>
+
+                    <span className="p-score">
+                        <Star size={13} fill="#fbbf24" color="#fbbf24" />
+                        <span className="p-score-val">{userRating || item.avgScore}</span>
                     </span>
                 </div>
             </div>

@@ -33,7 +33,7 @@ function Register() {
                                 <span>←</span> Ana Sayfaya Dön
                             </Link>
                             <h2>Hesap Oluştur</h2>
-                            <p>YorumNet deneyimine başlamak için kayıt ol.</p>
+                            <p>VividAI deneyimine başlamak için kayıt ol.</p>
                         </header>
 
                         <form onSubmit={handleRegister} className="auth-form">

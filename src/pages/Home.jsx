@@ -210,7 +210,7 @@ function Home() {
                         <div className="feature-card">
                             <div className="feature-icon purple">01</div>
                             <h3>Linki Yapıştır</h3>
-                            <p>Trendyol, Amazon veya Steam ürün linkini kopyalayıp sisteme ekleyin.</p>
+                            <p>Trendyol, Hepsiburada veya Steam ürün linkini kopyalayıp sisteme ekleyin.</p>
                         </div>
 
                         <div className="feature-card">
@@ -235,7 +235,7 @@ function Home() {
                     </div>
                     <div style={{ maxWidth: '800px', margin: '0 auto', display: 'flex', flexDirection: 'column', gap: '15px' }}>
                         {[
-                            { q: "Hangi platformları destekliyor?", a: "Trendyol, Amazon, Steam, Airbnb ve Google Maps dahil 10+ platformu destekliyoruz." },
+                            { q: "Hangi platformları destekliyor?", a: "Trendyol, Hepsiburada, Steam, Airbnb ve Google Maps dahil 10+ platformu destekliyoruz." },
                             { q: "Yorumları nasıl analiz ediyorsunuz?", a: "En güncel Büyük Dil Modellerini (LLM) kullanarak metinlerdeki anlam ve duygu tonunu ayrıştırıyoruz." },
                             { q: "Veriler gerçek zamanlı mı?", a: "Evet, siz linki yapıştırdığınız an platformdaki en güncel yorumlar taranır." }
                         ].map((item, index) => (

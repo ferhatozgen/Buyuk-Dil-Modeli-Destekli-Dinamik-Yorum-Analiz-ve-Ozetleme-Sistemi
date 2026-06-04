@@ -19,18 +19,18 @@ import {
 import './ProductPage.css';
 import ProductCard from './ProductCard';
 
-// ── DİNAMİK PLATFORM RENK HARİTASI ──
+// ── DİNAMİK GERÇEK PLATFORM RENK HARİTASI ──
 const PLATFORM_THEMES = {
-    'trendyol': { main: '#f27a1a', light: '#fff4eb' },      // Trendyol Turuncusu
-    'trendyolgo': { main: '#f27a1a', light: '#fff4eb' },    // Trendyol Go Turuncusu
-    'yemeksepeti': { main: '#ea004b', light: '#ffeef3' },   // Yemeksepeti Pembesi
-    'googlemaps': { main: '#34a853', light: '#f0fdf4' },    // Google Maps Yeşili
-    'airbnb': { main: '#ff5a5f', light: '#ffeeef' },        // Airbnb Kırmızı/Mercan
-    'hepsiburada': { main: '#ff6000', light: '#fff4eb' },   // Hepsiburada Turuncusu
-    'steam': { main: '#66c0f4', light: '#f0f8ff' },         // Steam Mavisi
-    'etstur': { main: '#0ea5e9', light: '#f0f9ff' },        // Etstur Açık Mavi
-    'ciceksepeti': { main: '#16a34a', light: '#f0fdf4' },   // Çiçeksepeti Yeşili
-    'default': { main: '#8b5cf6', light: '#f5f3ff' }        // VividAI Moru (Bilinmeyen platformlar için)
+    'trendyol': { main: '#F27A1A', light: '#fff4eb' },      // Trendyol Turuncusu
+    'trendyolgo': { main: '#0cc167', light: '#e8faef' },    // Trendyol Go Turuncusu
+    'yemeksepeti': { main: '#EA004B', light: '#ffeef3' },   // Yemeksepeti Pembesi
+    'googlemaps': { main: '#4285F4', light: '#e8f0fe' },   // Google Yeşili
+    'airbnb': { main: '#FF5A5F', light: '#ffeeef' },        // Airbnb Kırmızı/Mercan
+    'hepsiburada': { main: '#FF6000', light: '#fff4eb' },   // Hepsiburada Turuncusu
+    'steam': { main: '#2A475E', light: '#f1f5f9' },         // Steam Laciverti
+    'etstur': { main: '#009FDF', light: '#f0f9ff' },        // Etstur Turkuaz
+    'ciceksepeti': { main: '#028139', light: '#f0fdf4' },   // Çiçeksepeti Yeşili
+    'default': { main: '#8b5cf6', light: '#f5f3ff' }        // VividAI Moru
 };
 
 const CATEGORY_DETAILS = {
