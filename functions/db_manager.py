@@ -104,6 +104,7 @@ class DatabaseManager:
 
                         conn.commit()
                         print(f"--- [DB BAŞARILI] --- {urun_paketi['product_name']} kaydedildi.")
+                        return db_actual_id
                 except Exception as inner_e:
                     conn.rollback()
                     raise inner_e
@@ -143,3 +144,43 @@ class DatabaseManager:
         except Exception as e:
             print(f"Sorgu çalıştırma hatası: {e}")
             raise e
+
+    def get_unscored_data_by_produc_id(self, product_id):
+        try:
+            with self.get_connection() as conn:
+                with conn.cursor() as cur:
+                    query = "Select id, clean_text FROM reviews WHERE product_id = %s"
+                    cur.execute(query, (product_id,))
+                    rows = cur.fetchall()
+
+                    yorum_paketleri = []
+                    for row in rows:
+                        yorum_paketleri.append({
+                            "db_review_id": row[0],
+                            "clean_text": row[1]
+                        })
+
+                    return yorum_paketleri
+        except Exception as e:
+            print(f"Ham yorumlar çekilirken hata: {e}")
+            return []
+
+    def update_scores(self, product_id, avg_model_score, yorum_paketleri):
+        try:
+            with self.get_connection() as conn:
+                with conn.cursor() as cur:
+                    if avg_model_score is not None:
+                        cur.execute(
+                            "UPDATE products SET avg_model_score = %s WHERE id = %s",
+                            (avg_model_score, product_id)
+                        )
+
+                    update_query = "UPDATE reviews SET predicted_score = %s WHERE id = %s"
+                    review_data = [(y.get('predicted_score'), y.get('db_review_id')) for y in yorum_paketleri if y.get('predicted_score') is not None]
+
+                    from psycopg2.extras import execute_batch
+                    execute_batch(cur, update_query, review_data)
+
+                    conn.commit()
+        except Exception as e:
+            raise Exception(f"Puanlar güncellenirken hata: {e}")
