@@ -31,6 +31,30 @@ class BaseTransformer:
             "orijinal_metin") or ""
 
     def process(self) -> tuple[dict, list[dict]]:
+        gecerli_puanlar =[]
+        review_packets = []
+        for raw_review in self.ham_yorumlar:
+            current_rating = self.get_individual_rating(raw_review)
+            if current_rating is not None:
+                gecerli_puanlar.append(float(current_rating))
+
+            review_packets.append({
+                "product_id": self.product_uuid,
+                "original_rating": current_rating,
+                "rating_int": round(current_rating) if current_rating is not None else None,
+                "predicted_score": None,
+                "raw_text": self.get_raw_text(raw_review),
+                "clean_text": raw_review.get("temiz_metin"),
+                "metadata": self.get_metadata(raw_review),
+                "created_at": datetime.now()
+            })
+
+        celiski_score=0.00
+        if len(gecerli_puanlar) >= 2:
+            ort = sum(gecerli_puanlar) / len(gecerli_puanlar)
+            varyans = sum((x - ort) ** 2) for x in gecerli_puanlar / len(gecerli_puanlar)
+            celiski_score=round(varyans / 4.0, 2)   #burada 0-1 arasına normalize etmek için 4 'e böldük.(max variance)
+
         urun_paket = {
             "id": self.product_uuid,
             "platform": self.platform_name,
@@ -44,25 +68,11 @@ class BaseTransformer:
             "click_count": 0,
             "avg_orj_score": self.get_avg_orj_score(),
             "avg_model_score": None,
+            "celiski_score": celiski_score,
             "guncel_ozet": None,
             "created_at": datetime.now(),
             "last_updated_at": datetime.now()
         }
-
-        review_packets = []
-        for raw_review in self.ham_yorumlar:
-            current_rating = self.get_individual_rating(raw_review)
-            review_packets.append({
-                "product_id": self.product_uuid,
-                "original_rating": current_rating,
-                "rating_int": round(current_rating) if current_rating is not None else None,
-                "predicted_score": None,
-                "raw_text": self.get_raw_text(raw_review),
-                "clean_text": raw_review.get("temiz_metin"),
-                "metadata": self.get_metadata(raw_review),
-                "created_at": datetime.now()
-            })
-
         return urun_paket, review_packets
 
 
