@@ -88,20 +88,32 @@ class DatabaseManager:
                                 product_id, original_rating, rating_int, predicted_score, raw_text, clean_text, metadata
                             ) VALUES %s
                         """
+                        seen_reviews = set()
+                        review_values = []
 
-                        review_values = [
-                            (
-                                db_actual_id,  # Transformer'dan gelen değil, DB'den aldığımız ID'yi kullanıyoruz!
-                                y['original_rating'],
-                                y["rating_int"],
-                                y['predicted_score'],
-                                y['raw_text'],
-                                y['clean_text'],
-                                Json(y['metadata'])
-                            ) for y in yorum_paketleri
-                        ]
+                        for y in yorum_paketleri:
+                            ham_metin = y['raw_text'].strip() if y['raw_text'] else ""
+                            puan = y['original_rating']
 
-                        execute_values(cur, review_query, review_values)
+                            # Metin ve puan kombinasyonundan benzersiz bir anahtar (Tuple) oluşturuyoruz
+                            review_key = (ham_metin, puan)
+
+                            # Eğer bu yorumu o anki paket içinde ilk defa görüyorsak ve metin boş değilse listeye ekle
+                            if review_key not in seen_reviews and ham_metin != "":
+                                seen_reviews.add(review_key)
+                                review_values.append((
+                                    db_actual_id,
+                                    puan,
+                                    y["rating_int"],
+                                    y['predicted_score'],
+                                    y['raw_text'],
+                                    y['clean_text'],
+                                    Json(y['metadata'])
+                                ))
+
+                        # Sadece tekil olan temiz listeyi veritabanına tek kalemde fırlatıyoruz
+                        if review_values:
+                            execute_values(cur, review_query, review_values)
 
                         conn.commit()
                         print(f"--- [DB BAŞARILI] --- {urun_paketi['product_name']} kaydedildi.")
