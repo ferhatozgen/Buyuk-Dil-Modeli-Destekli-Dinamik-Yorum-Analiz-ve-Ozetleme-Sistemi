@@ -9,5 +9,8 @@ namespace LLM_Destekli_Ozetleme.Repositories
         Task<Product?> GetByIdAsync(Guid id);
         Task<List<Product>> GetPopularProductsAsync(int minClicks, int limit);
         Task<List<Product>> GetProductsAsync(ProductQueryParameters queryParams);
+        Task<bool> IncrementClickCountAsync(Guid id);
+        Task<UserProductInteraction?> GetUserInteractionAsync(Guid userId, Guid productId);
+        Task<bool> SaveUserInteractionAsync(UserProductInteraction interaction);
     }
 }

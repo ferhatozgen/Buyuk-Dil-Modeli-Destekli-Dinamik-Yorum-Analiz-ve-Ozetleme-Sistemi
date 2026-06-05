@@ -51,5 +51,8 @@ namespace LLM_Destekli_Ozetleme.Models.Entities
 
         [Column("last_updated_at")]
         public DateTime? LastUpdatedAt { get; set; }
+
+        [Column("celiski_score")]
+        public decimal CeliskiScore { get; set; } = 0.00m;
     }
 }
