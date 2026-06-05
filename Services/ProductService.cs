@@ -101,58 +101,6 @@ namespace LLM_Destekli_Ozetleme.Services
             return dto;
         }
 
-        public async Task<(bool Exists, string Message, Product? Product)> CheckUrlAsync(string url)
-        {
-            string generatedHash = GenerateSHA256Hash(url);
-            var existingProduct = await _productRepository.GetByUrlOrHashAsync(url, generatedHash);
-
-            if (existingProduct != null)
-            {
-                return (true, "Ürün veritabanında mevcut.", existingProduct);
-            }
-
-            return (false, "Ürün bulunamadı, yeni analiz başlatılmalı.", null);
-        }
-
-        public async Task<(bool NeedsRescrape, double MonthsPassed, string Message)> CheckProductStatusAsync(Guid productId)
-        {
-            var product = await _productRepository.GetByIdAsync(productId);
-            
-            if (product == null)
-            {
-                throw new Exception("Ürün bulunamadı.");
-            }
-
-            var referenceDate = product.CreatedAt ?? DateTime.UtcNow;
-            var monthsPassed = (DateTime.UtcNow - referenceDate).TotalDays / 30.0;
-            bool needsRescrape = monthsPassed > 3.0;
-
-            string message = needsRescrape 
-                ? "Ürün verileri 3 aydan eski. Yeniden scrape işlemi başlatılmalı." 
-                : "Ürün verileri güncel. Tekrar scrape edilmesine gerek yok.";
-
-            return (needsRescrape, Math.Round(monthsPassed, 1), message);
-        }
-
-        public async Task<(bool Success, string Message, int Count, object? Reviews)> GetReviewsForModelAsync(Guid productId)
-        {
-            var rawReviews = await _reviewRepository.GetCleanReviewsByProductIdAsync(productId);
-
-            if (!rawReviews.Any())
-            {
-                return (false, "Bu ürüne ait yorum bulunamadı veya henüz scrape edilmedi.", 0, null);
-            }
-
-            var projectedReviews = rawReviews.Select(r => new 
-            {
-                r.Id,
-                r.CleanText,
-                r.OriginalRating
-            }).ToList();
-
-            return (true, "Başarılı", projectedReviews.Count, projectedReviews);
-        }
-
         public async Task<(bool Success, string Message, Guid? ProductId)> Step1ScrapeAsync(string url)
         {
             try
