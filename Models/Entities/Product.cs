@@ -55,5 +55,7 @@ namespace LLM_Destekli_Ozetleme.Models.Entities
         public ICollection<ProductCategoryStat> CategoryStats { get; set; } = new List<ProductCategoryStat>();
         public ICollection<ProductSummaryHistory> SummaryHistories { get; set; } = new List<ProductSummaryHistory>();
         public ICollection<Review> Reviews { get; set; } = new List<Review>();
+        [Column("celiski_score")]
+        public decimal CeliskiScore { get; set; } = 0.00m;
     }
 }

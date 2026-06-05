@@ -127,5 +127,67 @@ namespace LLM_Destekli_Ozetleme.Controllers
                 summaryText = result.Summary 
             });
         }
+
+        [HttpPatch("{id}/click")]
+        public async Task<IActionResult> IncrementClickCount(Guid id)
+        {
+            var result = await _productService.IncrementClickCountAsync(id);
+
+            if (!result.Success)
+            {
+                return NotFound(new { message = result.Message });
+            }
+
+            return Ok(new { message = result.Message });
+        }
+
+        [Authorize] // 🌟 Bu endpoint'e sadece giriş yapmış ve geçerli Token'ı olanlar girebilir
+        [HttpPost("{id}/toggle-save")]
+        public async Task<IActionResult> ToggleSave(Guid id)
+        {
+            // JWT Token'ın içinden kullanıcının ID'sini (NameIdentifier) çıkarıyoruz
+            var userIdClaim = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
+
+            if (string.IsNullOrEmpty(userIdClaim) || !Guid.TryParse(userIdClaim, out Guid userId))
+            {
+                return Unauthorized(new { message = "Kullanıcı kimliği doğrulanamadı. Lütfen tekrar giriş yapın." });
+            }
+
+            // Servise gönder
+            var result = await _productService.ToggleProductSaveAsync(userId, id);
+
+            if (!result.Success)
+            {
+                return BadRequest(new { message = result.Message });
+            }
+
+            // Geriye işlemin başarılı olduğunu ve butonun yeni rengi için isSaved durumunu dönüyoruz
+            return Ok(new { message = result.Message, isSaved = result.IsSaved });
+        }
+
+        // Parametre olarak body'den SummaryRatingRequestDto nesnesini alıyoruz
+
+        [Authorize]
+        [HttpPost("{id}/rate-summary")]
+        public async Task<IActionResult> RateSummary(Guid id, [FromBody] SummaryRatingRequestDto request)
+        {
+            // Token'dan User ID'yi çıkartıyoruz
+            var userIdClaim = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
+
+            if (string.IsNullOrEmpty(userIdClaim) || !Guid.TryParse(userIdClaim, out Guid userId))
+            {
+                return Unauthorized(new { message = "Kullanıcı kimliği doğrulanamadı. Lütfen tekrar giriş yapın." });
+            }
+
+            // Servise gönderiyoruz
+            var result = await _productService.RateSummaryAsync(userId, id, request.Rating);
+
+            if (!result.Success)
+            {
+                return BadRequest(new { message = result.Message });
+            }
+
+            return Ok(new { message = result.Message });
+        }
     }
 }

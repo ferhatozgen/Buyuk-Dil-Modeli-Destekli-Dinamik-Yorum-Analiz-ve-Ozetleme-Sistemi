@@ -13,5 +13,8 @@ namespace LLM_Destekli_Ozetleme.Repositories
         Task<List<Review>> GetReviewsByIdsAsync(List<int> reviewIds);
         Task<bool> IsProductFavoritedByUserAsync(Guid productId, Guid userId);
 
+        Task<bool> IncrementClickCountAsync(Guid id);
+        Task<UserProductInteraction?> GetUserInteractionAsync(Guid userId, Guid productId);
+        Task<bool> SaveUserInteractionAsync(UserProductInteraction interaction);
     }
 }

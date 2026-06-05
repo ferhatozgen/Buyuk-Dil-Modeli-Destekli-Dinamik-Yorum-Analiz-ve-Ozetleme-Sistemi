@@ -12,5 +12,8 @@ namespace LLM_Destekli_Ozetleme.Services
         Task<(bool Success, string Message)> Step3CategorizeAsync(Guid productId);
         Task<(bool Success, string Message, string? Summary)> Step4SummarizeAsync(Guid productId);
         Task<ProductDetailDto?> GetProductDetailsByIdAsync(Guid productId, Guid? userId = null);
+        Task<(bool Success, string Message)> IncrementClickCountAsync(Guid productId);
+        Task<(bool Success, string Message, bool IsSaved)> ToggleProductSaveAsync(Guid userId, Guid productId);
+        Task<(bool Success, string Message)> RateSummaryAsync(Guid userId, Guid productId, int rating);
     }
 }

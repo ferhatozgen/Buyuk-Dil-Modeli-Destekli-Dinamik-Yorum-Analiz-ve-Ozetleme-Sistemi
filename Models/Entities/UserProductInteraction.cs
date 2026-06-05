@@ -17,7 +17,7 @@ namespace LLM_Destekli_Ozetleme.Models.Entities
         public Guid? ProductId { get; set; }
 
         [Column("is_saved")]
-        public bool? IsSaved { get; set; }
+        public bool IsSaved { get; set; }
 
         [Column("summary_rating")]
         public int? SummaryRating { get; set; }

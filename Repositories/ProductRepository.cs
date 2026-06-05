@@ -28,24 +28,31 @@ namespace LLM_Destekli_Ozetleme.Repositories
         public async Task<List<Product>> GetProductsAsync(ProductQueryParameters queryParams)
         {
             var query = _context.Products.AsQueryable();
-            // Kategori Filtresi (Null uyarısını kapatan ve güvenli filtreleme yapan hali)
+
+            // Kategori Filtresi
             if (!string.IsNullOrWhiteSpace(queryParams.Category))
             {
                 query = query.Where(p => p.Category != null && p.Category.ToLower() == queryParams.Category.ToLower());
             }
 
+            // Arama Terimi Filtresi
             if (!string.IsNullOrEmpty(queryParams.SearchTerm))
             {
                 query = query.Where(p => p.ProductName.Contains(queryParams.SearchTerm));
             }
 
+            // Dinamik Sıralama Mantığı
             query = queryParams.SortBy switch
             {
                 "mostClicked" => query.OrderByDescending(p => p.ClickCount),
                 "mostLiked" => query.OrderByDescending(p => p.AvgModelScore),
+                // 🌟 YENİ SÜTUN İÇİN DİNAMİK SIRALAMA SEÇENEĞİ:
+                // Çelişki skoru en yüksek olan (yani tahminle orijinal puanın en çok saptığı) ürünleri başa çeker.
+                "mostControversial" => query.OrderByDescending(p => p.CeliskiScore),
                 _ => query.OrderByDescending(p => p.CreatedAt)
             };
 
+            // Sayfalama (Pagination) Mantığı
             if (queryParams.Limit.HasValue)
             {
                 query = query.Take(queryParams.Limit.Value);
@@ -78,6 +85,39 @@ namespace LLM_Destekli_Ozetleme.Repositories
                 .FirstOrDefaultAsync(i => i.ProductId == productId && i.UserId == userId);
             
             return interaction?.IsSaved ?? false;
+        public async Task<bool> IncrementClickCountAsync(Guid id)
+        {
+            var product = await _context.Products.FindAsync(id);
+            if (product == null) return false;
+
+            // Eğer click_count null ise 1 yapıyoruz, değer varsa 1 arttırıyoruz.
+            product.ClickCount = (product.ClickCount ?? 0) + 1;
+            product.LastUpdatedAt = DateTime.UtcNow;
+
+            return await _context.SaveChangesAsync() > 0;
+        }
+
+        public async Task<UserProductInteraction?> GetUserInteractionAsync(Guid userId, Guid productId)
+        {
+            // Kullanıcının bu ürünle daha önce bir kaydı var mı diye bakıyoruz
+            return await _context.UserProductInteractions
+                .FirstOrDefaultAsync(x => x.UserId == userId && x.ProductId == productId);
+        }
+
+        public async Task<bool> SaveUserInteractionAsync(UserProductInteraction interaction)
+        {
+            if (interaction.Id == 0) 
+            {
+                // Eğer Id 0 ise bu yepyeni bir kayıttır (Insert)
+                await _context.UserProductInteractions.AddAsync(interaction);
+            }
+            else
+            {
+                // Kayıt varsa durumu güncelleniyordur (Update)
+                _context.UserProductInteractions.Update(interaction);
+            }
+            
+            return await _context.SaveChangesAsync() > 0;
         }
     }
 }

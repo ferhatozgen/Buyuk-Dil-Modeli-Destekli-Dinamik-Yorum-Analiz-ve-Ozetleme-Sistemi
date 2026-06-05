@@ -253,6 +253,116 @@ namespace LLM_Destekli_Ozetleme.Services
         }
         
 
+        public async Task<(bool Success, string Message)> IncrementClickCountAsync(Guid productId)
+        {
+            try
+            {
+                var result = await _productRepository.IncrementClickCountAsync(productId);
+                
+                if (!result)
+                {
+                    return (false, "Ürün bulunamadı veya tıklama sayısı güncellenemedi.");
+                }
+
+                return (true, "Ürün tıklama sayısı başarıyla arttırıldı.");
+            }
+            catch (Exception ex)
+            {
+                return (false, $"Tıklama sayısı arttırılırken sistem hatası oluştu: {ex.Message}");
+            }
+        }
+
+        public async Task<(bool Success, string Message, bool IsSaved)> ToggleProductSaveAsync(Guid userId, Guid productId)
+        {
+            try
+            {
+                var product = await _productRepository.GetByIdAsync(productId);
+                if (product == null) return (false, "Ürün bulunamadı.", false);
+
+                var interaction = await _productRepository.GetUserInteractionAsync(userId, productId);
+
+                if (interaction == null)
+                {
+                    interaction = new UserProductInteraction
+                    {
+                        UserId = userId,
+                        ProductId = productId,
+                        IsSaved = true,
+                        CreatedAt = DateTime.UtcNow
+                    };
+                }
+                else
+                {
+                    interaction.IsSaved = !interaction.IsSaved;
+                }
+
+                var result = await _productRepository.SaveUserInteractionAsync(interaction);
+
+                if (result)
+                {
+                    // Değişkeni if bloğunun içinde oluşturup anında return ediyoruz. Sorunsuz çalışacaktır.
+                    string statusMsg = interaction.IsSaved ? "Ürün favorilere eklendi." : "Ürün favorilerden çıkarıldı.";
+                    return (true, statusMsg, interaction.IsSaved);
+                }
+
+                return (false, "İşlem sırasında veritabanı hatası oluştu.", false);
+            }
+            catch (Exception ex)
+            {
+                return (false, $"Favori işlemi başarısız: {ex.Message}", false);
+            }
+        }
+
+        public async Task<(bool Success, string Message)> RateSummaryAsync(Guid userId, Guid productId, int rating)
+        {
+            // 1. Güvenlik ve İş Kuralları: Puan 1 ile 5 arasında olmalıdır
+            if (rating < 1 || rating > 5)
+            {
+                return (false, "Geçersiz puan! Değerlendirme 1 ile 5 arasında olmalıdır.");
+            }
+
+            try
+            {
+                // 2. Ürün gerçekten var mı kontrolü
+                var product = await _productRepository.GetByIdAsync(productId);
+                if (product == null) return (false, "Ürün bulunamadı.");
+
+                // 3. Kullanıcının bu ürünle daha önce bir etkileşimi var mı?
+                var interaction = await _productRepository.GetUserInteractionAsync(userId, productId);
+
+                if (interaction == null)
+                {
+                    // Eğer hiç favoriye falan almamışsa, doğrudan puan vererek ilk etkileşimi başlatıyor
+                    interaction = new UserProductInteraction
+                    {
+                        UserId = userId,
+                        ProductId = productId,
+                        SummaryRating = rating,
+                        IsSaved = false, // Varsayılan değer
+                        CreatedAt = DateTime.UtcNow
+                    };
+                }
+                else
+                {
+                    // Daha önce favoriye almış veya işlem yapmış, sadece puanı güncelliyoruz
+                    interaction.SummaryRating = rating;
+                }
+
+                // 4. Veritabanına kaydet (Eski yazdığımız repository metodunu tekrar kullanıyoruz!)
+                var result = await _productRepository.SaveUserInteractionAsync(interaction);
+
+                if (result)
+                {
+                    return (true, "Özet değerlendirmeniz başarıyla kaydedildi. Geri bildiriminiz için teşekkürler!");
+                }
+
+                return (false, "İşlem sırasında veritabanı hatası oluştu.");
+            }
+            catch (Exception ex)
+            {
+                return (false, $"Değerlendirme işlemi başarısız: {ex.Message}");
+            }
+        }
         private string GenerateSHA256Hash(string rawData)
         {
             using (SHA256 sha256Hash = SHA256.Create())
