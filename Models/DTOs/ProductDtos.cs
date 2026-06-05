@@ -13,4 +13,8 @@ namespace LLM_Destekli_Ozetleme.Models.DTOs
         public decimal? AvgModelScore { get; set; } 
         public string? GuncelOzet { get; set; }
     }
+    public class ProductIdDto
+    {
+        public Guid ProductId { get; set; }
+    }
 }

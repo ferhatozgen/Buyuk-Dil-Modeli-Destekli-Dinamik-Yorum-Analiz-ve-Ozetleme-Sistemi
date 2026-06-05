@@ -93,26 +93,84 @@ namespace LLM_Destekli_Ozetleme.Controllers
 
         }
 
-        [Authorize]
-        [HttpPost("scrape-and-predict")]
-        public async Task<IActionResult> ScrapeAndPredict([FromBody] AnalyzeRequestDto request)
+        [HttpPost("step1-scrape")]
+        public async Task<IActionResult> Step1Scrape([FromBody] CheckProductUrlDto request)
         {
-            if (request == null || string.IsNullOrEmpty(request.Url))
-                return BadRequest("İstek gövdesi veya Ürün URL'i boş olamaz.");
+           if (string.IsNullOrWhiteSpace(request.Url))
+            {
+                return BadRequest("Geçerli bir ürün URL'i girilmelidir.");
+            }
 
-            var result = await _productService.ScrapeAndPredictAsync(request.Url);
+            var result = await _productService.Step1ScrapeAsync(request.Url);
 
             if (!result.Success)
             {
-                // 500 Internal Server Error fırlatarak frontend'e detayları paslıyoruz
                 return StatusCode(500, new { message = result.Message });
             }
 
             return Ok(new 
             { 
-                success = true, 
-                message = result.Message, 
-                productId = result.ProductId 
+                message = result.Message,
+                productId = result.ProductId
+            });
+        }
+
+        [HttpPost("step2-score")]
+        public async Task<IActionResult> Step2Score([FromBody] ProductIdDto request)
+        {
+            if (request.ProductId == Guid.Empty)
+            {
+                return BadRequest("Geçerli bir ProductId girilmelidir.");
+            }
+
+            var result = await _productService.Step2ProcessAsync(request.ProductId);
+
+            if (!result.Success)
+            {
+                return StatusCode(500, new { message = result.Message });
+            }
+
+            return Ok(new { message = result.Message });
+        }
+
+        [HttpPost("step3-categorize")]
+        public async Task<IActionResult> Step3Categorize([FromBody] ProductIdDto request)
+        {
+            if (request.ProductId == Guid.Empty)
+            {
+                return BadRequest("Geçerli bir ürün ID'si girilmelidir.");
+            }
+
+            var result = await _productService.Step3CategorizeAsync(request.ProductId);
+
+            if (!result.Success)
+            {
+                return StatusCode(500, new { message = result.Message });
+            }
+
+            return Ok(new { message = result.Message });
+        }
+
+        [HttpPost("step4-summarize")]
+        public async Task<IActionResult> Step4Summarize([FromBody] ProductIdDto request)
+        {
+            if (request.ProductId == Guid.Empty)
+            {
+                return BadRequest("Geçerli bir ürün ID'si girilmelidir.");
+            }
+
+            var result = await _productService.Step4SummarizeAsync(request.ProductId);
+
+            if (!result.Success)
+            {
+                return StatusCode(500, new { message = result.Message });
+            }
+
+            // Başarılı olduğunda React'e özet metnini de (summaryText) gönderiyoruz
+            return Ok(new 
+            { 
+                message = result.Message,
+                summaryText = result.Summary 
             });
         }
     }
