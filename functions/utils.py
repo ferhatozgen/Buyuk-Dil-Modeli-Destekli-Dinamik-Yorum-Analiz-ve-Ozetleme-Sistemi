@@ -191,23 +191,22 @@ def yorumlara_puan_ver(classifier, yorum_paketleri):
     return yorum_paketleri
 
 
+try:
+    print("INFO: Hugging Face bağlantısı kuruluyor (Model uykudaysa uyanması 2-3 dk sürebilir)...")
+    PARCALAYICI_CLIENT = Client(
+        "eroglufurkaan/uzman_parcaliyici",
+        httpx_kwargs={"timeout": 300.0} # 5 dakikalık tolerans
+    )
+except Exception as e:
+    logger.error(f"Gradio Client başlatılamadı: {e}")
+    PARCALAYICI_CLIENT = None
+
+
 def bulut_ayirici_model(yorum_metni: str, urun_grubu: str) -> list:
-    """
-    Hugging Face Spaces üzerindeki parcalayici modelimize config.py içindeki
-    korumalı kategori şemalarını enjekte ederek istek atar.
-
-    yorum_metni: Ham müşteri veya mekan yorumu
-    urun_grubu: config.py içindeki sözlük anahtarı (Örn: 'aksesuar_taki', 'gezilecek_yer')
-    return: Modelin parçalayıp eşleştirdiği JSON listesi
-
-
-    ornek_yorum = "çok memnunum yıkaması sesi enerji tüketimi açısından tam fiyat performans ürünü"
-    ornek_urun_grubu = "elektronik_teknoloji"
-    """
-    if not yorum_metni:
+    if not yorum_metni or not PARCALAYICI_CLIENT:
         return []
 
-    # 1. Sözlükten ürün grubuna ait izin verilen kategorileri çekiyoruz
+    # 1. Şemayı Çek
     if urun_grubu in URUN_GRUP_SEMALARI:
         gecerli_sema = URUN_GRUP_SEMALARI[urun_grubu]
     else:
@@ -215,20 +214,25 @@ def bulut_ayirici_model(yorum_metni: str, urun_grubu: str) -> list:
         gecerli_sema = "Kullanım Kalitesi, Kargo ve Teslimat, Fiyat Performans, Genel"
 
     try:
-        # Bu kısım bulut köprüsünü kurmak deniyor.
-        client = Client("eroglufurkaan/uzman_parcaliyici")
-
-        response = client.predict(
+        # 2. Çalışan Orijinal Parametre Yapısı
+        response = PARCALAYICI_CLIENT.predict(
             yorum=yorum_metni,
             gecerli_kategoriler=gecerli_sema
         )
 
-        # Buluttan gelen JSON'u Python listesine parse et
-        parcalanmis_veri = json.loads(response)
+        # 3. JSON Markdown Temizliği (Hata almamak için şart)
+        temiz_response = str(response).strip()
+        if temiz_response.startswith("```json"):
+            temiz_response = temiz_response.replace("```json", "").replace("```", "").strip()
+        elif temiz_response.startswith("```"):
+            temiz_response = temiz_response.replace("```", "").strip()
+
+        # 4. JSON'a Dönüştür
+        parcalanmis_veri = json.loads(temiz_response)
         return parcalanmis_veri
 
     except json.JSONDecodeError:
-        logger.error("Buluttan dönen veri geçerli bir JSON formatında değil!")
+        logger.error(f"Buluttan dönen veri geçerli bir JSON değil. Gelen Yanıt: {str(response)[:100]}")
         return []
     except Exception as e:
         logger.error(f"Bulut model sorgulanırken utils katmanında hata oluştu: {e}")
