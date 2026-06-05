@@ -63,14 +63,6 @@ namespace LLM_Destekli_Ozetleme.Repositories
 
             return await query.ToListAsync();
         }
-        public async Task<List<Product>> GetPopularProductsAsync(int minClicks, int limit)
-        {
-            return await _context.Products
-                .Where(p => p.ClickCount != null && p.ClickCount >= minClicks)
-                .OrderByDescending(p => p.ClickCount)
-                .Take(limit)
-                .ToListAsync();
-        }
 
         public async Task<Product?> GetProductWithDetailsAsync(Guid productId)
         {
