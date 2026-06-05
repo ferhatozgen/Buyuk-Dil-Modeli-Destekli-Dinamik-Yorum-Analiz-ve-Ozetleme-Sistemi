@@ -42,9 +42,20 @@ namespace LLM_Destekli_Ozetleme.Controllers
         [HttpGet("all")]
         public async Task<IActionResult> GetAll([FromQuery] ProductQueryParameters queryParams)
         {
-            var products = await _productService.GetProductsAsync(queryParams);
-            return Ok(products);
+            Guid? userId = null;
 
+            // JWT Token içinden User ID'yi güvenli bir şekilde alıyoruz
+            var userIdClaim = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
+            
+            if (!string.IsNullOrEmpty(userIdClaim) && Guid.TryParse(userIdClaim, out Guid parsedUserId))
+            {
+                userId = parsedUserId;
+            }
+
+            // Çekilen ID'yi servise fırlatıyoruz
+            var products = await _productService.GetProductsAsync(queryParams, userId);
+            
+            return Ok(products);
         }
 
         [HttpPost("step1-scrape")]
