@@ -557,8 +557,10 @@
 
 .cat-tile-row {
     display: inline-flex;
-    gap: 32px;
-    /* Yuvarlaklar arası geniş boşluk */
+    align-items: flex-start;
+    /* EKLENDİ: Butonları üstten aynı hizaya sabitler */
+    gap: 16px;
+    /* GÜNCELLENDİ: Sabit genişlik verdiğimiz için boşluğu optimize ettik */
     padding: 0 10px;
     margin: 0 auto;
 }
@@ -569,9 +571,13 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 12px;
+    gap: 10px;
+    /* GÜNCELLENDİ: İkon ile metin arasını biraz kıstık */
     cursor: pointer;
-    min-width: 76px;
+    width: 104px;
+    /* EKLENDİ: Tüm butonlara sabit genişlik (esneme-daralma yapmaz) */
+    flex-shrink: 0;
+    /* EKLENDİ: Butonların sıkışmasını engeller */
     padding: 0;
 }
 
@@ -591,12 +597,21 @@
 }
 
 .cat-text {
-    font-size: 13.5px;
+    font-size: 13px;
+    /* GÜNCELLENDİ: Sığması için yarım punto küçültüldü */
     font-weight: 600;
     color: #64748b;
     text-align: center;
     transition: all 0.3s ease;
-    white-space: nowrap;
+
+    /* YENİ EKLENEN METİN KAYDIRMA KURALLARI */
+    white-space: normal;
+    word-wrap: break-word;
+    line-height: 1.4;
+    width: 100%;
+    min-height: 36px;
+    /* Tek satır da olsa 2 satırlık yer kaplamasını sağlar, hizayı bozmaz */
+    display: block;
 }
 
 /* Fareyle Üzerine Gelince (Hover) */

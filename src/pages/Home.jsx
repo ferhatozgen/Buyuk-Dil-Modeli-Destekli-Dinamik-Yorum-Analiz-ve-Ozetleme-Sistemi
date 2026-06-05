@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import botImage from '../assets/ai-review-bot.png';
+import botImage from '../assets/ai-review-bot.png'; // Yolun doğru olduğundan emin ol
 
 function Home() {
 
@@ -52,15 +52,11 @@ function Home() {
             <div className="bg-glow glow-2"></div>
             <div className="bg-grid"></div>
 
-
             <header className="navbar">
                 <Link to="/" className="logo-wrap">
                     <div className="premium-logo-container">
-
                         <div className="logo-halo"></div>
-
                         <div className="logo-structure">
-
                             <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M21 15C21 15.5304 20.7893 16.0391 20.4142 16.4142C20.0391 16.7893 19.5304 17 19 17H7L3 21V5C3 4.46957 3.21071 3.96086 3.58579 3.58579C3.96086 3.21071 4.46957 3 5 3H19C19.5304 3 20.0391 3.21071 20.4142 3.58579C20.7893 3.96086 21 4.46957 21 5V15Z" stroke="url(#paint0_linear)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                                 <path d="M8 9H16" stroke="white" strokeWidth="2" strokeLinecap="round" />
@@ -92,7 +88,6 @@ function Home() {
             </header>
 
             <main>
-
                 <section className="hero-section hero-split">
                     <div className="hero-content-left">
                         <h1 className="hero-title text-left">
@@ -110,8 +105,6 @@ function Home() {
                                 Hemen Analize Başla
                             </Link>
                         </div>
-
-
                     </div>
 
                     <div className="hero-visual-right">
@@ -124,14 +117,12 @@ function Home() {
                     </div>
                 </section>
 
-
                 <div className="trust-bar-container">
                     <div className="trust-bar-overlay left"></div>
                     <div className="trust-bar-overlay right"></div>
 
                     <div className="trust-marquee">
                         <div className="marquee-content">
-
                             {platforms.map((p, i) => (
                                 <div className="platform-item" key={`p1-${i}`}>
                                     <span className="platform-dot"></span>
@@ -149,10 +140,8 @@ function Home() {
                     </div>
                 </div>
 
-
                 <section id="trends" className="product-section" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                    <div className="section-head">
-
+                    <div className="section-head" style={{ marginTop: '40px' }}>
                         <h2>Platform Bazlı Özetler</h2>
                     </div>
                     <div className="product-grid" style={{ justifyContent: 'center', width: '100%' }}>
@@ -169,7 +158,6 @@ function Home() {
                                 <div className="product-content">
                                     <h3>{product.name}</h3>
                                     <p>{product.summary}</p>
-
 
                                     {activeAnalysis === product.id && (
                                         <div className="ai-insight-panel">
@@ -195,7 +183,6 @@ function Home() {
                         ))}
                     </div>
                 </section>
-
 
                 <section id="features" className="feature-section" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                     <div className="section-head">
@@ -227,7 +214,6 @@ function Home() {
                     </div>
                 </section>
 
-
                 <section id="faq" className="feature-section" style={{ paddingBottom: '100px' }}>
                     <div className="section-head">
                         <div className="section-tag">Destek</div>
@@ -247,13 +233,8 @@ function Home() {
                     </div>
                 </section>
 
-
                 <section className="cta-section-modern">
                     <div className="cta-container">
-
-                        <div className="cta-ring ring-1"></div>
-                        <div className="cta-ring ring-2"></div>
-
                         <div className="cta-glass-card">
                             <div className="section-tag">Hemen Başla</div>
                             <h2 className="cta-heading">
