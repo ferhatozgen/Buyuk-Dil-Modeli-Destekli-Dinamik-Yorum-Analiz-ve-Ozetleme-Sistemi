@@ -22,4 +22,5 @@ namespace LLM_Destekli_Ozetleme.Models.DTOs
     {
         public int Rating { get; set; }
     }
+
 }

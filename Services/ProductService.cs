@@ -4,7 +4,6 @@ using System.Text;
 using LLM_Destekli_Ozetleme.Models.Entities;
 using LLM_Destekli_Ozetleme.Models.DTOs;
 using LLM_Destekli_Ozetleme.Repositories;
-using System.Diagnostics; // Process sınıfı için zorunlu
 
 namespace LLM_Destekli_Ozetleme.Services
 {
@@ -12,11 +11,9 @@ namespace LLM_Destekli_Ozetleme.Services
     {
         private readonly IProductRepository _productRepository;
         private readonly IReviewRepository _reviewRepository;
-
         private readonly IHttpClientFactory _httpClientFactory;
         private readonly IConfiguration _configuration; 
 
-        // DbContext bitti, ambar görevlilerini (repositories) çağırıyoruz
         public ProductService(IProductRepository productRepository, IReviewRepository reviewRepository, IHttpClientFactory httpClientFactory, IConfiguration configuration)
         {
             _productRepository = productRepository;
@@ -25,42 +22,83 @@ namespace LLM_Destekli_Ozetleme.Services
             _configuration = configuration; 
         }
 
-        public async Task<List<ProductListDto>> GetProductsAsync(ProductQueryParameters queryParams)
+        public async Task<List<ProductListDto>> GetProductsAsync(ProductQueryParameters queryParams, Guid? userId = null)
         {
             var products = await _productRepository.GetProductsAsync(queryParams);
+            var productListDtos = new List<ProductListDto>();
 
-            var productListDtos = products.Select(p => new ProductListDto
+            foreach (var product in products)
             {
-                Id = p.Id,
-                Name = p.ProductName,
-                Category = p.Category ?? "Diğer",
-                AverageRating = p.AvgOrjScore,
-                ModelScore = p.AvgModelScore,
-                ClickCount = p.ClickCount ?? 0,
-                ImageUrl = p.ImageUrl
-            }).ToList();
+                bool isFavorited = false;
+
+                if (userId.HasValue)
+                {
+                    isFavorited = await _productRepository.IsProductFavoritedByUserAsync(product.Id, userId.Value);
+                }
+
+                productListDtos.Add(new ProductListDto
+                {
+                    Id = product.Id,
+                    Name = product.ProductName,
+                    Category = product.Category ?? "Diğer",
+                    ModelScore = product.AvgModelScore,
+                    ClickCount = product.ClickCount ?? 0,
+                    ImageUrl = product.ImageUrl,
+                    PlatformName = product.Platform, 
+                    IsFavorited = isFavorited
+                });
+            }
 
             return productListDtos;
         }
 
-        public async Task<(bool NeedsRescrape, double MonthsPassed, string Message)> CheckProductStatusAsync(Guid productId)
+        public async Task<ProductDetailDto?> GetProductDetailsByIdAsync(Guid productId, Guid? userId = null)
         {
-            var product = await _productRepository.GetByIdAsync(productId);
-            
+            var product = await _productRepository.GetProductWithDetailsAsync(productId);
             if (product == null)
+                return null;
+
+            var latestHistory = product.SummaryHistories?.FirstOrDefault();
+            List<SourceReviewDto> sourceReviews = new();
+
+            if (latestHistory != null && latestHistory.SourceReviewIds != null && latestHistory.SourceReviewIds.Any())
             {
-                throw new Exception("Ürün bulunamadı.");
+                var reviews = await _productRepository.GetReviewsByIdsAsync(latestHistory.SourceReviewIds);
+                sourceReviews = reviews.Select(r => new SourceReviewDto { Text = r.CleanText ?? r.RawText ?? string.Empty }).ToList();
             }
 
-            var referenceDate = product.CreatedAt ?? DateTime.UtcNow;
-            var monthsPassed = (DateTime.UtcNow - referenceDate).TotalDays / 30.0;
-            bool needsRescrape = monthsPassed > 3.0;
+            bool isFavorited = false;
 
-            string message = needsRescrape 
-                ? "Ürün verileri 3 aydan eski. Yeniden scrape işlemi başlatılmalı." 
-                : "Ürün verileri güncel. Tekrar scrape edilmesine gerek yok.";
+            if (userId.HasValue && userId != Guid.Empty)
+            {
+                isFavorited = await _productRepository.IsProductFavoritedByUserAsync(productId, userId.Value);
+            }
 
-            return (needsRescrape, Math.Round(monthsPassed, 1), message);
+            var dto = new ProductDetailDto
+            {
+                Id = product.Id,
+                ProductName = product.ProductName,
+                Platform = product.Platform,
+                Category = product.Category,
+                ImageUrl = product.ImageUrl,
+                OriginalUrl = product.OriginalUrl,
+                AvgOrjScore = product.AvgOrjScore,
+                AvgModelScore = product.AvgModelScore,
+                CeliskiScore = product.CeliskiScore, 
+                GuncelOzet = product.GuncelOzet,
+                
+                CategoricalStats = product.CategoryStats?.Select(cs => new CategoricalStatDto
+                {
+                    CategoryName = cs.CategoryName ?? "Genel",
+                    CategoryModelAvgScore = cs.CategoryModelAvgScore,
+                    CategorySummary = cs.CategorySummary
+                }).ToList() ?? new List<CategoricalStatDto>(),
+                
+                SourceReviews = sourceReviews,
+                IsFavorited = isFavorited
+            };
+
+            return dto;
         }
 
         public async Task<(bool Success, string Message, Guid? ProductId)> Step1ScrapeAsync(string url)
@@ -75,7 +113,6 @@ namespace LLM_Destekli_Ozetleme.Services
                 }
 
                 var client = _httpClientFactory.CreateClient();
-
                 var pythonApiUrl = _configuration["PythonSettings:ApiBaseUrl"] ?? "http://localhost:8000";
                 var requestUrl = $"{pythonApiUrl}/api/v1/extract";
 
@@ -107,7 +144,6 @@ namespace LLM_Destekli_Ozetleme.Services
             try
             {
                 var client = _httpClientFactory.CreateClient();
-
                 var pythonApiUrl = _configuration["PythonSettings:ApiBaseUrl"] ?? "http://localhost:8000";
                 var requestUrl = $"{pythonApiUrl}/api/v1/score";
 
@@ -140,8 +176,6 @@ namespace LLM_Destekli_Ozetleme.Services
             {
                 var client = _httpClientFactory.CreateClient();
                 var pythonApiUrl = _configuration["PythonSettings:ApiBaseUrl"] ?? "http://localhost:8000";
-                
-                // Python tarafında bu işlem için /api/v1/categorize adında bir rota yazacağız
                 var requestUrl = $"{pythonApiUrl}/api/v1/categorize";
 
                 var response = await client.PostAsJsonAsync(requestUrl, new { productId = productId });
@@ -173,8 +207,6 @@ namespace LLM_Destekli_Ozetleme.Services
             {
                 var client = _httpClientFactory.CreateClient();
                 var pythonApiUrl = _configuration["PythonSettings:ApiBaseUrl"] ?? "http://localhost:8000";
-                
-                // Python tarafında bu işlem için /api/v1/summarize adında bir rota yazacağız
                 var requestUrl = $"{pythonApiUrl}/api/v1/summarize";
 
                 var response = await client.PostAsJsonAsync(requestUrl, new { productId = productId });
@@ -189,7 +221,6 @@ namespace LLM_Destekli_Ozetleme.Services
 
                 if (result != null && result.Status == "success")
                 {
-                    // İşlem başarılıysa hem DB'ye yazılmış oluyor hem de özeti frontend'e iletiyoruz
                     return (true, "Yapay zeka özeti başarıyla oluşturuldu.", result.Summary);
                 }
 
@@ -200,58 +231,6 @@ namespace LLM_Destekli_Ozetleme.Services
                 return (false, $"Özetleme servisi (Python) ile iletişim kurulamadı: {ex.Message}", null);
             }
         }
-
-        public async Task<ProductDetailDto?> GetProductDetailsByIdAsync(Guid productId, Guid? userId = null)
-        {
-            var product = await _productRepository.GetProductWithDetailsAsync(productId);
-            if (product == null)
-                return null;
-
-            var latestHistory = product.SummaryHistories.FirstOrDefault();
-            List<SourceReviewDto> sourceReviews = new();
-
-            if (latestHistory != null && latestHistory.SourceReviewIds != null && latestHistory.SourceReviewIds.Any())
-            {
-                var reviews = await _productRepository.GetReviewsByIdsAsync(latestHistory.SourceReviewIds);
-                sourceReviews = reviews.Select(r => new SourceReviewDto { Text = r.CleanText ?? r.RawText ?? string.Empty }).ToList();
-            }
-
-            bool isFavorited = false;
-
-            if (userId.HasValue && userId != Guid.Empty)
-            {
-                isFavorited = await _productRepository.IsProductFavoritedByUserAsync(productId, userId.Value);
-            }
-
-            var dto = new ProductDetailDto
-            {
-                Id = product.Id,
-                ProductName = product.ProductName,
-                Platform = product.Platform,
-                Category = product.Category,
-                ImageUrl = product.ImageUrl,
-                OriginalUrl = product.OriginalUrl,
-                AvgOrjScore = product.AvgOrjScore,
-                AvgModelScore = product.AvgModelScore,
-                CeliskiScore = product.CeliskiScore, 
-                GuncelOzet = product.GuncelOzet,
-                
-                CategoricalStats = product.CategoryStats.Select(cs => new CategoricalStatDto
-                {
-                    CategoryName = cs.CategoryName ?? "Genel",
-                    CategoryModelAvgScore = cs.CategoryModelAvgScore,
-                    CategorySummary = cs.CategorySummary
-                }).ToList(),
-                
-                SourceReviews = sourceReviews,
-                IsFavorited = isFavorited // Veritabanından gelen gerçek sonuç
-            };
-
-            return dto;
-            
-            
-        }
-        
 
         public async Task<(bool Success, string Message)> IncrementClickCountAsync(Guid productId)
         {
@@ -300,7 +279,6 @@ namespace LLM_Destekli_Ozetleme.Services
 
                 if (result)
                 {
-                    // Değişkeni if bloğunun içinde oluşturup anında return ediyoruz. Sorunsuz çalışacaktır.
                     string statusMsg = interaction.IsSaved ? "Ürün favorilere eklendi." : "Ürün favorilerden çıkarıldı.";
                     return (true, statusMsg, interaction.IsSaved);
                 }
@@ -315,7 +293,6 @@ namespace LLM_Destekli_Ozetleme.Services
 
         public async Task<(bool Success, string Message)> RateSummaryAsync(Guid userId, Guid productId, int rating)
         {
-            // 1. Güvenlik ve İş Kuralları: Puan 1 ile 5 arasında olmalıdır
             if (rating < 1 || rating > 5)
             {
                 return (false, "Geçersiz puan! Değerlendirme 1 ile 5 arasında olmalıdır.");
@@ -323,32 +300,27 @@ namespace LLM_Destekli_Ozetleme.Services
 
             try
             {
-                // 2. Ürün gerçekten var mı kontrolü
                 var product = await _productRepository.GetByIdAsync(productId);
                 if (product == null) return (false, "Ürün bulunamadı.");
 
-                // 3. Kullanıcının bu ürünle daha önce bir etkileşimi var mı?
                 var interaction = await _productRepository.GetUserInteractionAsync(userId, productId);
 
                 if (interaction == null)
                 {
-                    // Eğer hiç favoriye falan almamışsa, doğrudan puan vererek ilk etkileşimi başlatıyor
                     interaction = new UserProductInteraction
                     {
                         UserId = userId,
                         ProductId = productId,
                         SummaryRating = rating,
-                        IsSaved = false, // Varsayılan değer
+                        IsSaved = false,
                         CreatedAt = DateTime.UtcNow
                     };
                 }
                 else
                 {
-                    // Daha önce favoriye almış veya işlem yapmış, sadece puanı güncelliyoruz
                     interaction.SummaryRating = rating;
                 }
 
-                // 4. Veritabanına kaydet (Eski yazdığımız repository metodunu tekrar kullanıyoruz!)
                 var result = await _productRepository.SaveUserInteractionAsync(interaction);
 
                 if (result)
@@ -363,6 +335,7 @@ namespace LLM_Destekli_Ozetleme.Services
                 return (false, $"Değerlendirme işlemi başarısız: {ex.Message}");
             }
         }
+
         private string GenerateSHA256Hash(string rawData)
         {
             using (SHA256 sha256Hash = SHA256.Create())
@@ -376,7 +349,6 @@ namespace LLM_Destekli_Ozetleme.Services
                 return builder.ToString();
             }
         }
-
     }
 
     public class PythonApiResponse

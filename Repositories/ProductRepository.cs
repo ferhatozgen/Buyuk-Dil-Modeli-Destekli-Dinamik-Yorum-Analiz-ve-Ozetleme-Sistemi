@@ -46,8 +46,6 @@ namespace LLM_Destekli_Ozetleme.Repositories
             {
                 "mostClicked" => query.OrderByDescending(p => p.ClickCount),
                 "mostLiked" => query.OrderByDescending(p => p.AvgModelScore),
-                // 🌟 YENİ SÜTUN İÇİN DİNAMİK SIRALAMA SEÇENEĞİ:
-                // Çelişki skoru en yüksek olan (yani tahminle orijinal puanın en çok saptığı) ürünleri başa çeker.
                 "mostControversial" => query.OrderByDescending(p => p.CeliskiScore),
                 _ => query.OrderByDescending(p => p.CreatedAt)
             };
@@ -73,12 +71,14 @@ namespace LLM_Destekli_Ozetleme.Repositories
                 .Include(p => p.SummaryHistories.OrderByDescending(sh => sh.Id).Take(1))
                 .FirstOrDefaultAsync(p => p.Id == productId);
         }
+
         public async Task<List<Review>> GetReviewsByIdsAsync(List<int> reviewIds)
         {
             return await _context.Reviews
                 .Where(r => reviewIds.Contains(r.Id))
                 .ToListAsync();
         }
+
         public async Task<bool> IsProductFavoritedByUserAsync(Guid productId, Guid userId)
         {
             var interaction = await _context.UserProductInteractions
