@@ -46,6 +46,35 @@ namespace LLM_Destekli_Ozetleme.Controllers
             return Ok(products);
 
         }
+        [AllowAnonymous] 
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetById(Guid id)
+        {
+            if (id == Guid.Empty)
+            {
+                return BadRequest(new { message = "Geçersiz ürün ID." });
+            }
+
+            Guid? userId = null;
+            
+            // Eğer kullanıcı giriş yapmışsa (Header'da Bearer token varsa) ID'sini çıkarıyoruz
+            var userIdClaim = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
+            
+            if (!string.IsNullOrEmpty(userIdClaim) && Guid.TryParse(userIdClaim, out Guid parsedId))
+            {
+                userId = parsedId;
+            }
+
+            // Servise hem ürün ID'sini hem de varsa Kullanıcı ID'sini gönderiyoruz
+            var productDetail = await _productService.GetProductDetailsByIdAsync(id, userId);
+
+            if (productDetail == null)
+            {
+                return NotFound(new { message = "Ürün bulunamadı." });
+            }
+
+            return Ok(productDetail);
+        }
 
         [HttpPost("step1-scrape")]
         public async Task<IActionResult> Step1Scrape([FromBody] CheckProductUrlDto request)
@@ -141,7 +170,7 @@ namespace LLM_Destekli_Ozetleme.Controllers
             return Ok(new { message = result.Message });
         }
 
-        [Authorize] // 🌟 Bu endpoint'e sadece giriş yapmış ve geçerli Token'ı olanlar girebilir
+        [Authorize] 
         [HttpPost("{id}/toggle-save")]
         public async Task<IActionResult> ToggleSave(Guid id)
         {

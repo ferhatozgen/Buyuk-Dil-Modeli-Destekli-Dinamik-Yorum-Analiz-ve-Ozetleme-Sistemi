@@ -85,6 +85,7 @@ namespace LLM_Destekli_Ozetleme.Repositories
                 .FirstOrDefaultAsync(i => i.ProductId == productId && i.UserId == userId);
             
             return interaction?.IsSaved ?? false;
+        }
         public async Task<bool> IncrementClickCountAsync(Guid id)
         {
             var product = await _context.Products.FindAsync(id);
