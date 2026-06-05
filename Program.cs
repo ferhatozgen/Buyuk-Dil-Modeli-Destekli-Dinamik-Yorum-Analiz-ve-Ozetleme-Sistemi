@@ -5,13 +5,23 @@ using Microsoft.EntityFrameworkCore;
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
-using Microsoft.OpenApi.Models; // Kritik namespace
+using Microsoft.OpenApi.Models;
 
 AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 
 var builder = WebApplication.CreateBuilder(args);
-// PostgreSQL için evrensel DateTime UTC eşlemesini aktif ediyoruz
-AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
+
+// --- CORS YAPILANDIRMASI ---
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAll",
+        policy =>
+        {
+            policy.AllowAnyOrigin()
+                  .AllowAnyMethod()
+                  .AllowAnyHeader();
+        });
+});
 
 // --- JWT AYARLARI ---
 var jwtSettings = builder.Configuration.GetSection("Jwt");
@@ -39,7 +49,7 @@ builder.Services.AddAuthentication(options =>
     };
 });
 
-// --- SWAGGER YAPILANDIRMASI ---
+// --- SERVİSLER ---
 builder.Services.AddControllers();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
@@ -94,8 +104,11 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.UseAuthentication(); // Önce kimlik doğrulama
-app.UseAuthorization();  // Sonra yetkilendirme
+// CORS burada devreye giriyor
+app.UseCors("AllowAll");
+
+app.UseAuthentication(); 
+app.UseAuthorization();  
 
 app.MapControllers();
 
