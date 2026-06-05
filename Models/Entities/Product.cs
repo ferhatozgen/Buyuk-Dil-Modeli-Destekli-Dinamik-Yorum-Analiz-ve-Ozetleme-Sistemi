@@ -51,5 +51,9 @@ namespace LLM_Destekli_Ozetleme.Models.Entities
 
         [Column("last_updated_at")]
         public DateTime? LastUpdatedAt { get; set; }
+
+        public ICollection<ProductCategoryStat> CategoryStats { get; set; } = new List<ProductCategoryStat>();
+        public ICollection<ProductSummaryHistory> SummaryHistories { get; set; } = new List<ProductSummaryHistory>();
+        public ICollection<Review> Reviews { get; set; } = new List<Review>();
     }
 }

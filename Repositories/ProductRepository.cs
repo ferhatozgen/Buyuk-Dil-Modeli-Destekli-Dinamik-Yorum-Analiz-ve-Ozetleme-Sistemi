@@ -25,15 +25,6 @@ namespace LLM_Destekli_Ozetleme.Repositories
             return await _context.Products.FindAsync(id);
         }
 
-        public async Task<List<Product>> GetPopularProductsAsync(int minClicks, int limit)
-        {
-            return await _context.Products
-                .Where(p => p.ClickCount != null && p.ClickCount >= minClicks)
-                .OrderByDescending(p => p.ClickCount)
-                .Take(limit)
-                .ToListAsync();
-        }
-
         public async Task<List<Product>> GetProductsAsync(ProductQueryParameters queryParams)
         {
             var query = _context.Products.AsQueryable();
@@ -66,6 +57,27 @@ namespace LLM_Destekli_Ozetleme.Repositories
             }
 
             return await query.ToListAsync();
+        }
+
+        public async Task<Product?> GetProductWithDetailsAsync(Guid productId)
+        {
+            return await _context.Products
+                .Include(p => p.CategoryStats)
+                .Include(p => p.SummaryHistories.OrderByDescending(sh => sh.Id).Take(1))
+                .FirstOrDefaultAsync(p => p.Id == productId);
+        }
+        public async Task<List<Review>> GetReviewsByIdsAsync(List<int> reviewIds)
+        {
+            return await _context.Reviews
+                .Where(r => reviewIds.Contains(r.Id))
+                .ToListAsync();
+        }
+        public async Task<bool> IsProductFavoritedByUserAsync(Guid productId, Guid userId)
+        {
+            var interaction = await _context.UserProductInteractions
+                .FirstOrDefaultAsync(i => i.ProductId == productId && i.UserId == userId);
+            
+            return interaction?.IsSaved ?? false;
         }
     }
 }

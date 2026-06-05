@@ -13,16 +13,18 @@ namespace LLM_Destekli_Ozetleme.Models.Entities
         [Column("product_id")]
         public Guid? ProductId { get; set; }
 
-        [Column("old_summary")]
-        public string? OldSummary { get; set; }
-
-        [Column("old_price")]
-        public decimal? OldPrice { get; set; }
+        [Column("summary")]
+        public string? Summary { get; set; }
 
         [Column("valid_from")]
         public DateTime? ValidFrom { get; set; }
 
         [Column("valid_until")]
         public DateTime? ValidUntil { get; set; }
+
+        [Column("source_review_ids", TypeName = "jsonb")]
+        public List<int> SourceReviewIds { get; set; } = new List<int>();
+
+        public Product? Product { get; set; }
     }
 }

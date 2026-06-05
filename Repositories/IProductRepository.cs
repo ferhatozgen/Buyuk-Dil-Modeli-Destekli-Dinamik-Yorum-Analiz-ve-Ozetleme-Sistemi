@@ -7,7 +7,11 @@ namespace LLM_Destekli_Ozetleme.Repositories
     {
         Task<Product?> GetByUrlOrHashAsync(string url, string hash);
         Task<Product?> GetByIdAsync(Guid id);
-        Task<List<Product>> GetPopularProductsAsync(int minClicks, int limit);
         Task<List<Product>> GetProductsAsync(ProductQueryParameters queryParams);
+
+        Task<Product?> GetProductWithDetailsAsync(Guid productId);
+        Task<List<Review>> GetReviewsByIdsAsync(List<int> reviewIds);
+        Task<bool> IsProductFavoritedByUserAsync(Guid productId, Guid userId);
+
     }
 }

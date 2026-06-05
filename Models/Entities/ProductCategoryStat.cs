@@ -16,13 +16,18 @@ namespace LLM_Destekli_Ozetleme.Models.Entities
         [Column("category_name")]
         public string? CategoryName { get; set; }
 
-        [Column("category_model_avg_score")]
+        [Column("category_model_avg_score", TypeName = "decimal(3,2)")]
         public decimal? CategoryModelAvgScore { get; set; }
-
-        [Column("product_model_avg_score")]
-        public decimal? ProductModelAvgScore { get; set; }
 
         [Column("updated_at")]
         public DateTime? UpdatedAt { get; set; }
+
+        [Column("category_summary")]
+        public string? CategorySummary { get; set; }
+
+        [Column("source_review_ids", TypeName = "jsonb")]
+        public List<int> SourceReviewIds { get; set; } = new List<int>();
+
+        public Product? Product { get; set; }
     }
 }
