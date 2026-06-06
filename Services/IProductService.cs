@@ -7,7 +7,6 @@ namespace LLM_Destekli_Ozetleme.Services
     {
         Task<List<ProductListDto>> GetProductsAsync(ProductQueryParameters queryParams, Guid? userId = null);
         Task<ProductDetailDto?> GetProductDetailsByIdAsync(Guid productId, Guid? userId = null);
-        Task<(bool Exists, string Message, Product? Product)> CheckUrlAsync(string url);
         Task<(bool NeedsRescrape, double MonthsPassed, string Message)> CheckProductStatusAsync(Guid productId);
         Task<(bool Success, string Message, Guid? ProductId)> Step1ScrapeAsync(string url);
         Task<(bool Success, string Message)> Step2ProcessAsync(Guid productId);

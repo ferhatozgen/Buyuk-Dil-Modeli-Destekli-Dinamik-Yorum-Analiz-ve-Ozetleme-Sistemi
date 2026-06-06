@@ -52,6 +52,26 @@ namespace LLM_Destekli_Ozetleme.Services
             return productListDtos;
         }
 
+        public async Task<(bool NeedsRescrape, double MonthsPassed, string Message)> CheckProductStatusAsync(Guid productId)
+        {
+            var product = await _productRepository.GetByIdAsync(productId);
+            
+            if (product == null)
+            {
+                throw new Exception("Ürün bulunamadı.");
+            }
+
+            var referenceDate = product.CreatedAt ?? DateTime.UtcNow;
+            var monthsPassed = (DateTime.UtcNow - referenceDate).TotalDays / 30.0;
+            bool needsRescrape = monthsPassed > 3.0;
+
+            string message = needsRescrape 
+                ? "Ürün verileri 3 aydan eski. Yeniden scrape işlemi başlatılmalı." 
+                : "Ürün verileri güncel. Tekrar scrape edilmesine gerek yok.";
+
+            return (needsRescrape, Math.Round(monthsPassed, 1), message);
+        }
+
         public async Task<ProductDetailDto?> GetProductDetailsByIdAsync(Guid productId, Guid? userId = null)
         {
             var product = await _productRepository.GetProductWithDetailsAsync(productId);
