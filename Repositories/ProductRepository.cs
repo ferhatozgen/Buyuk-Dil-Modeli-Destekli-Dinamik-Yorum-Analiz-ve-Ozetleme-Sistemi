@@ -79,6 +79,20 @@ namespace LLM_Destekli_Ozetleme.Repositories
                 .ToListAsync();
         }
 
+        public async Task<List<Product>> GetFavoriteProductsAsync(Guid userId)
+        {
+            // 1. Kullanıcının favorilediği ürünlerin ID'lerini alt tablodan çekiyoruz
+            var favoriteProductIds = await _context.UserProductInteractions
+                .Where(i => i.UserId == userId && i.IsSaved)
+                .Select(i => i.ProductId)
+                .ToListAsync();
+
+            // 2. Bu ID'lere sahip ana ürünleri products tablosundan listeliyoruz
+            return await _context.Products
+                .Where(p => favoriteProductIds.Contains(p.Id))
+                .ToListAsync();
+        }
+
         public async Task<bool> IsProductFavoritedByUserAsync(Guid productId, Guid userId)
         {
             var interaction = await _context.UserProductInteractions
