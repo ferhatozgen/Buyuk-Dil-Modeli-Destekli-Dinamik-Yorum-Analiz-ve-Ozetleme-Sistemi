@@ -1,13 +1,59 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import api from '../api';
 
 function Register() {
     const navigate = useNavigate();
 
-    const handleRegister = (e) => {
-        e.preventDefault();
+    const [formData, setFormData] = useState({
+        username: '',
+        email: '',
+        password: ''
+    });
+    const [error, setError] = useState('');
+    const [isLoading, setIsLoading] = useState(false);
 
-        navigate('/login');
+    const handleRegister = async (e) => {
+        e.preventDefault();
+        setError('');
+
+        // 1. E-POSTA FORMAT KONTROLÜ (Regex ile)
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(formData.email)) {
+            setError('Lütfen geçerli bir e-posta adresi girin (örn: isim@sirket.com).');
+            return; // Hata varsa işlemi durdur ve backend'e gitme
+        }
+
+        // 2. ŞİFRE GÜVENLİK KONTROLLERİ
+        if (formData.password.length < 6) {
+            setError('Şifreniz en az 6 karakter uzunluğunda olmalıdır.');
+            return;
+        }
+        if (!/[A-Z]/.test(formData.password)) {
+            setError('Şifreniz en az bir büyük harf içermelidir.');
+            return;
+        }
+        if (!/[0-9]/.test(formData.password)) {
+            setError('Şifreniz en az bir rakam içermelidir.');
+            return;
+        }
+        // İstersen özel karakter zorunluluğu da ekleyebilirsin:
+        // if (!/[!@#$%^&*]/.test(formData.password)) {
+        //     setError('Şifreniz en az bir özel karakter (!@#$%) içermelidir.');
+        //     return;
+        // }
+
+        setIsLoading(true);
+
+        try {
+            await api.post('/Auth/register', formData);
+            navigate('/login', { state: { message: "Kayıt başarıyla tamamlandı! Şimdi giriş yapabilirsiniz." } });
+        } catch (err) {
+            console.error("Kayıt hatası:", err);
+            setError(err.response?.data?.message || 'Kayıt başarısız. Lütfen bilgileri kontrol edin.');
+        } finally {
+            setIsLoading(false);
+        }
     };
 
     return (
@@ -38,22 +84,55 @@ function Register() {
 
                         <form onSubmit={handleRegister} className="auth-form">
                             <div className="input-field">
-                                <label>Ad Soyad</label>
-                                <input type="text" placeholder="Nisanur Cebecioğlu" required />
+                                <label>Kullanıcı Adı</label>
+                                <input
+                                    type="text"
+                                    placeholder="Kullanıcı adınız"
+                                    required
+                                    value={formData.username}
+                                    onChange={(e) => setFormData({ ...formData, username: e.target.value })}
+                                />
                             </div>
 
                             <div className="input-field">
                                 <label>E-posta Adresi</label>
-                                <input type="email" placeholder="isim@sirket.com" required />
+                                <input
+                                    type="text" // 'email' yerine 'text' yaptık ki tarayıcı varsayılanı yerine bizim hatamız görünsün
+                                    placeholder="isim@sirket.com"
+                                    required
+                                    value={formData.email}
+                                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                                />
                             </div>
 
                             <div className="input-field">
                                 <label>Şifre</label>
-                                <input type="password" placeholder="••••••••" required />
+                                <input
+                                    type="password"
+                                    placeholder="••••••••"
+                                    required
+                                    value={formData.password}
+                                    onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+                                />
                             </div>
 
-                            <button type="submit" className="auth-submit-btn">
-                                Kaydol
+                            {/* HATA MESAJI BURADA GÖSTERİLİYOR */}
+                            {error && (
+                                <div style={{
+                                    backgroundColor: '#fee2e2',
+                                    color: '#ef4444',
+                                    padding: '10px',
+                                    borderRadius: '6px',
+                                    fontSize: '13px',
+                                    marginBottom: '15px',
+                                    border: '1px solid #f87171'
+                                }}>
+                                    {error}
+                                </div>
+                            )}
+
+                            <button type="submit" className="auth-submit-btn" disabled={isLoading}>
+                                {isLoading ? 'Kaydediliyor...' : 'Kaydol'}
                             </button>
                         </form>
 

@@ -1,17 +1,19 @@
-import React, { useState, useCallback, useMemo } from 'react';
+import React, { useState, useCallback, useMemo, useEffect } from 'react';
+import { useNavigate, Navigate } from 'react-router-dom';
 import {
     Search, Zap, Link2, BarChart, LayoutGrid, Cpu, Shirt, UtensilsCrossed, Hotel,
     Sparkles, Compass, Flower2, LogOut, TrendingUp, Clock, Heart, ChevronDown, Star,
     ClipboardPaste, ChartNoAxesColumnIncreasing, ChevronRight,
     ShoppingBag, BookOpen, Home, GraduationCap, HeartPulse, Gamepad2,
-    Baby, Gift, PawPrint, Store, Cookie, Wrench, Building2, Dumbbell, Gem, Armchair, MoreHorizontal
+    Baby, Gift, PawPrint, Store, Cookie, Wrench, Building2, Dumbbell, Gem, Armchair, MoreHorizontal, Loader2,
+    Settings, User
 } from 'lucide-react';
 import './Dashboard.css';
 import ProductCard, { getPlatformColor } from './ProductCard';
 import ProductPage from './ProductPage';
 import { dbGet, dbSet, STORAGE_KEYS } from './storage';
+import api from '../api';
 
-// ── KATEGORİLER ──
 const CATEGORIES = [
     { label: 'Hepsi', icon: LayoutGrid },
     { label: 'Alışveriş', icon: ShoppingBag },
@@ -40,38 +42,35 @@ const CATEGORIES = [
     { label: 'Diğer', icon: MoreHorizontal }
 ];
 
-// ── MOCK DATA ──
-const MOCK_PRODUCTS = [
-    { id: 1, name: 'Keten Karışımlı Gömlek', category: 'Giyim & Ayakkabı', plat: 'Trendyol', avgScore: 4.6, img: 'https://images.unsplash.com/photo-1596755094514-f87e34085b2c?w=400', productUrl: 'https://trendyol.com', sum: 'Kumaşın nefes alabilir yapısı yaz ayları için ideal bulunmuş. Tam kalıp olduğu belirtiliyor.' },
-    { id: 2, name: 'Acılı Tavuk Dürüm Menü', category: 'Yemek', plat: 'Yemeksepeti', avgScore: 4.4, img: 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=400', productUrl: 'https://yemeksepeti.com', sum: 'Sıcak ve hızlı teslimat öne çıkıyor. Sosların lezzeti kullanıcılar tarafından beğenilmiş.' },
-    { id: 3, name: 'Taze Sıkma Portakal Suyu 1L', category: 'Süpermarket & Gıda', plat: 'Trendyol Go', avgScore: 4.8, img: 'https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?w=400', productUrl: 'https://trendyol.com', sum: 'Ürünlerin soğuk zincir bozulmadan hızlı ulaştığı raporlanmış. Meyve tazeliği vurgulanıyor.' },
-    { id: 4, name: 'Moda Sahili Parkı', category: 'Gezilecek Yer', plat: 'Google Maps', avgScore: 4.8, img: 'https://images.unsplash.com/photo-1572889601641-60a89d380e22?w=400', productUrl: 'https://maps.google.com', sum: 'Yürüyüş ve bisiklet yolları çok seviliyor. Hafta sonları kalabalık olabileceği belirtilmiş.' },
-    { id: 5, name: 'Boğaz Manzaralı Teraslı Loft', category: 'Günlük Ev', plat: 'Airbnb', avgScore: 4.9, img: 'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=400', productUrl: 'https://airbnb.com', sum: 'Evin temizliği ve ev sahibinin iletişimi kusursuz bulunmuş. Manzara beklentilerin üzerinde.' },
-    { id: 6, name: 'Apple iPhone 15 Pro (256 GB)', category: 'Elektronik & Teknoloji', plat: 'Hepsiburada', avgScore: 4.7, img: 'https://images.unsplash.com/photo-1695048065166-51e891395b05?w=400', productUrl: 'https://hepsiburada.com', sum: 'Kamera performansı ve hafif titanyum kasa övülmüş. Batarya ömrü kullanıcıları tatmin ediyor.' },
-    { id: 7, name: 'Cyberpunk 2077', category: 'Oyun', plat: 'Steam', avgScore: 4.2, img: 'https://images.unsplash.com/photo-1605901309584-818e25960b8f?w=400', productUrl: 'https://store.steampowered.com', sum: 'Güncellemelerle hikaye ve oynanışın çok iyileştiği, detaylı açık dünyanın etkileyici olduğu söyleniyor.' },
-    { id: 8, name: 'Crystal Tat Beach Golf Resort', category: 'Otel', plat: 'Etstur', avgScore: 4.5, img: 'https://images.unsplash.com/photo-1582719508461-905c673771fd?w=400', productUrl: 'https://etstur.com', sum: 'Çocuklu aileler için havuz ve animasyon imkanları harika. Açık büfe yemek çeşitliliği çok zengin.' },
-    { id: 9, name: 'Kırmızı Gül Buketi', category: 'Çiçek', plat: 'Çiçeksepeti', avgScore: 4.4, img: 'https://images.unsplash.com/photo-1582791695759-4d22165c3619?w=400', productUrl: 'https://ciceksepeti.com', sum: 'Çiçeklerin çok taze ve canlı teslim edildiği belirtilmiş. Teslimat saatine titizlikle uyulmuş.' },
-    { id: 10, name: 'Dyson V15 Kablosuz Süpürge', category: 'Elektronik & Teknoloji', plat: 'Hepsiburada', avgScore: 4.8, img: 'https://images.unsplash.com/photo-1558317374-067fb5f30001?w=400', productUrl: 'https://hepsiburada.com', sum: 'Lazer başlığın tozu gösterme performansı övülmüş. Batarya süresi performansa göre yeterli.' },
-    { id: 11, name: 'Nike Air Force 1 Sneaker', category: 'Giyim & Ayakkabı', plat: 'Hepsiburada', avgScore: 4.6, img: 'https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?w=400', productUrl: 'https://hepsiburada.com', sum: 'Gündelik kullanım için çok rahat ve şık bulunmuş. Temizliğinin kolay olduğu belirtiliyor.' },
-    { id: 12, name: 'Estée Lauder Gece Serumu', category: 'Kozmetik & Kişisel Bakım', plat: 'Trendyol', avgScore: 4.7, img: 'https://images.unsplash.com/photo-1620916566398-39f1143ab7be?w=400', productUrl: 'https://trendyol.com', sum: 'Düzenli kullanımda cilde aydınlık kattığı raporlanmış. Kalitesi sebebiyle çok tercih ediliyor.' }
-];
-
 export default function Dashboard() {
+    const navigate = useNavigate();
+    const currentToken = localStorage.getItem('token');
+
+    if (!currentToken) {
+        return <Navigate to="/" replace />;
+    }
+
+    const username = localStorage.getItem('username') || 'Misafir';
+
+    // ── TEMEL STATE'LER ──
     const [tab, setTab] = useState('kesfet');
     const [category, setCategory] = useState('Hepsi');
     const [searchQ, setSearchQ] = useState('');
     const [linkQ, setLinkQ] = useState('');
     const [selected, setSelected] = useState(null);
 
+    // ── GERÇEK ÜRÜN STATE'LERİ ──
+    const [products, setProducts] = useState([]);
+    const [isLoadingProducts, setIsLoadingProducts] = useState(false);
+
+    // ── KİŞİSEL VERİ STATE'LERİ ──
     const [favorites, setFavorites] = useState(() => dbGet(STORAGE_KEYS.favorites) ?? []);
     const [ratings, setRatings] = useState(() => dbGet(STORAGE_KEYS.ratings) ?? {});
     const [history, setHistory] = useState(() => dbGet(STORAGE_KEYS.history) ?? []);
-    const [clickCounts, setClickCounts] = useState(() => dbGet('clickCounts') ?? {});
 
     const [profileMenuOpen, setProfileMenuOpen] = useState(false);
     const [profileView, setProfileView] = useState(null);
 
-    // ── YAPAY ZEKA YÜKLEME DURUMU ──
     const [isAnalyzing, setIsAnalyzing] = useState(false);
     const [loadingStep, setLoadingStep] = useState(0);
 
@@ -82,13 +81,121 @@ export default function Dashboard() {
         "Genel trend ve sentez raporu oluşturuluyor..."
     ];
 
-    const toggleFav = useCallback((item) => {
+    const formatCategory = (rawCat) => {
+        if (!rawCat) return 'Diğer';
+        const str = rawCat.toLowerCase().replace(/_/g, ' ');
+
+        if (str.includes('elektronik') || str.includes('teknoloji')) return 'Elektronik & Teknoloji';
+        if (str.includes('kırtasiye') || str.includes('kirtasiye') || str.includes('kitap') || str.includes('hobi')) return 'Kırtasiye & Kitap & Hobi';
+        if (str.includes('otel') || str.includes('konaklama')) return 'Otel';
+        if (str.includes('günlük ev') || str.includes('gunluk')) return 'Günlük Ev';
+        if (str.includes('giyim') || str.includes('ayakkabı') || str.includes('ayakkabi')) return 'Giyim & Ayakkabı';
+        if (str.includes('eğitim') || str.includes('egitim') || str.includes('eğlence')) return 'Eğitim & Eğlence';
+        if (str.includes('sağlık') || str.includes('saglik')) return 'Sağlık';
+        if (str.includes('oyun') || str.includes('game')) return 'Oyun';
+        if (str.includes('yemek') || str.includes('restoran')) return 'Yemek';
+        if (str.includes('gezi') || str.includes('gezilecek')) return 'Gezilecek Yer';
+        if (str.includes('anne') || str.includes('bebek') || str.includes('oyuncak')) return 'Anne & Bebek & Oyuncak';
+        if (str.includes('kozmetik') || str.includes('bakım') || str.includes('bakim')) return 'Kozmetik & Kişisel Bakım';
+        if (str.includes('hediye')) return 'Hediyelik Eşya';
+        if (str.includes('pet') || str.includes('hayvan')) return 'Pet Shop';
+        if (str.includes('market') || str.includes('gıda') || str.includes('gida') || str.includes('süpermarket')) return 'Süpermarket & Gıda';
+        if (str.includes('yenilebilir')) return 'Yenilebilir Çiçek';
+        if (str.includes('çiçek') || str.includes('cicek')) return 'Çiçek';
+        if (str.includes('hizmet')) return 'Hizmet';
+        if (str.includes('kurumsal')) return 'Kurumsal';
+        if (str.includes('spor') || str.includes('outdoor')) return 'Spor & Outdoor';
+        if (str.includes('aksesuar') || str.includes('takı') || str.includes('taki')) return 'Aksesuar & Takı';
+        if (str.includes('ev') || str.includes('yaşam') || str.includes('yasam') || str.includes('mobilya')) return 'Ev & Yaşam & Mobilya';
+        if (str.includes('alışveriş') || str.includes('alisveris')) return 'Alışveriş';
+
+        return 'Diğer';
+    };
+
+    // ── GÜNCELLENMİŞ API VERİ ÇEKME & SENKRONİZASYON ──
+    const fetchProducts = useCallback(async () => {
+        setIsLoadingProducts(true);
+        try {
+            const params = {
+                PageNumber: 1,
+                PageSize: 100,
+            };
+
+            if (category !== 'Hepsi') params.Category = category;
+            if (searchQ.trim() !== '') params.SearchTerm = searchQ.trim();
+            if (tab === 'begenilenler') params.SortBy = 'mostLiked';
+            else if (tab === 'trendler') params.SortBy = 'mostClicked';
+
+            const response = await api.get('/Product/all', {
+                params: params,
+                headers: { 'Authorization': `Bearer ${currentToken}` }
+            });
+
+            const mappedProducts = response.data.map(p => ({
+                id: p.id,
+                name: p.name || p.productName,
+                category: formatCategory(p.category),
+                plat: p.platformName || p.platform || 'VividAI',
+                avgScore: p.modelScore ? p.modelScore.toFixed(1) : (p.averageRating ? p.averageRating.toFixed(1) : "0.0"),
+                img: p.imageUrl || 'https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=400',
+                clickCount: p.clickCount,
+                sum: p.guncelOzet || "VividAI tarafından analiz edilmiştir.",
+                isFavorited: p.isFavorited // Backend'den gelen favori durumu
+            }));
+
+            setProducts(mappedProducts);
+
+            // Favorileri LocalStorage ile Backend arasında senkronize et
+            setFavorites(prevFavs => {
+                let updatedFavs = [...prevFavs];
+                mappedProducts.forEach(product => {
+                    const existsIdx = updatedFavs.findIndex(f => f.id === product.id);
+                    if (product.isFavorited) {
+                        if (existsIdx === -1) updatedFavs.push(product);
+                    } else {
+                        if (existsIdx !== -1) updatedFavs.splice(existsIdx, 1);
+                    }
+                });
+                dbSet(STORAGE_KEYS.favorites, updatedFavs);
+                return updatedFavs;
+            });
+
+        } catch (error) {
+            console.error("Ürünler çekilirken hata oluştu:", error);
+        } finally {
+            setIsLoadingProducts(false);
+        }
+    }, [tab, category, searchQ, currentToken]);
+
+    useEffect(() => {
+        const delayDebounceFn = setTimeout(() => {
+            fetchProducts();
+        }, 300);
+        return () => clearTimeout(delayDebounceFn);
+    }, [fetchProducts]);
+
+    // ── GÜNCELLENMİŞ VE ÇAKISMAYI ÖNLEYEN FAVORİ FONKSİYONU ──
+    const toggleFav = useCallback(async (item, skipApi = false) => {
         setFavorites((prev) => {
             const exists = prev.some((f) => f.id === item.id);
             const next = exists ? prev.filter((f) => f.id !== item.id) : [...prev, item];
             dbSet(STORAGE_KEYS.favorites, next);
             return next;
         });
+
+        // Eğer istek ProductPage'den geldiyse (skipApi true ise) backend'e tekrar istek atma!
+        if (!skipApi) {
+            try {
+                const token = localStorage.getItem('token');
+                if (token) {
+                    await api.post(`/Product/${item.id}/toggle-save`, {}, {
+                        headers: { 'Authorization': `Bearer ${token}` }
+                    });
+                }
+            } catch (error) {
+                console.error("Favori durumu backend'e iletilemedi:", error);
+            }
+        }
     }, []);
 
     const handleRate = useCallback((productId, score) => {
@@ -113,12 +220,9 @@ export default function Dashboard() {
         if (!query) return;
 
         recordSearch(query);
-
-        // 1. Animasyonu Başlat
         setIsAnalyzing(true);
         setLoadingStep(0);
 
-        // 2. Metinleri sırayla değiştir (Her 850ms'de bir adım)
         let stepIndex = 0;
         const stepInterval = setInterval(() => {
             stepIndex++;
@@ -127,7 +231,6 @@ export default function Dashboard() {
             }
         }, 850);
 
-        // 3. Simülasyon bittiğinde modalı kapat ve ürünü aç
         setTimeout(() => {
             clearInterval(stepInterval);
             setIsAnalyzing(false);
@@ -145,6 +248,7 @@ export default function Dashboard() {
             };
             openProduct(newAnalysis);
             setLinkQ('');
+            fetchProducts();
         }, 3600);
     };
 
@@ -153,37 +257,39 @@ export default function Dashboard() {
         recordSearch(searchQ.trim());
     };
 
-    const openProduct = (item) => {
+    const openProduct = async (item) => {
         recordSearch(item.name);
-        setClickCounts((prev) => {
-            const next = { ...prev, [item.id]: (prev[item.id] || 0) + 1 };
-            dbSet('clickCounts', next);
-            return next;
-        });
         setSelected(item);
     };
 
-    const handleLogout = () => { window.location.href = '/'; };
+    const handleLogout = async () => {
+        try {
+            if (currentToken) {
+                await api.post('/Auth/logout', {}, {
+                    headers: { 'Authorization': `Bearer ${currentToken}` }
+                });
+            }
+        } catch (error) {
+            console.error("Çıkış isteği hatası:", error);
+        } finally {
+            // 1. Kullanıcı oturum token'larını sil
+            localStorage.removeItem('token');
+            localStorage.removeItem('refreshToken');
+            localStorage.removeItem('username');
 
-    const filteredProducts = useMemo(() =>
-        MOCK_PRODUCTS.filter((p) => {
-            const matchCategory = category === 'Hepsi' || p.category === category;
-            const matchSearch = p.name.toLowerCase().includes(searchQ.toLowerCase());
-            return matchCategory && matchSearch;
-        }),
-        [category, searchQ]
-    );
+            // 2. Tarayıcıda kalan eski kullanıcı verilerini tamamen temizle (KRİTİK ADIM)
+            localStorage.removeItem(STORAGE_KEYS.favorites);
+            localStorage.removeItem(STORAGE_KEYS.history);
+            localStorage.removeItem(STORAGE_KEYS.ratings);
 
-    const topRatedProducts = useMemo(() => {
-        return [...MOCK_PRODUCTS].sort((a, b) => b.avgScore - a.avgScore);
-    }, []);
+            // 3. State'leri sıfırla (Bileşen unmount olmadan önceki kalıntıları önler)
+            setFavorites([]);
+            setHistory([]);
+            setRatings({});
 
-    const trendProducts = useMemo(() => {
-        return MOCK_PRODUCTS.map(p => ({
-            ...p,
-            clickCount: clickCounts[p.id] || 0
-        })).sort((a, b) => b.clickCount - a.clickCount);
-    }, [clickCounts]);
+            navigate('/', { replace: true });
+        }
+    };
 
     if (selected) {
         return (
@@ -194,7 +300,7 @@ export default function Dashboard() {
                 onClose={() => setSelected(null)}
                 userRating={ratings[selected.id]}
                 onRate={handleRate}
-                allProducts={MOCK_PRODUCTS}
+                allProducts={products}
                 openProduct={openProduct}
                 favorites={favorites}
                 ratings={ratings}
@@ -204,7 +310,6 @@ export default function Dashboard() {
 
     return (
         <div className="vivid-main-page">
-            {/* AI ANALİZ YÜKLEME EKRANI */}
             {isAnalyzing && (
                 <div className="vivid-ai-loader-overlay">
                     <div className="vivid-ai-loader-card">
@@ -217,10 +322,7 @@ export default function Dashboard() {
                         </div>
 
                         <h2 className="loader-title">VividAI İşliyor</h2>
-
-                        <div className="loader-step-text">
-                            {analyzeSteps[loadingStep]}
-                        </div>
+                        <div className="loader-step-text">{analyzeSteps[loadingStep]}</div>
 
                         <div className="loader-progress-wrap">
                             <div
@@ -258,34 +360,48 @@ export default function Dashboard() {
                                 </svg>
                             </div>
                         </div>
-
                         <div className="project-title-group">
-                            <div className="brand-primary">
-                                Vivid<span className="brand-accent">AI</span>
-                            </div>
+                            <div className="brand-primary">Vivid<span className="brand-accent">AI</span></div>
                             <div className="brand-slogan">Yapay Zeka Analiz Motoru</div>
                         </div>
                     </div>
 
+                    {/* ── YENİ TASARIMLI KULLANICI PROFİLİ ── */}
                     <div className="vivid-user-profile-wrapper">
                         <div className="vivid-user-profile" onClick={() => setProfileMenuOpen(!profileMenuOpen)}>
-                            <div className="user-avatar-circle">N</div>
-                            <span className="user-name-display">Nisanur Cebecioğlu</span>
+                            <div className="user-avatar-container">
+                                <div className="user-avatar-circle">{username.charAt(0).toUpperCase()}</div>
+                                <div className="online-indicator"></div>
+                            </div>
+                            <div className="user-info-stack">
+                                <span className="user-name-display">{username}</span>
+
+                            </div>
                             <ChevronDown size={14} className={`profile-chevron ${profileMenuOpen ? 'open' : ''}`} />
                         </div>
 
                         {profileMenuOpen && (
                             <div className="profile-dropdown-menu">
-                                <div className="dropdown-header">Kişisel Menü</div>
-                                <button className="dropdown-item" onClick={() => { setProfileView('favoriler'); setProfileMenuOpen(false); }}>
-                                    <Heart size={14} /> Favorilerim
-                                </button>
-                                <button className="dropdown-item" onClick={() => { setProfileView('gecmis'); setProfileMenuOpen(false); }}>
-                                    <Clock size={14} /> Analiz Geçmişi
-                                </button>
-                                <div className="dropdown-divider"></div>
+                                <div className="dropdown-user-header">
+                                    <div className="user-avatar-circle large">{username.charAt(0).toUpperCase()}</div>
+                                    <div className="dropdown-user-details">
+                                        <span className="d-name">{username}</span>
+                                        <span className="d-role">VividAI Yetkili Kullanıcı</span>
+                                    </div>
+                                </div>
+                                <div className="dropdown-divider-thick"></div>
+                                <div className="dropdown-menu-list">
+                                    <button className="dropdown-item" onClick={() => { setProfileView('favoriler'); setProfileMenuOpen(false); }}>
+                                        <Heart size={16} color="#ec4899" /> Koleksiyonum
+                                    </button>
+                                    <button className="dropdown-item" onClick={() => { setProfileView('gecmis'); setProfileMenuOpen(false); }}>
+                                        <Clock size={16} color="#3b82f6" /> Analiz Geçmişi
+                                    </button>
+
+                                </div>
+                                <div className="dropdown-divider-thick"></div>
                                 <button className="dropdown-item exit-item" onClick={handleLogout}>
-                                    <LogOut size={14} /> Çıkış Yap
+                                    <LogOut size={16} /> Oturumu Kapat
                                 </button>
                             </div>
                         )}
@@ -300,47 +416,19 @@ export default function Dashboard() {
                         <p>Ürün linkini aşağıya yapıştır, AI ile anında detaylı analiz et.</p>
                     </div>
                 </div>
-
                 <div className="search-glow-wrap">
                     <div className="search-inner-box main-analyze-box">
                         <Link2 size={24} color="#7c3aed" className="search-icon" />
-                        <input
-                            className="search-input-field"
-                            placeholder="E-ticaret platformlarından (Trendyol, Hepsiburada vb.) ürün linkini buraya yapıştır..."
-                            value={linkQ}
-                            onChange={(e) => setLinkQ(e.target.value)}
-                            onKeyDown={(e) => { if (e.key === 'Enter') handleLinkAnalyze(); }}
-                        />
-                        <button className="search-action-btn pulse-glow" onClick={handleLinkAnalyze}>
-                            <Zap size={18} /> Analiz Et
-                        </button>
+                        <input className="search-input-field" placeholder="E-ticaret platformlarından (Trendyol, Hepsiburada vb.) ürün linkini buraya yapıştır..." value={linkQ} onChange={(e) => setLinkQ(e.target.value)} onKeyDown={(e) => { if (e.key === 'Enter') handleLinkAnalyze(); }} />
+                        <button className="search-action-btn pulse-glow" onClick={handleLinkAnalyze}><Zap size={18} /> Analiz Et</button>
                     </div>
                 </div>
-
                 <div className="flow-steps-row">
-                    <div className="flow-step-unit">
-                        <div className="flow-icon-box"><Link2 size={18} /></div>
-                        <div className="flow-text">
-                            <div className="flow-title">Link'i Kopyala</div>
-                            <div className="flow-desc">Ürün sayfasından URL al</div>
-                        </div>
-                    </div>
+                    <div className="flow-step-unit"><div className="flow-icon-box"><Link2 size={18} /></div><div className="flow-text"><div className="flow-title">Link'i Kopyala</div><div className="flow-desc">Ürün sayfasından URL al</div></div></div>
                     <ChevronRight size={16} color="#cbd5e1" />
-                    <div className="flow-step-unit">
-                        <div className="flow-icon-box"><ClipboardPaste size={18} /></div>
-                        <div className="flow-text">
-                            <div className="flow-title">Yapıştır</div>
-                            <div className="flow-desc">Arama kutusuna ekle</div>
-                        </div>
-                    </div>
+                    <div className="flow-step-unit"><div className="flow-icon-box"><ClipboardPaste size={18} /></div><div className="flow-text"><div className="flow-title">Yapıştır</div><div className="flow-desc">Arama kutusuna ekle</div></div></div>
                     <ChevronRight size={16} color="#cbd5e1" />
-                    <div className="flow-step-unit">
-                        <div className="flow-icon-box"><ChartNoAxesColumnIncreasing size={18} /></div>
-                        <div className="flow-text">
-                            <div className="flow-title">Sonuçları Gör</div>
-                            <div className="flow-desc">AI analiz raporunu incele</div>
-                        </div>
-                    </div>
+                    <div className="flow-step-unit"><div className="flow-icon-box"><ChartNoAxesColumnIncreasing size={18} /></div><div className="flow-text"><div className="flow-title">Sonuçları Gör</div><div className="flow-desc">AI analiz raporunu incele</div></div></div>
                 </div>
             </section>
 
@@ -350,14 +438,8 @@ export default function Dashboard() {
                         {CATEGORIES.map((c) => {
                             const CurrentIcon = c.icon;
                             return (
-                                <button
-                                    key={c.label}
-                                    className={`cat-tile-btn ${category === c.label ? 'active' : ''}`}
-                                    onClick={() => setCategory(c.label)}
-                                >
-                                    <div className="cat-circle">
-                                        {CurrentIcon && <CurrentIcon size={24} strokeWidth={1.5} />}
-                                    </div>
+                                <button key={c.label} className={`cat-tile-btn ${category === c.label ? 'active' : ''}`} onClick={() => setCategory(c.label)}>
+                                    <div className="cat-circle">{CurrentIcon && <CurrentIcon size={24} strokeWidth={1.5} />}</div>
                                     <span className="cat-text">{c.label}</span>
                                 </button>
                             );
@@ -368,98 +450,76 @@ export default function Dashboard() {
 
             <div className="tab-search-wrapper">
                 <div className="tab-bar">
-                    <button className={`tab-btn ${tab === 'kesfet' ? 'active' : ''}`} onClick={() => setTab('kesfet')}>
-                        <Compass size={18} /> Keşfet
-                    </button>
-                    <button className={`tab-btn ${tab === 'begenilenler' ? 'active' : ''}`} onClick={() => setTab('begenilenler')}>
-                        <Star size={18} /> En Çok Beğenilenler
-                    </button>
-                    <button className={`tab-btn ${tab === 'trendler' ? 'active' : ''}`} onClick={() => setTab('trendler')}>
-                        <TrendingUp size={18} /> Trend Sıralaması
-                    </button>
+                    <button className={`tab-btn ${tab === 'kesfet' ? 'active' : ''}`} onClick={() => setTab('kesfet')}><Compass size={18} /> Keşfet</button>
+                    <button className={`tab-btn ${tab === 'begenilenler' ? 'active' : ''}`} onClick={() => setTab('begenilenler')}><Star size={18} /> En Çok Beğenilenler</button>
+                    <button className={`tab-btn ${tab === 'trendler' ? 'active' : ''}`} onClick={() => setTab('trendler')}><TrendingUp size={18} /> Trend Sıralaması</button>
                 </div>
 
                 {tab === 'kesfet' && (
                     <div className="compact-search-box">
-                        <input
-                            placeholder="Mevcut sistemde ara..."
-                            value={searchQ}
-                            onChange={(e) => setSearchQ(e.target.value)}
-                            onKeyDown={(e) => { if (e.key === 'Enter') handleSystemSearch(); }}
-                        />
-                        <button className="compact-search-btn" onClick={handleSystemSearch}>
-                            <Search size={14} /> Ara
-                        </button>
+                        <input placeholder="Mevcut sistemde ara..." value={searchQ} onChange={(e) => setSearchQ(e.target.value)} onKeyDown={(e) => { if (e.key === 'Enter') handleSystemSearch(); }} />
+                        <button className="compact-search-btn" onClick={handleSystemSearch}><Search size={14} /> Ara</button>
                     </div>
                 )}
             </div>
 
             <div className="vivid-section">
-                {tab === 'kesfet' && (
-                    filteredProducts.length === 0 ? (
-                        <div className="empty-state">
-                            <Search size={40} color="#cbd5e1" />
-                            <br />Sistemde aradığınız kritere uygun ürün bulunamadı. Filtreyi temizleyin veya yeni link analiz edin.
-                        </div>
-                    ) : (
-                        <div className="card-grid">
-                            {filteredProducts.map((item) => (
-                                <ProductCard
-                                    key={item.id}
-                                    item={item}
-                                    isFav={favorites.some((f) => f.id === item.id)}
-                                    onFav={toggleFav}
-                                    onClick={() => openProduct(item)}
-                                    userRating={ratings[item.id]}
-                                />
-                            ))}
-                        </div>
-                    )
-                )}
-
-                {tab === 'begenilenler' && (
-                    <div className="card-grid">
-                        {topRatedProducts.map((item) => (
-                            <ProductCard
-                                key={item.id}
-                                item={item}
-                                isFav={favorites.some((f) => f.id === item.id)}
-                                onFav={toggleFav}
-                                onClick={() => openProduct(item)}
-                                userRating={ratings[item.id]}
-                            />
-                        ))}
+                {isLoadingProducts ? (
+                    <div className="empty-state" style={{ padding: '40px' }}>
+                        <Loader2 size={40} color="#7c3aed" className="animate-spin" />
+                        <br />Veriler yükleniyor...
                     </div>
-                )}
-
-                {tab === 'trendler' && (
-                    trendProducts.filter(p => p.clickCount > 0).length === 0 ? (
-                        <div className="empty-state">
-                            <BarChart size={40} color="#cbd5e1" />
-                            <br />Henüz hiçbir ürüne tıklanmadı. Tıklamalar burada listelenecek.
-                        </div>
-                    ) : (
-                        trendProducts.filter(p => p.clickCount > 0).map((product, i) => {
-                            const platColor = getPlatformColor(product.plat);
-
-                            return (
-                                <div key={product.id} className="trend-row" onClick={() => openProduct(product)}>
-                                    <span className="t-rank" style={{ color: platColor }}>#{i + 1}</span>
-
-                                    <div className="t-img-box">
-                                        <img src={product.img} alt={product.name} />
-                                    </div>
-
-                                    <div className="trend-row-info">
-                                        <span className="t-name">{product.name}</span>
-                                        <span className="t-sub">
-                                            {product.category} · <strong style={{ color: platColor }}>{product.plat}</strong>
-                                        </span>
-                                    </div>
+                ) : (
+                    <>
+                        {/* ── KEŞFET VE BEĞENİLENLER SEKMELERİ ── */}
+                        {(tab === 'kesfet' || tab === 'begenilenler') && (
+                            products.length === 0 ? (
+                                <div className="empty-state">
+                                    <Search size={40} color="#cbd5e1" />
+                                    <br />{category === 'Hepsi' && searchQ === '' ? 'Henüz sistemde ürün bulunmuyor.' : 'Aradığınız kritere uygun ürün bulunamadı.'}
                                 </div>
-                            );
-                        })
-                    )
+                            ) : (
+                                <div className="card-grid">
+                                    {products.map((item) => (
+                                        <ProductCard
+                                            key={item.id}
+                                            item={item}
+                                            isFav={favorites.some((f) => f.id === item.id)}
+                                            onFav={toggleFav}
+                                            onClick={() => openProduct(item)}
+                                            userRating={ratings[item.id]}
+                                        />
+                                    ))}
+                                </div>
+                            )
+                        )}
+
+                        {tab === 'trendler' && (
+                            products.filter(p => p.clickCount > 0).length === 0 ? (
+                                <div className="empty-state">
+                                    <BarChart size={40} color="#cbd5e1" />
+                                    <br />Henüz tıklanan ürün bulunamadı.
+                                </div>
+                            ) : (
+                                products
+                                    .filter(p => p.clickCount > 0)
+                                    .sort((a, b) => b.clickCount - a.clickCount)
+                                    .map((product, i) => {
+                                        const platColor = getPlatformColor(product.plat);
+                                        return (
+                                            <div key={product.id} className="trend-row" onClick={() => openProduct(product)}>
+                                                <span className="t-rank" style={{ color: platColor }}>#{i + 1}</span>
+                                                <div className="t-img-box"><img src={product.img} alt={product.name} /></div>
+                                                <div className="trend-row-info">
+                                                    <span className="t-name">{product.name}</span>
+                                                    <span className="t-sub">{product.category} · <strong style={{ color: platColor }}>{product.plat}</strong> · {product.clickCount} Tıklama</span>
+                                                </div>
+                                            </div>
+                                        );
+                                    })
+                            )
+                        )}
+                    </>
                 )}
             </div>
 
@@ -468,21 +528,16 @@ export default function Dashboard() {
                     <div className="profile-modal-card" onClick={(e) => e.stopPropagation()}>
                         <div className="profile-modal-header">
                             <div className="profile-modal-tabs">
-                                <button className={`p-tab-btn ${profileView === 'favoriler' ? 'active' : ''}`} onClick={() => setProfileView('favoriler')}>
-                                    <Heart size={16} /> Favorilerim
-                                </button>
-                                <button className={`p-tab-btn ${profileView === 'gecmis' ? 'active' : ''}`} onClick={() => setProfileView('gecmis')}>
-                                    <Clock size={16} /> Analiz Geçmişim
-                                </button>
+                                <button className={`p-tab-btn ${profileView === 'favoriler' ? 'active' : ''}`} onClick={() => setProfileView('favoriler')}><Heart size={16} /> Koleksiyonum</button>
+                                <button className={`p-tab-btn ${profileView === 'gecmis' ? 'active' : ''}`} onClick={() => setProfileView('gecmis')}><Clock size={16} /> Analiz Geçmişim</button>
                             </div>
                             <button className="profile-modal-close" onClick={() => setProfileView(null)}>✕</button>
                         </div>
-
                         <div className="profile-modal-body">
                             {profileView === 'favoriler' && (
                                 <div className="modal-inner-section">
                                     {favorites.length === 0 ? (
-                                        <div className="empty-state"><Heart size={40} /><br />Henüz favorilere ürün eklemediniz.</div>
+                                        <div className="empty-state"><Heart size={40} /><br />Henüz koleksiyonunuza ürün eklemediniz.</div>
                                     ) : (
                                         <div className="modal-card-grid card-grid">
                                             {favorites.map((item) => (
@@ -492,7 +547,6 @@ export default function Dashboard() {
                                     )}
                                 </div>
                             )}
-
                             {profileView === 'gecmis' && (
                                 <div className="modal-inner-section">
                                     {history.length === 0 ? (
@@ -500,7 +554,7 @@ export default function Dashboard() {
                                     ) : (
                                         <div className="modal-card-grid card-grid">
                                             {history.map((h) => {
-                                                const matchedProduct = MOCK_PRODUCTS.find((p) => p.name === h);
+                                                const matchedProduct = products.find((p) => p.name === h);
                                                 if (!matchedProduct) return null;
                                                 return (
                                                     <ProductCard key={matchedProduct.id} item={matchedProduct} isFav={favorites.some((f) => f.id === matchedProduct.id)} onFav={toggleFav} onClick={() => { setSelected(matchedProduct); setProfileView(null); }} userRating={ratings[matchedProduct.id]} />

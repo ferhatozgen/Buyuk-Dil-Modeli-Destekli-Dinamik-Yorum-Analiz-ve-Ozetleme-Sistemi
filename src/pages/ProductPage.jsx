@@ -1,18 +1,19 @@
-import React, { useState, useMemo, useRef, useEffect } from 'react';
+import React, { useState, useMemo, useRef, useEffect, useCallback } from 'react';
 import {
     ArrowLeft, Heart, Star, ChevronDown, ChevronUp, ShieldCheck, CheckCircle2,
     Clock, ThumbsUp, Sparkles, CheckCircle, Info, TrendingUp,
-    MessageCircle, X, Send, Bot, MoreHorizontal
+    MessageCircle, X, Send, Bot, MoreHorizontal, Loader2
 } from 'lucide-react';
 import './ProductPage.css';
 import ProductCard from './ProductCard';
+import api from '../api';
 
 // ── DİNAMİK GERÇEK PLATFORM RENK HARİTASI ──
 const PLATFORM_THEMES = {
     'trendyol': { main: '#F27A1A', light: '#fff4eb' },
     'trendyolgo': { main: '#0cc167', light: '#e8faef' },
     'yemeksepeti': { main: '#EA004B', light: '#ffeef3' },
-    'googlemaps': { main: '#4285F4', light: '#e8f0fe' },
+    'maps': { main: '#4285F4', light: '#e8f0fe' },
     'airbnb': { main: '#FF5A5F', light: '#ffeeef' },
     'hepsiburada': { main: '#FF6000', light: '#fff4eb' },
     'steam': { main: '#2A475E', light: '#f1f5f9' },
@@ -21,103 +22,148 @@ const PLATFORM_THEMES = {
     'default': { main: '#8b5cf6', light: '#f5f3ff' }
 };
 
-const CATEGORY_DETAILS = {
-    'Yemek & Gıda': [
-        { key: 'lezzet', label: 'Lezzet Oranı', score: 4.8, icon: ThumbsUp, desc: 'Kullanıcı yorumlarının genel analizi sos dengesi ve malzeme tazeliğini başarılı buluyor.' },
-        { key: 'hiz', label: 'Teslimat Hızı', score: 4.2, icon: Clock, desc: 'Siparişlerin ortalama varış süresi lojistik standartlara tam uyum sağlıyor.' },
-        { key: 'kurye', label: 'Kurye & Paketleme', score: 4.5, icon: CheckCircle2, desc: 'Sıcaklığı koruyan özel ambalaj yapısı ve kurye memnuniyeti yüksek.' }
-    ],
-    'Elektronik & Teknoloji': [
-        { key: 'ses', label: 'Ses Kalitesi & ANC', score: 4.9, icon: ThumbsUp, desc: 'Aktif gürültü engelleme performansı ve bas dengesi üst düzeyde raporlanmış.' },
-        { key: 'pil', label: 'Pil Ömrü & Şarj', score: 4.7, icon: Clock, desc: 'Tek şarjla uzun süreli kesintisiz kullanım verisi doğrulanmış durumda.' },
-        { key: 'ergonomi', label: 'Ergonomi & Konfor', score: 4.6, icon: ShieldCheck, desc: 'Kulak yastıklarının kafa yapısına tam uyum sağladığı belirtilmiş.' }
-    ],
-    default: [
-        { key: 'fp', label: 'Fiyat / Performans', score: 4.5, icon: ThumbsUp, desc: 'Harcanan bütçenin karşılığını verimlilik bazında optimum eğride karşılıyor.' },
-        { key: 'kalite', label: 'Genel Kalite Algısı', score: 4.4, icon: ShieldCheck, desc: 'Kullanıcı deneyimi standartların üzerinde, güvenilir bir his uyandırıyor.' }
-    ]
-};
+export default function ProductPage({ product, onFav, onClose, userRating, onRate, allProducts = [], openProduct, ratings = {} }) {
+    // ── API VERİ STATE'LERİ ──
+    const [productDetail, setProductDetail] = useState(null);
+    const [isLoading, setIsLoading] = useState(true);
 
-// Ürünün tüm yorumlarını barındıran veri kaynağı
-const MOCK_XAI_COMMENTS = {
-    1: [
-        { id: 101, user: "Ah*** K***", text: "Hayatımda gördüğüm en iyi gürültü engelleme teknolojisine sahip. Müzik dinlerken ses kalitesi muazzam berrak." },
-        { id: 102, user: "Ze*** T***", text: "Ses harika ancak uzun kullanımda kulaklarımda ağrı yaptı. Konfor ve ergonomi bence zayıf." },
-        { id: 103, user: "Ca*** M***", text: "Fiyatına göre inanılmaz bir konfor sunuyor, kesinlikle öneririm." },
-        { id: 104, user: "Bu*** S***", text: "Ses dengesi mükemmel, baslar ve tizler birbirine karışmıyor." }
-    ],
-    3: [
-        { id: 301, user: "Se*** B***", text: "Burger köftesi sıcacık geldi. Gerçekten tam bir lezzet şöleni, porsiyon büyüklüğü çok tatmin edici." },
-        { id: 302, user: "Be*** G***", text: "Yemek tam 1 saatte ulaştı. Teslimat süresi ve hız performansı korkunç derecede yavaş." },
-        { id: 303, user: "Oğ*** D***", text: "Lezzet harikaydı, kurye de çok kibardı. Teşekkürler." }
-    ],
-    'default': [
-        { id: 901, user: "Ku*** A***", text: "Genel olarak performansı çok iyi ve kalitesi yüksek, kesinlikle tavsiye ederim. Havuz ve çocuklu aileler için harika." },
-        { id: 902, user: "Ku*** B***", text: "Kargo hızı harika, ürün beklediğimden de iyi çıktı." },
-        { id: 903, user: "Ku*** C***", text: "Açık büfe yemek çeşitliliği zengin ama odalar biraz küçüktü." }
-    ]
-};
-
-function ProductPage({ product, isFav, onFav, onClose, userRating, onRate, allProducts = [], openProduct, favorites = [], ratings = {} }) {
+    // ── UI STATE'LERİ ──
     const [hoveredStar, setHoveredStar] = useState(0);
     const [expandedParam, setExpandedParam] = useState(null);
     const [selectedWord, setSelectedWord] = useState(null);
     const [hoveredWord, setHoveredWord] = useState(null);
 
-    // Chatbot States
+    // ── CHATBOT STATE'LERİ ──
     const [isChatOpen, setIsChatOpen] = useState(false);
     const [isTyping, setIsTyping] = useState(false);
-    const [chatMessages, setChatMessages] = useState([
-        { sender: 'ai', text: `Merhaba! Ben VividAI Asistan. 👋 ${product?.name} hakkında merak ettiklerini bana sorabilirsin.` }
-    ]);
+    const [chatMessages, setChatMessages] = useState([]);
     const [chatInput, setChatInput] = useState('');
     const chatEndRef = useRef(null);
 
+    // ── KATEGORİ FORMATLAYICI ──
+    const formatCategory = (rawCat) => {
+        if (!rawCat) return 'Diğer';
+        const str = rawCat.toLowerCase().replace(/_/g, ' ');
+        if (str.includes('elektronik') || str.includes('teknoloji')) return 'Elektronik & Teknoloji';
+        if (str.includes('kırtasiye') || str.includes('kirtasiye') || str.includes('kitap') || str.includes('hobi')) return 'Kırtasiye & Kitap & Hobi';
+        if (str.includes('otel') || str.includes('konaklama')) return 'Otel';
+        if (str.includes('günlük ev') || str.includes('gunluk')) return 'Günlük Ev';
+        if (str.includes('giyim') || str.includes('ayakkabı') || str.includes('ayakkabi')) return 'Giyim & Ayakkabı';
+        if (str.includes('eğitim') || str.includes('egitim') || str.includes('eğlence')) return 'Eğitim & Eğlence';
+        if (str.includes('sağlık') || str.includes('saglik')) return 'Sağlık';
+        if (str.includes('oyun') || str.includes('game')) return 'Oyun';
+        if (str.includes('yemek') || str.includes('restoran')) return 'Yemek';
+        if (str.includes('gezi') || str.includes('gezilecek')) return 'Gezilecek Yer';
+        if (str.includes('anne') || str.includes('bebek') || str.includes('oyuncak')) return 'Anne & Bebek & Oyuncak';
+        if (str.includes('kozmetik') || str.includes('bakım') || str.includes('bakim')) return 'Kozmetik & Kişisel Bakım';
+        if (str.includes('hediye')) return 'Hediyelik Eşya';
+        if (str.includes('pet') || str.includes('hayvan')) return 'Pet Shop';
+        if (str.includes('market') || str.includes('gıda') || str.includes('gida') || str.includes('süpermarket')) return 'Süpermarket & Gıda';
+        if (str.includes('yenilebilir')) return 'Yenilebilir Çiçek';
+        if (str.includes('çiçek') || str.includes('cicek')) return 'Çiçek';
+        if (str.includes('hizmet')) return 'Hizmet';
+        if (str.includes('kurumsal')) return 'Kurumsal';
+        if (str.includes('spor') || str.includes('outdoor')) return 'Spor & Outdoor';
+        if (str.includes('aksesuar') || str.includes('takı') || str.includes('taki')) return 'Aksesuar & Takı';
+        if (str.includes('ev') || str.includes('yaşam') || str.includes('yasam') || str.includes('mobilya')) return 'Ev & Yaşam & Mobilya';
+        if (str.includes('alışveriş') || str.includes('alisveris')) return 'Alışveriş';
+        return rawCat.charAt(0).toUpperCase() + rawCat.slice(1);
+    };
+
+    // ── YENİ API İSTEKLERİ (TIKLAMA & FAVORİ) ──
+    const handleIncrementClick = useCallback(async () => {
+        try {
+            if (product?.id) {
+                await api.patch(`/Product/${product.id}/click`);
+            }
+        } catch (error) {
+            console.error("Tıklama sayısı güncellenemedi:", error);
+        }
+    }, [product?.id]);
+
+    // ── GÜNCELLENEN FAVORİ KAYDETME FONKSİYONU ──
+    const handleToggleSave = async () => {
+        try {
+            const token = localStorage.getItem('token');
+            const response = await api.post(`/Product/${product.id}/toggle-save`, {}, {
+                headers: { 'Authorization': `Bearer ${token}` }
+            });
+
+            if (response.status === 200) {
+                const newSaveStatus = response.data.isSaved;
+
+                // 1. Ürün detay sayfasındaki kalbi anında güncelle
+                setProductDetail(prev => ({ ...prev, isFavorited: newSaveStatus }));
+
+                // 2. Dashboard'ın okuyabileceği formata çevir
+                const updatedProductForDashboard = {
+                    id: productDetail.id,
+                    name: productDetail.productName,
+                    category: productDetail.category,
+                    plat: productDetail.platform,
+                    avgScore: productDetail.avgModelScore ? productDetail.avgModelScore.toFixed(1) : "0.0",
+                    img: productDetail.imageUrl,
+                    clickCount: productDetail.clickCount || 0,
+                    isFavorited: newSaveStatus
+                };
+
+                if (onFav) {
+                    // 3. true parametresi göndererek Dashboard'un tekrar API atmasını engelliyoruz!
+                    onFav(updatedProductForDashboard, true);
+                }
+            }
+        } catch (error) {
+            console.error("Favori işlemi başarısız:", error);
+        }
+    };
+
+    // ── ÜRÜN DETAYINI ÇEKME ──
+    const fetchProductDetails = useCallback(async () => {
+        if (!product?.id) return;
+        setIsLoading(true);
+        try {
+            const token = localStorage.getItem('token');
+            const response = await api.get(`/Product/${product.id}`, {
+                headers: token ? { 'Authorization': `Bearer ${token}` } : {}
+            });
+            setProductDetail(response.data);
+
+            setChatMessages([
+                { sender: 'ai', text: `Merhaba! Ben VividAI Asistan. 👋 ${response.data.productName} hakkında merak ettiklerini bana sorabilirsin.` }
+            ]);
+        } catch (error) {
+            console.error("Ürün detayları yüklenirken hata oluştu:", error);
+        } finally {
+            setIsLoading(false);
+        }
+    }, [product]);
+
+    useEffect(() => {
+        fetchProductDetails();
+    }, [fetchProductDetails]);
+
+    // Ürün kartına tıklandığında (yani bu sayfa açıldığında) tıklanma sayısını artır
+    useEffect(() => {
+        handleIncrementClick();
+    }, [handleIncrementClick]);
+
+    // Chatbot scroll efekti
     useEffect(() => {
         if (isChatOpen && chatEndRef.current) {
             chatEndRef.current.scrollIntoView({ behavior: 'smooth' });
         }
     }, [chatMessages, isChatOpen, isTyping]);
 
-    if (!product) return null;
-
+    // ── YARDIMCI FONKSİYONLAR ──
     const getPlatformTheme = (platName) => {
         if (!platName) return PLATFORM_THEMES['default'];
         const str = platName.toLowerCase().replace(/\s+/g, '');
-        if (str.includes('trendyolgo')) return PLATFORM_THEMES['trendyolgo'];
-        if (str.includes('trendyol')) return PLATFORM_THEMES['trendyol'];
-        if (str.includes('yemeksepeti')) return PLATFORM_THEMES['yemeksepeti'];
-        if (str.includes('google')) return PLATFORM_THEMES['googlemaps'];
-        if (str.includes('airbnb')) return PLATFORM_THEMES['airbnb'];
-        if (str.includes('hepsiburada')) return PLATFORM_THEMES['hepsiburada'];
-        if (str.includes('steam')) return PLATFORM_THEMES['steam'];
-        if (str.includes('etstur')) return PLATFORM_THEMES['etstur'];
-        if (str.includes('çiçeksepeti') || str.includes('ciceksepeti')) return PLATFORM_THEMES['ciceksepeti'];
-        return PLATFORM_THEMES['default'];
+        const match = Object.keys(PLATFORM_THEMES).find(key => str.includes(key));
+        return match ? PLATFORM_THEMES[match] : PLATFORM_THEMES['default'];
     };
 
-    const activeTheme = getPlatformTheme(product.plat);
-
-    // Gereksiz/etkisiz kelimeleri filtreleme
     const cleanToken = (word) => word.toLowerCase().replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, "").trim();
     const isStopWord = (word) => ['ve', 'veya', 'da', 'de', 'bir', 'bu', 'için', 'en', 'ile', 'o', 'ise', 'içinde', 'çok', 'daha', 'gibi'].includes(cleanToken(word));
-
-    const aiModelScore = useMemo(() => (product.avgScore - 0.2).toFixed(1), [product.avgScore]);
-    const varianceScore = useMemo(() => {
-        const diff = Math.abs(product.avgScore - aiModelScore);
-        return Math.min(94, Math.max(8, (diff * 40) + 12)).toFixed(0);
-    }, [product.avgScore, aiModelScore]);
-
-    const similarProducts = useMemo(() => {
-        return allProducts
-            .filter((p) => p.category === product.category && p.id !== product.id)
-            .slice(0, 6);
-    }, [allProducts, product.category, product.id]);
-
-    const params = CATEGORY_DETAILS[product.category] || CATEGORY_DETAILS.default;
-    // Sağ tarafta her zaman GÖRÜNECEK kaynak yorumların tamamı
-    const sourceComments = MOCK_XAI_COMMENTS[product.id] || MOCK_XAI_COMMENTS.default;
-    const summaryWords = useMemo(() => product.sum.split(/\s+/), [product.sum]);
 
     const handleWordClick = (word) => {
         const clean = cleanToken(word);
@@ -139,12 +185,49 @@ function ProductPage({ product, isFav, onFav, onClose, userRating, onRate, allPr
             setIsTyping(false);
             setChatMessages(prev => [...prev, {
                 sender: 'ai',
-                text: `Analizlerimize göre "${newUserMsg.text}" konusunda kullanıcılar genel olarak olumlu bir eğilim gösteriyor.`
+                text: `Analizlerimize göre "${newUserMsg.text}" konusunda kullanıcılar genel olarak veritabanımızdaki yorumlara paralel bir eğilim gösteriyor.`
             }]);
         }, 1500);
     };
 
-    // SOL TARAF (ÖZET) İÇİN KELİME RENDER FONKSİYONU
+    // ── RENDER DURUMLARI ──
+    if (!product) return null;
+
+    if (isLoading) {
+        return (
+            <div className="tc-page-wrapper" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '60vh', flexDirection: 'column', gap: '15px' }}>
+                <Loader2 size={48} color="#8b5cf6" className="animate-spin" />
+                <h3 style={{ color: '#475569' }}>VividAI Analiz Raporu Yükleniyor...</h3>
+            </div>
+        );
+    }
+
+    if (!productDetail) {
+        return (
+            <div className="tc-page-wrapper" style={{ padding: '40px', textAlign: 'center' }}>
+                <h2>Ürün detayları bulunamadı.</h2>
+                <button className="tc-btn-primary" onClick={onClose} style={{ marginTop: '20px' }}>Geri Dön</button>
+            </div>
+        );
+    }
+
+    const {
+        productName, platform, imageUrl, originalUrl,
+        avgOrjScore, avgModelScore, celiskiScore,
+        guncelOzet, categoricalStats, sourceReviews, isFavorited
+    } = productDetail;
+
+    const activeTheme = getPlatformTheme(platform);
+    const summaryWords = (guncelOzet || "").split(/\s+/);
+    const activeTargetWord = hoveredWord || selectedWord;
+
+    // Platform ismini baş harfi büyük olacak şekilde biçimlendiriyoruz
+    const displayPlatform = platform ? platform.charAt(0).toUpperCase() + platform.slice(1) : '';
+
+    const similarProducts = allProducts
+        .filter((p) => p.category === productDetail.category && p.id !== productDetail.id)
+        .slice(0, 6);
+
     const renderInteractiveSummary = (textArray) => {
         return textArray.map((word, idx) => {
             const clean = cleanToken(word);
@@ -166,46 +249,32 @@ function ProductPage({ product, isFav, onFav, onClose, userRating, onRate, allPr
         });
     };
 
-    // SAĞ TARAFTAKİ YORUMLAR İÇİNDE METNİ VURGULAMA FONKSİYONU
     const renderHighlightedCommentText = (text, targetWord) => {
         if (!targetWord) return text;
-
-        // Cümledeki hedef kelimeyi büyük/küçük harf duyarsız bul ve böl
         const regex = new RegExp(`(${targetWord})`, 'gi');
         const parts = text.split(regex);
-
         return parts.map((part, i) =>
             part.toLowerCase() === targetWord.toLowerCase() ?
                 <span key={i} className="tc-word-highlight-match">{part}</span> : part
         );
     };
 
-    // Şu anda aktif olan (hover edilen veya tıklanan) kelime
-    const activeTargetWord = hoveredWord || selectedWord;
-
     return (
-        <div
-            className="tc-page-wrapper"
-            style={{
-                '--theme-main': activeTheme.main,
-                '--theme-light': activeTheme.light
-            }}
-        >
+        <div className="tc-page-wrapper" style={{ '--theme-main': activeTheme.main, '--theme-light': activeTheme.light }}>
             <div className="tc-top-bar">
                 <button className="tc-back-btn" onClick={onClose}>
                     <ArrowLeft size={16} /> Keşif Paneline Dön
                 </button>
                 <div className="tc-breadcrumb">
-                    Anasayfa {'>'} {product.category} {'>'} <span>{product.name}</span>
+                    Anasayfa {'>'} {formatCategory(productDetail.category)} {'>'} <span>{productName}</span>
                 </div>
             </div>
 
             <div className="tc-main-grid">
-
                 {/* 1. SOL: RESİM & AI ÖZETİ */}
                 <div className="tc-image-column">
                     <div className="tc-main-image-box">
-                        <img src={product.img} alt={product.name} />
+                        <img src={imageUrl || product.img} alt={productName} />
                         <div className="tc-image-badges">
                             <span className="tc-badge-ai">VividAI Analizör</span>
                         </div>
@@ -214,7 +283,7 @@ function ProductPage({ product, isFav, onFav, onClose, userRating, onRate, allPr
                     <div className="tc-ai-summary-box">
                         <div className="tc-ai-summary-header">
                             <Sparkles size={16} color={activeTheme.main} />
-                            <strong>{product.plat} Verisi Sentez Raporu</strong>
+                            <strong>{displayPlatform} Verisi Sentez Raporu</strong>
                         </div>
                         <p className="tc-interactive-text">
                             {renderInteractiveSummary(summaryWords)}
@@ -225,11 +294,11 @@ function ProductPage({ product, isFav, onFav, onClose, userRating, onRate, allPr
                     </div>
                 </div>
 
-                {/* 2. ORTA: DETAYLAR & KAYNAK YORUMLAR KUTUSU */}
+                {/* 2. ORTA: DETAYLAR & KAYNAK YORUMLAR KUT ব্যায়ামUTUSU */}
                 <div className="tc-details-column">
                     <div className="tc-product-header">
                         <h1 className="tc-product-title">
-                            <span className="tc-brand">{product.plat}</span> {product.name}
+                            <span className="tc-brand">{displayPlatform}</span> {productName}
                         </h1>
                         <div className="tc-rating-summary">
                             <div className="tc-stars">
@@ -237,14 +306,16 @@ function ProductPage({ product, isFav, onFav, onClose, userRating, onRate, allPr
                                     <Star key={i} size={14} fill={activeTheme.main} color={activeTheme.main} />
                                 ))}
                             </div>
-                            <span className="tc-rating-count">Platform Puanı: {product.avgScore}</span>
+                            <span className="tc-rating-count">Orijinal Puan: {avgOrjScore?.toFixed(1)}</span>
                         </div>
                     </div>
 
                     <div className="tc-score-cards-row">
                         <div className="tc-score-card">
-                            <div className="tc-score-top">
-                                <span className="tc-score-val">{aiModelScore}</span>
+                            <div className="tc-score-top" style={{ display: 'flex', alignItems: 'center' }}>
+                                <span className="tc-score-val" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                                    {avgModelScore?.toFixed(1)}
+                                </span>
                                 <div className="tc-score-labels">
                                     <strong>VividAI Endeksi</strong>
                                     <span>Anlamsal Model Skoru</span>
@@ -252,8 +323,11 @@ function ProductPage({ product, isFav, onFav, onClose, userRating, onRate, allPr
                             </div>
                         </div>
                         <div className="tc-score-card">
-                            <div className="tc-score-top">
-                                <span className="tc-score-val-alt">% {varianceScore}</span>
+                            <div className="tc-score-top" style={{ display: 'flex', alignItems: 'center' }}>
+                                <span className="tc-score-val-alt" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                                    <span style={{ fontSize: '15px', marginRight: '4px' }}>%</span>
+                                    <span>{celiskiScore ? (celiskiScore * 100).toFixed(0) : "0"}</span>
+                                </span>
                                 <div className="tc-score-labels">
                                     <strong>Çelişki Oranı</strong>
                                     <span>Yorum Standart Sapması</span>
@@ -268,36 +342,40 @@ function ProductPage({ product, isFav, onFav, onClose, userRating, onRate, allPr
                             <h3 className="tc-section-title">Kategorik Özet Parametreleri</h3>
                         </div>
                         <div className="tc-params-list">
-                            {params.map((p) => {
-                                const IconComp = p.icon;
-                                const isExpanded = expandedParam === p.key;
-                                return (
-                                    <div key={p.key} className={`tc-param-row-wrapper ${isExpanded ? 'active-row' : ''}`}>
-                                        <div className="tc-param-clickable-row" onClick={() => setExpandedParam(isExpanded ? null : p.key)}>
-                                            <div className="tc-param-left">
-                                                <div className="tc-icon-frame">{IconComp && <IconComp size={14} />}</div>
-                                                <span className="tc-param-label">{p.label}</span>
-                                            </div>
-                                            <div className="tc-param-right">
-                                                <div className="tc-progress-bg">
-                                                    <div className="tc-progress-fill" style={{ width: `${(p.score / 5) * 100}%` }}></div>
+                            {categoricalStats && categoricalStats.length > 0 ? (
+                                categoricalStats.map((stat, idx) => {
+                                    const isExpanded = expandedParam === idx;
+                                    return (
+                                        <div key={idx} className={`tc-param-row-wrapper ${isExpanded ? 'active-row' : ''}`}>
+                                            <div className="tc-param-clickable-row" onClick={() => setExpandedParam(isExpanded ? null : idx)}>
+                                                <div className="tc-param-left">
+                                                    <div className="tc-icon-frame"><CheckCircle2 size={14} /></div>
+                                                    <span className="tc-param-label">{formatCategory(stat.categoryName)}</span>
                                                 </div>
-                                                <span className="tc-param-score">{p.score}</span>
-                                                {isExpanded ? <ChevronUp size={16} color={activeTheme.main} /> : <ChevronDown size={16} color="#64748b" />}
+                                                <div className="tc-param-right">
+                                                    <div className="tc-progress-bg">
+                                                        <div className="tc-progress-fill" style={{ width: `${(stat.categoryModelAvgScore / 5) * 100}%` }}></div>
+                                                    </div>
+                                                    <span className="tc-param-score">
+                                                        {stat.categoryModelAvgScore ? (stat.categoryModelAvgScore * 20).toFixed(0) : "0"}%
+                                                    </span>
+                                                    {isExpanded ? <ChevronUp size={16} color={activeTheme.main} /> : <ChevronDown size={16} color="#64748b" />}
+                                                </div>
                                             </div>
+                                            {isExpanded && (
+                                                <div className="tc-param-expanded-content">
+                                                    <p className="tc-expanded-text">{stat.categorySummary}</p>
+                                                </div>
+                                            )}
                                         </div>
-                                        {isExpanded && (
-                                            <div className="tc-param-expanded-content">
-                                                <p className="tc-expanded-text">{p.desc}</p>
-                                            </div>
-                                        )}
-                                    </div>
-                                );
-                            })}
+                                    );
+                                })
+                            ) : (
+                                <p className="tc-expanded-text" style={{ padding: '10px 0' }}>Bu ürün için kategorik detay henüz oluşturulmadı.</p>
+                            )}
                         </div>
                     </div>
 
-                    {/* VURGULAMA VE HARİTALAMA (HIGHLIGHT) YAPILAN YORUM KUTUSU */}
                     <div className="tc-reviews-section">
                         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '14px' }}>
                             <h3 className="tc-section-title" style={{ margin: 0 }}>Özeti Oluşturan Kaynak Yorumlar</h3>
@@ -309,59 +387,56 @@ function ProductPage({ product, isFav, onFav, onClose, userRating, onRate, allPr
                         </div>
 
                         <div className="tc-reviews-scroll-box">
-                            {sourceComments.map(review => {
-                                // Arama işlemini küçük harfe çevirerek yapıyoruz
-                                const textLower = review.text.toLocaleLowerCase('tr-TR');
-                                const targetLower = activeTargetWord ? activeTargetWord.toLocaleLowerCase('tr-TR') : '';
+                            {sourceReviews && sourceReviews.length > 0 ? (
+                                sourceReviews.map((review, idx) => {
+                                    const textLower = review.text.toLocaleLowerCase('tr-TR');
+                                    const targetLower = activeTargetWord ? activeTargetWord.toLocaleLowerCase('tr-TR') : '';
+                                    const isMatch = activeTargetWord && textLower.includes(targetLower);
+                                    let cardStateClass = activeTargetWord ? (isMatch ? 'tc-card-highlight' : 'tc-card-dimmed') : '';
 
-                                // Yorumun içinde aktif kelime geçiyor mu?
-                                const isMatch = activeTargetWord && textLower.includes(targetLower);
-
-                                // Stil sınıfı ataması: Aktif kelime varsa ve yorum içeriyorsa öne çıkar, içermiyorsa soluklaştır.
-                                let cardStateClass = '';
-                                if (activeTargetWord) {
-                                    cardStateClass = isMatch ? 'tc-card-highlight' : 'tc-card-dimmed';
-                                }
-
-                                return (
-                                    <div key={review.id} className={`tc-review-card-mini ${cardStateClass}`}>
-                                        <div className="tc-review-header-mini">
-                                            <span className="tc-review-user-masked">{review.user}</span>
+                                    return (
+                                        <div key={idx} className={`tc-review-card-mini ${cardStateClass}`}>
+                                            <div className="tc-review-header-mini">
+                                                <span className="tc-review-user-masked">Doğrulanmış Alıcı</span>
+                                            </div>
+                                            <p className="tc-interactive-text-mini">
+                                                {activeTargetWord && isMatch
+                                                    ? renderHighlightedCommentText(review.text, activeTargetWord)
+                                                    : review.text}
+                                            </p>
                                         </div>
-                                        <p className="tc-interactive-text-mini">
-                                            {/* Eşleşme varsa kelimeyi sarı/tema rengi ile vurgula, yoksa düz metni bas */}
-                                            {activeTargetWord && isMatch
-                                                ? renderHighlightedCommentText(review.text, activeTargetWord)
-                                                : review.text}
-                                        </p>
-                                    </div>
-                                )
-                            })}
+                                    )
+                                })
+                            ) : (
+                                <p className="tc-expanded-text">Gösterilecek kaynak yorum bulunamadı.</p>
+                            )}
                         </div>
                     </div>
-
                 </div>
 
                 {/* 3. SAĞ: SATICI VE AKSİYONLAR */}
                 <div className="tc-action-column">
                     <div className="tc-seller-box">
                         <div className="tc-seller-header">
-                            <span className="tc-seller-name">{product.plat}</span>
+                            <span className="tc-seller-name">{displayPlatform}</span>
                             <span className="tc-seller-badge"><CheckCircle size={12} /> Orijinal Kaynak</span>
                         </div>
                         <div className="tc-seller-info-row">
                             <Info size={14} color={activeTheme.main} />
-                            <span>Bu analiz, {product.plat} üzerindeki açık veriler kullanılarak oluşturulmuştur.</span>
+                            <span>Bu analiz, {displayPlatform} üzerindeki açık veriler kullanılarak oluşturulmuştur.</span>
                         </div>
                     </div>
 
-                    <a href={product.productUrl} target="_blank" rel="noreferrer" className="tc-btn-primary">
-                        Mağazaya Git ve İncele
-                    </a>
+                    {/* Mağazaya Git butonundan onClick event'i kaldırıldı */}
+                    {originalUrl && (
+                        <a href={originalUrl} target="_blank" rel="noreferrer" className="tc-btn-primary">
+                            Mağazaya Git ve İncele
+                        </a>
+                    )}
 
-                    <button className={`tc-btn-secondary ${isFav ? 'fav-active' : ''}`} onClick={() => onFav(product)}>
-                        <Heart size={16} fill={isFav ? activeTheme.main : 'none'} color={isFav ? activeTheme.main : '#475569'} />
-                        {isFav ? 'Koleksiyona Eklendi' : 'Koleksiyona Ekle'}
+                    <button className={`tc-btn-secondary ${isFavorited ? 'fav-active' : ''}`} onClick={handleToggleSave}>
+                        <Heart size={16} fill={isFavorited ? activeTheme.main : 'none'} color={isFavorited ? activeTheme.main : '#475569'} />
+                        {isFavorited ? 'Koleksiyona Eklendi' : 'Koleksiyona Ekle'}
                     </button>
 
                     <div className="tc-rate-box">
@@ -377,7 +452,7 @@ function ProductPage({ product, isFav, onFav, onClose, userRating, onRate, allPr
                                         color={hoveredStar >= s ? activeTheme.main : '#cbd5e1'}
                                         onMouseEnter={() => setHoveredStar(s)}
                                         onMouseLeave={() => setHoveredStar(0)}
-                                        onClick={() => onRate(product.id, s)}
+                                        onClick={() => onRate && onRate(productDetail.id, s)}
                                         style={{ cursor: 'pointer', transition: 'transform 0.1s' }}
                                     />
                                 ))}
@@ -387,35 +462,36 @@ function ProductPage({ product, isFav, onFav, onClose, userRating, onRate, allPr
                 </div>
             </div>
 
-            {/* ========================================================= */}
-            {/* 4. ALT KISIM: BENZER ÜRÜNLER (YATAY SCROLL) */}
-            {/* ========================================================= */}
+            {/* 4. BENZER ÜRÜNLER */}
             <div className="tc-similar-section">
                 <h2 className="tc-similar-title">Kategorideki Benzer Ürünler</h2>
                 <div className="tc-similar-scroll-container">
-                    {similarProducts.map(item => (
-                        <div key={item.id} className="tc-similar-card-wrapper">
-                            <ProductCard
-                                item={item}
-                                isFav={favorites.some((f) => f.id === item.id)}
-                                onFav={onFav}
-                                onClick={() => {
-                                    window.scrollTo({ top: 0, behavior: 'smooth' });
-                                    openProduct(item);
-                                }}
-                                userRating={ratings[item.id]}
-                            />
-                        </div>
-                    ))}
+                    {similarProducts.length > 0 ? (
+                        similarProducts.map(item => (
+                            <div key={item.id} className="tc-similar-card-wrapper">
+                                <ProductCard
+                                    item={item}
+                                    isFav={false}
+                                    onFav={onFav}
+                                    onClick={() => {
+                                        window.scrollTo({ top: 0, behavior: 'smooth' });
+                                        openProduct(item);
+                                    }}
+                                    userRating={ratings[item.id]}
+                                />
+                            </div>
+                        ))
+                    ) : (
+                        <p style={{ color: '#64748b' }}>Bu kategoride başka ürün bulunamadı.</p>
+                    )}
                 </div>
             </div>
 
-            {/* CHATBOT FAB (Yüzen Buton) */}
+            {/* CHATBOT FAB & MODAL */}
             <button className={`tc-chatbot-fab ${isChatOpen ? 'hidden' : ''}`} onClick={() => setIsChatOpen(true)}>
                 <Bot size={28} />
             </button>
 
-            {/* MODAL PENCERESİ */}
             <div className={`tc-chatbot-modal ${isChatOpen ? 'open' : ''}`}>
                 <div className="tc-chatbot-header">
                     <div className="tc-chatbot-header-left">
@@ -464,9 +540,6 @@ function ProductPage({ product, isFav, onFav, onClose, userRating, onRate, allPr
                     </button>
                 </form>
             </div>
-
         </div>
     );
 }
-
-export default ProductPage;

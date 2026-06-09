@@ -191,79 +191,165 @@
     margin-top: 2px;
 }
 
-/* ── 4. KULLANICI PROFİLİ ── */
+/* ── 4. YENİ KULLANICI PROFİLİ (SaaS STİLİ) ── */
+.vivid-user-profile-wrapper {
+    position: relative;
+}
+
 .vivid-user-profile {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 12px;
     background: #ffffff;
     border: 1px solid rgba(15, 23, 42, 0.08);
     padding: 6px 16px 6px 6px;
-    border-radius: 100px;
+    border-radius: 50px;
     cursor: pointer;
-    transition: all 0.2s ease;
-    box-shadow: 0 1px 2px rgba(15, 23, 42, 0.03);
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 2px 6px rgba(15, 23, 42, 0.03);
 }
 
 .vivid-user-profile:hover {
-    border-color: rgba(15, 23, 42, 0.15);
+    border-color: rgba(124, 58, 237, 0.3);
     background: #f8fafc;
-    box-shadow: 0 4px 12px rgba(15, 23, 42, 0.05);
+    box-shadow: 0 6px 16px rgba(124, 58, 237, 0.08);
+    transform: translateY(-1px);
+}
+
+.user-avatar-container {
+    position: relative;
 }
 
 .user-avatar-circle {
-    background: linear-gradient(135deg, #8b5cf6 0%, #ec4899 100%);
+    background: linear-gradient(135deg, #7c3aed 0%, #ec4899 100%);
     color: #fff;
-    width: 34px;
-    height: 34px;
+    width: 38px;
+    height: 38px;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
     font-weight: 700;
-    font-size: 14px;
-    box-shadow: inset 0 2px 4px rgba(255, 255, 255, 0.3);
+    font-size: 16px;
+    box-shadow: 0 4px 10px rgba(124, 58, 237, 0.2);
+}
+
+.user-avatar-circle.large {
+    width: 48px;
+    height: 48px;
+    font-size: 20px;
+}
+
+.online-indicator {
+    position: absolute;
+    bottom: -2px;
+    right: -2px;
+    width: 12px;
+    height: 12px;
+    background-color: #10b981;
+    border: 2px solid #ffffff;
+    border-radius: 50%;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.user-info-stack {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
 }
 
 .user-name-display {
     font-size: 14px;
+    font-weight: 700;
+    color: #0f172a;
+    line-height: 1.2;
+}
+
+.user-role-display {
+    font-size: 11px;
     font-weight: 600;
-    color: #1e293b;
+    color: #7c3aed;
+    margin-top: 2px;
+    letter-spacing: 0.3px;
 }
 
 .profile-chevron {
     color: #94a3b8;
-    transition: transform 0.2s;
+    margin-left: 4px;
+    transition: transform 0.3s ease;
+}
+
+.vivid-user-profile:hover .profile-chevron {
+    color: #7c3aed;
 }
 
 .profile-chevron.open {
     transform: rotate(180deg);
 }
 
-.vivid-user-profile-wrapper {
-    position: relative;
-}
-
+/* YENİ AÇILIR MENÜ TASARIMI */
 .profile-dropdown-menu {
     position: absolute;
-    top: calc(100% + 12px);
+    top: calc(100% + 14px);
     right: 0;
-    background: #ffffff;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(20px);
     border: 1px solid rgba(15, 23, 42, 0.08);
-    border-radius: 12px;
-    box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
-    width: 220px;
-    padding: 8px;
+    border-radius: 16px;
+    box-shadow: 0 20px 40px rgba(15, 23, 42, 0.1);
+    width: 260px;
     z-index: 100;
+    overflow: hidden;
+    animation: slideDownFade 0.2s ease-out;
 }
 
-.dropdown-header {
+@keyframes slideDownFade {
+    from {
+        opacity: 0;
+        transform: translateY(-10px) scale(0.98);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.dropdown-user-header {
+    padding: 20px 16px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    background: #f8fafc;
+}
+
+.dropdown-user-details {
+    display: flex;
+    flex-direction: column;
+}
+
+.d-name {
+    font-size: 16px;
+    font-weight: 800;
+    color: #0f172a;
+}
+
+.d-role {
     font-size: 12px;
-    font-weight: 700;
     color: #64748b;
-    text-transform: uppercase;
-    padding: 10px 12px;
-    letter-spacing: 0.5px;
+    font-weight: 500;
+    margin-top: 2px;
+}
+
+.dropdown-menu-list {
+    padding: 8px;
+}
+
+.dropdown-divider-thick {
+    height: 1px;
+    background: rgba(15, 23, 42, 0.06);
+    width: 100%;
 }
 
 .dropdown-item {
@@ -273,34 +359,33 @@
     gap: 12px;
     background: transparent;
     border: none;
-    padding: 12px;
+    padding: 12px 16px;
     font-size: 14px;
     font-weight: 600;
     color: #334155;
     cursor: pointer;
-    border-radius: 8px;
-    text-align: left;
-    transition: all 0.15s;
+    border-radius: 10px;
+    transition: all 0.2s ease;
 }
 
 .dropdown-item:hover {
     background: #f1f5f9;
     color: #0f172a;
-}
-
-.dropdown-divider {
-    height: 1px;
-    background: rgba(15, 23, 42, 0.06);
-    margin: 6px 0;
+    transform: translateX(4px);
 }
 
 .exit-item {
     color: #ef4444;
+    margin: 8px;
+    width: calc(100% - 16px);
+    justify-content: center;
+    background: #fef2f2;
 }
 
 .exit-item:hover {
-    background: #fef2f2;
+    background: #fee2e2;
     color: #dc2626;
+    transform: none;
 }
 
 /* ── 5. HERO BÖLÜMÜ ── */

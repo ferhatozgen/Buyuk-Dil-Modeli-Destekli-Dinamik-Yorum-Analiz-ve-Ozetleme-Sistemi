@@ -2,17 +2,17 @@ import React from 'react';
 import { Heart, Star } from 'lucide-react';
 import './ProductCard.css';
 
-// ── PLATFORM GERÇEK MARKA RENK ALGORTİMASI ──
+// ── PLATFORM (MARKA) GERÇEK RENK ALGORTİMASI ──
 export const getPlatformColor = (platName) => {
     if (!platName) return '#8b5cf6'; // Default VividAI Moru
     const str = platName.toLowerCase().replace(/\s+/g, '');
 
     // Gerçek Marka Renk Kodları (Brand Colors)
-    if (str.includes('trendyolgo')) return '#0cc167'; // Trendyol Turuncusu
+    if (str.includes('trendyolgo')) return '#0cc167'; // Trendyol Go Yeşili
     if (str.includes('trendyol')) return '#F27A1A';   // Trendyol Turuncusu
     if (str.includes('yemeksepeti')) return '#EA004B';// Yemeksepeti Pembesi
-    if (str.includes('google')) return '#4285F4';    // Google Yeşili
-    if (str.includes('airbnb')) return '#FF5A5F';     // Airbnb Rausch (Kırmızı/Mercan)
+    if (str.includes('maps')) return '#4285F4';    // Google Yeşili/Mavisi
+    if (str.includes('airbnb')) return '#FF5A5F';     // Airbnb Rausch
     if (str.includes('hepsiburada')) return '#FF6000';// Hepsiburada Orijinal Turuncu
     if (str.includes('steam')) return '#2A475E';      // Steam Laciverti
     if (str.includes('etstur')) return '#009FDF';     // Etstur Orijinal Turkuaz
@@ -22,6 +22,7 @@ export const getPlatformColor = (platName) => {
 };
 
 function ProductCard({ item, isFav, onFav, onClick, userRating }) {
+    // Rengi artık PLATFORMDAN (Trendyol vb.) alıyoruz!
     const platColor = getPlatformColor(item.plat);
 
     return (
@@ -55,11 +56,12 @@ function ProductCard({ item, isFav, onFav, onClick, userRating }) {
             </div>
 
             <div className="p-body">
+                {/* Platform adını platformun kendi marka rengiyle yazdırıyoruz */}
                 <div className="p-plat" style={{ color: platColor }}>{item.plat}</div>
                 <h4 className="p-name" title={item.name}>{item.name}</h4>
 
                 <div className="p-footer">
-                    {/* Kategori için dinamik renkli şık badge */}
+                    {/* Backend'den gelen kategori adını, uyumlu olması için marka renginde basıyoruz */}
                     <span
                         className="p-cat"
                         style={{ backgroundColor: `${platColor}15`, color: platColor, border: `1px solid ${platColor}30` }}
