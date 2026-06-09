@@ -81,7 +81,7 @@ export default function ProductPage({ product, onFav, onClose, userRating, onRat
         }
     }, [product?.id]);
 
-    // ── GÜNCELLENEN FAVORİ KAYDETME FONKSİYONU ──
+    // ── GÜNCELLENEN FAVORİ KAYDETME FONKSİYONU (C# YANIT UYUMLU) ──
     const handleToggleSave = async () => {
         try {
             const token = localStorage.getItem('token');
@@ -90,7 +90,8 @@ export default function ProductPage({ product, onFav, onClose, userRating, onRat
             });
 
             if (response.status === 200) {
-                const newSaveStatus = response.data.isSaved;
+                // Backend'in döndürdüğü gerçek durumu alıyoruz
+                const newSaveStatus = response.data.isSaved !== undefined ? response.data.isSaved : response.data.IsSaved;
 
                 // 1. Ürün detay sayfasındaki kalbi anında güncelle
                 setProductDetail(prev => ({ ...prev, isFavorited: newSaveStatus }));

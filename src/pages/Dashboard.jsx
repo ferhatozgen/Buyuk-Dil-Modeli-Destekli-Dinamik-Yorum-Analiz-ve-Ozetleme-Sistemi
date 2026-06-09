@@ -204,8 +204,9 @@ export default function Dashboard() {
         return () => clearTimeout(delayDebounceFn);
     }, [fetchProducts]);
 
-    // ── GÜNCELLENMİŞ VE ÇAKISMAYI ÖNLEYEN FAVORİ FONKSİYONU ──
+    // ── GÜNCELLENMİŞ FAVORİ FONKSİYONU (BACKEND SENKRONİZASYONLU) ──
     const toggleFav = useCallback(async (item, skipApi = false) => {
+        // 1. Kullanıcıyı bekletmemek için kalbi anında değiştir (Optimistic Update)
         setFavorites((prev) => {
             const exists = prev.some((f) => f.id === item.id);
             const next = exists ? prev.filter((f) => f.id !== item.id) : [...prev, item];
@@ -213,21 +214,41 @@ export default function Dashboard() {
             return next;
         });
 
-        // Eğer istek ProductPage'den geldiyse (skipApi true ise) backend'e tekrar istek atma!
+        // 2. Eğer istek ProductPage'den gelmediyse backend'e git
         if (!skipApi) {
             try {
                 const token = localStorage.getItem('token');
                 if (token) {
-                    await api.post(`/Product/${item.id}/toggle-save`, {}, {
+                    const response = await api.post(`/Product/${item.id}/toggle-save`, {}, {
                         headers: { 'Authorization': `Bearer ${token}` }
                     });
+
+                    // 3. Backend'den dönen GÜVENİLİR sonucu al 
+                    // (C# varsayılan olarak json ismini camelCase yani isSaved yapar)
+                    const actualStatus = response.data.isSaved !== undefined ? response.data.isSaved : response.data.IsSaved;
+
+                    // 4. Backend ile Frontend'i kesin olarak eşleştir
+                    if (actualStatus !== undefined) {
+                        setFavorites((prev) => {
+                            const exists = prev.some((f) => f.id === item.id);
+                            let next = [...prev];
+
+                            if (actualStatus && !exists) {
+                                next.push(item); // Backend eklendi dediyse ama frontend'de yoksa ekle
+                            } else if (!actualStatus && exists) {
+                                next = next.filter((f) => f.id !== item.id); // Backend silindi dediyse çıkar
+                            }
+
+                            dbSet(STORAGE_KEYS.favorites, next);
+                            return next;
+                        });
+                    }
                 }
             } catch (error) {
                 console.error("Favori durumu backend'e iletilemedi:", error);
             }
         }
     }, []);
-
     const handleRate = useCallback((productId, score) => {
         setRatings((prev) => {
             const next = { ...prev, [productId]: score };
