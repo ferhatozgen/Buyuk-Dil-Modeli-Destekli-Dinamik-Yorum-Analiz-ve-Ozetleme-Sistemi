@@ -1,6 +1,3 @@
-// In-memory storage (localStorage yerine - Artifacts ortamıyla uyumlu)
-const memStore = {};
-
 export const STORAGE_KEYS = {
     ratings: 'vividai:ratings',
     favorites: 'vividai:favorites',
@@ -8,16 +5,22 @@ export const STORAGE_KEYS = {
     searches: 'vividai:searches',
 };
 
+// ── GERÇEK TARAYICI LOCALSTORAGE ENTEGRASYONU ──
 export function dbGet(key) {
-    const val = memStore[key];
-    if (val === undefined) return null;
     try {
+        const val = localStorage.getItem(key);
+        if (val === null || val === undefined) return null;
         return JSON.parse(val);
-    } catch {
+    } catch (error) {
+        console.error("Storage verisi okunurken hata oluştu:", error);
         return null;
     }
 }
 
 export function dbSet(key, value) {
-    memStore[key] = JSON.stringify(value);
+    try {
+        localStorage.setItem(key, JSON.stringify(value));
+    } catch (error) {
+        console.error("Storage verisi yazılırken hata oluştu:", error);
+    }
 }
