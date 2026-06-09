@@ -5,6 +5,7 @@ from datetime import datetime
 from uuid import uuid4
 from typing import Tuple, List, Dict
 from functions.utils import kategori_grupla, ciceksepeti_kategori_hibrit
+from functions.utils import upload_to_cloudinary
 
 
 class BaseTransformer:
@@ -31,27 +32,13 @@ class BaseTransformer:
             "orijinal_metin") or ""
 
     def process(self) -> tuple[dict, list[dict]]:
-        urun_paket = {
-            "id": self.product_uuid,
-            "platform": self.platform_name,
-            "platform_id": None,
-            "product_name": self.raw_json.get("baslik"),
-            "image_url": self.raw_json.get("gorsel_url"),
-            "category": self.get_category(),
-            "original_url": None,
-            "url_hash": None,
-            "status": "active",
-            "click_count": 0,
-            "avg_orj_score": self.get_avg_orj_score(),
-            "avg_model_score": None,
-            "guncel_ozet": None,
-            "created_at": datetime.now(),
-            "last_updated_at": datetime.now()
-        }
-
+        gecerli_puanlar =[]
         review_packets = []
         for raw_review in self.ham_yorumlar:
             current_rating = self.get_individual_rating(raw_review)
+            if current_rating is not None:
+                gecerli_puanlar.append(float(current_rating))
+
             review_packets.append({
                 "product_id": self.product_uuid,
                 "original_rating": current_rating,
@@ -63,6 +50,32 @@ class BaseTransformer:
                 "created_at": datetime.now()
             })
 
+        celiski_score=0.00
+        if len(gecerli_puanlar) >= 2:
+            ort = sum(gecerli_puanlar) / len(gecerli_puanlar)
+            varyans = sum((x - ort) ** 2 for x in gecerli_puanlar) / len(gecerli_puanlar)
+            celiski_score=round(varyans / 4.0, 2)   #burada 0-1 arasına normalize etmek için 4 'e böldük.(max variance)
+
+        kalici_gorsel_url = upload_to_cloudinary(self.raw_json.get("gorsel_url"))
+
+        urun_paket = {
+            "id": self.product_uuid,
+            "platform": self.platform_name,
+            "platform_id": None,
+            "product_name": self.raw_json.get("baslik"),
+            "image_url": kalici_gorsel_url, # 🌟 YENİ KALICI LİNKİ BURAYA VERDİK
+            "category": self.get_category(),
+            "original_url": None,
+            "url_hash": None,
+            "status": "active",
+            "click_count": 0,
+            "avg_orj_score": self.get_avg_orj_score(),
+            "avg_model_score": None,
+            "celiski_score": celiski_score,
+            "guncel_ozet": None,
+            "created_at": datetime.now(),
+            "last_updated_at": datetime.now()
+        }
         return urun_paket, review_packets
 
 

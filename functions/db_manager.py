@@ -54,12 +54,13 @@ class DatabaseManager:
                         product_query = """
                         INSERT INTO products (
                             id, platform, platform_id, product_name, image_url, category,
-                            original_url, url_hash, avg_orj_score, avg_model_score, status, last_updated_at
-                        ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+                            original_url, url_hash, avg_orj_score, avg_model_score,celiski_score, status, last_updated_at
+                        ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
                         ON CONFLICT (url_hash) DO UPDATE SET         
                             avg_orj_score = EXCLUDED.avg_orj_score,
                             avg_model_score = EXCLUDED.avg_model_score,
                             category = EXCLUDED.category, -- Kategori değişmişse günceller
+                            celiski_score = EXCLUDED.celiski_score,
                             last_updated_at = CURRENT_TIMESTAMP,
                             status = 'active'
                         RETURNING id; 
@@ -69,7 +70,7 @@ class DatabaseManager:
                             urun_paketi['id'], urun_paketi['platform'], urun_paketi['platform_id'],
                             urun_paketi['product_name'], urun_paketi['image_url'], urun_paketi['category'],
                             urun_paketi['original_url'], urun_paketi['url_hash'],
-                            urun_paketi['avg_orj_score'],urun_paketi['avg_model_score'], urun_paketi['status'],
+                            urun_paketi['avg_orj_score'],urun_paketi['avg_model_score'], urun_paketi["celiski_score"], urun_paketi['status'],
                             urun_paketi['last_updated_at']
                         ))
 
@@ -87,23 +88,36 @@ class DatabaseManager:
                                 product_id, original_rating, rating_int, predicted_score, raw_text, clean_text, metadata
                             ) VALUES %s
                         """
+                        seen_reviews = set()
+                        review_values = []
 
-                        review_values = [
-                            (
-                                db_actual_id,  # Transformer'dan gelen değil, DB'den aldığımız ID'yi kullanıyoruz!
-                                y['original_rating'],
-                                y["rating_int"],
-                                y['predicted_score'],
-                                y['raw_text'],
-                                y['clean_text'],
-                                Json(y['metadata'])
-                            ) for y in yorum_paketleri
-                        ]
+                        for y in yorum_paketleri:
+                            ham_metin = y['raw_text'].strip() if y['raw_text'] else ""
+                            puan = y['original_rating']
 
-                        execute_values(cur, review_query, review_values)
+                            # Metin ve puan kombinasyonundan benzersiz bir anahtar (Tuple) oluşturuyoruz
+                            review_key = (ham_metin, puan)
+
+                            # Eğer bu yorumu o anki paket içinde ilk defa görüyorsak ve metin boş değilse listeye ekle
+                            if review_key not in seen_reviews and ham_metin != "":
+                                seen_reviews.add(review_key)
+                                review_values.append((
+                                    db_actual_id,
+                                    puan,
+                                    y["rating_int"],
+                                    y['predicted_score'],
+                                    y['raw_text'],
+                                    y['clean_text'],
+                                    Json(y['metadata'])
+                                ))
+
+                        # Sadece tekil olan temiz listeyi veritabanına tek kalemde fırlatıyoruz
+                        if review_values:
+                            execute_values(cur, review_query, review_values)
 
                         conn.commit()
                         print(f"--- [DB BAŞARILI] --- {urun_paketi['product_name']} kaydedildi.")
+                        return db_actual_id
                 except Exception as inner_e:
                     conn.rollback()
                     raise inner_e
@@ -143,3 +157,43 @@ class DatabaseManager:
         except Exception as e:
             print(f"Sorgu çalıştırma hatası: {e}")
             raise e
+
+    def get_unscored_data_by_produc_id(self, product_id):
+        try:
+            with self.get_connection() as conn:
+                with conn.cursor() as cur:
+                    query = "Select id, clean_text FROM reviews WHERE product_id = %s"
+                    cur.execute(query, (product_id,))
+                    rows = cur.fetchall()
+
+                    yorum_paketleri = []
+                    for row in rows:
+                        yorum_paketleri.append({
+                            "db_review_id": row[0],
+                            "clean_text": row[1]
+                        })
+
+                    return yorum_paketleri
+        except Exception as e:
+            print(f"Ham yorumlar çekilirken hata: {e}")
+            return []
+
+    def update_scores(self, product_id, avg_model_score, yorum_paketleri):
+        try:
+            with self.get_connection() as conn:
+                with conn.cursor() as cur:
+                    if avg_model_score is not None:
+                        cur.execute(
+                            "UPDATE products SET avg_model_score = %s WHERE id = %s",
+                            (avg_model_score, product_id)
+                        )
+
+                    update_query = "UPDATE reviews SET predicted_score = %s WHERE id = %s"
+                    review_data = [(y.get('predicted_score'), y.get('db_review_id')) for y in yorum_paketleri if y.get('predicted_score') is not None]
+
+                    from psycopg2.extras import execute_batch
+                    execute_batch(cur, update_query, review_data)
+
+                    conn.commit()
+        except Exception as e:
+            raise Exception(f"Puanlar güncellenirken hata: {e}")

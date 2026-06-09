@@ -11,7 +11,7 @@ import base64
 from functions.logger import setup_logger
 import time
 import random
-
+from functions.utils import upload_to_cloudinary
 logger = setup_logger()
 
 # Projenin kök dizinini bulur ve dicts klasörünü sabitleriz.
@@ -125,7 +125,9 @@ def get_og_image(url):
         og_img = soup.find('meta', property='og:image') or soup.find('meta', attrs={'name': 'og:image'})
 
         if og_img and og_img.get('content'):
-            return og_img['content']
+            orijinal_link = og_img['content']
+            # Buluta yükle ve kalıcı linki dön
+            return upload_to_cloudinary(orijinal_link)
 
         return "Görsel Bulunamadı"
     except Exception as e:
@@ -1377,10 +1379,15 @@ def google_maps_veri_cek(mekan_linki, max_kaydirma) -> str:
                     }
                     return "Görsel Bulunamadı";
                 }''')
+
                 if gorsel_url != "Görsel Bulunamadı":
                     # Thumbnail boyutunu büyüt
                     gorsel_url = re.sub(r'=w\d+-h\d+.*', '=w800-h800-k-no', gorsel_url)
                     logger.info(f"🖼️ Mekan Görseli Çekildi: {gorsel_url}")
+
+                    # 🌟 İŞTE YENİ SATIR: Resmi buluta yüklüyoruz!
+                    gorsel_url = upload_to_cloudinary(gorsel_url)
+                    logger.info(f"☁️ Cloudinary Kalıcı URL: {gorsel_url}")
             except Exception as e:
                 logger.warning(f"⚠️ Görsel çekilemedi: {e}")
 

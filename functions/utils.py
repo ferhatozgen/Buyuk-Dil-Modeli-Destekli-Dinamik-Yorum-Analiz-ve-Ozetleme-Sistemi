@@ -4,9 +4,41 @@ import urllib.parse
 import hashlib
 import re
 import logging
+import json
+from gradio_client import Client
+from config import URUN_GRUP_SEMALARI
+import cloudinary.uploader
+import os
+import cloudinary
+import cloudinary.uploader
+from dotenv import load_dotenv
 
 logger = logging.getLogger(__name__)
 
+# .env dosyasını yükle
+load_dotenv()
+
+# Bilgileri .env'den güvenli bir şekilde çek
+cloudinary.config(
+    cloud_name=os.getenv("CLOUDINARY_CLOUD_NAME"),
+    api_key=os.getenv("CLOUDINARY_API_KEY"),
+    api_secret=os.getenv("CLOUDINARY_API_SECRET"),
+    secure=True
+)
+
+def upload_to_cloudinary(image_url: str) -> str:
+    """Dışarıdan gelen resim linkini Cloudinary'ye yükler ve kalıcı linki döner."""
+    if not image_url or image_url == "Görsel Bulunamadı":
+        return "Görsel Bulunamadı"
+
+    try:
+        # Resmi URL üzerinden direkt Cloudinary sunucularına çekiyoruz
+        response = cloudinary.uploader.upload(image_url, folder="vividai_products")
+        return response.get("secure_url", image_url)
+    except Exception as e:
+        print(f"⚠️ Cloudinary Yükleme Hatası: {e}")
+        # Yükleme başarısız olursa en azından orijinal URL'yi geri döndür
+        return image_url
 
 def url_cleaning(url: str) -> str:
     if not url:
@@ -164,7 +196,7 @@ def kategori_grupla(ham_liste):
 
 def yorumlara_puan_ver(classifier, yorum_paketleri):
     if not yorum_paketleri:
-        logger.warning("tahmin yapılacak yorum bulunamadı, boş liste döndürülüyor.")
+        logger.warning("tahmin yapılacak yorum bulunamadı, boş liste dönd3ürülüyor.")
         return []
 
     texts = [yorum.get("clean_text", '') for yorum in yorum_paketleri]
@@ -186,4 +218,52 @@ def yorumlara_puan_ver(classifier, yorum_paketleri):
     logger.info(f"Örnek tahmin skorları: {test_scores} (ilk 3 yorum)")
 
     return yorum_paketleri
+
+
+try:
+    print("INFO: Hugging Face bağlantısı kuruluyor (Model uykudaysa uyanması 2-3 dk sürebilir)...")
+    PARCALAYICI_CLIENT = Client(
+        "eroglufurkaan/uzman_parcaliyici",
+        httpx_kwargs={"timeout": 300.0} # 5 dakikalık tolerans
+    )
+except Exception as e:
+    logger.error(f"Gradio Client başlatılamadı: {e}")
+    PARCALAYICI_CLIENT = None
+
+
+def bulut_ayirici_model(yorum_metni: str, urun_grubu: str) -> list:
+    if not yorum_metni or not PARCALAYICI_CLIENT:
+        return []
+
+    # 1. Şemayı Çek
+    if urun_grubu in URUN_GRUP_SEMALARI:
+        gecerli_sema = URUN_GRUP_SEMALARI[urun_grubu]
+    else:
+        logger.warning(f"'{urun_grubu}' şeması config.py içinde bulunamadı. Genel şema devrede.")
+        gecerli_sema = "Kullanım Kalitesi, Kargo ve Teslimat, Fiyat Performans, Genel"
+
+    try:
+        # 2. Çalışan Orijinal Parametre Yapısı
+        response = PARCALAYICI_CLIENT.predict(
+            yorum=yorum_metni,
+            gecerli_kategoriler=gecerli_sema
+        )
+
+        # 3. JSON Markdown Temizliği (Hata almamak için şart)
+        temiz_response = str(response).strip()
+        if temiz_response.startswith("```json"):
+            temiz_response = temiz_response.replace("```json", "").replace("```", "").strip()
+        elif temiz_response.startswith("```"):
+            temiz_response = temiz_response.replace("```", "").strip()
+
+        # 4. JSON'a Dönüştür
+        parcalanmis_veri = json.loads(temiz_response)
+        return parcalanmis_veri
+
+    except json.JSONDecodeError:
+        logger.error(f"Buluttan dönen veri geçerli bir JSON değil. Gelen Yanıt: {str(response)[:100]}")
+        return []
+    except Exception as e:
+        logger.error(f"Bulut model sorgulanırken utils katmanında hata oluştu: {e}")
+        return []
 
