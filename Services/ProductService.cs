@@ -311,6 +311,24 @@ namespace LLM_Destekli_Ozetleme.Services
             }
         }
 
+        public async Task<List<ProductListDto>> GetFavoriteProductsAsync(Guid userId)
+        {
+            var products = await _productRepository.GetFavoriteProductsAsync(userId);
+            
+            // Çekilen ürünleri frontend'in beklediği DTO yapısına eşliyoruz (averageRating hariç tutulmuştur)
+            return products.Select(product => new ProductListDto
+            {
+                Id = product.Id,
+                Name = product.ProductName,
+                Category = product.Category ?? "Diğer",
+                ModelScore = product.AvgModelScore,
+                ClickCount = product.ClickCount ?? 0,
+                ImageUrl = product.ImageUrl,
+                PlatformName = product.Platform,
+                IsFavorited = true // Bu liste zaten favori listesi olduğu için direkt true dönüyoruz
+            }).ToList();
+        }
+
         public async Task<(bool Success, string Message)> RateSummaryAsync(Guid userId, Guid productId, int rating)
         {
             if (rating < 1 || rating > 5)

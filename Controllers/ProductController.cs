@@ -205,7 +205,23 @@ namespace LLM_Destekli_Ozetleme.Controllers
             return Ok(new { message = result.Message, isSaved = result.IsSaved });
         }
 
-        // Parametre olarak body'den SummaryRatingRequestDto nesnesini alıyoruz
+        [Authorize] // 🌟 Sadece giriş yapmış kullanıcılar kendi koleksiyonunu görebilir
+        [HttpGet("my-favorites")]
+        public async Task<IActionResult> GetMyFavorites()
+        {
+            // JWT Token içerisinden isteği atan kullanıcının ID'sini cımbızlıyoruz
+            var userIdClaim = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
+
+            if (string.IsNullOrEmpty(userIdClaim) || !Guid.TryParse(userIdClaim, out Guid userId))
+            {
+                return Unauthorized(new { message = "Kullanıcı kimliği doğrulanamadı. Lütfen tekrar giriş yapın." });
+            }
+
+            // Kullanıcıya özel favori listesini getirip fırlatıyoruz
+            var favoriteProducts = await _productService.GetFavoriteProductsAsync(userId);
+            
+            return Ok(favoriteProducts);
+        }
 
         [Authorize]
         [HttpPost("{id}/rate-summary")]

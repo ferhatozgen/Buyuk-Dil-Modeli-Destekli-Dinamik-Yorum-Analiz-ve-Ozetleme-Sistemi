@@ -10,6 +10,7 @@ namespace LLM_Destekli_Ozetleme.Repositories
         Task<List<Product>> GetProductsAsync(ProductQueryParameters queryParams);
         Task<Product?> GetProductWithDetailsAsync(Guid productId);
         Task<List<Review>> GetReviewsByIdsAsync(List<int> reviewIds);
+        Task<List<Product>> GetFavoriteProductsAsync(Guid userId);
         Task<bool> IsProductFavoritedByUserAsync(Guid productId, Guid userId);
         Task<bool> IncrementClickCountAsync(Guid id);
         Task<UserProductInteraction?> GetUserInteractionAsync(Guid userId, Guid productId);
