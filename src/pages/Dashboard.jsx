@@ -41,6 +41,33 @@ const CATEGORIES = [
     { label: 'Elektronik & Teknoloji', icon: Cpu },
     { label: 'Diğer', icon: MoreHorizontal }
 ];
+// ── EKRANDAKİ İSİMLERİ VERİTABANI FORMATINA ÇEVİREN SÖZLÜK ──
+const DB_CATEGORY_MAP = {
+    'Alışveriş': 'alisveris',
+    'Kırtasiye & Kitap & Hobi': 'kirtasiye_kitap_hobi',
+    'Otel': 'otel',
+    'Günlük Ev': 'gunluk_ev',
+    'Giyim & Ayakkabı': 'giyim_ayakkabi',
+    'Eğitim & Eğlence': 'egitim_eglence',
+    'Sağlık': 'saglik',
+    'Oyun': 'oyun',
+    'Yemek': 'yemek',
+    'Gezilecek Yer': 'gezilecek_yer',
+    'Anne & Bebek & Oyuncak': 'anne_bebek_oyuncak',
+    'Kozmetik & Kişisel Bakım': 'kozmetik_kisisel_bakim',
+    'Hediyelik Eşya': 'hediyelik_esya',
+    'Pet Shop': 'pet_shop',
+    'Süpermarket & Gıda': 'supermarket_gida',
+    'Çiçek': 'cicek',
+    'Yenilebilir Çiçek': 'yenilebilir_cicek',
+    'Hizmet': 'hizmet',
+    'Kurumsal': 'kurumsal',
+    'Spor & Outdoor': 'spor_outdoor',
+    'Aksesuar & Takı': 'aksesuar_taki',
+    'Ev & Yaşam & Mobilya': 'ev_yasam_mobilya',
+    'Elektronik & Teknoloji': 'elektronik_teknoloji',
+    'Diğer': 'diger'
+};
 
 export default function Dashboard() {
     const navigate = useNavigate();
@@ -112,16 +139,20 @@ export default function Dashboard() {
         return 'Diğer';
     };
 
-    // ── GÜNCELLENMİŞ API VERİ ÇEKME & SENKRONİZASYON ──
+    // ── KATEGORİSİ SÖZLÜK İLE EŞLEŞTİRİLMİŞ API FONKSİYONU ──
     const fetchProducts = useCallback(async () => {
         setIsLoadingProducts(true);
         try {
             const params = {
                 PageNumber: 1,
-                PageSize: 100,
+                PageSize: 500, // 500 ürün çekmeye devam ediyoruz
             };
 
-            if (category !== 'Hepsi') params.Category = category;
+            // 🌟 SİHİRLİ DOKUNUŞ BURADA: UI ismini (Giyim & Ayakkabı) -> DB ismine (giyim_ayakkabi) çevir!
+            if (category !== 'Hepsi') {
+                params.Category = DB_CATEGORY_MAP[category] || 'diger';
+            }
+
             if (searchQ.trim() !== '') params.SearchTerm = searchQ.trim();
             if (tab === 'begenilenler') params.SortBy = 'mostLiked';
             else if (tab === 'trendler') params.SortBy = 'mostClicked';
@@ -140,12 +171,11 @@ export default function Dashboard() {
                 img: p.imageUrl || 'https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=400',
                 clickCount: p.clickCount,
                 sum: p.guncelOzet || "VividAI tarafından analiz edilmiştir.",
-                isFavorited: p.isFavorited // Backend'den gelen favori durumu
+                isFavorited: p.isFavorited
             }));
 
             setProducts(mappedProducts);
 
-            // Favorileri LocalStorage ile Backend arasında senkronize et
             setFavorites(prevFavs => {
                 let updatedFavs = [...prevFavs];
                 mappedProducts.forEach(product => {
