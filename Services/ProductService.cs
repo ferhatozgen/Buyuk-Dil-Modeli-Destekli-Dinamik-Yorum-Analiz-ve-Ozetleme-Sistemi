@@ -24,17 +24,25 @@ namespace LLM_Destekli_Ozetleme.Services
 
         public async Task<List<ProductListDto>> GetProductsAsync(ProductQueryParameters queryParams, Guid? userId = null)
         {
+            // 1. Veritabanından (örneğin 500 adet) ürünü tek seferde çekiyoruz (1. Sorgu)
             var products = await _productRepository.GetProductsAsync(queryParams);
+            
+            // 2. RAM tabanlı kontrol için boş bir HashSet oluşturuyoruz
+            HashSet<Guid> favoritedProductIds = new HashSet<Guid>();
+
+            // 3. Kullanıcı giriş yapmışsa, favorilediği TÜM ürün ID'lerini tek seferde RAM'e çekiyoruz (2. Sorgu)
+            if (userId.HasValue)
+            {
+                favoritedProductIds = await _productRepository.GetUserFavoriteProductIdsAsync(userId.Value);
+            }
+
             var productListDtos = new List<ProductListDto>();
 
+            // 4. Döngüye giriyoruz. Artık içeride ASLA await (veritabanı sorgusu) yok!
             foreach (var product in products)
             {
-                bool isFavorited = false;
-
-                if (userId.HasValue)
-                {
-                    isFavorited = await _productRepository.IsProductFavoritedByUserAsync(product.Id, userId.Value);
-                }
+                // HashSet.Contains() metodu O(1) hızında çalışır. 500 ürün için bile milisaniyenin onda biri sürer.
+                bool isFavorited = userId.HasValue && favoritedProductIds.Contains(product.Id);
 
                 productListDtos.Add(new ProductListDto
                 {

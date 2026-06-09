@@ -15,5 +15,6 @@ namespace LLM_Destekli_Ozetleme.Repositories
         Task<bool> IncrementClickCountAsync(Guid id);
         Task<UserProductInteraction?> GetUserInteractionAsync(Guid userId, Guid productId);
         Task<bool> SaveUserInteractionAsync(UserProductInteraction interaction);
+        Task<HashSet<Guid>> GetUserFavoriteProductIdsAsync(Guid userId);
     }
 }

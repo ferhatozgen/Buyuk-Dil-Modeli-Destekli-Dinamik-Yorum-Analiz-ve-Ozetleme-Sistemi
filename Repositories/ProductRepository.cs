@@ -134,5 +134,16 @@ namespace LLM_Destekli_Ozetleme.Repositories
             
             return await _context.SaveChangesAsync() > 0;
         }
+
+        public async Task<HashSet<Guid>> GetUserFavoriteProductIdsAsync(Guid userId)
+        {
+            // Sadece "is_saved = true" olan VE "ProductId"si null olmayan kayıtları çekiyoruz
+            var favoriteIds = await _context.UserProductInteractions
+                .Where(i => i.UserId == userId && i.IsSaved && i.ProductId != null)
+                .Select(i => i.ProductId.Value) // 🌟 Guid? olan değeri .Value ile kesin Guid'e çeviriyoruz
+                .ToListAsync();
+
+            return favoriteIds.ToHashSet();
+        }
     }
 }
