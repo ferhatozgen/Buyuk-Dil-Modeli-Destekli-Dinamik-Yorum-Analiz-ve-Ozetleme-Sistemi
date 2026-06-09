@@ -534,9 +534,17 @@ export default function Dashboard() {
                             <button className="profile-modal-close" onClick={() => setProfileView(null)}>✕</button>
                         </div>
                         <div className="profile-modal-body">
+
+                            {/* ── 1. KOLEKSİYONUM (FAVORİLER) MODALI ── */}
                             {profileView === 'favoriler' && (
                                 <div className="modal-inner-section">
-                                    {favorites.length === 0 ? (
+                                    {isLoadingProducts ? (
+                                        // Veriler backend'den çekilirken görünecek şık progress loader
+                                        <div className="empty-state" style={{ padding: '60px 20px' }}>
+                                            <Loader2 size={40} color="#7c3aed" className="animate-spin" />
+                                            <br /><br />Koleksiyonunuz senkronize ediliyor...
+                                        </div>
+                                    ) : favorites.length === 0 ? (
                                         <div className="empty-state"><Heart size={40} /><br />Henüz koleksiyonunuza ürün eklemediniz.</div>
                                     ) : (
                                         <div className="modal-card-grid card-grid">
@@ -547,9 +555,17 @@ export default function Dashboard() {
                                     )}
                                 </div>
                             )}
+
+                            {/* ── 2. ANALİZ GEÇMİŞİ MODALI ── */}
                             {profileView === 'gecmis' && (
                                 <div className="modal-inner-section">
-                                    {history.length === 0 ? (
+                                    {isLoadingProducts ? (
+                                        // Geçmiş yüklenirken görünecek şık progress loader
+                                        <div className="empty-state" style={{ padding: '60px 20px' }}>
+                                            <Loader2 size={40} color="#7c3aed" className="animate-spin" />
+                                            <br /><br />Analiz geçmişi yükleniyor...
+                                        </div>
+                                    ) : history.length === 0 ? (
                                         <div className="empty-state"><Clock size={40} /><br />Arama geçmişiniz temiz.</div>
                                     ) : (
                                         <div className="modal-card-grid card-grid">
@@ -564,6 +580,7 @@ export default function Dashboard() {
                                     )}
                                 </div>
                             )}
+
                         </div>
                     </div>
                 </div>
