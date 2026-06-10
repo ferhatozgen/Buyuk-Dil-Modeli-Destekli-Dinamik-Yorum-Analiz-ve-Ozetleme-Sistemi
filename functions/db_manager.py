@@ -9,6 +9,9 @@ import os
 load_dotenv()
 
 class DatabaseManager:
+    # Sınıf seviyesinde havuz değişkeni (Uygulama boyunca tek 1 tane olacak)
+    _db_pool = None
+
     def __init__(self):
         self.config = {
             "dbname": os.getenv("DB_NAME"),
@@ -19,75 +22,78 @@ class DatabaseManager:
             "sslmode": "require"
         }
 
-        try:
-            self.db_pool = pool.ThreadedConnectionPool(1, 10, **self.config)
-            print("Veritabanı bağlantı havuzu başarıyla oluşturuldu.")
-        except Exception as e:
-            print(f"Veritabanı bağlantı havuzu oluşturulurken hata: {e}")
-            raise
+        # Eğer havuz daha önce oluşturulmamışsa OLUŞTUR
+        if DatabaseManager._db_pool is None:
+            try:
+                DatabaseManager._db_pool = pool.ThreadedConnectionPool(1, 20, **self.config)
+                print("✅ Veritabanı bağlantı havuzu 1 kez oluşturuldu ve hafızaya alındı.")
+            except Exception as e:
+                print(f"❌ Veritabanı bağlantı havuzu oluşturulurken hata: {e}")
+                raise
 
     @contextmanager
     def get_connection(self):
-        conn = self.db_pool.getconn()
+        # Bağlantıyı sınıf seviyesindeki (_db_pool) havuzdan çek
+        conn = DatabaseManager._db_pool.getconn()
         try:
             yield conn
         finally:
-            self.db_pool.putconn(conn)
+            # Bağlantıyı kapatma, havuza geri bırak!
+            DatabaseManager._db_pool.putconn(conn)
 
-    def close_pool(self):
-        if self.db_pool:
-            self.db_pool.closeall()
-            print("Veritabanı bağlantı havuzu kapatıldı.")
+    @classmethod
+    def close_pool(cls):
+        # Sınıf metoduna çevirdik, sadece sunucu kapanırken çağrılacak
+        if cls._db_pool:
+            cls._db_pool.closeall()
+            print("🛑 Veritabanı bağlantı havuzu tamamen kapatıldı.")
 
     def fetch_data(self, query):
         import pandas as pd
         with self.get_connection() as conn:
             return pd.read_sql(query, conn)
 
+    # 🌟 BURADAN İTİBAREN TÜM METOTLAR İÇERİ ALINDI 🌟
     def save_product_and_reviews(self, urun_paketi, yorum_paketleri):
         try:
             with self.get_connection() as conn:
                 try:
                     with conn.cursor() as cur:
                         # 1. Products Tablosuna Kayıt ve GERÇEK ID'yi Alma
-                        # RETURNING id ekledik, çünkü ürün zaten varsa DB'deki gerçek UUID'yi almamız lazım.
                         product_query = """
-                        INSERT INTO products (
-                            id, platform, platform_id, product_name, image_url, category,
-                            original_url, url_hash, avg_orj_score, avg_model_score,celiski_score, status, last_updated_at
-                        ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
-                        ON CONFLICT (url_hash) DO UPDATE SET         
-                            avg_orj_score = EXCLUDED.avg_orj_score,
-                            avg_model_score = EXCLUDED.avg_model_score,
-                            category = EXCLUDED.category, -- Kategori değişmişse günceller
-                            celiski_score = EXCLUDED.celiski_score,
-                            last_updated_at = CURRENT_TIMESTAMP,
-                            status = 'active'
-                        RETURNING id; 
-                    """
+                            INSERT INTO products (
+                                id, platform, platform_id, product_name, image_url, category,
+                                original_url, url_hash, avg_orj_score, avg_model_score, celiski_score, status, last_updated_at
+                            ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+                            ON CONFLICT (url_hash) DO UPDATE SET         
+                                avg_orj_score = EXCLUDED.avg_orj_score,
+                                avg_model_score = EXCLUDED.avg_model_score,
+                                category = EXCLUDED.category,
+                                celiski_score = EXCLUDED.celiski_score,
+                                last_updated_at = CURRENT_TIMESTAMP,
+                                status = 'active'
+                            RETURNING id; 
+                        """
 
                         cur.execute(product_query, (
                             urun_paketi['id'], urun_paketi['platform'], urun_paketi['platform_id'],
                             urun_paketi['product_name'], urun_paketi['image_url'], urun_paketi['category'],
                             urun_paketi['original_url'], urun_paketi['url_hash'],
-                            urun_paketi['avg_orj_score'],urun_paketi['avg_model_score'], urun_paketi["celiski_score"], urun_paketi['status'],
+                            urun_paketi['avg_orj_score'], urun_paketi['avg_model_score'], urun_paketi["celiski_score"], urun_paketi['status'],
                             urun_paketi['last_updated_at']
                         ))
 
-                        # DB'deki gerçek ID'yi yakalıyoruz (UUID uyuşmazlığını çözer)
                         db_actual_id = cur.fetchone()[0]
 
-                        # 2. Eski Yorumları Temizleme (Opsiyonel ama Tavsiye Edilir)
-                        # Aynı ürünü tekrar çekiyorsak mükerrer yorum olmaması için eskileri siliyoruz.
-                        # (İleride yorum bazlı 'id' üzerinden kontrol de yapabilirsin)
+                        # 2. Eski Yorumları Temizleme
                         cur.execute("DELETE FROM reviews WHERE product_id = %s", (db_actual_id,))
 
                         # 3. Reviews Tablosuna Toplu Kayıt
                         review_query = """
-                            INSERT INTO reviews (
-                                product_id, original_rating, rating_int, predicted_score, raw_text, clean_text, metadata
-                            ) VALUES %s
-                        """
+                                INSERT INTO reviews (
+                                    product_id, original_rating, rating_int, predicted_score, raw_text, clean_text, metadata, reviewed_at
+                                ) VALUES %s
+                            """
                         seen_reviews = set()
                         review_values = []
 
@@ -95,10 +101,8 @@ class DatabaseManager:
                             ham_metin = y['raw_text'].strip() if y['raw_text'] else ""
                             puan = y['original_rating']
 
-                            # Metin ve puan kombinasyonundan benzersiz bir anahtar (Tuple) oluşturuyoruz
                             review_key = (ham_metin, puan)
 
-                            # Eğer bu yorumu o anki paket içinde ilk defa görüyorsak ve metin boş değilse listeye ekle
                             if review_key not in seen_reviews and ham_metin != "":
                                 seen_reviews.add(review_key)
                                 review_values.append((
@@ -108,10 +112,11 @@ class DatabaseManager:
                                     y['predicted_score'],
                                     y['raw_text'],
                                     y['clean_text'],
-                                    Json(y['metadata'])
+                                    Json(y['metadata']),
+                                    y['reviewed_at']
                                 ))
 
-                        # Sadece tekil olan temiz listeyi veritabanına tek kalemde fırlatıyoruz
+                        # Sadece tekil olan temiz listeyi tek kalemde veritabanına fırlatıyoruz
                         if review_values:
                             execute_values(cur, review_query, review_values)
 

@@ -29,10 +29,16 @@ async def lifespan(app: FastAPI):
         print("INFO - [STARTUP] Model başarıyla yüklendi ve FastAPI sunucusu hazır!")
     except Exception as e:
         print(f"[ERROR] Model yüklenirken bir hata oluştu: {e}")
+
     yield
 
     print("[INFO] FastAPI sunucusu kapanıyor. Temizlik işlemleri yapılıyor...")
     ml_models.clear()
+
+    try:
+        DatabaseManager.close_pool()
+    except Exception as e:
+        print(f"[ERROR] Havuz kapatılırken bir sorun oluştu: {e}")
 
 
 app = FastAPI(title="LLM Destekli Yorum Analiz API", lifespan=lifespan)
@@ -40,9 +46,7 @@ app = FastAPI(title="LLM Destekli Yorum Analiz API", lifespan=lifespan)
 
 @app.post("/api/v1/extract")
 def extract_and_save(request: ExtractRequest):
-    db = None
     try:
-
         db = DatabaseManager()
         temiz_url = url_cleaning(request.url)
         url_hash = url_hashing(temiz_url)
@@ -86,15 +90,11 @@ def extract_and_save(request: ExtractRequest):
 
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Kazıma hatası: {str(e)}")
-    finally:
-        if db:
-            db.close_pool()
 
 
 # Aşama 2: Puanlama (Score)
 @app.post("/api/v1/score")
 async def score_reviews(request: ProductIdRequest):
-    db = None
     try:
         db = DatabaseManager()
         yorum_paketleri = db.get_unscored_data_by_produc_id(request.productId)
@@ -123,9 +123,6 @@ async def score_reviews(request: ProductIdRequest):
 
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Puanlama hatası: {str(e)}")
-    finally:
-        if db:
-            db.close_pool()
 
 
 # Aşama 3: Kategorizasyon (Categorize)
@@ -151,7 +148,4 @@ async def summarize_reviews(request: ProductIdRequest):
 
 # Uygulamayı Ayağa Kaldırma
 if __name__ == "__main__":
-    # DİKKAT: Dosya adımız api_runner olduğu için uvicorn'a api_runner:app diyoruz
     uvicorn.run("api_runner:app", host="0.0.0.0", port=8000, reload=True)
-
-
