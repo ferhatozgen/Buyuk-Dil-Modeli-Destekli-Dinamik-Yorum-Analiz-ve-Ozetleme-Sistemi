@@ -12,6 +12,8 @@ import os
 import cloudinary
 import cloudinary.uploader
 from dotenv import load_dotenv
+from datetime import datetime, timedelta
+import dateparser
 
 logger = logging.getLogger(__name__)
 
@@ -271,6 +273,33 @@ def bulut_ayirici_model(yorum_metni: str, urun_grubu: str) -> list:
         logger.error(f"Bulut model sorgulanırken utils katmanında hata oluştu: {e}")
         return []
 
+def parse_review_date(date_str: str) -> datetime:
+    if not date_str:
+        return datetime.now()
+
+    date_str = str(date_str).lower().strip()
+
+    # 1. Göreceli Tarih Kontrolü (Maps vb. platformlar için)
+    match = re.search(r'(\d+)\s*(gün|hafta|ay|yıl|saat|dakika)\s*önce', date_str)
+    if match:
+        deger = int(match.group(1))
+        birim = match.group(2)
+
+        if birim == 'gün': return datetime.now() - timedelta(days=deger)
+        elif birim == 'hafta': return datetime.now() - timedelta(weeks=deger)
+        elif birim == 'ay': return datetime.now() - timedelta(days=deger * 30) # Ortalama 30 gün
+        elif birim == 'yıl': return datetime.now() - timedelta(days=deger * 365)
+        elif birim == 'saat': return datetime.now() - timedelta(hours=deger)
+        elif birim == 'dakika': return datetime.now() - timedelta(minutes=deger)
+
+    # 2. Normal Tarih Kontrolü (Trendyol, Hepsiburada vb.)
+    # dateparser kütüphanesi Türkçe ayları (Mayıs, Ekim vb.) otomatik anlar
+    parsed_date = dateparser.parse(date_str, languages=['tr', 'en'])
+    if parsed_date:
+        return parsed_date
+
+    # Hiçbirine uymazsa anlık zamanı dön
+    return datetime.now()
 
 # farklı olarak scraperdan gelen tüm yorumları o ürün ana grubuna ait aspectlerle eşleştirip batch haline getirip o şekilde gönderir ve tek seferde sonuçları alır.
 def bulut_ayirici_model_batch(yorum_listesi: list[str], urun_grubu: str) -> list:

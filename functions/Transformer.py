@@ -4,8 +4,7 @@ import re
 from datetime import datetime
 from uuid import uuid4
 from typing import Tuple, List, Dict
-from functions.utils import kategori_grupla, ciceksepeti_kategori_hibrit
-from functions.utils import upload_to_cloudinary
+from functions.utils import kategori_grupla, ciceksepeti_kategori_hibrit, upload_to_cloudinary, parse_review_date
 
 
 class BaseTransformer:
@@ -31,6 +30,11 @@ class BaseTransformer:
         return raw_review.get("comment") or raw_review.get("metin") or raw_review.get("text") or raw_review.get(
             "orijinal_metin") or ""
 
+    def get_review_date(self, raw_review):
+        # Eğer alt sınıf ezmezse (override), varsayılan olarak ortak anahtarları dener
+        tarih = raw_review.get("tarih") or raw_review.get("createdAt") or raw_review.get("date") or ""
+        return parse_review_date(tarih)
+
     def process(self) -> tuple[dict, list[dict]]:
         gecerli_puanlar =[]
         review_packets = []
@@ -39,6 +43,7 @@ class BaseTransformer:
             if current_rating is not None:
                 gecerli_puanlar.append(float(current_rating))
 
+            gercek_tarih = self.get_review_date(raw_review)
             review_packets.append({
                 "product_id": self.product_uuid,
                 "original_rating": current_rating,
@@ -47,7 +52,7 @@ class BaseTransformer:
                 "raw_text": self.get_raw_text(raw_review),
                 "clean_text": raw_review.get("temiz_metin"),
                 "metadata": self.get_metadata(raw_review),
-                "created_at": datetime.now()
+                "reviewed_at": gercek_tarih.strftime("%Y-%m-%d %H:%M:%S")
             })
 
         celiski_score=0.00
@@ -63,7 +68,7 @@ class BaseTransformer:
             "platform": self.platform_name,
             "platform_id": None,
             "product_name": self.raw_json.get("baslik"),
-            "image_url": kalici_gorsel_url, # 🌟 YENİ KALICI LİNKİ BURAYA VERDİK
+            "image_url": kalici_gorsel_url,
             "category": self.get_category(),
             "original_url": None,
             "url_hash": None,
@@ -73,6 +78,7 @@ class BaseTransformer:
             "avg_model_score": None,
             "celiski_score": celiski_score,
             "guncel_ozet": None,
+            # 🌟 Ürünlere sisteme kaydedildiği anki tarihi veriyoruz (Mantık hatası düzeltildi)
             "created_at": datetime.now(),
             "last_updated_at": datetime.now()
         }
@@ -109,6 +115,10 @@ class TrendyolTransformer(BaseTransformer):
     def get_raw_text(self, raw_review):
         return raw_review.get("metin") or raw_review.get("comment") or ""
 
+    def get_review_date(self, raw_review):
+        tarih = raw_review.get("commentDateISOtype") or raw_review.get("tarih") or ""
+        return parse_review_date(tarih)
+
 
 class HepsiburadaTransformer(BaseTransformer):
     def __init__(self, raw_json: dict):
@@ -140,6 +150,10 @@ class HepsiburadaTransformer(BaseTransformer):
 
     def get_raw_text(self, raw_review):
         return raw_review.get("review", {}).get("content", "")
+
+    def get_review_date(self, raw_review):
+        tarih = raw_review.get("createdAt") or ""
+        return parse_review_date(tarih)
 
 
 class CiceksepetiTransformer(BaseTransformer):
@@ -175,6 +189,10 @@ class CiceksepetiTransformer(BaseTransformer):
 
     def get_raw_text(self, raw_review):
         return raw_review.get("orijinal_metin") or ""
+
+    def get_review_date(self, raw_review):
+        tarih = raw_review.get("tarih") or ""
+        return parse_review_date(tarih)
 
 
 class EtsturTransformer(BaseTransformer):
@@ -250,6 +268,10 @@ class MapsTransformer(BaseTransformer):
     def get_raw_text(self, raw_review):
         return raw_review.get("orijinal_metin") or ""
 
+    def get_review_date(self, raw_review):
+        tarih = raw_review.get("tarih") or ""
+        return parse_review_date(tarih)
+
 
 class SteamTransformer(BaseTransformer):
     def __init__(self, raw_json: dict):
@@ -279,6 +301,11 @@ class SteamTransformer(BaseTransformer):
 
     def get_raw_text(self, raw_review):
         return raw_review.get("review") or ""
+
+    def get_review_date(self, raw_review):
+        # Steam verisinde timestamp varsa onu alır, yoksa utils.py yardımcı olur
+        tarih = raw_review.get("timestamp_created") or raw_review.get("timestamp_updated") or ""
+        return parse_review_date(str(tarih))
 
 
 class TygoTransformer(BaseTransformer):
@@ -397,6 +424,10 @@ class AirbnbTransformer(BaseTransformer):
 
     def get_raw_text(self, raw_review):
         return raw_review.get("comment") or ""
+
+    def get_review_date(self, raw_review):
+        tarih = raw_review.get("createdAt") or ""
+        return parse_review_date(tarih)
 
 
 TRANSFORMER_REGISTRY = {
