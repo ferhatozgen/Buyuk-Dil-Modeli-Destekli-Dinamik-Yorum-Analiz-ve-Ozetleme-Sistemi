@@ -5,6 +5,7 @@ from datetime import datetime
 from uuid import uuid4
 from typing import Tuple, List, Dict
 from functions.utils import kategori_grupla, ciceksepeti_kategori_hibrit
+from functions.utils import upload_to_cloudinary
 
 
 class BaseTransformer:
@@ -52,15 +53,17 @@ class BaseTransformer:
         celiski_score=0.00
         if len(gecerli_puanlar) >= 2:
             ort = sum(gecerli_puanlar) / len(gecerli_puanlar)
-            varyans = sum((x - ort) ** 2) for x in gecerli_puanlar / len(gecerli_puanlar)
+            varyans = sum((x - ort) ** 2 for x in gecerli_puanlar) / len(gecerli_puanlar)
             celiski_score=round(varyans / 4.0, 2)   #burada 0-1 arasına normalize etmek için 4 'e böldük.(max variance)
+
+        kalici_gorsel_url = upload_to_cloudinary(self.raw_json.get("gorsel_url"))
 
         urun_paket = {
             "id": self.product_uuid,
             "platform": self.platform_name,
             "platform_id": None,
             "product_name": self.raw_json.get("baslik"),
-            "image_url": self.raw_json.get("gorsel_url"),
+            "image_url": kalici_gorsel_url, # 🌟 YENİ KALICI LİNKİ BURAYA VERDİK
             "category": self.get_category(),
             "original_url": None,
             "url_hash": None,
