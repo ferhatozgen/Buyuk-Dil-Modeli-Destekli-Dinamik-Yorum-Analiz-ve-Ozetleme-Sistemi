@@ -222,6 +222,9 @@ def yorumlara_puan_ver(classifier, yorum_paketleri):
     return yorum_paketleri
 
 
+
+
+
 try:
     print("INFO: Hugging Face bağlantısı kuruluyor (Model uykudaysa uyanması 2-3 dk sürebilir)...")
     PARCALAYICI_CLIENT = Client(
@@ -233,6 +236,7 @@ except Exception as e:
     PARCALAYICI_CLIENT = None
 
 
+#tek tek işleme mantığına sahip, tekli analizler için kullanılabilir
 def bulut_ayirici_model(yorum_metni: str, urun_grubu: str) -> list:
     if not yorum_metni or not PARCALAYICI_CLIENT:
         return []
@@ -251,7 +255,7 @@ def bulut_ayirici_model(yorum_metni: str, urun_grubu: str) -> list:
             gecerli_kategoriler=gecerli_sema
         )
 
-        # 3. JSON Markdown Temizliği (Hata almamak için şart)
+        # JSON Markdown Temizliği
         temiz_response = str(response).strip()
         if temiz_response.startswith("```json"):
             temiz_response = temiz_response.replace("```json", "").replace("```", "").strip()
@@ -296,3 +300,49 @@ def parse_review_date(date_str: str) -> datetime:
 
     # Hiçbirine uymazsa anlık zamanı dön
     return datetime.now()
+
+# farklı olarak scraperdan gelen tüm yorumları o ürün ana grubuna ait aspectlerle eşleştirip batch haline getirip o şekilde gönderir ve tek seferde sonuçları alır.
+def bulut_ayirici_model_batch(yorum_listesi: list[str], urun_grubu: str) -> list:
+    if not yorum_listesi or not PARCALAYICI_CLIENT:
+        return []
+
+    if urun_grubu in URUN_GRUP_SEMALARI:
+        secilen_aspect_semasi = URUN_GRUP_SEMALARI[urun_grubu]
+    else:
+        logger.warning(f"'{urun_grubu}' şeması config.py içinde bulunamadı. Genel şema kullanılıyor.")
+        secilen_aspect_semasi = "Kullanım Kalitesi, Kargo ve Teslimat, Fiyat Performans, Genel"
+
+    try:
+        # 2. [KRİTİK KISIM]: Her bir yorumu kendi ait olduğu aspect şemasıyla paketliyoruz
+        # Böylece bulut modeli hangi yoruma hangi alt kategorileri uygulayacağını kesin olarak bilecek.
+        gonderilecek_paket = []
+        for yorum in yorum_listesi:
+            gonderilecek_paket.append({
+                "yorum": yorum,
+                "sema": secilen_aspect_semasi
+            })
+
+        # Bulutun taşıyabilmesi için listeyi JSON string'ine çeviriyoruz
+        gonderilecek_paket_str = json.dumps(gonderilecek_paket, ensure_ascii=False)
+
+
+        # 3. Buluta TEK BİR network isteği atıyoruz tekli işlemdeki gibi yorum sayısı kadar git gel yapmamıza gerek olmuyor
+        response = PARCALAYICI_CLIENT.predict(
+            gonderilecek_paket_str,  # Tek bir input olarak paketlenmiş yapıyı gönderiyoruz
+            fn_index=0
+        )
+
+        # 4. JSON Markdown Temizliği
+        temiz_response = str(response).strip()
+        if temiz_response.startswith("```"):
+            temiz_response = temiz_response.replace("```json", "", 1)
+            temiz_response = temiz_response.replace("```", "")
+            temiz_response = temiz_response.strip()
+
+        # 5. Buluttan dönen toplu sonuçları çözme
+        toplu_analiz_sonucu = json.loads(temiz_response)
+        return toplu_analiz_sonucu
+
+    except Exception as e:
+        logger.error(f"Toplu bulut modeli sorgulanırken hata oldu: {e}")
+        return []
