@@ -36,5 +36,8 @@ namespace LLM_Destekli_Ozetleme.Models.Entities
 
         [Column("is_summarized")]
         public bool? IsSummarized { get; set; }
+
+        [Column("reviewed_at")]                             
+        public DateTime ReviewedAt { get; set; } = DateTime.UtcNow;
     }
 }

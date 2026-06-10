@@ -17,17 +17,21 @@ namespace LLM_Destekli_Ozetleme.Repositories
         public async Task<Product?> GetByUrlOrHashAsync(string url, string hash)
         {
             return await _context.Products
+                .AsNoTracking()
                 .FirstOrDefaultAsync(p => p.UrlHash == hash || p.OriginalUrl == url);
         }
 
         public async Task<Product?> GetByIdAsync(Guid id)
         {
-            return await _context.Products.FindAsync(id);
+            // 🌟 FindAsync yerine AsNoTracking destekleyen bu yapı okuma hızını artırır
+            return await _context.Products
+                .AsNoTracking()
+                .FirstOrDefaultAsync(p => p.Id == id);
         }
 
         public async Task<List<Product>> GetProductsAsync(ProductQueryParameters queryParams)
         {
-            var query = _context.Products.AsQueryable();
+            var query = _context.Products.AsNoTracking().AsQueryable();
 
             // Kategori Filtresi
             if (!string.IsNullOrWhiteSpace(queryParams.Category))
@@ -67,6 +71,7 @@ namespace LLM_Destekli_Ozetleme.Repositories
         public async Task<Product?> GetProductWithDetailsAsync(Guid productId)
         {
             return await _context.Products
+                .AsNoTracking()
                 .Include(p => p.CategoryStats)
                 .Include(p => p.SummaryHistories.OrderByDescending(sh => sh.Id).Take(1))
                 .FirstOrDefaultAsync(p => p.Id == productId);
@@ -75,37 +80,42 @@ namespace LLM_Destekli_Ozetleme.Repositories
         public async Task<List<Review>> GetReviewsByIdsAsync(List<int> reviewIds)
         {
             return await _context.Reviews
+                .AsNoTracking()
                 .Where(r => reviewIds.Contains(r.Id))
                 .ToListAsync();
         }
 
         public async Task<List<Product>> GetFavoriteProductsAsync(Guid userId)
         {
-            // 1. Kullanıcının favorilediği ürünlerin ID'lerini alt tablodan çekiyoruz
+            // 1. Önce sadece kaydedilmiş ürünlerin ID listesini bellek dostu bir şekilde çekiyoruz
             var favoriteProductIds = await _context.UserProductInteractions
-                .Where(i => i.UserId == userId && i.IsSaved)
-                .Select(i => i.ProductId)
+                .AsNoTracking()
+                .Where(i => i.UserId == userId && i.IsSaved && i.ProductId != null)
+                .Select(i => i.ProductId!.Value)
                 .ToListAsync();
 
-            // 2. Bu ID'lere sahip ana ürünleri products tablosundan listeliyoruz
+            // 2. Ardından tek sorguda Products tablosundan AsNoTracking kullanarak verileri uçuruyoruz
             return await _context.Products
+                .AsNoTracking()
                 .Where(p => favoriteProductIds.Contains(p.Id))
                 .ToListAsync();
         }
 
         public async Task<bool> IsProductFavoritedByUserAsync(Guid productId, Guid userId)
         {
-            var interaction = await _context.UserProductInteractions
-                .FirstOrDefaultAsync(i => i.ProductId == productId && i.UserId == userId);
-            
-            return interaction?.IsSaved ?? false;
+            // 🌟 OPTİMİZASYON: Tüm satırı çekmek yerine .AnyAsync() kullanarak 
+            // DB'den sadece true/false cevabı bekliyoruz. Muazzam hafıza tasarrufu sağlar.
+            return await _context.UserProductInteractions
+                .AsNoTracking()
+                .AnyAsync(i => i.ProductId == productId && i.UserId == userId && i.IsSaved);
         }
+
         public async Task<bool> IncrementClickCountAsync(Guid id)
         {
-            var product = await _context.Products.FindAsync(id);
+            // Tıklama sayısını artırırken veriyi güncelleyeceğimiz için burada AsNoTracking KULLANILMAZ (Doğru yapmışsın)
+            var product = await _context.Products.FirstOrDefaultAsync(p => p.Id == id);
             if (product == null) return false;
 
-            // Eğer click_count null ise 1 yapıyoruz, değer varsa 1 arttırıyoruz.
             product.ClickCount = (product.ClickCount ?? 0) + 1;
             product.LastUpdatedAt = DateTime.UtcNow;
 
@@ -114,7 +124,6 @@ namespace LLM_Destekli_Ozetleme.Repositories
 
         public async Task<UserProductInteraction?> GetUserInteractionAsync(Guid userId, Guid productId)
         {
-            // Kullanıcının bu ürünle daha önce bir kaydı var mı diye bakıyoruz
             return await _context.UserProductInteractions
                 .FirstOrDefaultAsync(x => x.UserId == userId && x.ProductId == productId);
         }
@@ -123,12 +132,10 @@ namespace LLM_Destekli_Ozetleme.Repositories
         {
             if (interaction.Id == 0) 
             {
-                // Eğer Id 0 ise bu yepyeni bir kayıttır (Insert)
                 await _context.UserProductInteractions.AddAsync(interaction);
             }
             else
             {
-                // Kayıt varsa durumu güncelleniyordur (Update)
                 _context.UserProductInteractions.Update(interaction);
             }
             
@@ -137,10 +144,10 @@ namespace LLM_Destekli_Ozetleme.Repositories
 
         public async Task<HashSet<Guid>> GetUserFavoriteProductIdsAsync(Guid userId)
         {
-            // Sadece "is_saved = true" olan VE "ProductId"si null olmayan kayıtları çekiyoruz
             var favoriteIds = await _context.UserProductInteractions
+                .AsNoTracking()
                 .Where(i => i.UserId == userId && i.IsSaved && i.ProductId != null)
-                .Select(i => i.ProductId.Value) // 🌟 Guid? olan değeri .Value ile kesin Guid'e çeviriyoruz
+                .Select(i => i.ProductId.Value) 
                 .ToListAsync();
 
             return favoriteIds.ToHashSet();
