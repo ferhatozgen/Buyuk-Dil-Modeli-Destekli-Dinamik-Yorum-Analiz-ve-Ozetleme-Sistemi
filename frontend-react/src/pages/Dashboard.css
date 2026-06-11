@@ -1,0 +1,1250 @@
+/* ── 1. GENEL AYARLAR (KURUMSAL MİNİMAL SAAS) ── */
+.vivid-main-page {
+    background-color: #fafbfc;
+    color: #0f172a;
+    min-height: 100vh;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    position: relative;
+    letter-spacing: -0.01em;
+    width: 100%;
+    overflow-x: hidden;
+}
+
+/* ── 2. ARKA PLAN NEON VE IZGARA KATMANLARI ── */
+.bg-animation-layer {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+.mesh-glow-light {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(120px);
+    z-index: 0;
+}
+
+.mesh-1 {
+    width: 800px;
+    height: 800px;
+    top: -200px;
+    left: -100px;
+    background: #8b5cf6;
+    opacity: 0.05;
+}
+
+.mesh-2 {
+    width: 600px;
+    height: 600px;
+    bottom: 10%;
+    right: -100px;
+    background: #ec4899;
+    opacity: 0.03;
+}
+
+.bg-grid-dashboard {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0) 60%);
+    -webkit-mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0) 60%);
+}
+
+.bg-grid-dashboard::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, #7c3aed, #db2777, #2563eb, #7c3aed);
+    background-size: 300% 100%;
+    animation: neonGridFlow 12s linear infinite;
+    opacity: 0.15;
+    -webkit-mask-image: linear-gradient(black 1px, transparent 1px), linear-gradient(90deg, black 1px, transparent 1px);
+    mask-image: linear-gradient(black 1px, transparent 1px), linear-gradient(90deg, black 1px, transparent 1px);
+    -webkit-mask-size: 40px 40px;
+    mask-size: 40px 40px;
+}
+
+@keyframes neonGridFlow {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    100% {
+        background-position: 100% 50%;
+    }
+}
+
+/* ── 3. ÜST NAV BAR VE LOGO ── */
+.vivid-top-nav {
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-bottom: 1px solid rgba(15, 23, 42, 0.06);
+    padding: 16px 5%;
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    transition: all 0.3s ease;
+}
+
+.nav-glow-capsule {
+    max-width: 1240px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.logo-wrap {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.premium-logo-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    flex-shrink: 0;
+}
+
+.logo-halo {
+    position: absolute;
+    inset: -2px;
+    background: linear-gradient(135deg, #a855f7, #ec4899);
+    border-radius: 12px;
+    filter: blur(6px);
+    opacity: 0.4;
+    transition: opacity 0.3s;
+}
+
+.logo-wrap:hover .logo-halo {
+    opacity: 0.7;
+}
+
+.logo-structure {
+    position: relative;
+    background: #0f172a;
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1;
+    box-shadow: 0 4px 12px rgba(15, 23, 42, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.pulse-dot {
+    animation: pulseDot 2.5s infinite ease-in-out;
+}
+
+@keyframes pulseDot {
+    0% {
+        transform: scale(0.95);
+        opacity: 0.6;
+    }
+
+    50% {
+        transform: scale(1.1);
+        opacity: 1;
+    }
+
+    100% {
+        transform: scale(0.95);
+        opacity: 0.6;
+    }
+}
+
+.project-title-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.brand-primary {
+    font-size: 24px;
+    font-weight: 800;
+    color: #0f172a !important;
+    letter-spacing: -0.5px;
+    line-height: 1.1;
+}
+
+.brand-accent {
+    color: #7c3aed !important;
+}
+
+.brand-slogan {
+    font-size: 11px;
+    font-weight: 700;
+    color: #64748b;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    margin-top: 2px;
+}
+
+/* ── 4. YENİ KULLANICI PROFİLİ (SaaS STİLİ) ── */
+.vivid-user-profile-wrapper {
+    position: relative;
+}
+
+.vivid-user-profile {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: #ffffff;
+    border: 1px solid rgba(15, 23, 42, 0.08);
+    padding: 6px 16px 6px 6px;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 2px 6px rgba(15, 23, 42, 0.03);
+}
+
+.vivid-user-profile:hover {
+    border-color: rgba(124, 58, 237, 0.3);
+    background: #f8fafc;
+    box-shadow: 0 6px 16px rgba(124, 58, 237, 0.08);
+    transform: translateY(-1px);
+}
+
+.user-avatar-container {
+    position: relative;
+}
+
+.user-avatar-circle {
+    background: linear-gradient(135deg, #7c3aed 0%, #ec4899 100%);
+    color: #fff;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 16px;
+    box-shadow: 0 4px 10px rgba(124, 58, 237, 0.2);
+}
+
+.user-avatar-circle.large {
+    width: 48px;
+    height: 48px;
+    font-size: 20px;
+}
+
+.online-indicator {
+    position: absolute;
+    bottom: -2px;
+    right: -2px;
+    width: 12px;
+    height: 12px;
+    background-color: #10b981;
+    border: 2px solid #ffffff;
+    border-radius: 50%;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.user-info-stack {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+}
+
+.user-name-display {
+    font-size: 14px;
+    font-weight: 700;
+    color: #0f172a;
+    line-height: 1.2;
+}
+
+.user-role-display {
+    font-size: 11px;
+    font-weight: 600;
+    color: #7c3aed;
+    margin-top: 2px;
+    letter-spacing: 0.3px;
+}
+
+.profile-chevron {
+    color: #94a3b8;
+    margin-left: 4px;
+    transition: transform 0.3s ease;
+}
+
+.vivid-user-profile:hover .profile-chevron {
+    color: #7c3aed;
+}
+
+.profile-chevron.open {
+    transform: rotate(180deg);
+}
+
+/* YENİ AÇILIR MENÜ TASARIMI */
+.profile-dropdown-menu {
+    position: absolute;
+    top: calc(100% + 14px);
+    right: 0;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(15, 23, 42, 0.08);
+    border-radius: 16px;
+    box-shadow: 0 20px 40px rgba(15, 23, 42, 0.1);
+    width: 260px;
+    z-index: 100;
+    overflow: hidden;
+    animation: slideDownFade 0.2s ease-out;
+}
+
+@keyframes slideDownFade {
+    from {
+        opacity: 0;
+        transform: translateY(-10px) scale(0.98);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.dropdown-user-header {
+    padding: 20px 16px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    background: #f8fafc;
+}
+
+.dropdown-user-details {
+    display: flex;
+    flex-direction: column;
+}
+
+.d-name {
+    font-size: 16px;
+    font-weight: 800;
+    color: #0f172a;
+}
+
+.d-role {
+    font-size: 12px;
+    color: #64748b;
+    font-weight: 500;
+    margin-top: 2px;
+}
+
+.dropdown-menu-list {
+    padding: 8px;
+}
+
+.dropdown-divider-thick {
+    height: 1px;
+    background: rgba(15, 23, 42, 0.06);
+    width: 100%;
+}
+
+.dropdown-item {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: transparent;
+    border: none;
+    padding: 12px 16px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #334155;
+    cursor: pointer;
+    border-radius: 10px;
+    transition: all 0.2s ease;
+}
+
+.dropdown-item:hover {
+    background: #f1f5f9;
+    color: #0f172a;
+    transform: translateX(4px);
+}
+
+.exit-item {
+    color: #ef4444;
+    margin: 8px;
+    width: calc(100% - 16px);
+    justify-content: center;
+    background: #fef2f2;
+}
+
+.exit-item:hover {
+    background: #fee2e2;
+    color: #dc2626;
+    transform: none;
+}
+
+/* ── 5. HERO BÖLÜMÜ ── */
+.vivid-hero-section {
+    background: #ffffff;
+    border: 1px solid rgba(15, 23, 42, 0.06);
+    border-radius: 24px;
+    margin: 40px auto;
+    max-width: 1240px;
+    padding: 56px 48px;
+    box-shadow: 0 12px 32px -4px rgba(15, 23, 42, 0.04), 0 4px 12px -2px rgba(15, 23, 42, 0.02);
+    position: relative;
+    z-index: 2;
+    width: 100%;
+}
+
+.hero-top {
+    display: flex;
+    flex-direction: column;
+    /* Yan yana durmaları yerine alt alta dizilmelerini sağlar */
+    align-items: center;
+    /* Yatayda tam merkeze alır */
+    justify-content: center;
+    text-align: center;
+    /* İçindeki tüm metinleri ortalar */
+    margin-bottom: 48px;
+    gap: 32px;
+    /* Başlık ile (eğer duruyorsa) istatistik kutusu arasına nefes aldırır */
+}
+
+.hero-text {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.hero-text h1 {
+    font-size: 44px;
+    font-weight: 800;
+    color: #0f172a;
+    line-height: 1.15;
+    margin: 0 0 16px 0;
+    letter-spacing: -1px;
+    text-align: center;
+}
+
+.hero-text h1 span {
+    background: linear-gradient(135deg, #7c3aed 0%, #db2777 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.hero-text p {
+    font-size: 16px;
+    color: #64748b;
+    margin: 0 auto;
+    font-weight: 400;
+    max-width: 500px;
+    /* Metnin sağa sola çok uzamamasını, derli toplu durmasını sağlar */
+    line-height: 1.6;
+    text-align: center;
+}
+
+/* Eğer istatistik kutusu (12.4K yazan yer) kodlarında hala duruyorsa, onun da ortada şık durması için: */
+.hero-stats {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.stat-box {
+    background: #ffffff;
+    border: 1px solid rgba(15, 23, 42, 0.06);
+    padding: 16px 28px;
+    border-radius: 16px;
+    text-align: center;
+    box-shadow: 0 2px 8px rgba(15, 23, 42, 0.02);
+}
+
+.s-num {
+    font-size: 24px;
+    font-weight: 800;
+    color: #0f172a;
+    letter-spacing: -0.5px;
+}
+
+.s-label {
+    font-size: 12px;
+    font-weight: 600;
+    color: #64748b;
+    margin-top: 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.search-glow-wrap {
+    position: relative;
+    z-index: 10;
+    margin-top: 10px;
+    width: 100%;
+}
+
+.search-inner-box {
+    display: flex;
+    align-items: center;
+    background: #ffffff;
+    border: 2px solid rgba(124, 58, 237, 0.15);
+    border-radius: 20px;
+    padding: 12px 12px 12px 24px;
+    transition: all 0.3s ease;
+    box-shadow: 0 8px 24px rgba(124, 58, 237, 0.08);
+}
+
+.search-inner-box:focus-within {
+    border-color: #7c3aed;
+    box-shadow: 0 0 0 6px rgba(124, 58, 237, 0.15);
+}
+
+.search-icon {
+    margin-right: 16px;
+}
+
+.search-input-field {
+    flex: 1;
+    border: none;
+    background: transparent;
+    font-size: 18px;
+    font-weight: 500;
+    color: #0f172a;
+    outline: none;
+    padding: 16px 0;
+}
+
+.search-input-field::placeholder {
+    color: #94a3b8;
+    font-weight: 400;
+}
+
+.search-action-btn {
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+    color: #fff;
+    border: none;
+    padding: 16px 32px;
+    border-radius: 14px;
+    font-size: 16px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    transition: all 0.2s;
+    box-shadow: 0 4px 12px rgba(15, 23, 42, 0.15);
+}
+
+.search-action-btn:hover {
+    background: #0f172a;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(15, 23, 42, 0.25);
+}
+
+.pulse-glow {
+    position: relative;
+    overflow: hidden;
+}
+
+.pulse-glow::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 50%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    animation: buttonShine 3s infinite;
+}
+
+@keyframes buttonShine {
+    0% {
+        left: -100%;
+    }
+
+    20% {
+        left: 200%;
+    }
+
+    100% {
+        left: 200%;
+    }
+}
+
+.flow-steps-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 40px;
+    margin-top: 48px;
+    padding-top: 40px;
+    border-top: 1px solid rgba(15, 23, 42, 0.06);
+}
+
+.flow-step-unit {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.flow-icon-box {
+    background: #f8fafc;
+    color: #7c3aed;
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgba(124, 58, 237, 0.1);
+    box-shadow: 0 4px 12px rgba(124, 58, 237, 0.05);
+}
+
+.flow-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: #0f172a;
+    margin-bottom: 2px;
+}
+
+.flow-desc {
+    font-size: 13px;
+    color: #64748b;
+    font-weight: 400;
+}
+
+/* ── 6. KATEGORİLER (YUVARLAK APP STİLİ) ── */
+.system-nav-section {
+    max-width: 1240px;
+    margin: 0 auto 40px auto;
+    position: relative;
+    z-index: 2;
+    width: 100%;
+}
+
+.cat-scroll-container {
+    width: 100%;
+    overflow-x: auto;
+    padding: 10px 0 20px 0;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+.cat-scroll-container::-webkit-scrollbar {
+    display: none;
+}
+
+.cat-tile-row {
+    display: inline-flex;
+    align-items: flex-start;
+    /* EKLENDİ: Butonları üstten aynı hizaya sabitler */
+    gap: 16px;
+    /* GÜNCELLENDİ: Sabit genişlik verdiğimiz için boşluğu optimize ettik */
+    padding: 0 10px;
+    margin: 0 auto;
+}
+
+.cat-tile-btn {
+    background: transparent;
+    border: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    /* GÜNCELLENDİ: İkon ile metin arasını biraz kıstık */
+    cursor: pointer;
+    width: 104px;
+    /* EKLENDİ: Tüm butonlara sabit genişlik (esneme-daralma yapmaz) */
+    flex-shrink: 0;
+    /* EKLENDİ: Butonların sıkışmasını engeller */
+    padding: 0;
+}
+
+/* Yuvarlak İkon Kutusu */
+.cat-circle {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background: #ffffff;
+    border: 1px solid rgba(15, 23, 42, 0.08);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #64748b;
+    box-shadow: 0 4px 10px rgba(15, 23, 42, 0.02);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.cat-text {
+    font-size: 13px;
+    /* GÜNCELLENDİ: Sığması için yarım punto küçültüldü */
+    font-weight: 600;
+    color: #64748b;
+    text-align: center;
+    transition: all 0.3s ease;
+
+    /* YENİ EKLENEN METİN KAYDIRMA KURALLARI */
+    white-space: normal;
+    word-wrap: break-word;
+    line-height: 1.4;
+    width: 100%;
+    min-height: 36px;
+    /* Tek satır da olsa 2 satırlık yer kaplamasını sağlar, hizayı bozmaz */
+    display: block;
+}
+
+/* Fareyle Üzerine Gelince (Hover) */
+.cat-tile-btn:hover .cat-circle {
+    transform: translateY(-4px) scale(1.05);
+    border-color: #cbd5e1;
+    box-shadow: 0 12px 24px rgba(15, 23, 42, 0.08);
+    color: #0f172a;
+}
+
+.cat-tile-btn:hover .cat-text {
+    color: #0f172a;
+}
+
+/* Aktif (Seçili) Kategori - VividAI Renkleri */
+.cat-tile-btn.active .cat-circle {
+    background: linear-gradient(135deg, #7c3aed 0%, #ec4899 100%);
+    border: none;
+    color: #ffffff;
+    box-shadow: 0 12px 24px rgba(124, 58, 237, 0.25);
+    transform: translateY(-6px) scale(1.05);
+}
+
+.cat-tile-btn.active .cat-circle svg {
+    color: #ffffff;
+}
+
+.cat-tile-btn.active .cat-text {
+    color: #0f172a;
+    font-weight: 800;
+}
+
+
+/* ── 7. SEKMELER VE ARAMA (HAVADA SÜZÜLEN RENKLİ BUTONLAR) ── */
+.tab-search-wrapper {
+    max-width: 1240px;
+    margin: 0 auto 32px auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    z-index: 2;
+    width: 100%;
+}
+
+.tab-bar {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    padding-left: 10px;
+}
+
+.tab-btn {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    padding: 10px 24px;
+    border-radius: 50px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #64748b;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 2px 6px rgba(15, 23, 42, 0.02);
+}
+
+.tab-btn:hover {
+    background: #f8fafc;
+    border-color: #cbd5e1;
+    color: #0f172a;
+    transform: translateY(-2px);
+}
+
+/* Aktif Sekme: VividAI Gradyan Rengi ile Parlar */
+.tab-btn.active {
+    background: linear-gradient(135deg, #7c3aed 0%, #ec4899 100%);
+    border: none;
+    color: #ffffff;
+    box-shadow: 0 6px 16px rgba(124, 58, 237, 0.25);
+    transform: translateY(-2px);
+    font-weight: 700;
+}
+
+.tab-btn.active svg {
+    color: #ffffff !important;
+    stroke: #ffffff !important;
+}
+
+/* Şık ve Yuvarlak Arama Kutusu */
+.compact-search-box {
+    display: flex;
+    align-items: center;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    padding: 6px 6px 6px 20px;
+    border-radius: 50px;
+    width: 320px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(15, 23, 42, 0.04);
+}
+
+.compact-search-box:focus-within {
+    border-color: #ec4899;
+    box-shadow: 0 0 0 4px rgba(236, 72, 153, 0.1);
+}
+
+.compact-search-box input {
+    flex: 1;
+    border: none;
+    background: transparent;
+    font-size: 14px;
+    color: #0f172a;
+    outline: none;
+}
+
+.compact-search-box input::placeholder {
+    color: #94a3b8;
+}
+
+.compact-search-btn {
+    background: #f1f5f9;
+    color: #0f172a;
+    border: none;
+    padding: 8px 18px;
+    border-radius: 50px;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.2s;
+}
+
+.compact-search-btn:hover {
+    background: #0f172a;
+    color: #ffffff;
+}
+
+/* ── 8. İÇERİK VE KARTLARIN SİMETRİK DİZİLİMİ ── */
+.vivid-section {
+    max-width: 1240px;
+    margin: 0 auto 60px auto;
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    padding: 0 10px;
+}
+
+.empty-state {
+    text-align: center;
+    padding: 100px 20px;
+    background: #ffffff;
+    border: 2px dashed rgba(15, 23, 42, 0.1);
+    border-radius: 24px;
+    color: #64748b;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+/* E-TİCARET KART DİZİLİMİ (IZGARA) */
+.card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 24px;
+    width: 100%;
+    align-items: stretch;
+}
+
+/* ── 9. TREND LİSTESİ ── */
+.trend-row {
+    background: #ffffff;
+    border: 1px solid rgba(15, 23, 42, 0.08);
+    border-radius: 16px;
+    padding: 20px 32px;
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    margin-bottom: 16px;
+    transition: all 0.2s ease;
+    cursor: pointer;
+}
+
+.trend-row:hover {
+    border-color: rgba(124, 58, 237, 0.3);
+    box-shadow: 0 10px 24px rgba(15, 23, 42, 0.06);
+    transform: translateY(-2px);
+}
+
+.t-rank {
+    font-size: 24px;
+    font-weight: 800;
+    min-width: 40px;
+    color: #94a3b8;
+}
+
+.t-img-box {
+    width: 72px;
+    height: 72px;
+    border-radius: 12px;
+    overflow: hidden;
+    background: #f8fafc;
+    flex-shrink: 0;
+}
+
+.t-img-box img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.trend-row-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.t-name {
+    font-size: 17px;
+    font-weight: 700;
+    color: #0f172a;
+}
+
+.t-sub {
+    font-size: 14px;
+    color: #64748b;
+    font-weight: 500;
+}
+
+.t-badge {
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.trend-bar-wrap {
+    width: 160px;
+    height: 8px;
+    background: #f1f5f9;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.trend-bar {
+    height: 100%;
+    border-radius: 10px;
+}
+
+/* ── 10. MODALLAR ── */
+.profile-modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(15, 23, 42, 0.6);
+    backdrop-filter: blur(12px);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: fadeIn 0.3s ease;
+}
+
+.profile-modal-card {
+    background: #ffffff;
+    width: 90%;
+    max-width: 1000px;
+    height: 85vh;
+    border-radius: 24px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    box-shadow: 0 24px 48px rgba(0, 0, 0, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+.profile-modal-header {
+    padding: 24px 40px;
+    border-bottom: 1px solid rgba(15, 23, 42, 0.08);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #ffffff;
+}
+
+.profile-modal-tabs {
+    display: flex;
+    gap: 32px;
+}
+
+.p-tab-btn {
+    background: none;
+    border: none;
+    font-size: 16px;
+    font-weight: 600;
+    color: #64748b;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding-bottom: 12px;
+    border-bottom: 3px solid transparent;
+    margin-bottom: -25px;
+    transition: all 0.2s ease;
+}
+
+.p-tab-btn.active {
+    color: #7c3aed;
+    border-bottom-color: #7c3aed;
+}
+
+.profile-modal-close {
+    font-size: 28px;
+    color: #94a3b8;
+    cursor: pointer;
+    border: none;
+    background: transparent;
+}
+
+.profile-modal-close:hover {
+    color: #0f172a;
+}
+
+.profile-modal-body {
+    padding: 40px;
+    overflow-y: auto;
+    flex: 1;
+    background: #fafbfc;
+}
+
+/* ── MOBİL UYUM ── */
+@media (max-width: 768px) {
+    .hero-top {
+        flex-direction: column;
+        text-align: center;
+        gap: 24px;
+    }
+
+    .hero-text h1 {
+        font-size: 36px;
+    }
+
+    .hero-text p {
+        max-width: 100%;
+    }
+
+    .hero-stats {
+        margin: 0 auto;
+    }
+
+    .flow-steps-row {
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .tab-search-wrapper {
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+    }
+
+    .tab-bar {
+        width: 100%;
+        overflow-x: auto;
+        justify-content: flex-start;
+        padding: 6px 10px;
+    }
+
+    .tab-btn {
+        white-space: nowrap;
+    }
+
+    .compact-search-box {
+        width: 100%;
+        margin-bottom: 0;
+    }
+}
+
+/* ── YAPAY ZEKA ANALİZ YÜKLEME EKRANI ── */
+.vivid-ai-loader-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(15, 23, 42, 0.7);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: fadeIn 0.3s ease;
+}
+
+.vivid-ai-loader-card {
+    background: #ffffff;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 24px;
+    padding: 48px 40px;
+    width: 90%;
+    max-width: 420px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    box-shadow: 0 24px 48px rgba(0, 0, 0, 0.2), 0 0 0 1px rgba(124, 58, 237, 0.1);
+    animation: scaleUp 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Çift Halkalı Orbital Animasyon */
+.loader-orbit-container {
+    position: relative;
+    width: 80px;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 24px;
+}
+
+.loader-orbit-ring {
+    position: absolute;
+    border-radius: 50%;
+    border: 2px solid transparent;
+}
+
+.ring-1 {
+    width: 100%;
+    height: 100%;
+    border-top-color: #7c3aed;
+    border-right-color: #ec4899;
+    animation: spin 1.2s linear infinite;
+}
+
+.ring-2 {
+    width: 70%;
+    height: 70%;
+    border-bottom-color: #3b82f6;
+    border-left-color: #7c3aed;
+    animation: spinReverse 1.5s linear infinite;
+}
+
+.loader-core {
+    width: 48px;
+    height: 48px;
+    background: linear-gradient(135deg, #7c3aed, #ec4899);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 20px rgba(124, 58, 237, 0.5);
+    animation: pulseCore 2s ease-in-out infinite;
+}
+
+.loader-title {
+    font-size: 20px;
+    font-weight: 800;
+    color: #0f172a;
+    margin: 0 0 8px 0;
+    letter-spacing: -0.5px;
+}
+
+.loader-step-text {
+    font-size: 14px;
+    font-weight: 500;
+    color: #64748b;
+    margin-bottom: 24px;
+    min-height: 20px;
+    /* Metin değiştiğinde zıplamayı önler */
+    animation: fadeText 0.85s infinite alternate;
+}
+
+.loader-progress-wrap {
+    width: 100%;
+    height: 6px;
+    background: #f1f5f9;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.loader-progress-bar {
+    height: 100%;
+    background: linear-gradient(90deg, #7c3aed, #ec4899);
+    border-radius: 10px;
+    transition: width 0.85s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Keyframes (Animasyon Kuralları) */
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes spinReverse {
+    0% {
+        transform: rotate(360deg);
+    }
+
+    100% {
+        transform: rotate(0deg);
+    }
+}
+
+@keyframes pulseCore {
+    0% {
+        transform: scale(0.95);
+        box-shadow: 0 0 10px rgba(124, 58, 237, 0.3);
+    }
+
+    50% {
+        transform: scale(1.05);
+        box-shadow: 0 0 25px rgba(236, 72, 153, 0.6);
+    }
+
+    100% {
+        transform: scale(0.95);
+        box-shadow: 0 0 10px rgba(124, 58, 237, 0.3);
+    }
+}
+
+@keyframes scaleUp {
+    0% {
+        transform: scale(0.9);
+        opacity: 0;
+    }
+
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+@keyframes fadeText {
+    0% {
+        opacity: 0.6;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+/* İkonların dönmesini sağlayan yardımcı sınıf */
+.animate-spin {
+    animation: spin 1s linear infinite;
+}

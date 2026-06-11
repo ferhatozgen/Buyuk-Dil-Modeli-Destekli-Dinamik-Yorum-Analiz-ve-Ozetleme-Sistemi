@@ -1,0 +1,14 @@
+venv/
+__pycache__/
+cekilen_veriler/
+Transformed_datas/
+node_modules/
+.env
+.DS_Store
+logs/
+saved_maps_profile/
+saved_ys_profile/
+functions/
+one-off/
+*.py
+*.txt

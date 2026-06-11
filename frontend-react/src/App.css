@@ -1,0 +1,1135 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  /* ── FERAH SAAS & KOYU MOR GRADYAN TEMA (Aydınlık Mod) ── */
+  --bg: #ffffff;
+  /* Temiz, ferah beyaz arka plan */
+  --bg-secondary: #faf5ff;
+  /* Çok uçuk lila geçişi (Ferahlık verir) */
+
+  --panel: rgba(255, 255, 255, 0.65);
+  /* Paneller buzlu cam gibi beyaz */
+  --border: rgba(168, 85, 247, 0.25);
+  /* Çizgiler zarif koyu mor */
+
+  --text: #0f172a;
+  /* Açık arka planda çok okunaklı koyu lacivert metin */
+  --muted: #64748b;
+
+  --purple: #7c3aed;
+  /* Aydınlıkta patlayan asil, tok mor */
+  --pink: #db2777;
+  --blue: #2563eb;
+}
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+button,
+input {
+  font: inherit;
+}
+
+/* ── ANA SAYFA ARKA PLANI (Ferah ve uçuk lila geçişler) ── */
+.landing-page {
+  position: relative;
+  min-height: 100vh;
+  background: linear-gradient(120deg, var(--bg), var(--bg-secondary), var(--bg));
+  background-size: 200% 200%;
+  animation: bgMove 15s ease infinite;
+}
+
+@keyframes bgMove {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* Sayfaya derinlik katan hafif renk yansımaları */
+.landing-page::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background: linear-gradient(180deg,
+      rgba(124, 58, 237, 0.05) 0%,
+      transparent 20%,
+      rgba(219, 39, 119, 0.03) 40%,
+      transparent 60%,
+      rgba(37, 99, 235, 0.05) 80%,
+      transparent 100%);
+}
+
+/* ── MOR IZGARA VE KOYU GRADYAN GEÇİŞİ ── */
+/* ── RENK GEÇİŞLİ (GRADIENT) HOLOGRAFİK IZGARA ── */
+/* ── HAREKETLİ NEON IZGARA (ANIMATED NEON GRID) ── */
+.bg-grid {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  /* Sayfanın altına doğru ızgaranın yavaşça silinmesi (Fade out) */
+  mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 1) 10%, rgba(0, 0, 0, 0) 90%);
+  -webkit-mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 1) 10%, rgba(0, 0, 0, 0) 90%);
+}
+
+.bg-grid::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+
+  /* Mordan, pembeye ve maviye kesintisiz akan neon renk geçişi */
+  background: linear-gradient(90deg, #7c3aed, #db2777, #2563eb, #7c3aed);
+  background-size: 300% 100%;
+  animation: neonGridFlow 8s linear infinite;
+
+  /* Çizgilerin canlılık ayarı (0.2 ile 0.4 arası idealdir) */
+  opacity: 0.25;
+
+  /* Renkli arka planı ızgara şeklinde kesen maske */
+  -webkit-mask-image:
+    linear-gradient(black 1px, transparent 1px),
+    linear-gradient(90deg, black 1px, transparent 1px);
+  mask-image:
+    linear-gradient(black 1px, transparent 1px),
+    linear-gradient(90deg, black 1px, transparent 1px);
+  -webkit-mask-size: 48px 48px;
+  mask-size: 48px 48px;
+}
+
+/* Izgara renklerini sürekli kaydıran animasyon */
+@keyframes neonGridFlow {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  100% {
+    background-position: 100% 50%;
+  }
+}
+
+/* Grid Çizgilerinin Kendisi (Renk Geçişli) */
+.bg-grid::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  /* Çizgilerin sahip olacağı o efsanevi renk geçişi (Mordan -> Pembeye -> Maviye) */
+  background: linear-gradient(135deg, #7c3aed, #db2777, #2563eb);
+  opacity: 0.18;
+  /* Izgaranın belirginliği (Göz yormaması için 0.18 idealdir) */
+
+  /* Çizgileri oluşturmak için CSS maskesi kullanıyoruz */
+  mask-image:
+    linear-gradient(black 1px, transparent 1px),
+    linear-gradient(90deg, black 1px, transparent 1px);
+  mask-size: 48px 48px;
+
+  -webkit-mask-image:
+    linear-gradient(black 1px, transparent 1px),
+    linear-gradient(90deg, black 1px, transparent 1px);
+  -webkit-mask-size: 48px 48px;
+}
+
+.bg-glow {
+  position: absolute;
+  border-radius: 999px;
+  filter: blur(120px);
+  z-index: 0;
+}
+
+.glow-1 {
+  top: 10%;
+  left: 5%;
+  width: 400px;
+  height: 400px;
+  background: rgba(124, 58, 237, 0.15);
+}
+
+.glow-2 {
+  bottom: 10%;
+  right: 5%;
+  width: 400px;
+  height: 400px;
+  background: rgba(37, 99, 235, 0.12);
+}
+
+/* Navbar */
+.navbar {
+  position: relative;
+  z-index: 10;
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 30px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.menu {
+  display: flex;
+  gap: 30px;
+  font-size: 15px;
+  color: var(--muted);
+  font-weight: 600;
+}
+
+.menu a:hover {
+  color: var(--purple);
+}
+
+.nav-button {
+  height: 42px;
+  padding: 0 18px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: rgba(124, 58, 237, 0.05);
+  color: var(--purple);
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.nav-button:hover {
+  background: rgba(124, 58, 237, 0.1);
+}
+
+.hero-section,
+.product-section,
+.feature-section,
+.login-section {
+  position: relative;
+  z-index: 2;
+  max-width: 1240px;
+  margin: 0 auto;
+  padding-left: 24px;
+  padding-right: 24px;
+}
+
+.hero-section.hero-split {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 80px 24px;
+  gap: 40px;
+}
+
+.hero-content-left {
+  flex: 1.2;
+  z-index: 5;
+}
+
+.hero-visual-right {
+  flex: 1;
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
+
+.hero-badge,
+.section-tag,
+.login-badge {
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+  padding: 8px 16px;
+  border-radius: 999px;
+  border: 1px solid rgba(124, 58, 237, 0.2);
+  background: rgba(124, 58, 237, 0.08);
+  color: var(--purple);
+  font-size: 13px;
+  font-weight: 700;
+  margin-bottom: 16px;
+}
+
+.hero-title {
+  font-size: 64px;
+  line-height: 1.1;
+  font-weight: 800;
+  letter-spacing: -1.5px;
+  margin-bottom: 24px;
+  color: var(--text);
+}
+
+.gradient-text {
+  background: linear-gradient(90deg, #db2777, #7c3aed, #2563eb, #db2777);
+  background-size: 200% auto;
+  animation: gradientFlow 5s linear infinite;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+@keyframes gradientFlow {
+  to {
+    background-position: 200% center;
+  }
+}
+
+.hero-text {
+  max-width: 600px;
+  color: var(--muted);
+  font-size: 18px;
+  line-height: 1.6;
+  margin-bottom: 34px;
+}
+
+.hero-actions {
+  display: flex;
+  gap: 18px;
+  align-items: center;
+}
+
+.primary-btn {
+  height: 56px;
+  padding: 0 32px;
+  border-radius: 16px;
+  background: linear-gradient(90deg, var(--purple), var(--pink));
+  color: white;
+  font-weight: 700;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 10px 24px rgba(124, 58, 237, 0.25);
+  transition: all 0.3s ease;
+}
+
+.primary-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 15px 32px rgba(124, 58, 237, 0.35);
+}
+
+.stats-inline {
+  display: flex;
+  gap: 40px;
+  margin-top: 48px;
+}
+
+.login-stat strong {
+  display: block;
+  font-size: 28px;
+  font-weight: 800;
+  color: var(--text);
+}
+
+.login-stat span {
+  font-size: 14px;
+  color: var(--muted);
+  font-weight: 500;
+}
+
+.hero-robot-img {
+  width: 130%;
+  max-width: 800px;
+  z-index: 2;
+  filter: drop-shadow(0 20px 40px rgba(124, 58, 237, 0.15));
+  animation: float 6s ease-in-out infinite;
+}
+
+.hero-blob-glow {
+  position: absolute;
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(124, 58, 237, 0.15) 0%, transparent 70%);
+  filter: blur(60px);
+  z-index: 1;
+}
+
+@keyframes float {
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-15px);
+  }
+}
+
+/* ── KARTLAR (Buzlu Cam - Aydınlık Mod) ── */
+.product-card,
+.feature-card,
+.login-card {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border-radius: 24px;
+  transition: all 0.3s ease;
+  box-shadow: 0 15px 35px rgba(124, 58, 237, 0.05);
+}
+
+.product-card:hover,
+.feature-card:hover {
+  border-color: rgba(124, 58, 237, 0.4);
+  transform: translateY(-5px);
+  box-shadow: 0 20px 40px rgba(124, 58, 237, 0.12);
+}
+
+.section-head {
+  max-width: 700px;
+  margin: 0 auto 40px;
+  text-align: center;
+}
+
+.section-head h2 {
+  font-size: 40px;
+  font-weight: 800;
+  margin-top: 16px;
+  letter-spacing: -1px;
+  color: var(--text);
+}
+
+.product-section {
+  padding-bottom: 100px;
+}
+
+.product-grid,
+.feature-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  width: 100%;
+}
+
+.product-visual {
+  height: 180px;
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  padding: 20px;
+  background: linear-gradient(135deg, rgba(124, 58, 237, 0.05), rgba(37, 99, 235, 0.05));
+  border-top-left-radius: 24px;
+  border-top-right-radius: 24px;
+}
+
+.product-chip {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  padding: 6px 12px;
+  border-radius: 100px;
+  background: rgba(255, 255, 255, 0.9);
+  color: var(--purple);
+  font-size: 12px;
+  font-weight: 700;
+  border: 1px solid rgba(124, 58, 237, 0.2);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+.visual-mock {
+  width: 100%;
+  padding: 16px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(15, 23, 42, 0.05);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
+}
+
+.mock-line {
+  height: 8px;
+  border-radius: 10px;
+  background: rgba(15, 23, 42, 0.1);
+  margin-top: 10px;
+}
+
+.mock-line.short {
+  width: 40%;
+  margin-top: 0;
+}
+
+.product-content {
+  padding: 24px;
+}
+
+.product-content h3 {
+  font-size: 20px;
+  margin-bottom: 12px;
+  color: var(--text);
+}
+
+.product-content p {
+  color: var(--muted);
+  font-size: 14.5px;
+  line-height: 1.6;
+}
+
+.mini-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+.mini-tags span {
+  padding: 6px 12px;
+  border-radius: 100px;
+  background: rgba(15, 23, 42, 0.05);
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.secondary-btn-small {
+  margin-top: 20px;
+  width: 100%;
+  height: 44px;
+  border-radius: 12px;
+  background: rgba(124, 58, 237, 0.05);
+  border: 1px solid rgba(124, 58, 237, 0.2);
+  color: var(--purple);
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.secondary-btn-small:hover {
+  background: rgba(124, 58, 237, 0.1);
+  color: var(--purple);
+}
+
+.ai-insight-panel {
+  margin-top: 16px;
+  padding: 16px;
+  background: rgba(124, 58, 237, 0.05);
+  border-left: 3px solid var(--purple);
+  border-radius: 12px;
+}
+
+.insight-header {
+  font-size: 12px;
+  font-weight: 800;
+  color: var(--purple);
+  margin-bottom: 8px;
+}
+
+.ai-insight-panel p {
+  color: var(--muted);
+  font-style: italic;
+}
+
+.feature-section {
+  padding-bottom: 100px;
+}
+
+.feature-card {
+  padding: 32px 24px;
+}
+
+.feature-icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+  font-size: 18px;
+  font-weight: 800;
+  color: white;
+}
+
+.feature-icon.pink {
+  background: linear-gradient(135deg, #ec4899, #a855f7);
+}
+
+.feature-icon.blue {
+  background: linear-gradient(135deg, #3b82f6, #06b6d4);
+}
+
+.feature-icon.purple {
+  background: linear-gradient(135deg, #8b5cf6, #d946ef);
+}
+
+.feature-card h3 {
+  font-size: 20px;
+  margin-bottom: 12px;
+  color: var(--text);
+}
+
+.feature-card p {
+  color: var(--muted);
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+/* ── ÇAĞRI (CTA) ALANI ── */
+.cta-section-modern {
+  padding: 100px 24px;
+  display: flex;
+  justify-content: center;
+  position: relative;
+}
+
+.cta-container {
+  position: relative;
+  width: 100%;
+  max-width: 900px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.cta-glass-card {
+  position: relative;
+  width: 100%;
+  padding: 60px 40px;
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(24px);
+  border: 1px solid rgba(124, 58, 237, 0.15);
+  border-radius: 32px;
+  text-align: center;
+  z-index: 2;
+  box-shadow: 0 40px 80px rgba(124, 58, 237, 0.1);
+}
+
+.cta-heading {
+  font-size: 44px;
+  font-weight: 800;
+  margin: 20px 0;
+  color: var(--text);
+}
+
+.cta-subtext {
+  color: var(--muted);
+  font-size: 17px;
+  max-width: 500px;
+  margin: 0 auto 30px;
+  line-height: 1.6;
+}
+
+.primary-btn-premium {
+  display: inline-block;
+  padding: 18px 40px;
+  background: linear-gradient(90deg, var(--purple), var(--pink));
+  border-radius: 16px;
+  color: #fff;
+  font-weight: 700;
+  font-size: 16px;
+  transition: 0.3s;
+  box-shadow: 0 15px 30px rgba(124, 58, 237, 0.25);
+}
+
+.primary-btn-premium:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 20px 40px rgba(124, 58, 237, 0.35);
+}
+
+.cta-features-mini {
+  margin-top: 30px;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+/* ── MARKA (LOGO) ORTAK AYARLAR ── */
+.logo-wrap {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+}
+
+.premium-logo-container {
+  position: relative;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.logo-structure {
+  position: relative;
+  background: #ffffff;
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+  border: 1px solid var(--border);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+.logo-halo {
+  position: absolute;
+  inset: -4px;
+  background: linear-gradient(135deg, #a855f7, #ec4899);
+  border-radius: 12px;
+  transition: all 0.3s ease;
+}
+
+.project-title-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.brand-primary {
+  font-size: 24px;
+  font-weight: 900;
+  letter-spacing: -0.5px;
+  line-height: 1;
+  color: var(--text) !important;
+}
+
+.brand-slogan {
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-top: 4px;
+  color: var(--muted) !important;
+}
+
+.brand-accent {
+  background: linear-gradient(135deg, #a855f7 0%, #ec4899 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.pulse-dot {
+  animation: pulseDot 2s infinite;
+}
+
+@keyframes pulseDot {
+
+  0%,
+  100% {
+    transform: scale(0.95);
+    opacity: 0.8;
+  }
+
+  50% {
+    transform: scale(1.1);
+    opacity: 1;
+  }
+}
+
+/* Landing & Dashboard Logo Uyumu */
+.landing-page .logo-halo,
+.vivid-main-page .logo-halo {
+  filter: blur(6px);
+  opacity: 0.4;
+}
+
+/* ── MARQUEE (KAYAN BANT) ── */
+.trust-bar-container {
+  width: 100%;
+  padding: 40px 0;
+  position: relative;
+  overflow: hidden;
+  border-top: 1px solid rgba(15, 23, 42, 0.05);
+  border-bottom: 1px solid rgba(15, 23, 42, 0.05);
+  background: rgba(255, 255, 255, 0.5);
+}
+
+.trust-bar-overlay {
+  position: absolute;
+  top: 0;
+  width: 150px;
+  height: 100%;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.trust-bar-overlay.left {
+  left: 0;
+  background: linear-gradient(to right, var(--bg), transparent);
+}
+
+.trust-bar-overlay.right {
+  right: 0;
+  background: linear-gradient(to left, var(--bg), transparent);
+}
+
+.trust-marquee {
+  display: flex;
+  white-space: nowrap;
+  width: 100%;
+}
+
+.marquee-content {
+  display: flex;
+  gap: 60px;
+  animation: scrollMarquee 30s linear infinite;
+}
+
+.platform-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--muted);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  opacity: 0.7;
+  transition: 0.3s;
+}
+
+.platform-item:hover {
+  color: var(--purple);
+  opacity: 1;
+}
+
+.platform-dot {
+  width: 6px;
+  height: 6px;
+  background: var(--purple);
+  border-radius: 50%;
+  box-shadow: 0 0 10px rgba(124, 58, 237, 0.5);
+}
+
+@keyframes scrollMarquee {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* ── RESPONSIVE AYARLAR ── */
+@media (max-width: 1024px) {
+  .hero-section.hero-split {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .hero-title.text-left,
+  .hero-text.text-left {
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .hero-actions.justify-left {
+    justify-content: center;
+  }
+
+  .product-grid,
+  .feature-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .menu {
+    display: none;
+  }
+
+  .hero-title {
+    font-size: 42px;
+  }
+
+  .stats-inline {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .product-grid,
+  .feature-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .cta-heading {
+    font-size: 32px;
+  }
+
+  .cta-glass-card {
+    padding: 40px 20px;
+  }
+
+  .cta-features-mini {
+    flex-direction: column;
+    gap: 10px;
+  }
+}
+
+/* =======================================================
+   LOGIN & REGISTER (MODERN AUTH) SAYFALARI (Aydınlık Mod)
+   ======================================================= */
+
+.modern-auth-wrapper {
+  position: relative;
+  min-height: 100vh;
+  background: var(--bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  overflow: hidden;
+}
+
+.ambient-light {
+  position: absolute;
+  width: 600px;
+  height: 600px;
+  filter: blur(150px);
+  border-radius: 50%;
+  opacity: 0.15;
+  z-index: 0;
+}
+
+.light-purple {
+  top: -10%;
+  left: -10%;
+  background: var(--purple);
+}
+
+.light-blue {
+  bottom: -10%;
+  right: -10%;
+  background: var(--blue);
+}
+
+.auth-container {
+  position: relative;
+  z-index: 10;
+  width: 100%;
+  max-width: 1000px;
+  height: 650px;
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(30px);
+  -webkit-backdrop-filter: blur(30px);
+  border: 1px solid var(--border);
+  border-radius: 32px;
+  display: flex;
+  overflow: hidden;
+  box-shadow: 0 40px 100px rgba(124, 58, 237, 0.1);
+}
+
+.auth-visual-side {
+  flex: 1;
+  background: linear-gradient(135deg, rgba(168, 85, 247, 0.08), rgba(59, 130, 246, 0.08));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+  border-right: 1px solid rgba(15, 23, 42, 0.05);
+}
+
+.visual-content {
+  text-align: center;
+  z-index: 2;
+}
+
+.visual-content h3 {
+  color: var(--text) !important;
+}
+
+.visual-content p {
+  color: var(--muted) !important;
+}
+
+/* Kayan/Dönen Abstrakt Şekil (Akışkan Neon Animasyonu) */
+.abstract-shape {
+  width: 220px;
+  height: 220px;
+  background: linear-gradient(45deg, #a855f7, #ec4899);
+  margin: 0 auto 30px;
+  border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+  animation: morph 8s ease-in-out infinite;
+  filter: drop-shadow(0 0 30px rgba(168, 85, 247, 0.2));
+  transform-origin: center center;
+}
+
+@keyframes morph {
+  0% {
+    border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+    transform: rotate(0deg) scale(1);
+  }
+
+  50% {
+    border-radius: 50% 50% 30% 70% / 50% 70% 30% 50%;
+    transform: rotate(180deg) scale(1.05);
+    /* Dönerken hafifçe büyür */
+  }
+
+  100% {
+    border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+    transform: rotate(360deg) scale(1);
+  }
+}
+
+.auth-form-side {
+  flex: 1.2;
+  background: rgba(255, 255, 255, 0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 60px;
+}
+
+.form-content {
+  width: 100%;
+  max-width: 360px;
+}
+
+.back-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--muted);
+  margin-bottom: 30px;
+  transition: 0.3s;
+  text-decoration: none;
+}
+
+.back-button:hover {
+  color: var(--purple);
+  transform: translateX(-5px);
+}
+
+.auth-form-side h2 {
+  font-size: 32px;
+  font-weight: 800;
+  margin-bottom: 8px;
+  color: var(--text);
+}
+
+.auth-form-side p {
+  color: var(--muted);
+  font-size: 15px;
+  margin-bottom: 40px;
+}
+
+.input-field {
+  margin-bottom: 24px;
+  text-align: left;
+}
+
+.input-field label {
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: var(--text);
+}
+
+.input-field input {
+  width: 100%;
+  height: 52px;
+  background: rgba(0, 0, 0, 0.02);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 14px;
+  padding: 0 16px;
+  color: var(--text);
+  outline: none;
+  font-size: 15px;
+  transition: all 0.3s ease;
+}
+
+.input-field input:focus {
+  border-color: var(--purple);
+  background: rgba(168, 85, 247, 0.03);
+  box-shadow: 0 0 0 4px rgba(168, 85, 247, 0.1);
+}
+
+.input-field input::placeholder {
+  color: #94a3b8;
+}
+
+.label-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.forgot-pass {
+  font-size: 12px;
+  color: var(--purple);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.forgot-pass:hover {
+  text-decoration: underline;
+}
+
+.auth-submit-btn {
+  width: 100%;
+  height: 56px;
+  background: linear-gradient(90deg, #8b2cf5, #ec4899);
+  color: #fff;
+  border-radius: 14px;
+  border: none;
+  font-weight: 700;
+  font-size: 16px;
+  cursor: pointer;
+  transition: 0.3s;
+  margin-top: 10px;
+  box-shadow: 0 10px 24px rgba(168, 85, 247, 0.25);
+}
+
+.auth-submit-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 15px 32px rgba(168, 85, 247, 0.35);
+}
+
+.form-content footer {
+  margin-top: 30px;
+  text-align: center;
+  font-size: 14px;
+  color: var(--muted);
+}
+
+.signup-link {
+  color: var(--purple);
+  font-weight: 700;
+  margin-left: 6px;
+  text-decoration: none;
+}
+
+.signup-link:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 850px) {
+  .auth-visual-side {
+    display: none;
+  }
+
+  .auth-container {
+    max-width: 450px;
+    height: auto;
+  }
+
+  .auth-form-side {
+    padding: 40px 30px;
+  }
+}
