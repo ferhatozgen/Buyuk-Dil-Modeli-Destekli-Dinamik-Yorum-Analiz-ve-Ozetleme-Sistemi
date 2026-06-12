@@ -1,12 +1,14 @@
-import React, { useState, useCallback, useMemo, useEffect } from 'react';
+import React, { useState, useCallback } from 'react';
 import { useNavigate, Navigate } from 'react-router-dom';
+import { useInfiniteQuery } from '@tanstack/react-query';
+import { useInView } from 'react-intersection-observer';
+
 import {
     Search, Zap, Link2, BarChart, LayoutGrid, Cpu, Shirt, UtensilsCrossed, Hotel,
     Sparkles, Compass, Flower2, LogOut, TrendingUp, Clock, Heart, ChevronDown, Star,
     ClipboardPaste, ChartNoAxesColumnIncreasing, ChevronRight,
     ShoppingBag, BookOpen, Home, GraduationCap, HeartPulse, Gamepad2,
-    Baby, Gift, PawPrint, Store, Cookie, Wrench, Building2, Dumbbell, Gem, Armchair, MoreHorizontal, Loader2,
-    Settings, User
+    Baby, Gift, PawPrint, Store, Cookie, Wrench, Building2, Dumbbell, Gem, Armchair, MoreHorizontal, Loader2
 } from 'lucide-react';
 import './Dashboard.css';
 import ProductCard, { getPlatformColor } from './ProductCard';
@@ -41,7 +43,7 @@ const CATEGORIES = [
     { label: 'Elektronik & Teknoloji', icon: Cpu },
     { label: 'Diğer', icon: MoreHorizontal }
 ];
-// ── EKRANDAKİ İSİMLERİ VERİTABANI FORMATINA ÇEVİREN SÖZLÜK ──
+
 const DB_CATEGORY_MAP = {
     'Alışveriş': 'alisveris',
     'Kırtasiye & Kitap & Hobi': 'kirtasiye_kitap_hobi',
@@ -73,31 +75,20 @@ export default function Dashboard() {
     const navigate = useNavigate();
     const currentToken = localStorage.getItem('token');
 
-    if (!currentToken) {
-        return <Navigate to="/" replace />;
-    }
-
+    if (!currentToken) return <Navigate to="/" replace />;
     const username = localStorage.getItem('username') || 'Misafir';
 
-    // ── TEMEL STATE'LER ──
     const [tab, setTab] = useState('kesfet');
     const [category, setCategory] = useState('Hepsi');
     const [searchQ, setSearchQ] = useState('');
     const [linkQ, setLinkQ] = useState('');
     const [selected, setSelected] = useState(null);
 
-    // ── GERÇEK ÜRÜN STATE'LERİ ──
-    const [products, setProducts] = useState([]);
-    const [isLoadingProducts, setIsLoadingProducts] = useState(false);
-
-    // ── KİŞİSEL VERİ STATE'LERİ ──
     const [favorites, setFavorites] = useState(() => dbGet(STORAGE_KEYS.favorites) ?? []);
     const [ratings, setRatings] = useState(() => dbGet(STORAGE_KEYS.ratings) ?? {});
     const [history, setHistory] = useState(() => dbGet(STORAGE_KEYS.history) ?? []);
-
     const [profileMenuOpen, setProfileMenuOpen] = useState(false);
     const [profileView, setProfileView] = useState(null);
-
     const [isAnalyzing, setIsAnalyzing] = useState(false);
     const [loadingStep, setLoadingStep] = useState(0);
 
@@ -112,6 +103,8 @@ export default function Dashboard() {
         if (!rawCat) return 'Diğer';
         const str = rawCat.toLowerCase().replace(/_/g, ' ');
 
+        if (str.includes('anne') || str.includes('bebek') || str.includes('oyuncak')) return 'Anne & Bebek & Oyuncak';
+        if (str.includes('oyun') || str.includes('game')) return 'Oyun'; 
         if (str.includes('elektronik') || str.includes('teknoloji')) return 'Elektronik & Teknoloji';
         if (str.includes('kırtasiye') || str.includes('kirtasiye') || str.includes('kitap') || str.includes('hobi')) return 'Kırtasiye & Kitap & Hobi';
         if (str.includes('otel') || str.includes('konaklama')) return 'Otel';
@@ -119,10 +112,8 @@ export default function Dashboard() {
         if (str.includes('giyim') || str.includes('ayakkabı') || str.includes('ayakkabi')) return 'Giyim & Ayakkabı';
         if (str.includes('eğitim') || str.includes('egitim') || str.includes('eğlence')) return 'Eğitim & Eğlence';
         if (str.includes('sağlık') || str.includes('saglik')) return 'Sağlık';
-        if (str.includes('oyun') || str.includes('game')) return 'Oyun';
         if (str.includes('yemek') || str.includes('restoran')) return 'Yemek';
         if (str.includes('gezi') || str.includes('gezilecek')) return 'Gezilecek Yer';
-        if (str.includes('anne') || str.includes('bebek') || str.includes('oyuncak')) return 'Anne & Bebek & Oyuncak';
         if (str.includes('kozmetik') || str.includes('bakım') || str.includes('bakim')) return 'Kozmetik & Kişisel Bakım';
         if (str.includes('hediye')) return 'Hediyelik Eşya';
         if (str.includes('pet') || str.includes('hayvan')) return 'Pet Shop';
@@ -139,74 +130,61 @@ export default function Dashboard() {
         return 'Diğer';
     };
 
-    // ── KATEGORİSİ SÖZLÜK İLE EŞLEŞTİRİLMİŞ API FONKSİYONU ──
-    const fetchProducts = useCallback(async () => {
-        setIsLoadingProducts(true);
-        try {
-            const params = {
-                PageNumber: 1,
-                PageSize: 500, // 500 ürün çekmeye devam ediyoruz
-            };
+    const { ref: observerRef, inView } = useInView();
 
-            // 🌟 SİHİRLİ DOKUNUŞ BURADA: UI ismini (Giyim & Ayakkabı) -> DB ismine (giyim_ayakkabi) çevir!
-            if (category !== 'Hepsi') {
-                params.Category = DB_CATEGORY_MAP[category] || 'diger';
-            }
+    const fetchProductsPage = async ({ pageParam = 1 }) => {
+        const params = {
+            PageNumber: pageParam,
+            PageSize: 20, 
+        };
 
-            if (searchQ.trim() !== '') params.SearchTerm = searchQ.trim();
-            if (tab === 'begenilenler') params.SortBy = 'mostLiked';
-            else if (tab === 'trendler') params.SortBy = 'mostClicked';
+        if (category !== 'Hepsi') params.Category = DB_CATEGORY_MAP[category] || 'diger';
+        if (searchQ.trim() !== '') params.SearchTerm = searchQ.trim();
+        if (tab === 'begenilenler') params.SortBy = 'mostLiked';
+        else if (tab === 'trendler') params.SortBy = 'mostClicked';
 
-            const response = await api.get('/Product/all', {
-                params: params,
-                headers: { 'Authorization': `Bearer ${currentToken}` }
-            });
+        const response = await api.get('/Product/all', {
+            params: params,
+            headers: { 'Authorization': `Bearer ${currentToken}` }
+        });
 
-            const mappedProducts = response.data.map(p => ({
-                id: p.id,
-                name: p.name || p.productName,
-                category: formatCategory(p.category),
-                plat: p.platformName || p.platform || 'VividAI',
-                avgScore: p.modelScore ? p.modelScore.toFixed(1) : (p.averageRating ? p.averageRating.toFixed(1) : "0.0"),
-                img: p.imageUrl || 'https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=400',
-                clickCount: p.clickCount,
-                sum: p.guncelOzet || "VividAI tarafından analiz edilmiştir.",
-                isFavorited: p.isFavorited
-            }));
+        return response.data.map(p => ({
+            id: p.id,
+            name: p.name || p.productName,
+            category: formatCategory(p.category),
+            plat: p.platformName || p.platform || 'VividAI',
+            avgScore: p.modelScore ? p.modelScore.toFixed(1) : (p.averageRating ? p.averageRating.toFixed(1) : "0.0"),
+            img: p.imageUrl || 'https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=400',
+            clickCount: p.clickCount,
+            sum: p.guncelOzet || "VividAI tarafından analiz edilmiştir.",
+            isFavorited: p.isFavorited
+        }));
+    };
 
-            setProducts(mappedProducts);
+    const {
+        data,
+        fetchNextPage,
+        hasNextPage,
+        isFetchingNextPage,
+        status,
+    } = useInfiniteQuery({
+        queryKey: ['products', category, searchQ, tab], 
+        queryFn: fetchProductsPage,
+        getNextPageParam: (lastPage, allPages) => {
+            return lastPage.length === 20 ? allPages.length + 1 : undefined;
+        },
+        staleTime: 5 * 60 * 1000, 
+    });
 
-            setFavorites(prevFavs => {
-                let updatedFavs = [...prevFavs];
-                mappedProducts.forEach(product => {
-                    const existsIdx = updatedFavs.findIndex(f => f.id === product.id);
-                    if (product.isFavorited) {
-                        if (existsIdx === -1) updatedFavs.push(product);
-                    } else {
-                        if (existsIdx !== -1) updatedFavs.splice(existsIdx, 1);
-                    }
-                });
-                dbSet(STORAGE_KEYS.favorites, updatedFavs);
-                return updatedFavs;
-            });
-
-        } catch (error) {
-            console.error("Ürünler çekilirken hata oluştu:", error);
-        } finally {
-            setIsLoadingProducts(false);
+    React.useEffect(() => {
+        if (inView && hasNextPage) {
+            fetchNextPage();
         }
-    }, [tab, category, searchQ, currentToken]);
+    }, [inView, hasNextPage, fetchNextPage]);
 
-    useEffect(() => {
-        const delayDebounceFn = setTimeout(() => {
-            fetchProducts();
-        }, 300);
-        return () => clearTimeout(delayDebounceFn);
-    }, [fetchProducts]);
+    const flatProducts = data?.pages.flatMap(page => page) || [];
 
-    // ── GÜNCELLENMİŞ FAVORİ FONKSİYONU (BACKEND SENKRONİZASYONLU) ──
     const toggleFav = useCallback(async (item, skipApi = false) => {
-        // 1. Kullanıcıyı bekletmemek için kalbi anında değiştir (Optimistic Update)
         setFavorites((prev) => {
             const exists = prev.some((f) => f.id === item.id);
             const next = exists ? prev.filter((f) => f.id !== item.id) : [...prev, item];
@@ -214,7 +192,6 @@ export default function Dashboard() {
             return next;
         });
 
-        // 2. Eğer istek ProductPage'den gelmediyse backend'e git
         if (!skipApi) {
             try {
                 const token = localStorage.getItem('token');
@@ -222,23 +199,14 @@ export default function Dashboard() {
                     const response = await api.post(`/Product/${item.id}/toggle-save`, {}, {
                         headers: { 'Authorization': `Bearer ${token}` }
                     });
-
-                    // 3. Backend'den dönen GÜVENİLİR sonucu al 
-                    // (C# varsayılan olarak json ismini camelCase yani isSaved yapar)
                     const actualStatus = response.data.isSaved !== undefined ? response.data.isSaved : response.data.IsSaved;
 
-                    // 4. Backend ile Frontend'i kesin olarak eşleştir
                     if (actualStatus !== undefined) {
                         setFavorites((prev) => {
                             const exists = prev.some((f) => f.id === item.id);
                             let next = [...prev];
-
-                            if (actualStatus && !exists) {
-                                next.push(item); // Backend eklendi dediyse ama frontend'de yoksa ekle
-                            } else if (!actualStatus && exists) {
-                                next = next.filter((f) => f.id !== item.id); // Backend silindi dediyse çıkar
-                            }
-
+                            if (actualStatus && !exists) next.push(item);
+                            else if (!actualStatus && exists) next = next.filter((f) => f.id !== item.id);
                             dbSet(STORAGE_KEYS.favorites, next);
                             return next;
                         });
@@ -249,6 +217,7 @@ export default function Dashboard() {
             }
         }
     }, []);
+
     const handleRate = useCallback((productId, score) => {
         setRatings((prev) => {
             const next = { ...prev, [productId]: score };
@@ -299,7 +268,6 @@ export default function Dashboard() {
             };
             openProduct(newAnalysis);
             setLinkQ('');
-            fetchProducts();
         }, 3600);
     };
 
@@ -323,21 +291,15 @@ export default function Dashboard() {
         } catch (error) {
             console.error("Çıkış isteği hatası:", error);
         } finally {
-            // 1. Kullanıcı oturum token'larını sil
             localStorage.removeItem('token');
             localStorage.removeItem('refreshToken');
             localStorage.removeItem('username');
-
-            // 2. Tarayıcıda kalan eski kullanıcı verilerini tamamen temizle (KRİTİK ADIM)
             localStorage.removeItem(STORAGE_KEYS.favorites);
             localStorage.removeItem(STORAGE_KEYS.history);
             localStorage.removeItem(STORAGE_KEYS.ratings);
-
-            // 3. State'leri sıfırla (Bileşen unmount olmadan önceki kalıntıları önler)
             setFavorites([]);
             setHistory([]);
             setRatings({});
-
             navigate('/', { replace: true });
         }
     };
@@ -351,7 +313,7 @@ export default function Dashboard() {
                 onClose={() => setSelected(null)}
                 userRating={ratings[selected.id]}
                 onRate={handleRate}
-                allProducts={products}
+                allProducts={flatProducts}
                 openProduct={openProduct}
                 favorites={favorites}
                 ratings={ratings}
@@ -371,10 +333,8 @@ export default function Dashboard() {
                                 <Sparkles size={28} color="#ffffff" />
                             </div>
                         </div>
-
                         <h2 className="loader-title">VividAI İşliyor</h2>
                         <div className="loader-step-text">{analyzeSteps[loadingStep]}</div>
-
                         <div className="loader-progress-wrap">
                             <div
                                 className="loader-progress-bar"
@@ -397,18 +357,7 @@ export default function Dashboard() {
                         <div className="premium-logo-container">
                             <div className="logo-halo"></div>
                             <div className="logo-structure">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M21 15C21 15.5304 20.7893 16.0391 20.4142 16.4142C20.0391 16.7893 19.5304 17 19 17H7L3 21V5C3 4.46957 3.21071 3.96086 3.58579 3.58579C3.96086 3.21071 4.46957 3 5 3H19C19.5304 3 20.0391 3.21071 20.4142 3.58579C20.7893 3.96086 21 4.46957 21 5V15Z" stroke="url(#paint0_linear)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                                    <path d="M8 9H16" stroke="white" strokeWidth="2" strokeLinecap="round" />
-                                    <path d="M8 13H13" stroke="white" strokeWidth="2" strokeLinecap="round" />
-                                    <circle cx="17.5" cy="12.5" r="2" fill="#ec4899" className="pulse-dot" />
-                                    <defs>
-                                        <linearGradient id="paint0_linear" x1="3" y1="3" x2="21" y2="21" gradientUnits="userSpaceOnUse">
-                                            <stop stopColor="#a855f7" />
-                                            <stop offset="1" stopColor="#ec4899" />
-                                        </linearGradient>
-                                    </defs>
-                                </svg>
+                                <Sparkles size={24} color="#ec4899" />
                             </div>
                         </div>
                         <div className="project-title-group">
@@ -417,7 +366,6 @@ export default function Dashboard() {
                         </div>
                     </div>
 
-                    {/* ── YENİ TASARIMLI KULLANICI PROFİLİ ── */}
                     <div className="vivid-user-profile-wrapper">
                         <div className="vivid-user-profile" onClick={() => setProfileMenuOpen(!profileMenuOpen)}>
                             <div className="user-avatar-container">
@@ -426,7 +374,6 @@ export default function Dashboard() {
                             </div>
                             <div className="user-info-stack">
                                 <span className="user-name-display">{username}</span>
-
                             </div>
                             <ChevronDown size={14} className={`profile-chevron ${profileMenuOpen ? 'open' : ''}`} />
                         </div>
@@ -448,7 +395,6 @@ export default function Dashboard() {
                                     <button className="dropdown-item" onClick={() => { setProfileView('gecmis'); setProfileMenuOpen(false); }}>
                                         <Clock size={16} color="#3b82f6" /> Analiz Geçmişi
                                     </button>
-
                                 </div>
                                 <div className="dropdown-divider-thick"></div>
                                 <button className="dropdown-item exit-item" onClick={handleLogout}>
@@ -470,16 +416,9 @@ export default function Dashboard() {
                 <div className="search-glow-wrap">
                     <div className="search-inner-box main-analyze-box">
                         <Link2 size={24} color="#7c3aed" className="search-icon" />
-                        <input className="search-input-field" placeholder="E-ticaret platformlarından (Trendyol, Hepsiburada vb.) ürün linkini buraya yapıştır..." value={linkQ} onChange={(e) => setLinkQ(e.target.value)} onKeyDown={(e) => { if (e.key === 'Enter') handleLinkAnalyze(); }} />
+                        <input className="search-input-field" placeholder="E-ticaret platformlarından (Trendyol, vb.) ürün linkini yapıştır..." value={linkQ} onChange={(e) => setLinkQ(e.target.value)} onKeyDown={(e) => { if (e.key === 'Enter') handleLinkAnalyze(); }} />
                         <button className="search-action-btn pulse-glow" onClick={handleLinkAnalyze}><Zap size={18} /> Analiz Et</button>
                     </div>
-                </div>
-                <div className="flow-steps-row">
-                    <div className="flow-step-unit"><div className="flow-icon-box"><Link2 size={18} /></div><div className="flow-text"><div className="flow-title">Link'i Kopyala</div><div className="flow-desc">Ürün sayfasından URL al</div></div></div>
-                    <ChevronRight size={16} color="#cbd5e1" />
-                    <div className="flow-step-unit"><div className="flow-icon-box"><ClipboardPaste size={18} /></div><div className="flow-text"><div className="flow-title">Yapıştır</div><div className="flow-desc">Arama kutusuna ekle</div></div></div>
-                    <ChevronRight size={16} color="#cbd5e1" />
-                    <div className="flow-step-unit"><div className="flow-icon-box"><ChartNoAxesColumnIncreasing size={18} /></div><div className="flow-text"><div className="flow-title">Sonuçları Gör</div><div className="flow-desc">AI analiz raporunu incele</div></div></div>
                 </div>
             </section>
 
@@ -515,23 +454,26 @@ export default function Dashboard() {
             </div>
 
             <div className="vivid-section">
-                {isLoadingProducts ? (
+                {status === 'pending' ? (
                     <div className="empty-state" style={{ padding: '40px' }}>
                         <Loader2 size={40} color="#7c3aed" className="animate-spin" />
                         <br />Veriler yükleniyor...
                     </div>
+                ) : status === 'error' ? (
+                    <div className="empty-state" style={{ padding: '40px', color: '#ef4444' }}>
+                        Veriler yüklenirken bir hata oluştu. Lütfen oturumunuzu yenileyin.
+                    </div>
                 ) : (
                     <>
-                        {/* ── KEŞFET VE BEĞENİLENLER SEKMELERİ ── */}
                         {(tab === 'kesfet' || tab === 'begenilenler') && (
-                            products.length === 0 ? (
+                            flatProducts.length === 0 ? (
                                 <div className="empty-state">
                                     <Search size={40} color="#cbd5e1" />
                                     <br />{category === 'Hepsi' && searchQ === '' ? 'Henüz sistemde ürün bulunmuyor.' : 'Aradığınız kritere uygun ürün bulunamadı.'}
                                 </div>
                             ) : (
                                 <div className="card-grid">
-                                    {products.map((item) => (
+                                    {flatProducts.map((item) => (
                                         <ProductCard
                                             key={item.id}
                                             item={item}
@@ -541,39 +483,47 @@ export default function Dashboard() {
                                             userRating={ratings[item.id]}
                                         />
                                     ))}
+                                    
+                                    {/* 🌟 INFINITE SCROLL GÖZLEMCİ DÜĞÜMÜ 🌟 */}
+                                    <div ref={observerRef} style={{ width: '100%', height: '20px', display: 'flex', justifyContent: 'center', margin: '20px 0' }}>
+                                        {isFetchingNextPage ? <Loader2 size={24} className="animate-spin text-purple-600" /> : null}
+                                    </div>
                                 </div>
                             )
                         )}
 
                         {tab === 'trendler' && (
-                            products.filter(p => p.clickCount > 0).length === 0 ? (
+                            flatProducts.filter(p => p.clickCount > 0).length === 0 ? (
                                 <div className="empty-state">
                                     <BarChart size={40} color="#cbd5e1" />
                                     <br />Henüz tıklanan ürün bulunamadı.
                                 </div>
                             ) : (
-                                products
-                                    .filter(p => p.clickCount > 0)
-                                    .sort((a, b) => b.clickCount - a.clickCount)
-                                    .map((product, i) => {
-                                        const platColor = getPlatformColor(product.plat);
-                                        return (
-                                            <div key={product.id} className="trend-row" onClick={() => openProduct(product)}>
-                                                <span className="t-rank" style={{ color: platColor }}>#{i + 1}</span>
-                                                <div className="t-img-box"><img src={product.img} alt={product.name} /></div>
-                                                <div className="trend-row-info">
-                                                    <span className="t-name">{product.name}</span>
-                                                    <span className="t-sub">{product.category} · <strong style={{ color: platColor }}>{product.plat}</strong> · {product.clickCount} Tıklama</span>
+                                <div style={{display: 'flex', flexDirection: 'column', gap: '1rem'}}>
+                                    {flatProducts
+                                        .filter(p => p.clickCount > 0)
+                                        .sort((a, b) => b.clickCount - a.clickCount)
+                                        .map((product, i) => {
+                                            const platColor = getPlatformColor(product.plat);
+                                            return (
+                                                <div key={product.id} className="trend-row" onClick={() => openProduct(product)}>
+                                                    <span className="t-rank" style={{ color: platColor }}>#{i + 1}</span>
+                                                    <div className="t-img-box"><img src={product.img} alt={product.name} /></div>
+                                                    <div className="trend-row-info">
+                                                        <span className="t-name">{product.name}</span>
+                                                        <span className="t-sub">{product.category} · <strong style={{ color: platColor }}>{product.plat}</strong> · {product.clickCount} Tıklama</span>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        );
-                                    })
+                                            );
+                                        })}
+                                </div>
                             )
                         )}
                     </>
                 )}
             </div>
 
+            {/* ── KULLANICI PROFİL MODALLARI (DÜZELTİLEN KISIM) ── */}
             {profileView && (
                 <div className="profile-modal-overlay" onClick={() => setProfileView(null)}>
                     <div className="profile-modal-card" onClick={(e) => e.stopPropagation()}>
@@ -584,13 +534,12 @@ export default function Dashboard() {
                             </div>
                             <button className="profile-modal-close" onClick={() => setProfileView(null)}>✕</button>
                         </div>
+                        
                         <div className="profile-modal-body">
-
-                            {/* ── 1. KOLEKSİYONUM (FAVORİLER) MODALI ── */}
+                            {/* 1. KOLEKSİYONUM (FAVORİLER) MODALI */}
                             {profileView === 'favoriler' && (
                                 <div className="modal-inner-section">
-                                    {isLoadingProducts ? (
-                                        // Veriler backend'den çekilirken görünecek şık progress loader
+                                    {status === 'pending' ? (
                                         <div className="empty-state" style={{ padding: '60px 20px' }}>
                                             <Loader2 size={40} color="#7c3aed" className="animate-spin" />
                                             <br /><br />Koleksiyonunuz senkronize ediliyor...
@@ -607,11 +556,10 @@ export default function Dashboard() {
                                 </div>
                             )}
 
-                            {/* ── 2. ANALİZ GEÇMİŞİ MODALI ── */}
+                            {/* 2. ANALİZ GEÇMİŞİ MODALI */}
                             {profileView === 'gecmis' && (
                                 <div className="modal-inner-section">
-                                    {isLoadingProducts ? (
-                                        // Geçmiş yüklenirken görünecek şık progress loader
+                                    {status === 'pending' ? (
                                         <div className="empty-state" style={{ padding: '60px 20px' }}>
                                             <Loader2 size={40} color="#7c3aed" className="animate-spin" />
                                             <br /><br />Analiz geçmişi yükleniyor...
@@ -621,7 +569,7 @@ export default function Dashboard() {
                                     ) : (
                                         <div className="modal-card-grid card-grid">
                                             {history.map((h) => {
-                                                const matchedProduct = products.find((p) => p.name === h);
+                                                const matchedProduct = flatProducts.find((p) => p.name === h);
                                                 if (!matchedProduct) return null;
                                                 return (
                                                     <ProductCard key={matchedProduct.id} item={matchedProduct} isFav={favorites.some((f) => f.id === matchedProduct.id)} onFav={toggleFav} onClick={() => { setSelected(matchedProduct); setProfileView(null); }} userRating={ratings[matchedProduct.id]} />
@@ -631,7 +579,6 @@ export default function Dashboard() {
                                     )}
                                 </div>
                             )}
-
                         </div>
                     </div>
                 </div>

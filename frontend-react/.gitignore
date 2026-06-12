@@ -12,3 +12,4 @@ functions/
 one-off/
 *.py
 *.txt
+dist/
