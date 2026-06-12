@@ -26,3 +26,5 @@ one-off/
 /off/
 /scripts/
 /results/
+/Llama_Dataset/islenen_urunler.json
+/Llama_Dataset/train.jsonl
