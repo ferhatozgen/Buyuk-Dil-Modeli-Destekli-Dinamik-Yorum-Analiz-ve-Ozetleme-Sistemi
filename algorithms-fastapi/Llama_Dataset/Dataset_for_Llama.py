@@ -1,4 +1,5 @@
 import os
+import sys
 import json
 import time
 import asyncio
@@ -6,19 +7,21 @@ from collections import Counter
 from google import genai
 from google.genai import types
 from dotenv import load_dotenv
-
-# --- KENDİ MODÜLLERİNİZ ---
+load_dotenv()
+# Mevcut dosyanın bir üst klasörünü (algorithms-fastapi) Python'un arama yoluna ekle
+current_dir = os.path.dirname(os.path.abspath(__file__))
+parent_dir = os.path.abspath(os.path.join(current_dir, '..'))
+sys.path.append(parent_dir)
 from functions.db_manager import DatabaseManager
 from functions.utils import vllm_ile_toplu_isleme
 from config import URUN_GRUP_SEMALARI
 from functions.logger import setup_logger
 
 # --- KONFİGÜRASYON VE SABİTLER ---
-load_dotenv()
 GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
 
 client = genai.Client(api_key=GEMINI_API_KEY)
-MODEL_NAME = "gemini-2.0-flash"
+MODEL_NAME = "gemini-2.5-flash"
 
 HEDEF_URUN_KATEGORI_BASINA = 50
 MAX_YORUM_SAYISI = 50
