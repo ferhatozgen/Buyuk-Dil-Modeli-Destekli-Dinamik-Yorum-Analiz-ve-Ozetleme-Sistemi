@@ -27,6 +27,31 @@ CHECKPOINT_DOSYASI = "islenen_urunler.json"
 
 logger = setup_logger("Dataset_Generator")
 
+# --- İŞLENECEK KATEGORİLER LİSTESİ ---
+# İşlemi biten kategorileri bu listeden silebilir veya başına '#' koyarak atlayabilirsin.
+# Buraya yazdığın isimler config.py içindeki URUN_GRUP_SEMALARI anahtarlarıyla aynı olmalı.
+ISLENECEK_KATEGORILER = [
+    "anne_bebek_oyuncak",
+    "cicek",
+    "egitim_eglence",
+    "elektronik_teknoloji",
+    "ev_yasam_mobilya",
+    "gezilecek_yer",
+    "giyim_ayakkabi",
+    "gunluk_ev",
+    "hediyelik_esya",
+    "kirtasiye_kitap_hobi",
+    "kozmetik_kisisel_bakim",
+    "kurumsal",
+    "oyun",
+    "pet_shop",
+    "saglik",
+    "spor_outdoor",
+    "supermarket_gida",
+    "yemek",
+    "yenilebilir_cicek"
+]
+
 
 # --- CHECKPOINT YÖNETİMİ ---
 def checkpoint_yukle():
@@ -170,7 +195,14 @@ async def veri_setini_olustur():
 
     logger.info("Veri seti oluşturma süreci başlıyor...")
 
-    for urun_grubu in URUN_GRUP_SEMALARI.keys():
+    # Artık tüm şemayı değil, sadece yukarıda belirlediğimiz listeyi geziyoruz
+    for urun_grubu in ISLENECEK_KATEGORILER:
+
+        # Eğer listeye yazılan kategori ismi şemalarda yoksa uyar ve atla (hata vermesin diye güvenlik)
+        if urun_grubu not in URUN_GRUP_SEMALARI:
+            logger.warning(f"'{urun_grubu}' adlı kategori URUN_GRUP_SEMALARI içinde bulunamadı, atlanıyor.")
+            continue
+
         logger.info(f"Kategori işleniyor: {urun_grubu}")
 
         urunler_sorgusu = "SELECT id, product_name FROM products WHERE category = %s LIMIT %s;"
@@ -238,12 +270,12 @@ async def veri_setini_olustur():
             tum_yorumlar_metni = " | ".join(genel_havuz_listesi)
 
             kategori_sayaclari = Counter([item.get('kategori') for item in parcalanmis_veri if item.get('kategori')])
-            top_4_kategori = [kat[0] for kat in kategori_sayaclari.most_common(4)]
+            top_3_kategori = [kat[0] for kat in kategori_sayaclari.most_common(3)]
 
             with open(JSONL_DOSYA_YOLU, "a", encoding="utf-8") as jsonl_dosya:
 
                 # --- KATEGORİ ÖZETLERİNİN ÜRETİMİ ---
-                for kategori_adi in top_4_kategori:
+                for kategori_adi in top_3_kategori:
                     kategoriye_ait_cumleler = [
                         f"[Puan: {item['puan']}/5] {item['metin']}"
                         for item in parcalanmis_veri if item.get('kategori') == kategori_adi
