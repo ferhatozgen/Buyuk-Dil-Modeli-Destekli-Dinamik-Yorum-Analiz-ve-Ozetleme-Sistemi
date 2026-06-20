@@ -20,7 +20,6 @@ namespace LLM_Destekli_Ozetleme.Services
             _context = context;
             _configuration = configuration;
         }
-
         public async Task<AuthResult> RegisterAsync(RegisterDto registerDto)
         {
             if (await _context.Users.AnyAsync(u => u.Email == registerDto.Email))
@@ -44,7 +43,7 @@ namespace LLM_Destekli_Ozetleme.Services
 
             return new AuthResult { Success = true, Message = "Kullanıcı başarıyla oluşturuldu!" };
         }
-
+    
         public async Task<AuthResult> LoginAsync(LoginDto loginDto)
         {
             var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == loginDto.Email);
