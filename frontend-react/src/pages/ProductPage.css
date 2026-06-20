@@ -10,6 +10,92 @@
     transition: all 0.3s ease;
 }
 
+/* ── MODERN ROZET TASARIMLI AKADEMİK BANT ── */
+.top-academic-banner {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f1f5f9 !important;
+    color: #64748b !important;
+    padding: 6px 18px;
+    border-radius: 100px;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    margin: 0 auto 24px auto;
+    border: 1px solid #e2e8f0 !important;
+    box-shadow: none !important;
+    background-image: none !important;
+    text-transform: none;
+    user-select: none;
+}
+
+/* ── DÜZELTİLMİŞ TOOLTIP (AÇIKLAMA BALONCUKLARI) STİLLERİ ── */
+.tc-tooltip-wrap {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    cursor: help;
+}
+
+.tc-help-icon {
+    color: #94a3b8;
+    transition: color 0.2s ease;
+}
+
+.tc-tooltip-wrap:hover .tc-help-icon {
+    color: var(--theme-main);
+}
+
+.tc-tooltip-content {
+    visibility: hidden;
+    opacity: 0;
+    position: absolute;
+    bottom: 150%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 260px;
+    background-color: #1e293b !important;
+    color: #f8fafc !important;
+    text-align: left;
+    padding: 14px;
+    border-radius: 10px;
+    font-size: 12px;
+    font-weight: normal;
+    line-height: 1.6;
+    z-index: 1000;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    pointer-events: none;
+}
+
+/* GÖRSELDEKİ HATAYI ÇÖZEN KISIM (BAŞLIK RENGİ) */
+.tc-tooltip-content strong {
+    color: #ffffff !important;
+    /* Zorla net bir beyaz yaptık */
+    display: block;
+    margin-bottom: 6px;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.tc-tooltip-content::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -6px;
+    border-width: 6px;
+    border-style: solid;
+    border-color: #1e293b transparent transparent transparent;
+}
+
+.tc-tooltip-wrap:hover .tc-tooltip-content {
+    visibility: visible;
+    opacity: 1;
+    bottom: 130%;
+}
+
 /* ── ÜST BAR & BREADCRUMB ── */
 .tc-top-bar {
     display: flex;
@@ -177,7 +263,6 @@
     font-weight: 500;
 }
 
-/* ── SKOR KUTULARI ── */
 .tc-score-cards-row {
     display: flex;
     gap: 16px;
@@ -240,7 +325,6 @@
     color: #64748b;
 }
 
-/* ── KATEGORİK PARAMETRELER (AKORDİYON) ── */
 .tc-specs-section {
     display: flex;
     flex-direction: column;
@@ -339,10 +423,6 @@
     background: rgba(0, 0, 0, 0.01);
 }
 
-/* =========================================================================
-   KAYNAK YORUMLAR & HARİTALAMA (HIGHLIGHT / DIMMED EFEKTLERİ)
-   ========================================================================= */
-
 .tc-reviews-section {
     margin-top: 8px;
     display: flex;
@@ -390,7 +470,6 @@
     border-radius: 10px;
 }
 
-/* Varsayılan Yorum Kartı (Normal Metin Akışı) */
 .tc-review-card-mini {
     background: #fff;
     border: 1px solid #e2e8f0;
@@ -400,7 +479,6 @@
     transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
-/* KELİME SEÇİLDİĞİNDE EŞLEŞEN YORUMUN PARLAMASI (HIGHLIGHT) */
 .tc-card-highlight {
     border-color: var(--theme-main);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
@@ -410,7 +488,6 @@
     position: relative;
 }
 
-/* KELİME SEÇİLDİĞİNDE EŞLEŞMEYEN YORUMUN SOLUKLAŞMASI (DIMMED) */
 .tc-card-dimmed {
     opacity: 0.35;
     transform: scale(0.98);
@@ -434,7 +511,6 @@
     border: 1px solid #e2e8f0;
 }
 
-/* Sağdaki Yorum Kutusu Metni - Normal Akış */
 .tc-interactive-text-mini {
     font-size: 13.5px;
     line-height: 1.5;
@@ -442,7 +518,6 @@
     margin: 0;
 }
 
-/* SAĞDAKİ YORUM METNİNİN İÇİNDE EŞLEŞEN KELİMENİN FOSFORLU GİBİ PARLAMASI */
 .tc-word-highlight-match {
     background-color: var(--theme-main);
     color: #fff;
@@ -452,7 +527,6 @@
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
 }
 
-/* Soldaki Özet Metni (İnteraktif) */
 .tc-interactive-text {
     font-size: 14px;
     line-height: 1.6;
@@ -541,7 +615,6 @@
     line-height: 1.4;
 }
 
-/* Aksiyon Butonları */
 .tc-btn-primary {
     background: var(--theme-main);
     color: #fff;
@@ -589,7 +662,6 @@
     background: var(--theme-light);
 }
 
-/* Değerlendirme (Yıldız) Kutusu */
 .tc-rate-box {
     border: 1px solid #e2e8f0;
     border-radius: 12px;
@@ -618,7 +690,7 @@
 }
 
 /* =========================================================================
-   4. ALT KISIM: BENZER ÜRÜNLER (YATAY SCROLL)
+   4. ALT KISIM: BENZER ÜRÜNLER (YATAY SCROLL / KAYDIRMALI)
    ========================================================================= */
 .tc-similar-section {
     max-width: 1240px;
@@ -641,29 +713,24 @@
     scrollbar-width: thin;
     scrollbar-color: #cbd5e1 transparent;
     scroll-snap-type: x mandatory;
-    /* Kaydırırken kartlarda hizalanmasını sağlar */
 }
 
 .tc-similar-scroll-container::-webkit-scrollbar {
-    height: 6px;
+    height: 8px;
 }
 
 .tc-similar-scroll-container::-webkit-scrollbar-thumb {
     background-color: #cbd5e1;
-    border-radius: 100px;
+    border-radius: 10px;
 }
 
-/* KARTLARI SABİT BOYUTA ZORLAYAN KISIM */
 .tc-similar-card-wrapper {
     flex: 0 0 260px;
-    /* Bütün kartları tam olarak 260px genişliğe kilitler */
     min-width: 260px;
-    max-width: 260px;
     scroll-snap-align: start;
     display: flex;
 }
 
-/* DİKKAT: .product-card yerine senin yazdığın .p-card class'ını kullanıyoruz */
 .tc-similar-card-wrapper .p-card {
     width: 100%;
     height: 100%;
@@ -675,8 +742,6 @@
 /* =========================================================================
    🤖 MODERN CHATBOT TASARIMI
    ========================================================================= */
-
-/* ── Yüzen Buton (FAB) & Pulse Efekti ── */
 .tc-chatbot-fab {
     position: fixed;
     bottom: 30px;
@@ -721,7 +786,6 @@
     animation: none;
 }
 
-/* ── Chatbot Penceresi (Modal Container) ── */
 .tc-chatbot-modal {
     position: fixed;
     bottom: 30px;
@@ -748,7 +812,6 @@
     pointer-events: auto;
 }
 
-/* ── Chatbot Header ── */
 .tc-chatbot-header {
     background: var(--theme-main);
     color: #fff;
@@ -822,7 +885,6 @@
     background: rgba(255, 255, 255, 0.25);
 }
 
-/* ── Chatbot Gövdesi (Mesajlar) ── */
 .tc-chatbot-body {
     flex: 1;
     padding: 20px 24px;
@@ -853,7 +915,6 @@
     letter-spacing: 0.5px;
 }
 
-/* ── Modern Baloncuk (Bubble) Stilleri ── */
 .tc-chat-bubble {
     max-width: 82%;
     padding: 12px 16px;
@@ -863,7 +924,6 @@
     word-wrap: break-word;
 }
 
-/* Yapay Zeka Mesajı (Sol) */
 .tc-chat-bubble.ai {
     align-self: flex-start;
     background: #fff;
@@ -873,7 +933,6 @@
     box-shadow: 0 2px 6px rgba(15, 23, 42, 0.04);
 }
 
-/* Kullanıcı Mesajı (Sağ) */
 .tc-chat-bubble.user {
     align-self: flex-end;
     background: var(--theme-main);
@@ -882,7 +941,6 @@
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
-/* Yazıyor... Animasyonu */
 .tc-chat-bubble.typing {
     display: flex;
     align-items: center;
@@ -909,7 +967,6 @@
     }
 }
 
-/* ── Alt Kısım (Footer & Input) ── */
 .tc-chatbot-footer {
     padding: 16px 20px;
     background: #fff;

@@ -1133,3 +1133,128 @@ input {
     padding: 40px 30px;
   }
 }
+
+/* =========================================
+   PREMIUM AKADEMİK DUYURU BANDI
+   ========================================= */
+.academic-banner {
+  width: 100%;
+  /* Sayfanın açık temasını üstten asil bir şekilde çerçeveleyen koyu gradyan */
+  background: linear-gradient(90deg, #4c1d95 0%, #be185d 100%);
+  color: #ffffff;
+  text-align: center;
+  padding: 10px 0;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 1px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  position: relative;
+  z-index: 100;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(190, 24, 93, 0.2);
+}
+
+.academic-icon {
+  font-size: 16px;
+  /* İkonun biraz daha parlak durması için */
+  filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.5));
+}
+
+.academic-text {
+  opacity: 0.95;
+}
+
+/* Bandın üzerinden belirli aralıklarla geçen şık parlama (shine) animasyonu */
+.academic-shine {
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  animation: banner-shine 5s infinite;
+}
+
+@keyframes banner-shine {
+  0% {
+    left: -100%;
+  }
+
+  15% {
+    left: 200%;
+  }
+
+  100% {
+    left: 200%;
+  }
+}
+
+.site-footer {
+  width: 100%;
+  text-align: center;
+  padding: 60px 0;
+  opacity: 0.4;
+  margin-top: auto;
+  /* Flexbox ile footer'ı her zaman en aşağı iter */
+  background: transparent;
+  /* Arka plan rengi ile karışmaması için */
+}
+
+.footer-text {
+  margin: 0;
+  width: 100%;
+}
+
+/* ── REGISTER SAYFASI İÇİN SABİT ÜST BANT ── */
+
+/* SADECE LOGIN VE REGISTER İÇİN RENKLİ BANT */
+.auth-academic-banner {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 12px 0;
+  background: linear-gradient(90deg, #4c1d95 0%, #be185d 100%);
+  color: #ffffff;
+  text-align: center;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  z-index: 9999;
+  box-shadow: 0 2px 10px rgba(76, 29, 149, 0.3);
+}
+
+.modern-auth-wrapper {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  /* Formu ortalamak için */
+  padding-top: 50px;
+  /* Bantın içeriği kapatmaması için üst boşluk */
+  overflow: hidden;
+}
+
+.auth-container {
+  margin-top: 20px;
+  /* Bantın hemen altında, içerik için boşluk */
+  position: relative;
+  z-index: 10;
+  width: 100%;
+  max-width: 1000px;
+  height: 650px;
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(30px);
+  border: 1px solid var(--border);
+  border-radius: 32px;
+  display: flex;
+  overflow: hidden;
+  box-shadow: 0 40px 100px rgba(124, 58, 237, 0.1);
+}

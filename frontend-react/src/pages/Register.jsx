@@ -58,6 +58,9 @@ function Register() {
 
     return (
         <div className="modern-auth-wrapper">
+            <div className="auth-academic-banner">
+                BU BİR AKADEMİK ÇALIŞMADIR - SADECE YETKİLİ KULLANICILAR İÇİN ERİŞİME AÇIKTIR
+            </div>
             <div className="ambient-light light-purple"></div>
             <div className="ambient-light light-blue"></div>
 
@@ -65,9 +68,9 @@ function Register() {
                 <div className="auth-visual-side">
                     <div className="visual-content">
                         <div className="abstract-shape" style={{ background: 'linear-gradient(45deg, #3b82f6, #60a5fa)' }}></div>
-                        <h3 style={{ color: 'white', fontSize: '24px', fontWeight: '800' }}>Aramıza Katıl</h3>
+                        <h3 style={{ color: 'white', fontSize: '24px', fontWeight: '800' }}>Aramıza Katılın</h3>
                         <p style={{ color: 'rgba(255,255,255,0.6)', marginTop: '10px' }}>
-                            Verinin gücünü keşfetmek için ilk adımı at.
+                            Verinin gücünü keşfetmek için ilk adımı atın.
                         </p>
                     </div>
                 </div>
@@ -78,8 +81,9 @@ function Register() {
                             <Link to="/" className="back-button">
                                 <span>←</span> Ana Sayfaya Dön
                             </Link>
-                            <h2>Hesap Oluştur</h2>
-                            <p>VividAI deneyimine başlamak için kayıt ol.</p>
+
+                            <h2>Hesap Oluşturun</h2>
+                            <p>VividAI deneyimine başlamak için kayıt olun.</p>
                         </header>
 
                         <form onSubmit={handleRegister} className="auth-form">
