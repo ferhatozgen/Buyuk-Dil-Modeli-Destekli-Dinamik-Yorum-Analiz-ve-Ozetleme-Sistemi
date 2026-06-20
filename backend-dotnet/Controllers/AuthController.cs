@@ -18,14 +18,6 @@ namespace LLM_Destekli_Ozetleme.Controllers
             _authService = authService;
         }
 
-        [HttpPost("register")]
-        public async Task<IActionResult> Register([FromBody] RegisterDto request)
-        {
-            var result = await _authService.RegisterAsync(request);
-            if (!result.Success) return BadRequest(result.Message);
-            
-            return Ok(new { message = result.Message });
-        }
 
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] LoginDto request)

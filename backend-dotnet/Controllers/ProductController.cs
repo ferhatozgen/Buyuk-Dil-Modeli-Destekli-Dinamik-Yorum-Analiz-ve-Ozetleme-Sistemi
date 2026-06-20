@@ -229,5 +229,22 @@ namespace LLM_Destekli_Ozetleme.Controllers
 
             return Ok(new { message = result.Message });
         }
+
+        [HttpGet("{id}/trend")]
+        public async Task<IActionResult> GetProductTrend(Guid id)
+        {
+            try
+            {
+                var trendData = await _productService.GetProductTrendAsync(id);
+                if (trendData.PeriodType == "NoData")
+                    return NotFound(new { message = "Bu ürün için trend analizi yapılacak geçerli tarihli yorum bulunamadı." });
+
+                return Ok(trendData);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = "Trend analizi hesaplanırken bir hata oluştu.", error = ex.Message });
+            }
+        }
     }
 }
