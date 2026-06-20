@@ -20,7 +20,29 @@ namespace LLM_Destekli_Ozetleme.Services
             _context = context;
             _configuration = configuration;
         }
+        public async Task<AuthResult> RegisterAsync(RegisterDto registerDto)
+        {
+            if (await _context.Users.AnyAsync(u => u.Email == registerDto.Email))
+                return new AuthResult { Success = false, Message = "Bu e-posta adresi zaten kullanılıyor." };
 
+            if (await _context.Users.AnyAsync(u => u.Username == registerDto.Username))
+                return new AuthResult { Success = false, Message = "Bu kullanıcı adı zaten alınmış." };
+
+            string passwordHash = BCrypt.Net.BCrypt.HashPassword(registerDto.Password);
+
+            var newUser = new User
+            {
+                Username = registerDto.Username,
+                Email = registerDto.Email,
+                PasswordHash = passwordHash,
+                CreatedAt = DateTime.UtcNow
+            };
+
+            _context.Users.Add(newUser);
+            await _context.SaveChangesAsync();
+
+            return new AuthResult { Success = true, Message = "Kullanıcı başarıyla oluşturuldu!" };
+        }
     
         public async Task<AuthResult> LoginAsync(LoginDto loginDto)
         {
