@@ -40,19 +40,7 @@ ISLENECEK_KATEGORILER = [
     "elektronik_teknoloji",
     "ev_yasam_mobilya",
     "gezilecek_yer",
-    "giyim_ayakkabi",
-    "gunluk_ev",
-    "hediyelik_esya",
-    "kirtasiye_kitap_hobi",
-    "kozmetik_kisisel_bakim",
-    "kurumsal",
-    "oyun",
-    "pet_shop",
-    "saglik",
-    "spor_outdoor",
-    "supermarket_gida",
-    "yemek",
-    "yenilebilir_cicek"
+
 ]
 
 
