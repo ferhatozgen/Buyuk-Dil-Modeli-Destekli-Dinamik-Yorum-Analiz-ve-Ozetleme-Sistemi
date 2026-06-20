@@ -104,7 +104,7 @@ export default function Dashboard() {
         const str = rawCat.toLowerCase().replace(/_/g, ' ');
 
         if (str.includes('anne') || str.includes('bebek') || str.includes('oyuncak')) return 'Anne & Bebek & Oyuncak';
-        if (str.includes('oyun') || str.includes('game')) return 'Oyun'; 
+        if (str.includes('oyun') || str.includes('game')) return 'Oyun';
         if (str.includes('elektronik') || str.includes('teknoloji')) return 'Elektronik & Teknoloji';
         if (str.includes('kırtasiye') || str.includes('kirtasiye') || str.includes('kitap') || str.includes('hobi')) return 'Kırtasiye & Kitap & Hobi';
         if (str.includes('otel') || str.includes('konaklama')) return 'Otel';
@@ -135,7 +135,7 @@ export default function Dashboard() {
     const fetchProductsPage = async ({ pageParam = 1 }) => {
         const params = {
             PageNumber: pageParam,
-            PageSize: 20, 
+            PageSize: 20,
         };
 
         if (category !== 'Hepsi') params.Category = DB_CATEGORY_MAP[category] || 'diger';
@@ -168,12 +168,12 @@ export default function Dashboard() {
         isFetchingNextPage,
         status,
     } = useInfiniteQuery({
-        queryKey: ['products', category, searchQ, tab], 
+        queryKey: ['products', category, searchQ, tab],
         queryFn: fetchProductsPage,
         getNextPageParam: (lastPage, allPages) => {
             return lastPage.length === 20 ? allPages.length + 1 : undefined;
         },
-        staleTime: 5 * 60 * 1000, 
+        staleTime: 5 * 60 * 1000,
     });
 
     React.useEffect(() => {
@@ -325,6 +325,7 @@ export default function Dashboard() {
         <div className="vivid-main-page">
             {isAnalyzing && (
                 <div className="vivid-ai-loader-overlay">
+
                     <div className="vivid-ai-loader-card">
                         <div className="loader-orbit-container">
                             <div className="loader-orbit-ring ring-1"></div>
@@ -357,12 +358,23 @@ export default function Dashboard() {
                         <div className="premium-logo-container">
                             <div className="logo-halo"></div>
                             <div className="logo-structure">
-                                <Sparkles size={24} color="#ec4899" />
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M21 15C21 15.5304 20.7893 16.0391 20.4142 16.4142C20.0391 16.7893 19.5304 17 19 17H7L3 21V5C3 4.46957 3.21071 3.96086 3.58579 3.58579C3.96086 3.21071 4.46957 3 5 3H19C19.5304 3 20.0391 3.21071 20.4142 3.58579C20.7893 3.96086 21 4.46957 21 5V15Z" stroke="url(#paint0_linear)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                                    <path d="M8 9H16" stroke="white" strokeWidth="2" strokeLinecap="round" />
+                                    <path d="M8 13H13" stroke="white" strokeWidth="2" strokeLinecap="round" />
+                                    <circle cx="17.5" cy="12.5" r="2" fill="#ec4899" className="pulse-dot" />
+                                    <defs>
+                                        <linearGradient id="paint0_linear" x1="3" y1="3" x2="21" y2="21" gradientUnits="userSpaceOnUse">
+                                            <stop stopColor="#a855f7" />
+                                            <stop offset="1" stopColor="#ec4899" />
+                                        </linearGradient>
+                                    </defs>
+                                </svg>
                             </div>
                         </div>
                         <div className="project-title-group">
                             <div className="brand-primary">Vivid<span className="brand-accent">AI</span></div>
-                            <div className="brand-slogan">Yapay Zeka Analiz Motoru</div>
+                            <div className="brand-slogan">Yapay Zeka ANALİZ Motoru</div>
                         </div>
                     </div>
 
@@ -405,18 +417,20 @@ export default function Dashboard() {
                     </div>
                 </div>
             </header>
-
+            <div className="dashboard-academic-bannerr">
+                BU PROJE AKADEMİK AMAÇLIDIR VE TİCARİ BİR KULLANIM İÇERMEZ
+            </div>
             <section className="vivid-hero-section">
                 <div className="hero-top">
                     <div className="hero-text">
-                        <h1>Analiz Portalına<br /><span>Hoş Geldin</span></h1>
-                        <p>Ürün linkini aşağıya yapıştır, AI ile anında detaylı analiz et.</p>
+                        <h1> Yapay Zeka Destekli Analiz Motoruna <br /><span>Hoş Geldiniz</span></h1>
+                        <p>Ürün linkini aşağıya yapıştırın, yapay zeka yardımı ile anında analiz edin.</p>
                     </div>
                 </div>
                 <div className="search-glow-wrap">
                     <div className="search-inner-box main-analyze-box">
                         <Link2 size={24} color="#7c3aed" className="search-icon" />
-                        <input className="search-input-field" placeholder="E-ticaret platformlarından (Trendyol, vb.) ürün linkini yapıştır..." value={linkQ} onChange={(e) => setLinkQ(e.target.value)} onKeyDown={(e) => { if (e.key === 'Enter') handleLinkAnalyze(); }} />
+                        <input className="search-input-field" placeholder="E-ticaret platformlarından (Trendyol, vb.) ürün linkini yapıştırın..." value={linkQ} onChange={(e) => setLinkQ(e.target.value)} onKeyDown={(e) => { if (e.key === 'Enter') handleLinkAnalyze(); }} />
                         <button className="search-action-btn pulse-glow" onClick={handleLinkAnalyze}><Zap size={18} /> Analiz Et</button>
                     </div>
                 </div>
@@ -457,11 +471,11 @@ export default function Dashboard() {
                 {status === 'pending' ? (
                     <div className="empty-state" style={{ padding: '40px' }}>
                         <Loader2 size={40} color="#7c3aed" className="animate-spin" />
-                        <br />Veriler yükleniyor...
+                        <br />Ürünler yükleniyor...
                     </div>
                 ) : status === 'error' ? (
                     <div className="empty-state" style={{ padding: '40px', color: '#ef4444' }}>
-                        Veriler yüklenirken bir hata oluştu. Lütfen oturumunuzu yenileyin.
+                        Ürünler yüklenirken bir hata oluştu. Lütfen oturumunuzu yenileyin.
                     </div>
                 ) : (
                     <>
@@ -483,7 +497,7 @@ export default function Dashboard() {
                                             userRating={ratings[item.id]}
                                         />
                                     ))}
-                                    
+
                                     {/* 🌟 INFINITE SCROLL GÖZLEMCİ DÜĞÜMÜ 🌟 */}
                                     <div ref={observerRef} style={{ width: '100%', height: '20px', display: 'flex', justifyContent: 'center', margin: '20px 0' }}>
                                         {isFetchingNextPage ? <Loader2 size={24} className="animate-spin text-purple-600" /> : null}
@@ -499,7 +513,7 @@ export default function Dashboard() {
                                     <br />Henüz tıklanan ürün bulunamadı.
                                 </div>
                             ) : (
-                                <div style={{display: 'flex', flexDirection: 'column', gap: '1rem'}}>
+                                <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
                                     {flatProducts
                                         .filter(p => p.clickCount > 0)
                                         .sort((a, b) => b.clickCount - a.clickCount)
@@ -534,7 +548,7 @@ export default function Dashboard() {
                             </div>
                             <button className="profile-modal-close" onClick={() => setProfileView(null)}>✕</button>
                         </div>
-                        
+
                         <div className="profile-modal-body">
                             {/* 1. KOLEKSİYONUM (FAVORİLER) MODALI */}
                             {profileView === 'favoriler' && (

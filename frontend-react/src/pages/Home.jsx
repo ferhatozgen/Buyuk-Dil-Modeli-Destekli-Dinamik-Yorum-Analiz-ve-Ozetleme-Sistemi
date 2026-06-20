@@ -37,8 +37,8 @@ function Home() {
     ];
 
     const platforms = [
-        "Trendyol", "Hepsiburada", "Airbnb", "Steam",
-        "Google Maps", "Etstur", "Çiçeksepeti", "TrendyolGo"
+        "Trendyol", "HEPSİBURADA", "AİRBNB", "Steam",
+        "Google Maps", "Etstur", "ÇİÇEKSEPETİ", "TrendyolGo"
     ];
 
     const toggleAnalysis = (id) => {
@@ -47,6 +47,13 @@ function Home() {
 
     return (
         <div className="landing-page">
+            {/* AKADEMİK ÇALIŞMA ÜST BANDI */}
+            {/* AKADEMİK ÇALIŞMA ÜST BANDI */}
+            <div className="academic-banner">
+
+                <span className="academic-text">BU PROJE AKADEMİK AMAÇLIDIR VE TİCARİ BİR KULLANIM İÇERMEZ</span>
+                <div className="academic-shine"></div>
+            </div>
 
             <div className="bg-glow glow-1"></div>
             <div className="bg-glow glow-2"></div>
@@ -76,7 +83,7 @@ function Home() {
                         <div className="brand-primary">
                             Vivid<span className="brand-accent">AI</span>
                         </div>
-                        <div className="brand-slogan">Yapay Zeka Analiz Motoru</div>
+                        <div className="brand-slogan">YAPAY ZEKA ANALİZ MOTORU</div>
                     </div>
                 </Link>
 
@@ -93,7 +100,7 @@ function Home() {
                         <h1 className="hero-title text-left">
                             Binlerce yorumu saniyeler içinde <br />
                             <span className="gradient-text">
-                                anlamlı verilere dönüştür.
+                                anlamlı verilere dönüştürün.
                             </span>
                         </h1>
                         <p className="hero-text text-left">
@@ -102,7 +109,7 @@ function Home() {
                         </p>
                         <div className="hero-actions justify-left">
                             <Link to="/login" className="primary-btn">
-                                Hemen Analize Başla
+                                Hemen Analize Başlayın
                             </Link>
                         </div>
                     </div>
@@ -140,19 +147,19 @@ function Home() {
                     </div>
                 </div>
 
-                <section id="trends" className="product-section" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                    <div className="section-head" style={{ marginTop: '40px' }}>
+                <section id="trends" className="product-section section-centered">
+                    <div className="section-head mt-40">
                         <h2>Platform Bazlı Özetler</h2>
                     </div>
-                    <div className="product-grid" style={{ justifyContent: 'center', width: '100%' }}>
+                    <div className="product-grid grid-centered">
                         {trends.map(product => (
-                            <div className="product-card" key={product.id} style={{ margin: '0 auto' }}>
+                            <div className="product-card card-centered" key={product.id}>
                                 <div className="product-visual">
                                     <div className="product-chip">{product.platform}</div>
                                     <div className="visual-mock">
                                         <div className="mock-line short"></div>
                                         <div className="mock-line"></div>
-                                        <div style={{ marginTop: 10, fontSize: '12px' }}>SKOR: {product.score}</div>
+                                        <div className="mock-score">SKOR: {product.score}</div>
                                     </div>
                                 </div>
                                 <div className="product-content">
@@ -184,19 +191,19 @@ function Home() {
                     </div>
                 </section>
 
-                <section id="features" className="feature-section" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                <section id="features" className="feature-section section-centered">
                     <div className="section-head">
                         <div className="section-tag">Nasıl Çalışır?</div>
-                        <h2>3 Adımda Sonuca Ulaş</h2>
-                        <p style={{ marginTop: '10px', color: 'var(--muted)' }}>
+                        <h2>3 Adımda Sonuca Ulaşın</h2>
+                        <p className="section-subtitle">
                             VividAİ, karmaşık verileri saniyeler içinde sizin için analiz eder.
                         </p>
                     </div>
 
-                    <div className="feature-grid" style={{ justifyContent: 'center', width: '100%' }}>
+                    <div className="feature-grid grid-centered">
                         <div className="feature-card">
                             <div className="feature-icon purple">01</div>
-                            <h3>Linki Yapıştır</h3>
+                            <h3>Linki Yapıştırın</h3>
                             <p>Trendyol, Hepsiburada veya Steam ürün linkini kopyalayıp sisteme ekleyin.</p>
                         </div>
 
@@ -208,26 +215,26 @@ function Home() {
 
                         <div className="feature-card">
                             <div className="feature-icon blue">03</div>
-                            <h3>Özeti Gör</h3>
+                            <h3>Özeti Görün</h3>
                             <p>Karmaşa yerine; net skorlar ve raporlarını saniyeler içinde alın.</p>
                         </div>
                     </div>
                 </section>
 
-                <section id="faq" className="feature-section" style={{ paddingBottom: '100px' }}>
+                <section id="faq" className="feature-section pb-100">
                     <div className="section-head">
                         <div className="section-tag">Destek</div>
                         <h2>Sıkça Sorulan Sorular</h2>
                     </div>
-                    <div style={{ maxWidth: '800px', margin: '0 auto', display: 'flex', flexDirection: 'column', gap: '15px' }}>
+                    <div className="faq-container">
                         {[
                             { q: "Hangi platformları destekliyor?", a: "Trendyol, Hepsiburada, Steam, Airbnb ve Google Maps dahil 10+ platformu destekliyoruz." },
                             { q: "Yorumları nasıl analiz ediyorsunuz?", a: "En güncel Büyük Dil Modellerini (LLM) kullanarak metinlerdeki anlam ve duygu tonunu ayrıştırıyoruz." },
                             { q: "Veriler gerçek zamanlı mı?", a: "Evet, siz linki yapıştırdığınız an platformdaki en güncel yorumlar taranır." }
                         ].map((item, index) => (
-                            <div key={index} className="feature-card" style={{ padding: '20px', textAlign: 'left' }}>
-                                <h4 style={{ color: 'var(--purple)', marginBottom: '10px' }}>{item.q}</h4>
-                                <p style={{ fontSize: '14px' }}>{item.a}</p>
+                            <div key={index} className="feature-card faq-card">
+                                <h4 className="faq-question">{item.q}</h4>
+                                <p className="faq-answer">{item.a}</p>
                             </div>
                         ))}
                     </div>
@@ -236,10 +243,10 @@ function Home() {
                 <section className="cta-section-modern">
                     <div className="cta-container">
                         <div className="cta-glass-card">
-                            <div className="section-tag">Hemen Başla</div>
+                            <div className="section-tag">Hemen Başlayın</div>
                             <h2 className="cta-heading">
                                 Yorumları analiz etmeye <br />
-                                <span className="gradient-text">hazır mısın?</span>
+                                <span className="gradient-text">hazır mısınız?</span>
                             </h2>
                             <p className="cta-subtext">
                                 Binlerce kullanıcı deneyimini saniyeler içinde analiz edin.
@@ -248,7 +255,7 @@ function Home() {
 
                             <div className="cta-button-wrapper">
                                 <Link to="/login" className="primary-btn-premium">
-                                    <span className="btn-text">Analize Şimdi Başla</span>
+                                    <span className="btn-text">Analize Şimdi Başlayın</span>
                                     <span className="btn-glow"></span>
                                 </Link>
                             </div>
@@ -263,8 +270,8 @@ function Home() {
                 </section>
             </main>
 
-            <footer style={{ textAlign: 'center', padding: '60px 0', opacity: 0.4 }}>
-                © 2026 VividAİ - Smart Review Engine
+            <footer className="site-footer">
+                <p className="footer-text">© 2026 VividAİ - Smart Review Engine</p>
             </footer>
         </div>
     );

@@ -2,7 +2,7 @@ import React, { useState, useMemo, useRef, useEffect, useCallback } from 'react'
 import {
     ArrowLeft, Heart, Star, ChevronDown, ChevronUp, ShieldCheck, CheckCircle2,
     Clock, ThumbsUp, Sparkles, CheckCircle, Info, TrendingUp,
-    MessageCircle, X, Send, Bot, MoreHorizontal, Loader2
+    MessageCircle, X, Send, Bot, MoreHorizontal, Loader2, HelpCircle
 } from 'lucide-react';
 import './ProductPage.css';
 import ProductCard from './ProductCard';
@@ -81,7 +81,6 @@ export default function ProductPage({ product, onFav, onClose, userRating, onRat
         }
     }, [product?.id]);
 
-    // ── GÜNCELLENEN FAVORİ KAYDETME FONKSİYONU (C# YANIT UYUMLU) ──
     const handleToggleSave = async () => {
         try {
             const token = localStorage.getItem('token');
@@ -90,13 +89,9 @@ export default function ProductPage({ product, onFav, onClose, userRating, onRat
             });
 
             if (response.status === 200) {
-                // Backend'in döndürdüğü gerçek durumu alıyoruz
                 const newSaveStatus = response.data.isSaved !== undefined ? response.data.isSaved : response.data.IsSaved;
-
-                // 1. Ürün detay sayfasındaki kalbi anında güncelle
                 setProductDetail(prev => ({ ...prev, isFavorited: newSaveStatus }));
 
-                // 2. Dashboard'ın okuyabileceği formata çevir
                 const updatedProductForDashboard = {
                     id: productDetail.id,
                     name: productDetail.productName,
@@ -109,7 +104,6 @@ export default function ProductPage({ product, onFav, onClose, userRating, onRat
                 };
 
                 if (onFav) {
-                    // 3. true parametresi göndererek Dashboard'un tekrar API atmasını engelliyoruz!
                     onFav(updatedProductForDashboard, true);
                 }
             }
@@ -118,7 +112,6 @@ export default function ProductPage({ product, onFav, onClose, userRating, onRat
         }
     };
 
-    // ── ÜRÜN DETAYINI ÇEKME ──
     const fetchProductDetails = useCallback(async () => {
         if (!product?.id) return;
         setIsLoading(true);
@@ -143,19 +136,16 @@ export default function ProductPage({ product, onFav, onClose, userRating, onRat
         fetchProductDetails();
     }, [fetchProductDetails]);
 
-    // Ürün kartına tıklandığında (yani bu sayfa açıldığında) tıklanma sayısını artır
     useEffect(() => {
         handleIncrementClick();
     }, [handleIncrementClick]);
 
-    // Chatbot scroll efekti
     useEffect(() => {
         if (isChatOpen && chatEndRef.current) {
             chatEndRef.current.scrollIntoView({ behavior: 'smooth' });
         }
     }, [chatMessages, isChatOpen, isTyping]);
 
-    // ── YARDIMCI FONKSİYONLAR ──
     const getPlatformTheme = (platName) => {
         if (!platName) return PLATFORM_THEMES['default'];
         const str = platName.toLowerCase().replace(/\s+/g, '');
@@ -172,7 +162,6 @@ export default function ProductPage({ product, onFav, onClose, userRating, onRat
         setSelectedWord(selectedWord === clean ? null : clean);
     };
 
-    // Chatbot Mesaj Gönderimi
     const handleSendMessage = (e) => {
         e.preventDefault();
         if (!chatInput.trim()) return;
@@ -191,7 +180,6 @@ export default function ProductPage({ product, onFav, onClose, userRating, onRat
         }, 1500);
     };
 
-    // ── RENDER DURUMLARI ──
     if (!product) return null;
 
     if (isLoading) {
@@ -222,11 +210,22 @@ export default function ProductPage({ product, onFav, onClose, userRating, onRat
     const summaryWords = (guncelOzet || "").split(/\s+/);
     const activeTargetWord = hoveredWord || selectedWord;
 
-    // Platform ismini baş harfi büyük olacak şekilde biçimlendiriyoruz
     const displayPlatform = platform ? platform.charAt(0).toUpperCase() + platform.slice(1) : '';
 
+    // ── DÜZELTİLMİŞ BENZER ÜRÜNLER FİLTRESİ ──
+    // Dashboard'dan gelen 'p.category' formatlıdır ("Otel"). 
+    // API'den gelen 'productDetail.category' hamdır ("otel").
+    // Eşleşme için detay kategorisini de formatCategory'den geçiriyoruz.
     const similarProducts = allProducts
-        .filter((p) => p.category === productDetail.category && p.id !== productDetail.id)
+        .filter((p) => {
+            if (!p.category || !productDetail?.category) return false;
+
+            // İkisini de aynı "Okunabilir Formata" getiriyoruz
+            const dashboardCat = p.category;
+            const currentProductCat = formatCategory(productDetail.category);
+
+            return dashboardCat === currentProductCat && p.id !== productDetail.id;
+        })
         .slice(0, 6);
 
     const renderInteractiveSummary = (textArray) => {
@@ -262,6 +261,8 @@ export default function ProductPage({ product, onFav, onClose, userRating, onRat
 
     return (
         <div className="tc-page-wrapper" style={{ '--theme-main': activeTheme.main, '--theme-light': activeTheme.light }}>
+
+
             <div className="tc-top-bar">
                 <button className="tc-back-btn" onClick={onClose}>
                     <ArrowLeft size={16} /> Keşif Paneline Dön
@@ -277,7 +278,7 @@ export default function ProductPage({ product, onFav, onClose, userRating, onRat
                     <div className="tc-main-image-box">
                         <img src={imageUrl || product.img} alt={productName} />
                         <div className="tc-image-badges">
-                            <span className="tc-badge-ai">VividAI Analizör</span>
+                            <span className="tc-badge-ai">VividAI </span>
                         </div>
                     </div>
 
@@ -295,7 +296,7 @@ export default function ProductPage({ product, onFav, onClose, userRating, onRat
                     </div>
                 </div>
 
-                {/* 2. ORTA: DETAYLAR & KAYNAK YORUMLAR KUT ব্যায়ামUTUSU */}
+                {/* 2. ORTA: DETAYLAR & KAYNAK YORUMLAR */}
                 <div className="tc-details-column">
                     <div className="tc-product-header">
                         <h1 className="tc-product-title">
@@ -308,6 +309,13 @@ export default function ProductPage({ product, onFav, onClose, userRating, onRat
                                 ))}
                             </div>
                             <span className="tc-rating-count">Orijinal Puan: {avgOrjScore?.toFixed(1)}</span>
+                            {/* Orijinal Puan Tooltip */}
+                            <div className="tc-tooltip-wrap">
+                                <HelpCircle size={14} className="tc-help-icon" />
+                                <div className="tc-tooltip-content">
+                                    <strong>Orijinal Puan:</strong> {displayPlatform} platformunda yer alan ham, müdahale edilmemiş ortalama kullanıcı puanıdır.
+                                </div>
+                            </div>
                         </div>
                     </div>
 
@@ -318,7 +326,16 @@ export default function ProductPage({ product, onFav, onClose, userRating, onRat
                                     {avgModelScore?.toFixed(1)}
                                 </span>
                                 <div className="tc-score-labels">
-                                    <strong>VividAI Endeksi</strong>
+                                    <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+                                        <strong>VividAI Endeksi</strong>
+                                        {/* VividAI Endeksi Tooltip */}
+                                        <div className="tc-tooltip-wrap">
+                                            <HelpCircle size={12} className="tc-help-icon" />
+                                            <div className="tc-tooltip-content">
+                                                <strong>VividAI Endeksi:</strong> LLM motorumuzun yorumları doğal dil işleme ile analiz ederek hesapladığı ağırlıklı, gerçek kullanıcı memnuniyet skorudur. Manipülatif yorumlar filtrelenerek oluşturulur.
+                                            </div>
+                                        </div>
+                                    </div>
                                     <span>Anlamsal Model Skoru</span>
                                 </div>
                             </div>
@@ -330,7 +347,16 @@ export default function ProductPage({ product, onFav, onClose, userRating, onRat
                                     <span>{celiskiScore ? (celiskiScore * 100).toFixed(0) : "0"}</span>
                                 </span>
                                 <div className="tc-score-labels">
-                                    <strong>Çelişki Oranı</strong>
+                                    <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+                                        <strong>Çelişki Oranı</strong>
+                                        {/* Çelişki Oranı Tooltip */}
+                                        <div className="tc-tooltip-wrap">
+                                            <HelpCircle size={12} className="tc-help-icon" />
+                                            <div className="tc-tooltip-content">
+                                                <strong>Çelişki Oranı:</strong> Kullanıcı deneyimlerindeki duygu zıtlıklarını ölçer. Oranın yüksek olması, ürünü çok sevenler kadar nefret edenlerin de olduğunu (standart sapmanın yüksek olduğunu) gösterir.
+                                            </div>
+                                        </div>
+                                    </div>
                                     <span>Yorum Standart Sapması</span>
                                 </div>
                             </div>
@@ -428,7 +454,6 @@ export default function ProductPage({ product, onFav, onClose, userRating, onRat
                         </div>
                     </div>
 
-                    {/* Mağazaya Git butonundan onClick event'i kaldırıldı */}
                     {originalUrl && (
                         <a href={originalUrl} target="_blank" rel="noreferrer" className="tc-btn-primary">
                             Mağazaya Git ve İncele
@@ -441,7 +466,16 @@ export default function ProductPage({ product, onFav, onClose, userRating, onRat
                     </button>
 
                     <div className="tc-rate-box">
-                        <strong>Model Çıktısını Değerlendir</strong>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                            <strong>Model Çıktısını Değerlendir</strong>
+                            {/* Değerlendirme Tooltip */}
+                            <div className="tc-tooltip-wrap">
+                                <HelpCircle size={14} className="tc-help-icon" />
+                                <div className="tc-tooltip-content" style={{ right: 0, transform: 'translateX(0)', left: 'auto' }}>
+                                    <strong>Geri Bildirim Sistemi:</strong> AI modelimizin analiz başarısını puanlayarak algoritmamızın öğrenme sürecine ve doğruluğunun artmasına doğrudan katkı sağlayabilirsiniz.
+                                </div>
+                            </div>
+                        </div>
                         {userRating ? (
                             <div className="tc-rate-success">Geri Bildirim Alındı ({userRating} Yıldız)</div>
                         ) : (
@@ -463,7 +497,7 @@ export default function ProductPage({ product, onFav, onClose, userRating, onRat
                 </div>
             </div>
 
-            {/* 4. BENZER ÜRÜNLER */}
+            {/* 4. BENZER ÜRÜNLER (YATAY SCROLL / KAYDIRMALI) */}
             <div className="tc-similar-section">
                 <h2 className="tc-similar-title">Kategorideki Benzer Ürünler</h2>
                 <div className="tc-similar-scroll-container">
