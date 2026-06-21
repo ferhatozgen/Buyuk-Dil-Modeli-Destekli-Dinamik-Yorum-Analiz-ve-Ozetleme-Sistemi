@@ -234,12 +234,6 @@
     box-shadow: 0 4px 10px rgba(124, 58, 237, 0.2);
 }
 
-.user-avatar-circle.large {
-    width: 48px;
-    height: 48px;
-    font-size: 20px;
-}
-
 .online-indicator {
     position: absolute;
     bottom: -2px;
@@ -288,7 +282,6 @@
     transform: rotate(180deg);
 }
 
-/* YENİ AÇILIR MENÜ TASARIMI */
 .profile-dropdown-menu {
     position: absolute;
     top: calc(100% + 14px);
@@ -399,21 +392,17 @@
     box-shadow: 0 12px 32px -4px rgba(15, 23, 42, 0.04), 0 4px 12px -2px rgba(15, 23, 42, 0.02);
     position: relative;
     z-index: 2;
-    width: 100%;
+    width: calc(100% - 20px);
 }
 
 .hero-top {
     display: flex;
     flex-direction: column;
-    /* Yan yana durmaları yerine alt alta dizilmelerini sağlar */
     align-items: center;
-    /* Yatayda tam merkeze alır */
     justify-content: center;
     text-align: center;
-    /* İçindeki tüm metinleri ortalar */
     margin-bottom: 48px;
     gap: 32px;
-    /* Başlık ile (eğer duruyorsa) istatistik kutusu arasına nefes aldırır */
 }
 
 .hero-text {
@@ -445,41 +434,8 @@
     margin: 0 auto;
     font-weight: 400;
     max-width: 500px;
-    /* Metnin sağa sola çok uzamamasını, derli toplu durmasını sağlar */
     line-height: 1.6;
     text-align: center;
-}
-
-/* Eğer istatistik kutusu (12.4K yazan yer) kodlarında hala duruyorsa, onun da ortada şık durması için: */
-.hero-stats {
-    display: flex;
-    justify-content: center;
-    width: 100%;
-}
-
-.stat-box {
-    background: #ffffff;
-    border: 1px solid rgba(15, 23, 42, 0.06);
-    padding: 16px 28px;
-    border-radius: 16px;
-    text-align: center;
-    box-shadow: 0 2px 8px rgba(15, 23, 42, 0.02);
-}
-
-.s-num {
-    font-size: 24px;
-    font-weight: 800;
-    color: #0f172a;
-    letter-spacing: -0.5px;
-}
-
-.s-label {
-    font-size: 12px;
-    font-weight: 600;
-    color: #64748b;
-    margin-top: 4px;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
 }
 
 .search-glow-wrap {
@@ -507,6 +463,7 @@
 
 .search-icon {
     margin-right: 16px;
+    flex-shrink: 0;
 }
 
 .search-input-field {
@@ -518,6 +475,7 @@
     color: #0f172a;
     outline: none;
     padding: 16px 0;
+    min-width: 0;
 }
 
 .search-input-field::placeholder {
@@ -535,10 +493,12 @@
     font-weight: 700;
     display: flex;
     align-items: center;
+    justify-content: center;
     gap: 10px;
     cursor: pointer;
     transition: all 0.2s;
     box-shadow: 0 4px 12px rgba(15, 23, 42, 0.15);
+    white-space: nowrap;
 }
 
 .search-action-btn:hover {
@@ -547,79 +507,7 @@
     box-shadow: 0 8px 20px rgba(15, 23, 42, 0.25);
 }
 
-.pulse-glow {
-    position: relative;
-    overflow: hidden;
-}
-
-.pulse-glow::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 50%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-    animation: buttonShine 3s infinite;
-}
-
-@keyframes buttonShine {
-    0% {
-        left: -100%;
-    }
-
-    20% {
-        left: 200%;
-    }
-
-    100% {
-        left: 200%;
-    }
-}
-
-.flow-steps-row {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 40px;
-    margin-top: 48px;
-    padding-top: 40px;
-    border-top: 1px solid rgba(15, 23, 42, 0.06);
-}
-
-.flow-step-unit {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-}
-
-.flow-icon-box {
-    background: #f8fafc;
-    color: #7c3aed;
-    width: 48px;
-    height: 48px;
-    border-radius: 12px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: 1px solid rgba(124, 58, 237, 0.1);
-    box-shadow: 0 4px 12px rgba(124, 58, 237, 0.05);
-}
-
-.flow-title {
-    font-size: 14px;
-    font-weight: 700;
-    color: #0f172a;
-    margin-bottom: 2px;
-}
-
-.flow-desc {
-    font-size: 13px;
-    color: #64748b;
-    font-weight: 400;
-}
-
-/* ── 6. KATEGORİLER (YUVARLAK APP STİLİ) ── */
+/* ── 6. KATEGORİLER ── */
 .system-nav-section {
     max-width: 1240px;
     margin: 0 auto 40px auto;
@@ -643,9 +531,7 @@
 .cat-tile-row {
     display: inline-flex;
     align-items: flex-start;
-    /* EKLENDİ: Butonları üstten aynı hizaya sabitler */
     gap: 16px;
-    /* GÜNCELLENDİ: Sabit genişlik verdiğimiz için boşluğu optimize ettik */
     padding: 0 10px;
     margin: 0 auto;
 }
@@ -657,16 +543,12 @@
     flex-direction: column;
     align-items: center;
     gap: 10px;
-    /* GÜNCELLENDİ: İkon ile metin arasını biraz kıstık */
     cursor: pointer;
     width: 104px;
-    /* EKLENDİ: Tüm butonlara sabit genişlik (esneme-daralma yapmaz) */
     flex-shrink: 0;
-    /* EKLENDİ: Butonların sıkışmasını engeller */
     padding: 0;
 }
 
-/* Yuvarlak İkon Kutusu */
 .cat-circle {
     width: 64px;
     height: 64px;
@@ -683,23 +565,18 @@
 
 .cat-text {
     font-size: 13px;
-    /* GÜNCELLENDİ: Sığması için yarım punto küçültüldü */
     font-weight: 600;
     color: #64748b;
     text-align: center;
     transition: all 0.3s ease;
-
-    /* YENİ EKLENEN METİN KAYDIRMA KURALLARI */
     white-space: normal;
     word-wrap: break-word;
     line-height: 1.4;
     width: 100%;
     min-height: 36px;
-    /* Tek satır da olsa 2 satırlık yer kaplamasını sağlar, hizayı bozmaz */
     display: block;
 }
 
-/* Fareyle Üzerine Gelince (Hover) */
 .cat-tile-btn:hover .cat-circle {
     transform: translateY(-4px) scale(1.05);
     border-color: #cbd5e1;
@@ -711,7 +588,6 @@
     color: #0f172a;
 }
 
-/* Aktif (Seçili) Kategori - VividAI Renkleri */
 .cat-tile-btn.active .cat-circle {
     background: linear-gradient(135deg, #7c3aed 0%, #ec4899 100%);
     border: none;
@@ -729,8 +605,7 @@
     font-weight: 800;
 }
 
-
-/* ── 7. SEKMELER VE ARAMA (HAVADA SÜZÜLEN RENKLİ BUTONLAR) ── */
+/* ── 7. SEKMELER VE ARAMA ── */
 .tab-search-wrapper {
     max-width: 1240px;
     margin: 0 auto 32px auto;
@@ -740,13 +615,13 @@
     position: relative;
     z-index: 2;
     width: 100%;
+    padding: 0 10px;
 }
 
 .tab-bar {
     display: flex;
     gap: 12px;
     align-items: center;
-    padding-left: 10px;
 }
 
 .tab-btn {
@@ -763,6 +638,7 @@
     gap: 8px;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     box-shadow: 0 2px 6px rgba(15, 23, 42, 0.02);
+    white-space: nowrap;
 }
 
 .tab-btn:hover {
@@ -772,7 +648,6 @@
     transform: translateY(-2px);
 }
 
-/* Aktif Sekme: VividAI Gradyan Rengi ile Parlar */
 .tab-btn.active {
     background: linear-gradient(135deg, #7c3aed 0%, #ec4899 100%);
     border: none;
@@ -787,7 +662,6 @@
     stroke: #ffffff !important;
 }
 
-/* Şık ve Yuvarlak Arama Kutusu */
 .compact-search-box {
     display: flex;
     align-items: center;
@@ -812,6 +686,7 @@
     font-size: 14px;
     color: #0f172a;
     outline: none;
+    min-width: 0;
 }
 
 .compact-search-box input::placeholder {
@@ -831,6 +706,7 @@
     align-items: center;
     gap: 6px;
     transition: all 0.2s;
+    flex-shrink: 0;
 }
 
 .compact-search-btn:hover {
@@ -859,13 +735,136 @@
     font-weight: 500;
 }
 
-/* E-TİCARET KART DİZİLİMİ (IZGARA) */
 .card-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    /* Masaüstünde ferah görünsün diye tekrar 240px'e çektik. */
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
     gap: 24px;
     width: 100%;
     align-items: stretch;
+}
+
+/* ── ÜRÜN KARTLARI (.p-card) ── */
+.p-card {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    overflow: hidden;
+    cursor: pointer;
+    position: relative;
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.p-card:hover {
+    transform: translateY(-4px);
+    border-color: #cbd5e1;
+    box-shadow: 0 12px 24px rgba(15, 23, 42, 0.08);
+}
+
+.p-fav-btn {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    width: 32px;
+    height: 32px;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(4px);
+    border: 1px solid #e2e8f0;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    z-index: 2;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+}
+
+.p-fav-btn:hover {
+    transform: scale(1.05);
+}
+
+.p-img-wrap {
+    width: 100%;
+    height: 200px;
+    overflow: hidden;
+    background: #f8fafc;
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.p-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top center;
+    transition: transform 0.4s ease;
+}
+
+.p-card:hover .p-img {
+    transform: scale(1.06);
+}
+
+.p-body {
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.p-plat {
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+}
+
+.p-name {
+    font-size: 14px;
+    font-weight: 600;
+    color: #0f172a;
+    line-height: 1.4;
+    margin: 0 0 16px 0;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    height: 38px;
+}
+
+.p-footer {
+    margin-top: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 12px;
+    border-top: 1px dashed #e2e8f0;
+}
+
+.p-cat {
+    font-size: 11px;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 8px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 65%;
+}
+
+.p-score {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.p-score-val {
+    font-size: 13px;
+    font-weight: 800;
+    color: #334155;
 }
 
 /* ── 9. TREND LİSTESİ ── */
@@ -915,12 +914,16 @@
     display: flex;
     flex-direction: column;
     gap: 6px;
+    min-width: 0;
 }
 
 .t-name {
     font-size: 17px;
     font-weight: 700;
     color: #0f172a;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .t-sub {
@@ -929,27 +932,7 @@
     font-weight: 500;
 }
 
-.t-badge {
-    padding: 8px 16px;
-    border-radius: 8px;
-    font-size: 13px;
-    font-weight: 700;
-}
-
-.trend-bar-wrap {
-    width: 160px;
-    height: 8px;
-    background: #f1f5f9;
-    border-radius: 10px;
-    overflow: hidden;
-}
-
-.trend-bar {
-    height: 100%;
-    border-radius: 10px;
-}
-
-/* ── 10. MODALLAR ── */
+/* ── 10. MODALLAR & LOADER ── */
 .profile-modal-overlay {
     position: fixed;
     inset: 0;
@@ -960,11 +943,12 @@
     align-items: center;
     justify-content: center;
     animation: fadeIn 0.3s ease;
+    padding: 20px;
 }
 
 .profile-modal-card {
     background: #ffffff;
-    width: 90%;
+    width: 100%;
     max-width: 1000px;
     height: 85vh;
     border-radius: 24px;
@@ -1029,55 +1013,6 @@
     background: #fafbfc;
 }
 
-/* ── MOBİL UYUM ── */
-@media (max-width: 768px) {
-    .hero-top {
-        flex-direction: column;
-        text-align: center;
-        gap: 24px;
-    }
-
-    .hero-text h1 {
-        font-size: 36px;
-    }
-
-    .hero-text p {
-        max-width: 100%;
-    }
-
-    .hero-stats {
-        margin: 0 auto;
-    }
-
-    .flow-steps-row {
-        flex-direction: column;
-        gap: 12px;
-    }
-
-    .tab-search-wrapper {
-        flex-direction: column;
-        align-items: center;
-        gap: 20px;
-    }
-
-    .tab-bar {
-        width: 100%;
-        overflow-x: auto;
-        justify-content: flex-start;
-        padding: 6px 10px;
-    }
-
-    .tab-btn {
-        white-space: nowrap;
-    }
-
-    .compact-search-box {
-        width: 100%;
-        margin-bottom: 0;
-    }
-}
-
-/* ── YAPAY ZEKA ANALİZ YÜKLEME EKRANI ── */
 .vivid-ai-loader-overlay {
     position: fixed;
     inset: 0;
@@ -1106,7 +1041,6 @@
     animation: scaleUp 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* Çift Halkalı Orbital Animasyon */
 .loader-orbit-container {
     position: relative;
     width: 80px;
@@ -1165,7 +1099,6 @@
     color: #64748b;
     margin-bottom: 24px;
     min-height: 20px;
-    /* Metin değiştiğinde zıplamayı önler */
     animation: fadeText 0.85s infinite alternate;
 }
 
@@ -1184,7 +1117,6 @@
     transition: width 0.85s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* Keyframes (Animasyon Kuralları) */
 @keyframes spin {
     0% {
         transform: rotate(0deg);
@@ -1244,25 +1176,258 @@
     }
 }
 
-/* İkonların dönmesini sağlayan yardımcı sınıf */
-.animate-spin {
-    animation: spin 1s linear infinite;
+/* =========================================================================
+   📱 MOBİL VE TABLET UYUM DÜZELTMELERİ (RESPONSIVE)
+   ========================================================================= */
+
+/* 1. TABLET EKRANLAR (1024px ve altı) */
+@media (max-width: 1024px) {
+    .vivid-hero-section {
+        padding: 40px 30px;
+        margin: 20px auto;
+    }
+
+    .hero-text h1 {
+        font-size: 38px;
+    }
+
+    .profile-modal-card {
+        width: 95%;
+        height: 90vh;
+    }
 }
 
-/* Dashboard Akademik Bant - Minimal ve Şık */
+/* 2. TELEFON EKRANLARI İÇİN DETAYLI DÜZENLEMELER (768px ve altı) */
+@media (max-width: 768px) {
+
+    .vivid-top-nav {
+        padding: 12px 16px;
+    }
+
+    .brand-slogan {
+        display: none;
+    }
+
+    .brand-primary {
+        font-size: 20px;
+    }
+
+    .user-name-display {
+        display: none;
+    }
+
+    .vivid-user-profile {
+        padding: 4px;
+        gap: 0;
+    }
+
+    .profile-chevron {
+        display: none;
+    }
+
+    .profile-dropdown-menu {
+        right: 0;
+        width: 220px;
+    }
+
+    .vivid-hero-section {
+        padding: 30px 20px;
+        margin: 16px auto;
+        border-radius: 20px;
+    }
+
+    .hero-text h1 {
+        font-size: 28px;
+        letter-spacing: -0.5px;
+    }
+
+    .hero-text p {
+        font-size: 14px;
+        padding: 0 10px;
+    }
+
+    .search-inner-box {
+        flex-direction: column;
+        padding: 16px;
+        border-radius: 16px;
+        gap: 12px;
+    }
+
+    .search-icon {
+        display: none;
+    }
+
+    .search-input-field {
+        width: 100%;
+        text-align: center;
+        padding: 8px 0;
+        font-size: 15px;
+    }
+
+    .search-action-btn {
+        width: 100%;
+        justify-content: center;
+        padding: 14px;
+        font-size: 15px;
+    }
+
+    .tab-search-wrapper {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 16px;
+        padding: 0 16px;
+    }
+
+    .tab-bar {
+        width: 100%;
+        overflow-x: auto;
+        justify-content: flex-start;
+        padding-bottom: 8px;
+    }
+
+    .compact-search-box {
+        width: 100%;
+    }
+
+    /* Mobilde daralsın diye özel kural */
+    .card-grid {
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+        gap: 16px;
+        padding: 0 6px;
+    }
+
+    /* Ürün Kartları Mobil Uyum */
+    .p-img-wrap {
+        height: 150px;
+    }
+
+    .p-body {
+        padding: 12px;
+    }
+
+    .p-name {
+        font-size: 13px;
+        height: 36px;
+    }
+
+    .p-cat {
+        font-size: 10px;
+        padding: 4px 6px;
+    }
+
+    .p-fav-btn {
+        width: 28px;
+        height: 28px;
+        top: 8px;
+        right: 8px;
+    }
+
+    .trend-row {
+        padding: 16px;
+        gap: 12px;
+        flex-direction: row;
+        align-items: center;
+    }
+
+    .t-rank {
+        font-size: 18px;
+        min-width: 24px;
+    }
+
+    .t-img-box {
+        width: 56px;
+        height: 56px;
+    }
+
+    .t-name {
+        font-size: 15px;
+    }
+
+    .t-sub {
+        font-size: 12px;
+    }
+
+    .profile-modal-card {
+        width: 100%;
+        height: 100vh;
+        border-radius: 0;
+    }
+
+    .profile-modal-overlay {
+        padding: 0;
+    }
+
+    .profile-modal-header {
+        padding: 20px 16px;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 16px;
+    }
+
+    .profile-modal-close {
+        position: absolute;
+        top: 16px;
+        right: 16px;
+    }
+
+    .profile-modal-tabs {
+        gap: 16px;
+        width: 100%;
+        overflow-x: auto;
+        padding-bottom: 2px;
+    }
+
+    .p-tab-btn {
+        font-size: 14px;
+        white-space: nowrap;
+    }
+
+    .profile-modal-body {
+        padding: 16px;
+    }
+
+    .vivid-ai-loader-card {
+        padding: 30px 20px;
+    }
+
+    .loader-title {
+        font-size: 18px;
+    }
+}
+
+/* 3. ÇOK KÜÇÜK TELEFONLAR (Örn: iPhone SE - 375px altı) */
+@media (max-width: 375px) {
+    .card-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .hero-text h1 {
+        font-size: 24px;
+    }
+
+    .t-img-box {
+        display: none;
+    }
+}
+
+/* ── AKADEMİK BANT (TAM EKRAN VE ORTALANMIŞ) ── */
 .dashboard-academic-bannerr {
-    width: 100%;
+    width: 100vw;
+    /* Ekranın %100'ünü kaplamaya zorlar */
+    margin-left: calc(-50vw + 50%);
+    /* Kutu içine sıkışmasını engeller, ekranı ortalar */
+    display: flex;
+    justify-content: center;
+    align-items: center;
     text-align: center;
-    padding: 6px 0;
-    font-size: 10px;
-    font-weight: 700;
-    letter-spacing: 1.2px;
-    color: var(--muted);
-    /* Biraz daha silik ve dikkat dağıtmayan bir renk */
-    background: rgba(255, 255, 255, 0.4);
-    border-bottom: 1px solid rgba(124, 58, 237, 0.1);
-    backdrop-filter: blur(5px);
-    margin-bottom: 10px;
-    /* Hero section ile arasına hafif bir boşluk */
+    padding: 8px 10px;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 1.5px;
+    color: rgba(15, 23, 42, 0.7);
+    ;
+    /* Orijinal şık degrade renk */
     text-transform: uppercase;
+    position: relative;
+    z-index: 40;
 }

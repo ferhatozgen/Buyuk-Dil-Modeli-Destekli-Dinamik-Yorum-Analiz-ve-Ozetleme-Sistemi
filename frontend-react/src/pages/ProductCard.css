@@ -130,3 +130,48 @@
     font-weight: 800;
     color: #334155;
 }
+
+/* =========================================================================
+   📱 ÜRÜN KARTLARI (.p-card) MOBİL UYUM DÜZELTMELERİ
+   ========================================================================= */
+@media (max-width: 768px) {
+
+    /* Mobilde resim boyunu orantılı kısaltır */
+    .p-img-wrap {
+        height: 150px;
+    }
+
+    /* İç boşlukları (padding) daraltır */
+    .p-body {
+        padding: 12px;
+    }
+
+    /* Yazı fontunu mobilde sırıtmayacak şekilde küçültür */
+    .p-name {
+        font-size: 13px;
+        height: 36px;
+    }
+
+    /* Platform ve Kategori etiketlerini küçültür */
+    .p-plat {
+        font-size: 10px;
+    }
+
+    .p-cat {
+        font-size: 10px;
+        padding: 4px 6px;
+    }
+
+    /* Puan yazısını uyarlar */
+    .p-score-val {
+        font-size: 12px;
+    }
+
+    /* Sağ üstteki favori butonunu telefona göre küçültür */
+    .p-fav-btn {
+        width: 28px;
+        height: 28px;
+        top: 8px;
+        right: 8px;
+    }
+}
