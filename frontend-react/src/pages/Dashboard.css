@@ -1248,3 +1248,21 @@
 .animate-spin {
     animation: spin 1s linear infinite;
 }
+
+/* Dashboard Akademik Bant - Minimal ve Şık */
+.dashboard-academic-bannerr {
+    width: 100%;
+    text-align: center;
+    padding: 6px 0;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1.2px;
+    color: var(--muted);
+    /* Biraz daha silik ve dikkat dağıtmayan bir renk */
+    background: rgba(255, 255, 255, 0.4);
+    border-bottom: 1px solid rgba(124, 58, 237, 0.1);
+    backdrop-filter: blur(5px);
+    margin-bottom: 10px;
+    /* Hero section ile arasına hafif bir boşluk */
+    text-transform: uppercase;
+}

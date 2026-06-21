@@ -26,7 +26,7 @@ namespace LLM_Destekli_Ozetleme.Controllers
             
             return Ok(new { message = result.Message });
         }
-
+        
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] LoginDto request)
         {

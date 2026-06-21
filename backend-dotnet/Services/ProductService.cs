@@ -1,4 +1,5 @@
 using Microsoft.Extensions.Configuration;
+using Microsoft.EntityFrameworkCore;
 using System.Security.Cryptography;
 using System.Text;
 using LLM_Destekli_Ozetleme.Models.Entities;
@@ -61,7 +62,7 @@ namespace LLM_Destekli_Ozetleme.Services
                 throw new Exception("Ürün bulunamadı.");
             }
 
-            var referenceDate = product.CreatedAt ?? DateTime.UtcNow;
+            var referenceDate = product.CreatedAt! ?? DateTime.UtcNow;
             var monthsPassed = (DateTime.UtcNow - referenceDate).TotalDays / 30.0;
             bool needsRescrape = monthsPassed > 3.0;
 
@@ -354,6 +355,94 @@ namespace LLM_Destekli_Ozetleme.Services
             {
                 return (false, $"Değerlendirme işlemi başarısız: {ex.Message}");
             }
+        }
+
+        public async Task<ProductTrendDto> GetProductTrendAsync(Guid productId)
+        {
+            // 1. Veritabanından ürüne ait puanlanmış VE gerçek tarihi (ReviewedAt) olan yorumları çekiyoruz
+            var reviews = await _reviewRepository.GetQueryable()
+                .Where(r => r.ProductId == productId && r.PredictedScore != null && r.ReviewedAt != null)
+                .ToListAsync();
+
+            if (!reviews.Any())
+                return new ProductTrendDto { ProductId = productId, PeriodType = "NoData" };
+
+            // 2. Sahte Tarih Filtresi (2000 yılından eski olanları eledik)
+            var validReviews = reviews.Where(r => r.ReviewedAt!.Value.Year > 2000).ToList();
+
+            if (!validReviews.Any())
+                return new ProductTrendDto { ProductId = productId, PeriodType = "NoData" };
+
+            var minDate = validReviews.Min(r => r.ReviewedAt!.Value);
+            var maxDate = validReviews.Max(r => r.ReviewedAt!.Value);
+            var totalDays = (maxDate - minDate).TotalDays;
+
+            var result = new ProductTrendDto { ProductId = productId };
+
+            // 3. STRING BAZLI GRUPLAMA MANTIĞI
+            IEnumerable<IGrouping<string, Review>> groupedReviews;
+
+            if (totalDays <= 30 || totalDays <= 365)
+            {
+                result.PeriodType = totalDays <= 30 ? "SinglePoint" : "Monthly";
+                // Ay bazlı gruplama ("2026-05" formatında)
+                groupedReviews = validReviews.GroupBy(r => r.ReviewedAt!.Value.ToString("yyyy-MM"));
+            }
+            else if (totalDays <= 1095)
+            {
+                result.PeriodType = "Quarterly";
+                // 3 Aylık gruplama ("2026-Q2" formatında)
+                groupedReviews = validReviews.GroupBy(r => $"{r.ReviewedAt!.Value.Year}-Q{((r.ReviewedAt!.Value.Month - 1) / 3) + 1}");
+            }
+            else
+            {
+                result.PeriodType = "Yearly";
+                // Yıl bazlı gruplama ("2026" formatında)
+                groupedReviews = validReviews.GroupBy(r => r.ReviewedAt!.Value.ToString("yyyy"));
+            }
+
+            // 4. Sonuçları DTO'ya eşle ve tarih sırasına göre diz
+            foreach (var group in groupedReviews.OrderBy(g => g.Key))
+            {
+                result.Trends.Add(new TrendDataPointDto
+                {
+                    PeriodLabel = group.Key,
+                    StartDate = group.First().ReviewedAt!.Value, 
+                    AverageScore = Math.Round(group.Average(r => (double)r.PredictedScore!), 2),
+                    ReviewCount = group.Count()
+                });
+            }
+            // 5. SEYREK VERİLERİ BİRLEŞTİRME (DATA SMOOTHING)
+            int minReviewThreshold = 3; // 3'ten az yorumu olan periyotları hedefe kat
+            for (int i = 0; i < result.Trends.Count; i++)
+            {
+                // Eğer yorum sayısı eşiğin altındaysa ve listede birleşebilecek başka bir eleman varsa
+                if (result.Trends[i].ReviewCount < minReviewThreshold && result.Trends.Count > 1)
+                {
+                    var current = result.Trends[i];
+                    
+                    // Eğer son eleman değilse bir sonrakine (geleceğe), son elemansa bir öncekine (geçmişe) ekle
+                    int targetIndex = (i < result.Trends.Count - 1) ? i + 1 : i - 1;
+                    var target = result.Trends[targetIndex];
+
+                    // Ağırlıklı ortalama hesapla: ((Puan1 * Sayı1) + (Puan2 * Sayı2)) / ToplamSayı
+                    double totalScore = (target.AverageScore * target.ReviewCount) + (current.AverageScore * current.ReviewCount);
+                    target.ReviewCount += current.ReviewCount;
+                    target.AverageScore = Math.Round(totalScore / target.ReviewCount, 2);
+
+                    // Grafik X ekseni için etiketleri birleştir (Örn: "2010 & 2011")
+                    if (i < result.Trends.Count - 1) 
+                        target.PeriodLabel = current.PeriodLabel + " & " + target.PeriodLabel;
+                    else 
+                        target.PeriodLabel = target.PeriodLabel + " & " + current.PeriodLabel;
+
+                    // Zayıf periyodu listeden sil
+                    result.Trends.RemoveAt(i);
+                    i--; // Listeden eleman sildiğimiz için kaymayı önlemek adına indeksi bir geri alıyoruz
+                }
+            }
+
+            return result;
         }
 
         private string GenerateSHA256Hash(string rawData)

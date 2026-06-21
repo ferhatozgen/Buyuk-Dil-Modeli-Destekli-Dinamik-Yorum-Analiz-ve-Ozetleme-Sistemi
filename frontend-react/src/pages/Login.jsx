@@ -40,6 +40,9 @@ function Login() {
 
     return (
         <div className="modern-auth-wrapper">
+            <div className="auth-academic-banner">
+                BU BİR AKADEMİK ÇALIŞMADIR - SADECE YETKİLİ KULLANICILAR İÇİN ERİŞİME AÇIKTIR
+            </div>
             <div className="ambient-light light-purple"></div>
             <div className="ambient-light light-blue"></div>
             <div className="bg-mesh"></div>
