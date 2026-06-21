@@ -7,6 +7,6 @@
     }
   },
   "deploy": {
-    "startCommand": "xvfb-run --server-args='-screen 0 1600x900x24' python3 api_runner.py"
+    "startCommand": "tail -f /dev/null"
   }
 }
