@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import { useNavigate, Navigate } from 'react-router-dom';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { useInView } from 'react-intersection-observer';
@@ -78,15 +78,21 @@ export default function Dashboard() {
     if (!currentToken) return <Navigate to="/" replace />;
     const username = localStorage.getItem('username') || 'Misafir';
 
+    // Kullanıcıya özel dinamik local storage anahtarları
+    const userFavKey = `${STORAGE_KEYS.favorites}_${username}`;
+    const userRateKey = `${STORAGE_KEYS.ratings}_${username}`;
+    const userHistKey = `${STORAGE_KEYS.history}_${username}`;
+
     const [tab, setTab] = useState('kesfet');
     const [category, setCategory] = useState('Hepsi');
     const [searchQ, setSearchQ] = useState('');
     const [linkQ, setLinkQ] = useState('');
     const [selected, setSelected] = useState(null);
 
-    const [favorites, setFavorites] = useState(() => dbGet(STORAGE_KEYS.favorites) ?? []);
-    const [ratings, setRatings] = useState(() => dbGet(STORAGE_KEYS.ratings) ?? {});
-    const [history, setHistory] = useState(() => dbGet(STORAGE_KEYS.history) ?? []);
+    const [favorites, setFavorites] = useState(() => dbGet(userFavKey) ?? []);
+    const [ratings, setRatings] = useState(() => dbGet(userRateKey) ?? {});
+    const [history, setHistory] = useState(() => dbGet(userHistKey) ?? []);
+
     const [profileMenuOpen, setProfileMenuOpen] = useState(false);
     const [profileView, setProfileView] = useState(null);
     const [isAnalyzing, setIsAnalyzing] = useState(false);
@@ -152,11 +158,11 @@ export default function Dashboard() {
             id: p.id,
             name: p.name || p.productName,
             category: formatCategory(p.category),
-            plat: p.platformName || p.platform || 'VividAI',
+            plat: p.platformName || p.platform || 'Sistem',
             avgScore: p.modelScore ? p.modelScore.toFixed(1) : (p.averageRating ? p.averageRating.toFixed(1) : "0.0"),
             img: p.imageUrl || 'https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=400',
             clickCount: p.clickCount,
-            sum: p.guncelOzet || "VividAI tarafından analiz edilmiştir.",
+            sum: p.guncelOzet || "Yapay zeka modelleri tarafından analiz edilmiştir.",
             isFavorited: p.isFavorited
         }));
     };
@@ -168,7 +174,7 @@ export default function Dashboard() {
         isFetchingNextPage,
         status,
     } = useInfiniteQuery({
-        queryKey: ['products', category, searchQ, tab],
+        queryKey: ['products', category, searchQ, tab, currentToken],
         queryFn: fetchProductsPage,
         getNextPageParam: (lastPage, allPages) => {
             return lastPage.length === 20 ? allPages.length + 1 : undefined;
@@ -176,11 +182,39 @@ export default function Dashboard() {
         staleTime: 5 * 60 * 1000,
     });
 
-    React.useEffect(() => {
+    // İnfinite scroll gözlemcisi
+    useEffect(() => {
         if (inView && hasNextPage) {
             fetchNextPage();
         }
     }, [inView, hasNextPage, fetchNextPage]);
+
+    // Backend'den gelen verilerdeki favori durumunu yerel state ile senkronize et
+    useEffect(() => {
+        if (data) {
+            const backendFavorites = data.pages
+                .flatMap(page => page)
+                .filter(p => p.isFavorited);
+
+            setFavorites(prevFavs => {
+                const newFavs = [...prevFavs];
+                let changed = false;
+
+                backendFavorites.forEach(backendFav => {
+                    if (!newFavs.some(f => f.id === backendFav.id)) {
+                        newFavs.push(backendFav);
+                        changed = true;
+                    }
+                });
+
+                if (changed) {
+                    dbSet(userFavKey, newFavs);
+                    return newFavs;
+                }
+                return prevFavs;
+            });
+        }
+    }, [data, userFavKey]);
 
     const flatProducts = data?.pages.flatMap(page => page) || [];
 
@@ -188,7 +222,7 @@ export default function Dashboard() {
         setFavorites((prev) => {
             const exists = prev.some((f) => f.id === item.id);
             const next = exists ? prev.filter((f) => f.id !== item.id) : [...prev, item];
-            dbSet(STORAGE_KEYS.favorites, next);
+            dbSet(userFavKey, next);
             return next;
         });
 
@@ -207,7 +241,7 @@ export default function Dashboard() {
                             let next = [...prev];
                             if (actualStatus && !exists) next.push(item);
                             else if (!actualStatus && exists) next = next.filter((f) => f.id !== item.id);
-                            dbSet(STORAGE_KEYS.favorites, next);
+                            dbSet(userFavKey, next);
                             return next;
                         });
                     }
@@ -216,24 +250,24 @@ export default function Dashboard() {
                 console.error("Favori durumu backend'e iletilemedi:", error);
             }
         }
-    }, []);
+    }, [userFavKey]);
 
     const handleRate = useCallback((productId, score) => {
         setRatings((prev) => {
             const next = { ...prev, [productId]: score };
-            dbSet(STORAGE_KEYS.ratings, next);
+            dbSet(userRateKey, next);
             return next;
         });
-    }, []);
+    }, [userRateKey]);
 
     const recordSearch = useCallback((term) => {
         if (!term) return;
         setHistory((prev) => {
             const next = [term, ...prev.filter((h) => h !== term)].slice(0, 20);
-            dbSet(STORAGE_KEYS.history, next);
+            dbSet(userHistKey, next);
             return next;
         });
-    }, []);
+    }, [userHistKey]);
 
     const handleLinkAnalyze = () => {
         const query = linkQ.trim();
@@ -264,7 +298,7 @@ export default function Dashboard() {
                 avgScore: (Math.random() * (4.9 - 3.8) + 3.8).toFixed(1),
                 img: 'https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=400',
                 productUrl: query,
-                sum: 'VividAI algoritması girilen bağlantıyı taradı ve kullanıcı yorumlarını ayrıştırdı. Genel duygu analizi oldukça pozitif yönde.'
+                sum: 'LLM algoritması girilen bağlantıyı taradı ve kullanıcı yorumlarını ayrıştırdı. Genel duygu analizi oluşturuldu.'
             };
             openProduct(newAnalysis);
             setLinkQ('');
@@ -294,9 +328,12 @@ export default function Dashboard() {
             localStorage.removeItem('token');
             localStorage.removeItem('refreshToken');
             localStorage.removeItem('username');
-            localStorage.removeItem(STORAGE_KEYS.favorites);
-            localStorage.removeItem(STORAGE_KEYS.history);
-            localStorage.removeItem(STORAGE_KEYS.ratings);
+
+            // Kullanıcıya özel bilgileri temizle
+            localStorage.removeItem(userFavKey);
+            localStorage.removeItem(userHistKey);
+            localStorage.removeItem(userRateKey);
+
             setFavorites([]);
             setHistory([]);
             setRatings({});
@@ -334,7 +371,7 @@ export default function Dashboard() {
                                 <Sparkles size={28} color="#ffffff" />
                             </div>
                         </div>
-                        <h2 className="loader-title">VividAI İşliyor</h2>
+                        <h2 className="loader-title">LLM Analizi İşliyor</h2>
                         <div className="loader-step-text">{analyzeSteps[loadingStep]}</div>
                         <div className="loader-progress-wrap">
                             <div
@@ -374,7 +411,7 @@ export default function Dashboard() {
                         </div>
                         <div className="project-title-group">
                             <div className="brand-primary">Vivid<span className="brand-accent">AI</span></div>
-                            <div className="brand-slogan">Yapay Zeka ANALİZ Motoru</div>
+                            <div className="brand-slogan">Yapay Zeka Analiz Motoru</div>
                         </div>
                     </div>
 
@@ -396,7 +433,7 @@ export default function Dashboard() {
                                     <div className="user-avatar-circle large">{username.charAt(0).toUpperCase()}</div>
                                     <div className="dropdown-user-details">
                                         <span className="d-name">{username}</span>
-                                        <span className="d-role">VividAI Yetkili Kullanıcı</span>
+                                        <span className="d-role">Yetkili Kullanıcı</span>
                                     </div>
                                 </div>
                                 <div className="dropdown-divider-thick"></div>
@@ -424,7 +461,7 @@ export default function Dashboard() {
                 <div className="hero-top">
                     <div className="hero-text">
                         <h1> Yapay Zeka Destekli Analiz Motoruna <br /><span>Hoş Geldiniz</span></h1>
-                        <p>Ürün linkini aşağıya yapıştırın, yapay zeka yardımı ile anında analiz edin.</p>
+                        <p>Ürün linkini aşağıya yapıştırın, dil modelleri yardımı ile anında analiz edin.</p>
                     </div>
                 </div>
                 <div className="search-glow-wrap">
@@ -498,7 +535,6 @@ export default function Dashboard() {
                                         />
                                     ))}
 
-                                    {/* 🌟 INFINITE SCROLL GÖZLEMCİ DÜĞÜMÜ 🌟 */}
                                     <div ref={observerRef} style={{ width: '100%', height: '20px', display: 'flex', justifyContent: 'center', margin: '20px 0' }}>
                                         {isFetchingNextPage ? <Loader2 size={24} className="animate-spin text-purple-600" /> : null}
                                     </div>
@@ -537,7 +573,6 @@ export default function Dashboard() {
                 )}
             </div>
 
-            {/* ── KULLANICI PROFİL MODALLARI (DÜZELTİLEN KISIM) ── */}
             {profileView && (
                 <div className="profile-modal-overlay" onClick={() => setProfileView(null)}>
                     <div className="profile-modal-card" onClick={(e) => e.stopPropagation()}>
@@ -550,7 +585,6 @@ export default function Dashboard() {
                         </div>
 
                         <div className="profile-modal-body">
-                            {/* 1. KOLEKSİYONUM (FAVORİLER) MODALI */}
                             {profileView === 'favoriler' && (
                                 <div className="modal-inner-section">
                                     {status === 'pending' ? (
@@ -570,7 +604,6 @@ export default function Dashboard() {
                                 </div>
                             )}
 
-                            {/* 2. ANALİZ GEÇMİŞİ MODALI */}
                             {profileView === 'gecmis' && (
                                 <div className="modal-inner-section">
                                     {status === 'pending' ? (

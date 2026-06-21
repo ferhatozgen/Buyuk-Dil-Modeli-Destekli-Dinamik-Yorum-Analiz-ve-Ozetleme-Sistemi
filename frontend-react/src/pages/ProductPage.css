@@ -1,6 +1,7 @@
 /* =========================================================================
    GENEL AYARLAR & LAYOUT (IZGARA)
    ========================================================================= */
+
 .tc-page-wrapper {
     background-color: #f8fafc;
     min-height: 100vh;
@@ -8,26 +9,6 @@
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     color: #1e293b;
     transition: all 0.3s ease;
-}
-
-/* ── MODERN ROZET TASARIMLI AKADEMİK BANT ── */
-.top-academic-banner {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    background-color: #f1f5f9 !important;
-    color: #64748b !important;
-    padding: 6px 18px;
-    border-radius: 100px;
-    font-size: 11px;
-    font-weight: 500;
-    letter-spacing: 0.5px;
-    margin: 0 auto 24px auto;
-    border: 1px solid #e2e8f0 !important;
-    box-shadow: none !important;
-    background-image: none !important;
-    text-transform: none;
-    user-select: none;
 }
 
 /* ── DÜZELTİLMİŞ TOOLTIP (AÇIKLAMA BALONCUKLARI) STİLLERİ ── */
@@ -69,10 +50,8 @@
     pointer-events: none;
 }
 
-/* GÖRSELDEKİ HATAYI ÇÖZEN KISIM (BAŞLIK RENGİ) */
 .tc-tooltip-content strong {
     color: #ffffff !important;
-    /* Zorla net bir beyaz yaptık */
     display: block;
     margin-bottom: 6px;
     font-size: 13px;
@@ -141,6 +120,7 @@
 .tc-main-grid {
     display: grid;
     grid-template-columns: 340px 1fr 280px;
+    /* Masaüstünde 3 sütun */
     gap: 36px;
     max-width: 1240px;
     margin: 0 auto;
@@ -1021,4 +1001,109 @@
 
 .tc-chatbot-footer button.active:hover {
     transform: scale(1.08) translateY(-1px);
+}
+
+/* =========================================================================
+   📱 MOBİL VE TABLET UYUM DÜZELTMELERİ (EN ALTA EKLENMİŞTİR)
+   ========================================================================= */
+/* =========================================================================
+   📱 MOBİL VE TABLET UYUM DÜZELTMELERİ (TEMİZ & GÜNCEL VERSİYON)
+   ========================================================================= */
+
+/* 0. GLOBAL KUTU MODELİ (Taşmaları önlemenin en önemli kuralı) */
+.tc-page-wrapper,
+.tc-page-wrapper * {
+    box-sizing: border-box !important;
+}
+
+/* 1. TABLET VE KÜÇÜK EKRANLAR (1024px ve altı) */
+@media (max-width: 1024px) {
+    .tc-main-grid {
+        /* Inatçı 3 sütun yapısını kırıp tek sütuna düşürüyoruz */
+        grid-template-columns: 1fr;
+        gap: 24px;
+        padding: 24px;
+    }
+
+    .tc-main-image-box {
+        height: auto;
+        min-height: 300px;
+    }
+}
+
+/* 2. TELEFON EKRANLARI (768px ve altı) */
+@media (max-width: 768px) {
+
+    /* Genel sayfa taşmasını kesin olarak engelle */
+    body,
+    html {
+        overflow-x: hidden;
+    }
+
+    .tc-page-wrapper {
+        padding: 16px 12px;
+        width: 100%;
+        overflow-x: hidden;
+    }
+
+    .tc-main-grid {
+        padding: 16px;
+        gap: 20px;
+    }
+
+    /* Üst menü elemanlarını alt alta al */
+    .tc-top-bar {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 16px;
+    }
+
+    .tc-breadcrumb {
+        line-height: 1.5;
+        font-size: 12px;
+    }
+
+    .tc-product-title {
+        font-size: 20px;
+    }
+
+    /* Skor kartlarını yan yana sıkıştırmak yerine alt alta diz */
+    .tc-score-cards-row {
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    /* Parametre satırlarını mobilde rahat tıklanabilir yap */
+    .tc-param-clickable-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+    }
+
+    .tc-param-right {
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    .tc-progress-bg {
+        width: 100%;
+        margin-right: 12px;
+        flex-grow: 1;
+    }
+
+    /* Satıcı kutusu düzeni */
+    .tc-seller-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+
+    /* Chatbot ekranını küçük cihazlarda tam ekran yap */
+    .tc-chatbot-modal {
+        width: 100%;
+        height: 100%;
+        bottom: 0;
+        right: 0;
+        border-radius: 0;
+    }
 }

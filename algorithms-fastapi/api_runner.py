@@ -220,4 +220,5 @@ async def chat_with_vivid_bot(request: ChatRequest):
 
 # Uygulamayı Ayağa Kaldırma
 if __name__ == "__main__":
-    uvicorn.run("api_runner:app", host="0.0.0.0", port=8000, reload=True)
+    port = int(os.environ.get("PORT", 8000))
+    uvicorn.run("api_runner:app", host="0.0.0.0", port=port)
