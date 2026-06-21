@@ -3,7 +3,17 @@
   "build": {
     "nixpacksPlan": {
       "providers": ["python"],
-      "pkgs": ["chromium", "xorg.xauth", "xvfb"]
+      "phases": {
+        "setup": {
+          "aptPkgs": ["xvfb"]
+        },
+        "build": {
+          "cmds": [
+            "pip install -r requirements.txt",
+            "playwright install --with-deps chromium"
+          ]
+        }
+      }
     }
   },
   "deploy": {
