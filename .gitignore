@@ -26,6 +26,6 @@ one-off/
 /off/
 /scripts/
 /results/
-/Llama_Dataset/islenen_urunler.json
-/Llama_Dataset/train.jsonl
 algorithms-fastapi/Llama_Dataset/
+backend-dotnet/appsettings.Development.json
+algorithms-fastapi/logs/
