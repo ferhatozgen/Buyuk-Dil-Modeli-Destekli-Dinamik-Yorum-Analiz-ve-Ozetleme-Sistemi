@@ -18,11 +18,11 @@ load_dotenv()
 GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
 
 client = genai.Client(api_key=GEMINI_API_KEY)
-MODEL_NAME = "gemini-2.0-flash"
+MODEL_NAME = "gemini-2.5-flash"
 
-HEDEF_URUN_KATEGORI_BASINA = 50
+HEDEF_URUN_KATEGORI_BASINA = 2
 MAX_YORUM_SAYISI = 50
-JSONL_DOSYA_YOLU = "train.jsonl"
+JSONL_DOSYA_YOLU = "test.jsonl"
 CHECKPOINT_DOSYASI = "islenen_urunler.json"
 
 logger = setup_logger("Dataset_Generator")
@@ -31,25 +31,11 @@ logger = setup_logger("Dataset_Generator")
 # İşlemi biten kategorileri bu listeden silebilir veya başına '#' koyarak atlayabilirsin.
 # Buraya yazdığın isimler config.py içindeki URUN_GRUP_SEMALARI anahtarlarıyla aynı olmalı.
 ISLENECEK_KATEGORILER = [
-    "anne_bebek_oyuncak",
-    "cicek",
-    "egitim_eglence",
-    "elektronik_teknoloji",
-    "ev_yasam_mobilya",
-    "gezilecek_yer",
-    "giyim_ayakkabi",
     "gunluk_ev",
     "hediyelik_esya",
     "kirtasiye_kitap_hobi",
     "kozmetik_kisisel_bakim",
-    "kurumsal",
-    "oyun",
-    "pet_shop",
-    "saglik",
-    "spor_outdoor",
-    "supermarket_gida",
-    "yemek",
-    "yenilebilir_cicek"
+    "kurumsal"
 ]
 
 
@@ -205,24 +191,33 @@ async def veri_setini_olustur():
 
         logger.info(f"Kategori işleniyor: {urun_grubu}")
 
-        urunler_sorgusu = "SELECT id, product_name FROM products WHERE category = %s LIMIT %s;"
-        urunler = db.fetch_query(urunler_sorgusu, (urun_grubu, HEDEF_URUN_KATEGORI_BASINA))
+        # LIMIT'i 100 yapıyoruz ki işlenmişe denk gelirsek elimizde bakacak başka ürünler olsun
+        urunler_sorgusu = "SELECT id, product_name FROM products WHERE category = %s LIMIT 100;"
+        urunler = db.fetch_query(urunler_sorgusu, (urun_grubu,))
+
+        # Bu kategori için kaç tane YENİ ürün işlediğimizi tutan sayaç
+        basarili_islenen_sayisi = 0
 
         for urun in urunler:
+            # Hedeflenen (örneğin 1) yeni ürün sayısına ulaştıysak döngüyü kır, diğer kategoriye geç
+            if basarili_islenen_sayisi >= HEDEF_URUN_KATEGORI_BASINA:
+                logger.info(f"[{urun_grubu}] kategorisi için hedefe ({HEDEF_URUN_KATEGORI_BASINA}) ulaşıldı.")
+                break
+
             urun_id = urun[0]
             urun_adi = urun[1]
 
             if str(urun_id) in islenen_idler:
+                logger.warning(f"Zaten işlenmiş, sıradakine geçiliyor: {urun_adi[:30]}")
                 continue
 
             secilen_yorumlar = oransal_yorum_secimi(db, urun_id, MAX_YORUM_SAYISI)
 
-            # Belirlediğimiz güvenli taban tavan kontrolü
             if not secilen_yorumlar or len(secilen_yorumlar) < 5:
-                logger.warning(f"Atlanıyor (Yetersiz Yorum): {urun_adi[:30]}")
+                logger.warning(f"Yetersiz Yorum, sıradakine geçiliyor: {urun_adi[:30]}")
                 continue
 
-            logger.info(f"Ürün işleniyor: {urun_adi[:30]}... ({len(secilen_yorumlar)} yorum)")
+            logger.info(f"YENİ Ürün işleniyor: {urun_adi[:30]}... ({len(secilen_yorumlar)} yorum)")
 
             # --- 1. HAMLE: MATEMATİKSEL DAĞILIM RAPORUNUN HAZIRLANMASI ---
             puanlar = [y["puan"] for y in secilen_yorumlar]
@@ -305,6 +300,8 @@ async def veri_setini_olustur():
 
             islenen_idler.add(str(urun_id))
             checkpoint_kaydet(islenen_idler)
+
+            basarili_islenen_sayisi += 1
 
             time.sleep(20)
 
