@@ -15,8 +15,6 @@ from datetime import datetime, timedelta
 import dateparser
 import asyncio
 import aiohttp
-from pydantic import BaseModel
-from functions.db_manager import DatabaseManager
 
 logger = logging.getLogger(__name__)
 
@@ -321,68 +319,3 @@ async def vllm_ile_toplu_isleme(yorum_listesi: list[str], urun_grubu: str, max_c
         results = await asyncio.gather(*tasks)
 
     return results
-
-
-class ChatRequest(BaseModel):
-    productId: str
-    user_message: str
-
-
-#left join aynı kategorideki diğer ürünlerle kıyaslanabilmesi için eklendi.
-#ve aynı zamanda eğer ürünün kategori tablosu boş olsa bile ürün bilgilerini alıyor ve hata vermiyor.(Inner Join verirdi)
-def get_product_rag_context(product_id: str, db_manager: DatabaseManager) -> str:
-    """
-    Veritabanı tablolarından ürün özetini, çelişki skorunu ve
-    sektör analizlerini eksiksiz çeken kurşun geçirmez RAG sorgusu.
-    """
-    query = """
-            SELECT p.product_name, \
-                   p.platform, \
-                   p.avg_orj_score, \
-                   p.avg_model_score, \
-                   p.celiski_score, \
-                   p.guncel_ozet, \
-                   c.category_name, \
-                   c.category_model_avg_score, \
-                   c.category_summary
-            FROM products p
-                     LEFT JOIN product_category_stats c ON p.id = c.product_id
-            WHERE p.id = %s; \
-            """
-    product_data = db_manager.fetch_query(query, (product_id,))
-    if not product_data:
-        return "Ürün analitik verileri veritabanında bulunamadı."
-
-    (p_name, platform, avg_orj, avg_model, celiski, guncel_ozet,
-     cat_name, cat_avg_score, cat_summary) = product_data[0]
-
-    temiz_celiski = int(float(celiski) * 100) if celiski is not None else 0
-
-    # Modele kanıt niteliğinde sunulacak en güncel 5 adet gerçek ham kullanıcı yorumu
-    yorum_query = """
-                  SELECT original_rating, raw_text
-                  FROM reviews
-                  WHERE product_id = %s \
-                    AND raw_text IS NOT NULL \
-                    AND raw_text != '' 
-        LIMIT 5; \
-                  """
-    yorumlar = db_manager.fetch_query(yorum_query, (product_id,))
-    yorum_metinleri = "".join([f"- [{r[0]} Yıldız]: {r[1].strip()}\n" for r in yorumlar])
-
-    # 🎯 DÜZELTME: item_metinleri hatası yorum_metinleri olarak eşitlendi!
-    context = f"""
-    [ÜRÜN KILAVUZU]
-    Ürün Adı: {p_name} | Platform: {platform}
-    Müşteri Puan Ortalaması: {avg_orj}/5 | Yapay Zeka Memnuniyet Skoru: {avg_model}/5
-    Müşteri Fikir Ayrılığı (Çelişki) Oranı: %{temiz_celiski}
-    Detaylı Yapay Zeka Özeti: {guncel_ozet if guncel_ozet else 'Analiz aşamasında.'}
-
-    [SEKTÖR / RAKİP ANALİZİ]
-    Kategori: {cat_name if cat_name else 'Mevcut değil'} | Rakip Ortalama Puanı: {cat_avg_score if cat_avg_score else '0'}/5
-    Kategori Sektör Durumu: {cat_summary if cat_summary else 'Mevcut değil'}
-
-    [SİSTEMDEKİ GERÇEK KULLANICI YORUMLARI]
-    {yorum_metinleri if yorum_metinleri else 'Henüz ham yorum metni yüklenmemiş.'}
-    """
-    return context

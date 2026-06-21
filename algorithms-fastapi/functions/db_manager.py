@@ -26,9 +26,9 @@ class DatabaseManager:
         if DatabaseManager._db_pool is None:
             try:
                 DatabaseManager._db_pool = pool.ThreadedConnectionPool(1, 20, **self.config)
-                print(" Veritabanı bağlantı havuzu 1 kez oluşturuldu ve hafızaya alındı.")
+                print("✅ Veritabanı bağlantı havuzu 1 kez oluşturuldu ve hafızaya alındı.")
             except Exception as e:
-                print(f" Veritabanı bağlantı havuzu oluşturulurken hata: {e}")
+                print(f"❌ Veritabanı bağlantı havuzu oluşturulurken hata: {e}")
                 raise
 
     @contextmanager
@@ -53,7 +53,7 @@ class DatabaseManager:
         with self.get_connection() as conn:
             return pd.read_sql(query, conn)
 
-    #  BURADAN İTİBAREN TÜM METOTLAR İÇERİ ALINDI
+    # 🌟 BURADAN İTİBAREN TÜM METOTLAR İÇERİ ALINDI 🌟
     def save_product_and_reviews(self, urun_paketi, yorum_paketleri):
         try:
             with self.get_connection() as conn:
@@ -147,7 +147,7 @@ class DatabaseManager:
             with self.get_connection() as conn:
                 with conn.cursor() as cur:
                     cur.execute(query, params)
-                    return cur.fetchall()  # vtden dönen satırları [("..", "...")]  list of tupples olarak getirir.
+                    return cur.fetchall()
         except Exception as e:
             print(f"Veri çekme hatası: {e}")
             return []
