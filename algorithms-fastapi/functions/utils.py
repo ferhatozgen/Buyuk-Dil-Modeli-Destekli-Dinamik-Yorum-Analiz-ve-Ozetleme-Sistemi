@@ -16,7 +16,7 @@ import dateparser
 import asyncio
 import aiohttp
 from pydantic import BaseModel
-from db_manager import DatabaseManager
+from functions.db_manager import DatabaseManager
 
 logger = logging.getLogger(__name__)
 
@@ -365,7 +365,7 @@ def get_product_rag_context(product_id: str, db_manager: DatabaseManager) -> str
                   WHERE product_id = %s \
                     AND raw_text IS NOT NULL \
                     AND raw_text != '' 
-        LIMIT 8; \
+        LIMIT 5; \
                   """
     yorumlar = db_manager.fetch_query(yorum_query, (product_id,))
     yorum_metinleri = "".join([f"- [{r[0]} Yıldız]: {r[1].strip()}\n" for r in yorumlar])
