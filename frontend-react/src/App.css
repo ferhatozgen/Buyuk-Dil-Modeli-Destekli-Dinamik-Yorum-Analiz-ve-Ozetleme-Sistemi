@@ -1258,3 +1258,127 @@ input {
   overflow: hidden;
   box-shadow: 0 40px 100px rgba(124, 58, 237, 0.1);
 }
+
+/* =========================================================================
+   📱 LANDING & AUTH SAYFALARI İÇİN KUSURSUZ MOBİL DÜZELTMELER (EN ALTA EKLE)
+   ========================================================================= */
+
+@media (max-width: 768px) {
+
+  /* ── 1. ORTAK ALANLAR & HERO ── */
+  .hero-section.hero-split {
+    padding: 30px 16px;
+    gap: 24px;
+  }
+
+  .hero-title {
+    font-size: 34px !important;
+    /* Başlığı mobilde ekrana sığacak şekilde tırpanladık */
+    letter-spacing: -1px;
+  }
+
+  .hero-text {
+    font-size: 15px;
+    padding: 0 10px;
+  }
+
+  .hero-actions {
+    flex-direction: column;
+    /* Mobilde butonları alt alta al */
+    width: 100%;
+    gap: 14px;
+  }
+
+  .primary-btn {
+    width: 100%;
+    /* Parmakla basması kolay olsun diye tam genişlik */
+    max-width: 320px;
+    height: 52px;
+  }
+
+  /* ── 2. LOGIN & REGISTER FORM EKRANLARI ── */
+  .modern-auth-wrapper {
+    /* Bantın yüksekliğini hesaplayarak formu aşağı ittik */
+    padding: 60px 16px 20px 16px;
+  }
+
+  .auth-container {
+    height: auto;
+    /* Sabit 650px yüksekliği kaldırıp içeriğe göre esnemesini sağladık */
+    min-height: 500px;
+    border-radius: 24px;
+    /* Köşeleri mobilde daha estetik yaptık */
+    margin-top: 0;
+  }
+
+  .auth-form-side {
+    padding: 40px 24px;
+    /* Form iç boşluklarını daralttık */
+  }
+
+  .auth-form-side h2 {
+    font-size: 26px;
+  }
+
+  /* Inputları telefona uyumlu hale getirdik */
+  .input-field input {
+    height: 48px;
+    font-size: 14px;
+  }
+
+  .auth-submit-btn {
+    height: 50px;
+    font-size: 15px;
+  }
+
+  /* ── 3. UZUN AKADEMİK BANT (ÇOK ÖNEMLİ) ── */
+  .auth-academic-banner,
+  .academic-banner {
+    font-size: 9px;
+    /* "Bu proje akademik amaçlıdır..." metninin mobilde 3 satır olup taşmasını engeller */
+    padding: 10px 6px;
+    line-height: 1.4;
+    white-space: normal;
+    word-wrap: break-word;
+  }
+
+  /* ── 4. CTA (ÇAĞRI) VE KAYAN LOGOLAR ── */
+  .cta-section-modern {
+    padding: 60px 16px;
+  }
+
+  .cta-glass-card {
+    padding: 40px 20px;
+    border-radius: 24px;
+  }
+
+  .cta-heading {
+    font-size: 28px;
+  }
+
+  /* Logoların mobilde çok aralıklı kalmasını önler */
+  .marquee-content {
+    gap: 30px;
+  }
+
+  /* Kenardaki beyaz geçişleri mobilde daraltır */
+  .trust-bar-overlay {
+    width: 50px;
+  }
+}
+
+/* ── ÇOK KÜÇÜK EKRANLAR (iPhone SE / 375px vb.) ── */
+@media (max-width: 375px) {
+  .auth-form-side {
+    padding: 30px 20px;
+  }
+
+  .hero-title {
+    font-size: 28px !important;
+  }
+
+  .stats-inline {
+    gap: 12px;
+    /* İstatistik sayılarını sıkıştır */
+  }
+}
