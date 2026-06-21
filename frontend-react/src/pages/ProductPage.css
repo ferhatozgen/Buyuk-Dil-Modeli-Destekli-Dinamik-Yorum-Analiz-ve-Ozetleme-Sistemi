@@ -690,6 +690,63 @@
 }
 
 /* =========================================================================
+   TREND TABLOSU (SAĞ SÜTUN)
+   ========================================================================= */
+.tc-trend-box {
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 16px;
+    background: #f8fafc;
+    display: flex;
+    flex-direction: column;
+}
+
+.tc-trend-header {
+    margin-bottom: 12px;
+    font-size: 13px;
+    color: #334155;
+    border-bottom: 1px solid #e2e8f0;
+    padding-bottom: 10px;
+}
+
+.tc-trend-table-wrapper {
+    overflow-x: auto;
+}
+
+.tc-trend-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12px;
+    text-align: left;
+}
+
+.tc-trend-table th {
+    color: #64748b;
+    font-weight: 600;
+    padding: 8px 2px;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.tc-trend-table td {
+    padding: 10px 2px;
+    color: #1e293b;
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.tc-trend-table tr:last-child td {
+    border-bottom: none;
+}
+
+.tc-trend-label {
+    font-weight: 500;
+}
+
+.tc-trend-count {
+    color: #64748b;
+    font-size: 11px;
+}
+
+/* =========================================================================
    4. ALT KISIM: BENZER ÜRÜNLER (YATAY SCROLL / KAYDIRMALI)
    ========================================================================= */
 .tc-similar-section {
