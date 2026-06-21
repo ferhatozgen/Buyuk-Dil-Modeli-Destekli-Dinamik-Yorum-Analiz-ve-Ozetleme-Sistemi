@@ -28,12 +28,12 @@ const CustomTooltip = ({ active, payload, label, activeTheme }) => {
     if (active && payload && payload.length) {
         const data = payload[0].payload;
         return (
-            <div style={{ 
-                background: '#fff', 
-                border: '1px solid #e2e8f0', 
-                borderRadius: '8px', 
-                padding: '10px', 
-                boxShadow: '0 4px 12px rgba(0, 0, 0, 0.08)' 
+            <div style={{
+                background: '#fff',
+                border: '1px solid #e2e8f0',
+                borderRadius: '8px',
+                padding: '10px',
+                boxShadow: '0 4px 12px rgba(0, 0, 0, 0.08)'
             }}>
                 <p style={{ margin: 0, fontWeight: 600, color: '#1e293b', fontSize: '12px' }}>{label}</p>
                 <p style={{ margin: '4px 0', color: activeTheme?.main || '#8b5cf6', fontWeight: 'bold', fontSize: '15px' }}>
@@ -48,7 +48,8 @@ const CustomTooltip = ({ active, payload, label, activeTheme }) => {
     return null;
 };
 
-export default function ProductPage({ product, onFav, onClose, userRating, onRate, allProducts = [], openProduct, ratings = {} }) {
+// YENİ EKLENEN FAVORİLER PARAMETRESİ BURADA (favorites = [])
+export default function ProductPage({ product, onFav, onClose, userRating, onRate, allProducts = [], openProduct, ratings = {}, favorites = [] }) {
     // ── API VERİ STATE'LERİ ──
     const [productDetail, setProductDetail] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
@@ -265,7 +266,7 @@ export default function ProductPage({ product, onFav, onClose, userRating, onRat
             return dashboardCat === currentProductCat && p.id !== productDetail.id;
         })
         .slice(0, 6);
-    
+
     const renderInteractiveSummary = (textArray) => {
         return textArray.map((word, idx) => {
             const clean = cleanToken(word);
@@ -528,7 +529,7 @@ export default function ProductPage({ product, onFav, onClose, userRating, onRat
                         )}
                     </div>
 
-                    {/* YENİ EKLENEN: ZAMAN BAZLI TREND KARTI / GRAFİĞİ */}
+                    {/* ZAMAN BAZLI TREND KARTI / GRAFİĞİ */}
                     {trendLoading ? (
                         <div className="tc-trend-box" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '20px' }}>
                             <Loader2 size={20} color={activeTheme?.main || '#8b5cf6'} className="animate-spin" />
@@ -541,14 +542,14 @@ export default function ProductPage({ product, onFav, onClose, userRating, onRat
                                     <TrendingUp size={16} color={activeTheme?.main || '#8b5cf6'} />
                                     <strong>
                                         {trendData.periodType === "SinglePoint" ? "Genel Puan Dağılımı" :
-                                         trendData.periodType === "Monthly" ? "Aylık Trend" :
-                                         trendData.periodType === "Quarterly" ? "Çeyreklik Trend" :
-                                         "Yıllık Trend"}
+                                            trendData.periodType === "Monthly" ? "Aylık Trend" :
+                                                trendData.periodType === "Quarterly" ? "Çeyreklik Trend" :
+                                                    "Yıllık Trend"}
                                     </strong>
                                 </div>
                             </div>
-                            
-                            {/* DİNAMİK RENDER: 1 Veri Varsa Özet Göster, Birden Fazlaysa Grafik Çiz */}
+
+                            {/* DİNAMİK RENDER */}
                             {trendData.trends.length === 1 ? (
                                 <div style={{ background: activeTheme?.light || '#f5f3ff', borderRadius: '8px', padding: '16px', textAlign: 'center', marginTop: '10px' }}>
                                     <div style={{ fontSize: '24px', fontWeight: 'bold', color: activeTheme?.main || '#8b5cf6' }}>
@@ -564,39 +565,39 @@ export default function ProductPage({ product, onFav, onClose, userRating, onRat
                             ) : (
                                 <div className="tc-trend-chart-wrapper" style={{ width: '100%', height: '220px', marginTop: '10px' }}>
                                     <ResponsiveContainer width="100%" height="100%">
-                                        <AreaChart 
-                                            data={trendData.trends} 
+                                        <AreaChart
+                                            data={trendData.trends}
                                             margin={{ top: 10, right: 10, left: -25, bottom: 0 }}
                                         >
                                             <defs>
                                                 <linearGradient id="colorScore" x1="0" y1="0" x2="0" y2="1">
-                                                    <stop offset="5%" stopColor={activeTheme?.main || '#8b5cf6'} stopOpacity={0.6}/>
-                                                    <stop offset="95%" stopColor={activeTheme?.main || '#8b5cf6'} stopOpacity={0}/>
+                                                    <stop offset="5%" stopColor={activeTheme?.main || '#8b5cf6'} stopOpacity={0.6} />
+                                                    <stop offset="95%" stopColor={activeTheme?.main || '#8b5cf6'} stopOpacity={0} />
                                                 </linearGradient>
                                             </defs>
                                             <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9" />
-                                            <XAxis 
-                                                dataKey="periodLabel" 
-                                                axisLine={false} 
-                                                tickLine={false} 
-                                                tick={{ fontSize: 10, fill: '#94a3b8' }} 
+                                            <XAxis
+                                                dataKey="periodLabel"
+                                                axisLine={false}
+                                                tickLine={false}
+                                                tick={{ fontSize: 10, fill: '#94a3b8' }}
                                                 dy={10}
                                             />
-                                            <YAxis 
-                                                domain={[1, 5]} 
-                                                axisLine={false} 
-                                                tickLine={false} 
-                                                tick={{ fontSize: 10, fill: '#94a3b8' }} 
+                                            <YAxis
+                                                domain={[1, 5]}
+                                                axisLine={false}
+                                                tickLine={false}
+                                                tick={{ fontSize: 10, fill: '#94a3b8' }}
                                                 tickCount={5}
                                             />
                                             <Tooltip content={(props) => <CustomTooltip {...props} activeTheme={activeTheme} />} />
-                                            <Area 
-                                                type="monotone" 
-                                                dataKey="averageScore" 
-                                                stroke={activeTheme?.main || '#8b5cf6'} 
-                                                strokeWidth={3} 
-                                                fillOpacity={1} 
-                                                fill="url(#colorScore)" 
+                                            <Area
+                                                type="monotone"
+                                                dataKey="averageScore"
+                                                stroke={activeTheme?.main || '#8b5cf6'}
+                                                strokeWidth={3}
+                                                fillOpacity={1}
+                                                fill="url(#colorScore)"
                                                 activeDot={{ r: 6, strokeWidth: 0, fill: activeTheme?.main || '#8b5cf6' }}
                                             />
                                         </AreaChart>
@@ -609,7 +610,7 @@ export default function ProductPage({ product, onFav, onClose, userRating, onRat
                 </div>
             </div>
 
-            {/* 4. BENZER ÜRÜNLER (YATAY SCROLL / KAYDIRMALI) */}
+            {/* 4. BENZER ÜRÜNLER (YATAY SCROLL / KAYDIRMALI) - FAVORİLER DİNAMİK YAPILDI */}
             <div className="tc-similar-section">
                 <h2 className="tc-similar-title">Kategorideki Benzer Ürünler</h2>
                 <div className="tc-similar-scroll-container">
@@ -618,7 +619,7 @@ export default function ProductPage({ product, onFav, onClose, userRating, onRat
                             <div key={item.id} className="tc-similar-card-wrapper">
                                 <ProductCard
                                     item={item}
-                                    isFav={false}
+                                    isFav={favorites.some((f) => f.id === item.id)} // BURASI GÜNCELLENDİ
                                     onFav={onFav}
                                     onClick={() => {
                                         window.scrollTo({ top: 0, behavior: 'smooth' });
