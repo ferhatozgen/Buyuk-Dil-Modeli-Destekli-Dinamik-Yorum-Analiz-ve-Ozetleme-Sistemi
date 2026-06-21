@@ -1,0 +1,12 @@
+{
+  "$schema": "https://railway.com/railway.schema.json",
+  "build": {
+    "nixpacksPlan": {
+      "providers": ["python"],
+      "pkgs": ["chromium", "xorg.xauth", "xvfb"]
+    }
+  },
+  "deploy": {
+    "startCommand": "xvfb-run --server-args='-screen 0 1600x900x24' python3 api_runner.py"
+  }
+}
