@@ -6,7 +6,7 @@ import {
 } from 'lucide-react';
 import './ProductPage.css';
 import ProductCard from './ProductCard';
-import api from '../api';
+import api, { sendChatMessageToVividBot } from '../api';
 
 // ── DİNAMİK GERÇEK PLATFORM RENK HARİTASI ──
 const PLATFORM_THEMES = {
@@ -162,22 +162,44 @@ export default function ProductPage({ product, onFav, onClose, userRating, onRat
         setSelectedWord(selectedWord === clean ? null : clean);
     };
 
-    const handleSendMessage = (e) => {
+    const handleSendMessage = async (e) => {
         e.preventDefault();
-        if (!chatInput.trim()) return;
+        
+        // Koruma kalkanı: Mesaj boşsa veya ürün yüklenemediyse isteği durdur
+        if (!chatInput.trim() || !productDetail?.id) return;
 
-        const newUserMsg = { sender: 'user', text: chatInput };
+        const userQuestion = chatInput.trim();
+
+        // 1. Kullanıcının yazdığı soruyu arayüz baloncuğuna anında ekliyoruz
+        const newUserMsg = { sender: 'user', text: userQuestion };
         setChatMessages(prev => [...prev, newUserMsg]);
+        
+        // Input kutusunu temizliyoruz
         setChatInput('');
+        
+        // 2. Üç nokta yanıp sönen "Yazıyor..." animasyonunu aktif ediyoruz
         setIsTyping(true);
 
-        setTimeout(() => {
-            setIsTyping(false);
+        try {
+            // 3. Bizim api.js içerisindeki asıl RAG bağlantı fonksiyonumuzu ateşliyoruz
+            const botResponse = await sendChatMessageToVividBot(productDetail.id, userQuestion);
+            
+            // 4. FastAPI'den gelen o kurallı Türkçe cevabı ekrandaki bot baloncuğuna basıyoruz
             setChatMessages(prev => [...prev, {
                 sender: 'ai',
-                text: `Analizlerimize göre "${newUserMsg.text}" konusunda kullanıcılar genel olarak veritabanımızdaki yorumlara paralel bir eğilim gösteriyor.`
+                text: botResponse
             }]);
-        }, 1500);
+            
+        } catch (error) {
+            console.error("Chatbot akışında hata:", error);
+            setChatMessages(prev => [...prev, {
+                sender: 'ai',
+                text: "Şu anda teknik bir aksaklık nedeniyle yanıt üretemiyorum. Lütfen biraz sonra tekrar deneyin."
+            }]);
+        } finally {
+            // 5. İşlem başarılı da olsa hata da alsa "Yazıyor..." animasyonunu kapatıyoruz
+            setIsTyping(false);
+        }
     };
 
     if (!product) return null;
