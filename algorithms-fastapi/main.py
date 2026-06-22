@@ -119,8 +119,7 @@ def baslat(link_listesi):
 
 
 if __name__ == "__main__":
-    manuel_liste = ["https://www.ciceksepeti.com/avon-wish-of-love-bayan-parfumu-50-ml--kc3239884",
-    ]
+    manuel_liste = ["",]
     txt_dosya_yolu = "linkler.txt"
 
     print("\n" + "*" * 50)
