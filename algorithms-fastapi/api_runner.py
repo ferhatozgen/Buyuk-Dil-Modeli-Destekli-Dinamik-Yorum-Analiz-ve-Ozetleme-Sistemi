@@ -127,7 +127,6 @@ async def score_reviews(request: ProductIdRequest):
         raise HTTPException(status_code=500, detail=f"Puanlama hatası: {str(e)}")
 
 
-# Aşama 3: Kategorizasyon (Categorize)
 @app.post("/api/v1/categorize")
 async def categorize_aspects(request: ProductIdRequest):
     try:
@@ -214,7 +213,9 @@ async def summarize_reviews(request: ProductIdRequest):
         if not ham_parcalar:
             raise HTTPException(status_code=404, detail="Bu ürüne ait özetlenecek nitelik bulunamadı.")
 
-        kategori_sayaclari = Counter([p[1] for p in ham_parcalar])
+        islenen_review_idler = list(set([p[0] for p in ham_parcalar]))
+
+        kategori_sayaclari = Counter([p[1] for p in ham_parcalar if p[1] and p[1].lower() != "genel"])
         top_3_kategori = [k[0] for k in kategori_sayaclari.most_common(3)]
 
         urun_sorgusu = "SELECT avg_model_score FROM products WHERE id = %s;"
@@ -243,24 +244,43 @@ async def summarize_reviews(request: ProductIdRequest):
 
         for kat_adi in top_3_kategori:
             ilgili_parcalar = [p for p in ham_parcalar if p[1] == kat_adi]
-        kat_puanlari = [float(p[3]) for p in ilgili_parcalar if p[3] is not None]
-        kat_ortalama = round(sum(kat_puanlari) / len(kat_puanlari), 2) if kat_puanlari else None
+            kat_puanlari = [float(p[3]) for p in ilgili_parcalar if p[3] is not None]
+            kat_ortalama = round(sum(kat_puanlari) / len(kat_puanlari), 2) if kat_puanlari else None
+            kaynak_id_listesi = list(set([p[0] for p in ilgili_parcalar]))
 
-        kaynak_id_listesi = list(set([p[0] for p in ilgili_parcalar]))
+            gorulen_parcalar = set()
+            essiz_parcalar = []
+            for p in ilgili_parcalar:
+                temiz_metin = p[2].strip().lower()
+                if temiz_metin not in gorulen_parcalar:
+                    gorulen_parcalar.add(temiz_metin)
+                    essiz_parcalar.append(f"[Puan: {int(p[3] if p[3] else 0)}/5] {p[2]}")
 
-        kategori_metni = " | ".join([f"[Puan: {int(p[3] if p[3] else 0)}/5] {p[2]}" for p in ilgili_parcalar])
+            kategori_metni = " | ".join(essiz_parcalar)
 
-        user_content = f"Görev: Kategori Özeti\nKategori: {kat_adi}\nÜrün Dağılımı: {dagilim_raporu}\nYorumlar:\n{kategori_metni}"
+            user_content = f"Görev: Kategori Özeti\nKategori: {kat_adi}\nÜrün Dağılımı: {dagilim_raporu}\nYorumlar:\n{kategori_metni}"
 
-        llama_istekleri.append({
-            "system_prompt": system_prompt,
-            "user_content": user_content,
-            "meta": {"type": "CATEGORY", "category_name": kat_adi, "avg_score": kat_ortalama, "source_ids": kaynak_id_listesi}
-        })
+            llama_istekleri.append({
+                "system_prompt": system_prompt,
+                "user_content": user_content,
+                "meta": {"type": "CATEGORY", "category_name": kat_adi, "avg_score": kat_ortalama,
+                         "source_ids": kaynak_id_listesi}
+            })
 
-        genel_yorum_listesi = [f"[Puan: {int(y[2])}/5] {y[1]}" for y in tum_yorumlar]
-        tum_yorumlar_metni = " | ".join(genel_yorum_listesi)
-        genel_kaynak_id_listesi = [y[0] for y in tum_yorumlar]
+        qwen_secimi_yorumlar = [y for y in tum_yorumlar if y[0] in islenen_review_idler]
+
+        gorulen_genel_yorumlar = set()
+        essiz_genel_yorumlar = []
+        genel_kaynak_id_listesi = []
+
+        for y in qwen_secimi_yorumlar:
+            temiz_metin = y[1].strip().lower()
+            if temiz_metin not in gorulen_genel_yorumlar:
+                gorulen_genel_yorumlar.add(temiz_metin)
+                essiz_genel_yorumlar.append(f"[Puan: {int(y[2])}/5] {y[1]}")
+                genel_kaynak_id_listesi.append(y[0])
+
+        tum_yorumlar_metni = " | ".join(essiz_genel_yorumlar)
 
         genel_user_content = f"Görev: Genel Özet\nÜrün Dağılımı: {dagilim_raporu}\nYorumlar:\n{tum_yorumlar_metni}"
 
@@ -285,20 +305,20 @@ async def summarize_reviews(request: ProductIdRequest):
             if meta["type"] == "GENERAL":
                 genel_ozet_metni_arayuz_icin = ozet_metni
 
-            # Bütün SQL kalabalığı DatabaseManager içine taşındı
-            s_id = db.save_product_summary(
-                product_id=product_id,
-                summary_type=meta["type"],
-                category_name=meta["category_name"],
-                summary_text=ozet_metni,
-                average_score=meta["avg_score"]
+            # Tertemiz, tek satırlık Data Access Layer (DAL) çağrısı
+            summary_id = db.save_summary_and_get_id(
+                product_id,
+                meta["type"],
+                meta.get("category_name"),
+                ozet_metni,
+                meta["avg_score"]
             )
 
-            if s_id:
+            if summary_id:
                 yazilan_ozet_sayisi += 1
 
                 if meta["source_ids"]:
-                    iliskiler = [(s_id, r_id) for r_id in meta["source_ids"]]
+                    iliskiler = [(summary_id, r_id) for r_id in meta["source_ids"]]
                     db.save_summary_source_reviews(iliskiler)
 
         return {

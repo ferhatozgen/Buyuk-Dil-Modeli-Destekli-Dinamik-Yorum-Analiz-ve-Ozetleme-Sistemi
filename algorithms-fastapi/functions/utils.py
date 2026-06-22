@@ -367,10 +367,12 @@ def oransal_yorum_secimi(db, urun_id, max_sayi):
 
     return secilen_yorumlar
 
-VLLM_LLAMA_SERVER_URL = os.getenv("VLLM_LLAMA_SERVER_URL", "htto://0.0.0.0:8000")
+VLLM_LLAMA_SERVER_URL = os.getenv("VLLM_LLAMA_SERVER_URL", "http://0.0.0.0:8000")
 VLLM_LLAMA_MODEL_NAME = "ecommerce-adapter"
 
-async def _tekil_llama_istegi(session: aiohttp.ClientSession, semaphore: asyncio.Semaphore, system_prompt:str, user_content:str, meta_data: dict) -> dict:
+
+async def _tekil_llama_istegi(session: aiohttp.ClientSession, semaphore: asyncio.Semaphore, system_prompt: str,
+                              user_content: str, meta_data: dict) -> dict:
     url = f"{VLLM_LLAMA_SERVER_URL}/v1/chat/completions"
 
     payload = {
@@ -379,10 +381,16 @@ async def _tekil_llama_istegi(session: aiohttp.ClientSession, semaphore: asyncio
             {"role": "system", "content": system_prompt},
             {"role": "user", "content": user_content}
         ],
-        "temperature": 0.1,
+        "temperature": 0.2,
         "top_p": 0.9,
         "max_tokens": 512,
+        "presence_penalty": 0.1,
+        "frequency_penalty": 0.1
     }
+
+    print("\n" + "=" * 60)
+    print(f"🚀 [GENEL ÖZET] MODELE GİDEN USER CONTENT:\n{user_content}")
+    print("=" * 60 + "\n")
 
     async with semaphore:
         try:
@@ -391,8 +399,13 @@ async def _tekil_llama_istegi(session: aiohttp.ClientSession, semaphore: asyncio
                     hata_metni = await response.text()
                     logger.error(f"LLAMA isteği başarısız oldu. Status: {response.status}, Hata: {hata_metni}")
                     return {"meta": meta_data, "ozet": None}
+
                 sonuc_json = await response.json()
                 ozet_metni = sonuc_json["choices"][0]["message"]["content"].strip()
+
+                print("\n" + "*" * 60)
+                print(f"📥 [GENEL ÖZET] MODELDEN GELEN YANIT:\n{ozet_metni}")
+                print("*" * 60 + "\n")
 
                 return {"meta": meta_data, "ozet": ozet_metni}
 
