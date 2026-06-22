@@ -1086,20 +1086,28 @@ def yemeksepeti_veri_cek(restoran_linki, max_sayfa) -> str:
                 try:
                     with open(cerez_dosyasi, 'r', encoding='utf-8') as f:
                         cookies = json.load(f)
+
                         temiz_cookies = []
                         for cookie in cookies:
-                            temiz_cookies.append({
-                                "name": cookie["name"],
-                                "value": cookie["value"],
-                                "domain": cookie["domain"],
-                                "path": cookie["path"]
-                            })
+                            # SADECE Playwright'ın %100 kabul ettiği temel alanları alıyoruz
+                            # .get() kullanarak eğer o alan yoksa hata vermesini engelliyoruz
+                            temiz_cookie = {
+                                "name": cookie.get("name", ""),
+                                "value": cookie.get("value", ""),
+                                "domain": cookie.get("domain", ""),
+                                "path": cookie.get("path", "/")
+                            }
+
+                            # sameSite alanı genelde bu hataya sebep olur. Sadece güvenli olanları alıyoruz.
+                            if "sameSite" in cookie and cookie["sameSite"] in ["Strict", "Lax", "None"]:
+                                temiz_cookie["sameSite"] = cookie["sameSite"]
+
+                            temiz_cookies.append(temiz_cookie)
+
                         context.add_cookies(temiz_cookies)
-                        logger.info("🍪 Yemeksepeti çerezleri başarıyla enjekte edildi!")
+                        logger.info("🍪 Çerezler başarıyla enjekte edildi!")
                 except Exception as e:
-                    logger.warning(f"⚠️ Yemeksepeti çerez enjeksiyonu başarısız: {e}")
-            else:
-                logger.warning(f"⚠️ {cerez_dosyasi} bulunamadı, anonim giriliyor.")
+                    logger.warning(f"⚠️ Çerez enjeksiyonu başarısız: {e}")
             # ==========================================
 
             page = context.pages[0] if context.pages else context.new_page()
@@ -1337,20 +1345,28 @@ def google_maps_veri_cek(mekan_linki, max_kaydirma) -> str:
                 try:
                     with open(cerez_dosyasi, 'r', encoding='utf-8') as f:
                         cookies = json.load(f)
+
                         temiz_cookies = []
                         for cookie in cookies:
-                            temiz_cookies.append({
-                                "name": cookie["name"],
-                                "value": cookie["value"],
-                                "domain": cookie["domain"],
-                                "path": cookie["path"]
-                            })
+                            # SADECE Playwright'ın %100 kabul ettiği temel alanları alıyoruz
+                            # .get() kullanarak eğer o alan yoksa hata vermesini engelliyoruz
+                            temiz_cookie = {
+                                "name": cookie.get("name", ""),
+                                "value": cookie.get("value", ""),
+                                "domain": cookie.get("domain", ""),
+                                "path": cookie.get("path", "/")
+                            }
+
+                            # sameSite alanı genelde bu hataya sebep olur. Sadece güvenli olanları alıyoruz.
+                            if "sameSite" in cookie and cookie["sameSite"] in ["Strict", "Lax", "None"]:
+                                temiz_cookie["sameSite"] = cookie["sameSite"]
+
+                            temiz_cookies.append(temiz_cookie)
+
                         context.add_cookies(temiz_cookies)
-                        logger.info("🍪 Google Maps çerezleri başarıyla enjekte edildi!")
+                        logger.info("🍪 Çerezler başarıyla enjekte edildi!")
                 except Exception as e:
-                    logger.warning(f"⚠️ Maps çerez enjeksiyonu başarısız: {e}")
-            else:
-                logger.warning(f"⚠️ {cerez_dosyasi} bulunamadı, anonim giriliyor.")
+                    logger.warning(f"⚠️ Çerez enjeksiyonu başarısız: {e}")
             # ==========================================
 
             page = context.pages[0] if context.pages else context.new_page()
