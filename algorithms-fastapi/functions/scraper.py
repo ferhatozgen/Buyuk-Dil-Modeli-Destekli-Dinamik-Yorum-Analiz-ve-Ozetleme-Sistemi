@@ -1142,30 +1142,47 @@ def yemeksepeti_veri_cek(restoran_linki, max_sayfa) -> str:
             except Exception as e:
                 logger.warning(f"   [Uyarı] Sayfa yüklenirken sorun oluştu: {e}")
 
-            page.mouse.wheel(0, 500)
-            time.sleep(1.5)
+            page.mouse.wheel(0, 800) # Biraz daha derine inelim
+            time.sleep(2) # Tembel görsellerin (lazy load) yüklenmesi için yarım saniye daha ekledik
 
             try:
+                # SİHİR: En sağlam görsel bulma algoritması (Meta Tag + Gelişmiş DOM)
                 bulunan_resim = page.evaluate('''() => {
+                    // 1. PLAN: Sitenin Meta (Sosyal Medya) Görselini Çal (En Garantili Yol)
+                    const ogImage = document.querySelector('meta[property="og:image"]');
+                    if (ogImage && ogImage.content && ogImage.content.includes('deliveryhero')) {
+                        return ogImage.content;
+                    }
+
+                    // 2. PLAN: Sayfadaki tüm resimleri genişletilmiş filtreyle tara
                     const images = Array.from(document.querySelectorAll('img'));
                     const logo = images.find(img => {
-                        const src = img.src.toLowerCase();
-                        const alt = img.alt.toLowerCase();
-                        return src.includes('deliveryhero') || src.includes('logo') || alt.includes('logo');
+                        const src = (img.src || img.dataset?.src || '').toLowerCase();
+                        const alt = (img.alt || '').toLowerCase();
+                        return src.includes('deliveryhero') || src.includes('logo') || alt.includes('logo') || src.includes('vendor');
                     });
-                    return logo ? (logo.src || logo.dataset.src) : null;
+                    
+                    if (logo) return logo.src || logo.dataset.src;
+                    
+                    return null;
                 }''')
 
                 if bulunan_resim:
                     if bulunan_resim.startswith("//"):
                         bulunan_resim = "https:" + bulunan_resim
                     gorsel_url = bulunan_resim.replace('\\u002F', '/')
-                    logger.info(f" ✅ Görsel Playwright ile Yakalandı: {gorsel_url}")
+                    logger.info(f" ✅ Görsel Başarıyla Yakalandı: {gorsel_url}")
                 else:
-                    element = page.locator("img[data-testid='vendor-logo'], img.vendor-logo__image").first
+                    # 3. PLAN: Playwright Locator ile Son Çare
+                    element = page.locator("img[data-testid='vendor-logo'], .vendor-info-main-details img, picture img").first
                     if element.count() > 0:
                         gorsel_url = element.get_attribute("src") or element.get_attribute("data-src")
-                        logger.info(f" ✅ Görsel (B Planı) Playwright ile Yakalandı: {gorsel_url}")
+                        if gorsel_url:
+                            logger.info(f" ✅ Görsel (Son Çare) ile Yakalandı: {gorsel_url}")
+                        else:
+                            gorsel_url = "Görsel Bulunamadı"
+                    else:
+                        logger.warning("   ⚠️ Görsel DOM'da hiçbir şekilde bulunamadı.")
 
             except Exception as img_err:
                 logger.warning(f"   [Uyarı] Görsel aranırken sorun oluştu: {img_err}")
