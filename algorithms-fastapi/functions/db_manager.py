@@ -202,3 +202,66 @@ class DatabaseManager:
                     conn.commit()
         except Exception as e:
             raise Exception(f"Puanlar güncellenirken hata: {e}")
+
+    def save_summary_and_get_id(self, product_id, summary_type, category_name, summary_text, average_score):
+        """
+        Özeti product_summaries tablosuna kaydeder ve oluşturulan yeni UUID'yi döndürür.
+        """
+        try:
+            with self.get_connection() as conn:
+                with conn.cursor() as cur:
+                    query = """
+                        INSERT INTO product_summaries (product_id, summary_type, category_name, summary_text, average_score) 
+                        VALUES (%s, %s, %s, %s, %s) RETURNING id;
+                    """
+                    cur.execute(query, (product_id, summary_type, category_name, summary_text, average_score))
+                    summary_id = cur.fetchone()[0]
+                    conn.commit()
+
+                    return summary_id
+        except Exception as e:
+            print(f"[ERROR] Özet veritabanına kaydedilirken hata oluştu: {e}")
+            return None
+
+    def save_summary_source_reviews(self, iliskiler):
+        """
+        Hangi özetin hangi yorumlardan oluştuğunu eşleşme tablosuna (summary_source_reviews) toplu olarak yazar.
+        iliskiler formatı: [(summary_id, review_id), (summary_id, review_id), ...]
+        """
+        if not iliskiler:
+            return
+
+        try:
+            with self.get_connection() as conn:
+                with conn.cursor() as cur:
+                    query = "INSERT INTO summary_source_reviews (summary_id, review_id) VALUES %s"
+                    execute_values(cur, query, iliskiler)
+                    conn.commit()
+        except Exception as e:
+            print(f"[ERROR] Özet-Yorum ilişkileri kaydedilirken hata oluştu: {e}")
+
+    def save_review_aspects(self, final_aspects):
+        """
+        Qwen modelinden dönen ve puanlanan parçaları (aspects) toplu olarak veritabanına yazar.
+        final_aspects formatı: [{"review_id": ..., "category_name": ..., "snippet_text": ..., "snippet_score": ...}]
+        """
+        if not final_aspects:
+            return
+
+        try:
+            with self.get_connection() as conn:
+                with conn.cursor() as cur:
+                    query = """
+                        INSERT INTO review_aspects (review_id, category_name, snippet_text, snippet_score)
+                        VALUES %s
+                    """
+                    # Sözlük listesini, execute_values'un okuyabileceği tuple listesine çeviriyoruz
+                    values = [
+                        (item["review_id"], item["category_name"], item["snippet_text"], item["snippet_score"])
+                        for item in final_aspects
+                    ]
+
+                    execute_values(cur, query, values)
+                    conn.commit()
+        except Exception as e:
+            print(f"[ERROR] Review aspects kaydedilirken hata oluştu: {e}")
