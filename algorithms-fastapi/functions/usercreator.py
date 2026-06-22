@@ -43,7 +43,7 @@ def create_admin_user():
         print("Artık bu bilgilerle React frontend üzerinden giriş yapıp JWT alabilirsin.")
 
     except Exception as e:
-        print(f"\n❌ Veritabanına kayıt sırasında hata oluştu: {e}")
+        print(f"\n Veritabanına kayıt sırasında hata oluştu: {e}")
     finally:
         # Veritabanı bağlantısını kapatmayı unutmuyoruz
         db.close_pool()
