@@ -1089,19 +1089,13 @@ def yemeksepeti_veri_cek(restoran_linki, max_sayfa) -> str:
 
                         temiz_cookies = []
                         for cookie in cookies:
-                            # SADECE Playwright'ın %100 kabul ettiği temel alanları alıyoruz
-                            # .get() kullanarak eğer o alan yoksa hata vermesini engelliyoruz
+                            # Sadece en temel 4 bilgiyi alıyoruz, eklentinin eklediği saçma sapan verileri (id, hostOnly vs) çöpe atıyoruz.
                             temiz_cookie = {
                                 "name": cookie.get("name", ""),
                                 "value": cookie.get("value", ""),
                                 "domain": cookie.get("domain", ""),
                                 "path": cookie.get("path", "/")
                             }
-
-                            # sameSite alanı genelde bu hataya sebep olur. Sadece güvenli olanları alıyoruz.
-                            if "sameSite" in cookie and cookie["sameSite"] in ["Strict", "Lax", "None"]:
-                                temiz_cookie["sameSite"] = cookie["sameSite"]
-
                             temiz_cookies.append(temiz_cookie)
 
                         context.add_cookies(temiz_cookies)
@@ -1348,19 +1342,13 @@ def google_maps_veri_cek(mekan_linki, max_kaydirma) -> str:
 
                         temiz_cookies = []
                         for cookie in cookies:
-                            # SADECE Playwright'ın %100 kabul ettiği temel alanları alıyoruz
-                            # .get() kullanarak eğer o alan yoksa hata vermesini engelliyoruz
+                            # Sadece en temel 4 bilgiyi alıyoruz, eklentinin eklediği saçma sapan verileri (id, hostOnly vs) çöpe atıyoruz.
                             temiz_cookie = {
                                 "name": cookie.get("name", ""),
                                 "value": cookie.get("value", ""),
                                 "domain": cookie.get("domain", ""),
                                 "path": cookie.get("path", "/")
                             }
-
-                            # sameSite alanı genelde bu hataya sebep olur. Sadece güvenli olanları alıyoruz.
-                            if "sameSite" in cookie and cookie["sameSite"] in ["Strict", "Lax", "None"]:
-                                temiz_cookie["sameSite"] = cookie["sameSite"]
-
                             temiz_cookies.append(temiz_cookie)
 
                         context.add_cookies(temiz_cookies)
