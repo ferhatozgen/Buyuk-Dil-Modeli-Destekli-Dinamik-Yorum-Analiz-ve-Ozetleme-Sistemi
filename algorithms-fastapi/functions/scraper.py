@@ -1129,7 +1129,12 @@ def yemeksepeti_veri_cek(restoran_linki, max_sayfa) -> str:
             try:
                 page.goto(restoran_linki, wait_until="domcontentloaded", timeout=90000)
                 logger.info("   ⏳ Sayfa yüklendi...")
-                page.wait_for_selector("img[data-testid='vendor-logo'], img.vendor-logo__image", timeout=90000)
+
+                # 90 saniyelik tehlikeli beklemeyi 10 saniyeye düşürüp try-except içine alıyoruz
+                try:
+                    page.wait_for_selector("img[data-testid='vendor-logo'], img.vendor-logo__image", timeout=10000)
+                except Exception:
+                    logger.info("   ℹ️ Logo elementi hemen bulunamadı, B planına (JS) geçiliyor...")
 
                 kapat_btn = page.locator('button:has-text("Kabul Et"), button:has-text("Anladım"), button:has-text("Kapat")')
                 if kapat_btn.count() > 0:
