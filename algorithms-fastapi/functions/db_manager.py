@@ -202,3 +202,60 @@ class DatabaseManager:
                     conn.commit()
         except Exception as e:
             raise Exception(f"Puanlar güncellenirken hata: {e}")
+
+        def save_review_aspects(self, aspects_data):
+            """
+            Ayırıcı (Aspect) modelinin bulduğu kategori parçacıklarını kaydeder.
+            aspects_data formatı: list of tuples -> [(review_id, category_name, snippet_text, snippet_score), ...]
+            """
+            query = """
+                    INSERT INTO review_aspects (review_id, category_name, snippet_text, snippet_score)
+                    VALUES %s \
+                    """
+            try:
+                with self.get_connection() as conn:
+                    with conn.cursor() as cur:
+                        if aspects_data:
+                            execute_values(cur, query, aspects_data)
+                            conn.commit()
+            except Exception as e:
+                print(f"Aspect (parçacık) verileri kaydedilirken hata: {e}")
+                raise e
+
+        def save_product_summary_with_sources(self, product_id, summary_type, category_name, summary_text,
+                                              average_score, source_review_ids):
+            """
+            Üretilen Llama özetini kaydeder ve bu özeti oluşturan kaynak yorumların (review_id)
+            referanslarını summary_source_reviews tablosuna bağlar.
+            """
+            insert_summary_query = """
+                                   INSERT INTO product_summaries (product_id, summary_type, category_name, summary_text, average_score)
+                                   VALUES (%s, %s, %s, %s, %s) RETURNING id; \
+                                   """
+            insert_sources_query = """
+                                   INSERT INTO summary_source_reviews (summary_id, review_id)
+                                   VALUES %s \
+                                   """
+            try:
+                with self.get_connection() as conn:
+                    try:
+                        with conn.cursor() as cur:
+                            # 1. Özeti kaydet ve yeni oluşan özetin ID'sini al
+                            cur.execute(insert_summary_query,
+                                        (product_id, summary_type, category_name, summary_text, average_score))
+                            summary_id = cur.fetchone()[0]
+
+                            # 2. Bu özeti oluşturan yorum id'lerini ara tabloya (Many-to-Many) kaydet
+                            if source_review_ids:
+                                sources_data = [(summary_id, r_id) for r_id in source_review_ids]
+                                execute_values(cur, insert_sources_query, sources_data)
+
+                            conn.commit()
+                            return summary_id
+                    except Exception as inner_e:
+                        conn.rollback()
+                        raise inner_e
+            except Exception as e:
+                print(f"Özet ve kaynakları kaydedilirken hata: {e}")
+                raise e
+
