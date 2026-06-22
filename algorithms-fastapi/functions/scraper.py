@@ -1055,40 +1055,50 @@ def yemeksepeti_veri_cek(restoran_linki, max_sayfa) -> str:
     gorsel_url = "Görsel Bulunamadı"
 
     # ==========================================
-    # SİHİR 1: CURL-CFFI İLE GÖRSEL ÇEKME (Playwright İptal)
+    # SİHİR 1: SCRAPERAPI + CURL-CFFI İLE GÖRSEL ÇEKME
     # ==========================================
     logger.info("🛡️ ScraperAPI üzerinden Cloudflare aşılarak restoran görseli aranıyor...")
     try:
         from bs4 import BeautifulSoup
+        import urllib.parse
 
-        # 1. ADIM: ScraperAPI panelinden aldığın API anahtarını buraya yapıştır
         SCRAPER_API_KEY = "d0cc1d27bea9d4088810fafebef28724"
+        # render=true kaldırıldı, böylece zaman aşımı (timeout) riski tamamen bitti!
+        scraper_url = f"http://api.scraperapi.com?api_key={SCRAPER_API_KEY}&url={urllib.parse.quote(restoran_linki)}"
 
-        # 2. ADIM: Hedef linki ScraperAPI'nin anlayacağı formata sokuyoruz
-        # render=true parametresi, Yemeksepeti'ndeki JavaScript'lerin sunucuda açılmasını sağlar
-        scraper_url = f"http://api.scraperapi.com?api_key={SCRAPER_API_KEY}&url={urllib.parse.quote(restoran_linki)}&render=true"
-
-        # Artık doğrudan Yemeksepeti'ne değil, ScraperAPI'ye istek atıyoruz
+        # İstek süresini güvenli bölgede tutmak için timeout'u 30 saniye yaptık
         res = curl_requests.get(scraper_url, impersonate="chrome124", timeout=30, verify=False)
 
         if res.status_code == 200:
             soup = BeautifulSoup(res.text, "html.parser")
+            bulunan_url = None
 
-            # 1. PLAN: Meta (og:image) etiketini ara
+            # 1. PLAN: Meta (og:image) etiketini güvenli bir şekilde kontrol et
             og_image = soup.find("meta", property="og:image")
+            if og_image and og_image.get("content"):
+                gorsel_icerik = og_image.get("content")
+                if 'deliveryhero' in gorsel_icerik.lower():
+                    bulunan_url = gorsel_icerik
 
-            if og_image and og_image.get("content") and 'deliveryhero' in og_image.get("content"):
-                gorsel_url = og_image.get("content")
-            else:
-                # 2. PLAN: HTML içindeki img etiketlerini CDN yapısına göre tara
+            # 2. PLAN: Meta bulunamadıysa veya deliveryhero içermiyorsa img etiketlerini tara
+            if not bulunan_url:
                 img_tag = soup.find("img", src=lambda x: x and ('deliveryhero' in x.lower() or 'logo' in x.lower() or 'vendor' in x.lower()))
                 if img_tag:
-                    gorsel_url = img_tag.get("src") or img_tag.get("data-src") or img_tag.get("content")
+                    bulunan_url = img_tag.get("src") or img_tag.get("data-src") or img_tag.get("content")
 
-            if gorsel_url and gorsel_url != "Görsel Bulunamadı":
-                if gorsel_url.startswith("//"):
-                    gorsel_url = "https:" + gorsel_url
-                gorsel_url = gorsel_url.replace('\\u002F', '/')
+            # 3. PLAN: Üsttekiler de boşa çıktıysa geniş kapsamlı bir img taraması yap
+            if not bulunan_url:
+                for img in soup.find_all("img"):
+                    src_val = img.get("src") or img.get("data-src") or ""
+                    if "deliveryhero" in src_val.lower() or "vendor" in src_val.lower():
+                        bulunan_url = src_val
+                        break
+
+            # Bulunan URL'i temizleme ve biçimlendirme
+            if bulunan_url and bulunan_url != "Görsel Bulunamadı":
+                if bulunan_url.startswith("//"):
+                    bulunan_url = "https:" + bulunan_url
+                gorsel_url = bulunan_url.replace('\\u002F', '/')
                 logger.info(f" ✅ Görsel ScraperAPI ile başarıyla yakalandı: {gorsel_url}")
             else:
                 logger.warning("   ⚠️ Güvenlik duvarı geçildi ancak HTML içinde logo görseli bulunamadı.")
@@ -1097,7 +1107,7 @@ def yemeksepeti_veri_cek(restoran_linki, max_sayfa) -> str:
 
     except Exception as img_err:
         logger.warning(f"   [Uyarı] Görsel aranırken sorun oluştu: {img_err}")
-
+    # ==========================================
     # ==========================================
     # SİHİR 2: YORUMLARI API'DEN ÇEKME
     # ==========================================
