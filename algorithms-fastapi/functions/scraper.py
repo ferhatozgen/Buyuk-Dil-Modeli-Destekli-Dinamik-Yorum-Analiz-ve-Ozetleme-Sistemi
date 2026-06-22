@@ -1048,7 +1048,7 @@ def yemeksepeti_veri_cek(restoran_linki, max_sayfa) -> str:
     else:
         urun_adi = "Yemeksepeti Restoranı"
 
-    # Dosya yolu orijinal formata sadık kalındı
+    # Dosya yolunu orijinal formatına geri çektik
     dosya_yolu = f"cekilen_veriler/yemeksepeti/yemeksepeti_{vendor_id}.json"
 
     logger.info(f"🔍 Yemeksepeti Vendor ID Çözümleniyor: {vendor_id}")
@@ -1082,7 +1082,7 @@ def yemeksepeti_veri_cek(restoran_linki, max_sayfa) -> str:
                 gorsel_url = og_image.get("content")
             else:
                 # 2. PLAN: Meta bulunamazsa, HTML içindeki img etiketlerini CDN kalıbına göre tara
-                img_tag = soup.find("img", src=lambda x: x and ('deliveryhero' in x.lower() || 'logo' in x.lower() || 'vendor' in x.lower()))
+                img_tag = soup.find("img", src=lambda x: x and ('deliveryhero' in x.lower() or 'logo' in x.lower() or 'vendor' in x.lower()))
                 if img_tag:
                     gorsel_url = img_tag.get("src") or img_tag.get("data-src") or img_tag.get("content")
 
