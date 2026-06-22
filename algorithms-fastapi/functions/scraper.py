@@ -1089,17 +1089,37 @@ def yemeksepeti_veri_cek(restoran_linki, max_sayfa) -> str:
 
                         temiz_cookies = []
                         for cookie in cookies:
-                            # Sadece en temel 4 bilgiyi alıyoruz, eklentinin eklediği saçma sapan verileri (id, hostOnly vs) çöpe atıyoruz.
+                            # 1. Sadece en temel ve zorunlu bilgileri alıyoruz
                             temiz_cookie = {
                                 "name": cookie.get("name", ""),
                                 "value": cookie.get("value", ""),
                                 "domain": cookie.get("domain", ""),
                                 "path": cookie.get("path", "/")
                             }
+
+                            # 2. Playwright'ın kabul ettiği opsiyonel alanları güvenli bir şekilde ekliyoruz
+                            if "expirationDate" in cookie:
+                                temiz_cookie["expires"] = cookie["expirationDate"]
+                            if "secure" in cookie:
+                                temiz_cookie["secure"] = cookie["secure"]
+                            if "httpOnly" in cookie:
+                                temiz_cookie["httpOnly"] = cookie["httpOnly"]
+
+                            # 3. SİHİR BURADA: sameSite hatalarını Playwright'ın diline çeviriyoruz
+                            if "sameSite" in cookie:
+                                val = cookie["sameSite"].lower()
+                                if val == "no_restriction":
+                                    temiz_cookie["sameSite"] = "None"
+                                elif val == "lax":
+                                    temiz_cookie["sameSite"] = "Lax"
+                                elif val == "strict":
+                                    temiz_cookie["sameSite"] = "Strict"
+                                # Eğer "unspecified" ise hiç eklemiyoruz, Playwright kendisi karar versin.
+
                             temiz_cookies.append(temiz_cookie)
 
                         context.add_cookies(temiz_cookies)
-                        logger.info("🍪 Çerezler başarıyla enjekte edildi!")
+                        logger.info("🍪 Çerezler formatlanarak başarıyla enjekte edildi!")
                 except Exception as e:
                     logger.warning(f"⚠️ Çerez enjeksiyonu başarısız: {e}")
             # ==========================================
@@ -1342,17 +1362,37 @@ def google_maps_veri_cek(mekan_linki, max_kaydirma) -> str:
 
                         temiz_cookies = []
                         for cookie in cookies:
-                            # Sadece en temel 4 bilgiyi alıyoruz, eklentinin eklediği saçma sapan verileri (id, hostOnly vs) çöpe atıyoruz.
+                            # 1. Sadece en temel ve zorunlu bilgileri alıyoruz
                             temiz_cookie = {
                                 "name": cookie.get("name", ""),
                                 "value": cookie.get("value", ""),
                                 "domain": cookie.get("domain", ""),
                                 "path": cookie.get("path", "/")
                             }
+
+                            # 2. Playwright'ın kabul ettiği opsiyonel alanları güvenli bir şekilde ekliyoruz
+                            if "expirationDate" in cookie:
+                                temiz_cookie["expires"] = cookie["expirationDate"]
+                            if "secure" in cookie:
+                                temiz_cookie["secure"] = cookie["secure"]
+                            if "httpOnly" in cookie:
+                                temiz_cookie["httpOnly"] = cookie["httpOnly"]
+
+                            # 3. SİHİR BURADA: sameSite hatalarını Playwright'ın diline çeviriyoruz
+                            if "sameSite" in cookie:
+                                val = cookie["sameSite"].lower()
+                                if val == "no_restriction":
+                                    temiz_cookie["sameSite"] = "None"
+                                elif val == "lax":
+                                    temiz_cookie["sameSite"] = "Lax"
+                                elif val == "strict":
+                                    temiz_cookie["sameSite"] = "Strict"
+                                # Eğer "unspecified" ise hiç eklemiyoruz, Playwright kendisi karar versin.
+
                             temiz_cookies.append(temiz_cookie)
 
                         context.add_cookies(temiz_cookies)
-                        logger.info("🍪 Çerezler başarıyla enjekte edildi!")
+                        logger.info("🍪 Çerezler formatlanarak başarıyla enjekte edildi!")
                 except Exception as e:
                     logger.warning(f"⚠️ Çerez enjeksiyonu başarısız: {e}")
             # ==========================================
