@@ -1062,7 +1062,7 @@ def yemeksepeti_veri_cek(restoran_linki, max_sayfa) -> str:
         from bs4 import BeautifulSoup
         import urllib.parse
 
-        SCRAPER_API_KEY = "d0cc1d27bea9d4088810fafebef28724"
+        SCRAPER_API_KEY = os.getenv("SCRAPER_API_KEY")
         # render=true kaldırıldı, böylece zaman aşımı (timeout) riski tamamen bitti!
         scraper_url = f"http://api.scraperapi.com?api_key={SCRAPER_API_KEY}&url={urllib.parse.quote(restoran_linki)}"
 

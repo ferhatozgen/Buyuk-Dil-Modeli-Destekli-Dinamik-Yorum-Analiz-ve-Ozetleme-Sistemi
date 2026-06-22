@@ -119,8 +119,7 @@ def baslat(link_listesi):
 
 
 if __name__ == "__main__":
-    manuel_liste = ["https://www.yemeksepeti.com/restaurant/q37x/meato",
-    ]
+    manuel_liste = ["",]
     txt_dosya_yolu = "linkler.txt"
 
     print("\n" + "*" * 50)
