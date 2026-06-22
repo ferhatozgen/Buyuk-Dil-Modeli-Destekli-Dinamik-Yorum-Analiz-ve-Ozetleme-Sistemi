@@ -1048,154 +1048,56 @@ def yemeksepeti_veri_cek(restoran_linki, max_sayfa) -> str:
     else:
         urun_adi = "Yemeksepeti Restoranı"
 
-    # Dosya yolunu senin orijinal formatına geri çektik
+    # Dosya yolu orijinal formata sadık kalındı
     dosya_yolu = f"cekilen_veriler/yemeksepeti/yemeksepeti_{vendor_id}.json"
 
     logger.info(f"🔍 Yemeksepeti Vendor ID Çözümleniyor: {vendor_id}")
     gorsel_url = "Görsel Bulunamadı"
 
     # ==========================================
-    # SİHİR 1: PLAYWRIGHT (GÖRSEL ÇEKME)
+    # SİHİR 1: CURL-CFFI İLE GÖRSEL ÇEKME (Playwright İptal)
     # ==========================================
-    logger.info("🔍 Restoran sayfasına kalıcı profil ile erişiliyor...")
+    logger.info("🔍 Cloudflare atlatılarak restoran görseli aranıyor...")
     try:
-        from playwright.sync_api import sync_playwright
-        from playwright_stealth import Stealth
+        from bs4 import BeautifulSoup
 
-        # İsteğin üzerine burayı orijinal haline (üst dizine bakacak şekilde) döndürdüm
-        profil_klasoru = "/app/browser_profiles/yemeksepeti"
-        os.makedirs(profil_klasoru, exist_ok=True)
+        headers = {
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36",
+            "Accept-Language": "tr-TR,tr;q=0.9",
+            "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8",
+            "Origin": "https://www.yemeksepeti.com",
+            "Referer": restoran_linki
+        }
 
-        with Stealth().use_sync(sync_playwright()) as p:
-            context = p.chromium.launch_persistent_context(
-                user_data_dir=profil_klasoru,
-                headless=False,
-                user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36",
-                locale="tr-TR",
-                ignore_default_args=["--enable-automation"],
-                args=["--disable-blink-features=AutomationControlled", "--no-sandbox"],
-                viewport={'width': 1600, 'height': 900}
-            )
+        # curl_cffi'nin impersonate yeteneği sayesinde Cloudflare TLS korumasını doğrudan geçiyoruz
+        res = curl_requests.get(restoran_linki, headers=headers, impersonate="chrome124", timeout=15, verify=False)
 
-            import json
-            # scraper.py'nin bulunduğu yerden bir üst klasöre (algorithms-fastapi) çıkıyoruz
-            BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-            cerez_dosyasi = os.path.join(BASE_DIR, "cookies_ys.json")
+        if res.status_code == 200:
+            soup = BeautifulSoup(res.text, "html.parser")
 
-            if os.path.exists(cerez_dosyasi):
-                try:
-                    with open(cerez_dosyasi, 'r', encoding='utf-8') as f:
-                        cookies = json.load(f)
+            # 1. PLAN: Sitenin Meta (Sosyal Medya) Görselini Çal (En Hızlı ve Garantili Yol)
+            og_image = soup.find("meta", property="og:image")
 
-                        temiz_cookies = []
-                        for cookie in cookies:
-                            # 1. Sadece en temel ve zorunlu bilgileri alıyoruz
-                            temiz_cookie = {
-                                "name": cookie.get("name", ""),
-                                "value": cookie.get("value", ""),
-                                "domain": cookie.get("domain", ""),
-                                "path": cookie.get("path", "/")
-                            }
+            if og_image and og_image.get("content") and 'deliveryhero' in og_image.get("content"):
+                gorsel_url = og_image.get("content")
+            else:
+                # 2. PLAN: Meta bulunamazsa, HTML içindeki img etiketlerini CDN kalıbına göre tara
+                img_tag = soup.find("img", src=lambda x: x and ('deliveryhero' in x.lower() || 'logo' in x.lower() || 'vendor' in x.lower()))
+                if img_tag:
+                    gorsel_url = img_tag.get("src") or img_tag.get("data-src") or img_tag.get("content")
 
-                            # 2. Playwright'ın kabul ettiği opsiyonel alanları güvenli bir şekilde ekliyoruz
-                            if "expirationDate" in cookie:
-                                temiz_cookie["expires"] = cookie["expirationDate"]
-                            if "secure" in cookie:
-                                temiz_cookie["secure"] = cookie["secure"]
-                            if "httpOnly" in cookie:
-                                temiz_cookie["httpOnly"] = cookie["httpOnly"]
+            if gorsel_url and gorsel_url != "Görsel Bulunamadı":
+                if gorsel_url.startswith("//"):
+                    gorsel_url = "https:" + gorsel_url
+                gorsel_url = gorsel_url.replace('\\u002F', '/')
+                logger.info(f" ✅ Görsel Cloudflare aşılarak başarıyla bulundu: {gorsel_url}")
+            else:
+                logger.warning("   ⚠️ Güvenlik duvarı aşıldı ancak HTML içinde uygun görsel kaynağı tespit edilemedi.")
+        else:
+            logger.warning(f"   ⚠️ Sayfaya erişilemedi (Status Code: {res.status_code})")
 
-                            # 3. SİHİR BURADA: sameSite hatalarını Playwright'ın diline çeviriyoruz
-                            if "sameSite" in cookie:
-                                val = cookie["sameSite"].lower()
-                                if val == "no_restriction":
-                                    temiz_cookie["sameSite"] = "None"
-                                elif val == "lax":
-                                    temiz_cookie["sameSite"] = "Lax"
-                                elif val == "strict":
-                                    temiz_cookie["sameSite"] = "Strict"
-                                # Eğer "unspecified" ise hiç eklemiyoruz, Playwright kendisi karar versin.
-
-                            temiz_cookies.append(temiz_cookie)
-
-                        context.add_cookies(temiz_cookies)
-                        logger.info("🍪 Çerezler formatlanarak başarıyla enjekte edildi!")
-                except Exception as e:
-                    logger.warning(f"⚠️ Çerez enjeksiyonu başarısız: {e}")
-            # ==========================================
-
-            page = context.pages[0] if context.pages else context.new_page()
-
-            try:
-                page.goto(restoran_linki, wait_until="domcontentloaded", timeout=90000)
-                logger.info("   ⏳ Sayfa yüklendi...")
-
-                # 90 saniyelik tehlikeli beklemeyi 10 saniyeye düşürüp try-except içine alıyoruz
-                try:
-                    page.wait_for_selector("img[data-testid='vendor-logo'], img.vendor-logo__image", timeout=10000)
-                except Exception:
-                    logger.info("   ℹ️ Logo elementi hemen bulunamadı, B planına (JS) geçiliyor...")
-
-                kapat_btn = page.locator('button:has-text("Kabul Et"), button:has-text("Anladım"), button:has-text("Kapat")')
-                if kapat_btn.count() > 0:
-                    kapat_btn.first.click(timeout=3000)
-            except Exception as e:
-                logger.warning(f"   [Uyarı] Sayfa yüklenirken sorun oluştu: {e}")
-
-            page.mouse.wheel(0, 800) # Biraz daha derine inelim
-            time.sleep(2) # Tembel görsellerin (lazy load) yüklenmesi için yarım saniye daha ekledik
-            # --- DEBUG: BOTUN GÖZÜNDEN EKRAN FOTOĞRAFI ÇEK ---
-            page.screenshot(path=f"debug_{vendor_id}.png", full_page=True)
-            logger.info(f"📸 Sunucu ekran görüntüsü alındı: debug_{vendor_id}.png")
-            # ------------------------------------------------
-
-            try:
-                # SİHİR: En sağlam görsel bulma algoritması (Meta Tag + Gelişmiş DOM)
-                bulunan_resim = page.evaluate('''() => {
-                    // 1. PLAN: Sitenin Meta (Sosyal Medya) Görselini Çal (En Garantili Yol)
-                    const ogImage = document.querySelector('meta[property="og:image"]');
-                    if (ogImage && ogImage.content && ogImage.content.includes('deliveryhero')) {
-                        return ogImage.content;
-                    }
-
-                    // 2. PLAN: Sayfadaki tüm resimleri genişletilmiş filtreyle tara
-                    const images = Array.from(document.querySelectorAll('img'));
-                    const logo = images.find(img => {
-                        const src = (img.src || img.dataset?.src || '').toLowerCase();
-                        const alt = (img.alt || '').toLowerCase();
-                        return src.includes('deliveryhero') || src.includes('logo') || alt.includes('logo') || src.includes('vendor');
-                    });
-                    
-                    if (logo) return logo.src || logo.dataset.src;
-                    
-                    return null;
-                }''')
-
-                if bulunan_resim:
-                    if bulunan_resim.startswith("//"):
-                        bulunan_resim = "https:" + bulunan_resim
-                    gorsel_url = bulunan_resim.replace('\\u002F', '/')
-                    logger.info(f" ✅ Görsel Başarıyla Yakalandı: {gorsel_url}")
-                else:
-                    # 3. PLAN: Playwright Locator ile Son Çare
-                    element = page.locator("img[data-testid='vendor-logo'], .vendor-info-main-details img, picture img").first
-                    if element.count() > 0:
-                        gorsel_url = element.get_attribute("src") or element.get_attribute("data-src")
-                        if gorsel_url:
-                            logger.info(f" ✅ Görsel (Son Çare) ile Yakalandı: {gorsel_url}")
-                        else:
-                            gorsel_url = "Görsel Bulunamadı"
-                    else:
-                        logger.warning("   ⚠️ Görsel DOM'da hiçbir şekilde bulunamadı.")
-
-            except Exception as img_err:
-                logger.warning(f"   [Uyarı] Görsel aranırken sorun oluştu: {img_err}")
-
-            page.close()
-            context.close()
-
-    except Exception as py_err:
-        logger.warning(f"   [Uyarı] Playwright ana işleminde sorun oluştu: {py_err}")
+    except Exception as img_err:
+        logger.warning(f"   [Uyarı] Görsel aranırken sorun oluştu: {img_err}")
 
     # ==========================================
     # SİHİR 2: YORUMLARI API'DEN ÇEKME
