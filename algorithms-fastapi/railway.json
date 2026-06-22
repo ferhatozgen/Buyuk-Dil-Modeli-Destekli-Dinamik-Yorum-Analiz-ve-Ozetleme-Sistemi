@@ -17,6 +17,6 @@
     }
   },
   "deploy": {
-    "startCommand": "tail -f /dev/null"
+    "startCommand": "xvfb-run -a uvicorn api_runner:app --host 0.0.0.0 --port $PORT"
   }
 }
