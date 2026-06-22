@@ -202,3 +202,41 @@ class DatabaseManager:
                     conn.commit()
         except Exception as e:
             raise Exception(f"Puanlar güncellenirken hata: {e}")
+
+    def save_product_summary(self, product_id, summary_type, category_name, summary_text, average_score):
+        """
+        Özeti veritabanına yazar ve yeni oluşturulan satırın UUID'sini (id) döner.
+        """
+        query = """
+            INSERT INTO product_summaries (product_id, summary_type, category_name, summary_text, average_score) 
+            VALUES (%s, %s, %s, %s, %s) RETURNING id;
+        """
+        try:
+            with self.get_connection() as conn:
+                with conn.cursor() as cur:
+                    cur.execute(query, (product_id, summary_type, category_name, summary_text, average_score))
+                    yeni_id = cur.fetchone()[0]  # RETURNING id ile dönen değeri yakalıyoruz
+                    conn.commit()
+                    return yeni_id
+        except Exception as e:
+            print(f"Özet kaydedilirken hata oluştu: {e}")
+            return None
+
+    def save_summary_source_reviews(self, iliskiler):
+        """
+        Özet ve Kaynak Yorum ilişkilerini (Many-to-Many) tek seferde Bulk Insert ile kaydeder.
+        iliskiler: [(summary_id, review_id), (summary_id, review_id), ...] formatında liste olmalıdır.
+        """
+        if not iliskiler:
+            return
+
+        query = "INSERT INTO summary_source_reviews (summary_id, review_id) VALUES (%s, %s);"
+        try:
+            with self.get_connection() as conn:
+                with conn.cursor() as cur:
+                    from psycopg2.extras import execute_batch
+                    # execute_batch, binlerce satırı bile milisaniyeler içinde tek seferde yazar
+                    execute_batch(cur, query, iliskiler)
+                    conn.commit()
+        except Exception as e:
+            print(f"Özet-Yorum ilişkileri kaydedilirken hata oluştu: {e}")

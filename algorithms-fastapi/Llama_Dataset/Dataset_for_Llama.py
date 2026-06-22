@@ -53,45 +53,7 @@ def checkpoint_kaydet(islenen_idler):
 
 
 # --- ORANSAL ÖRNEKLEME (STRATIFIED SAMPLING) ---
-def oransal_yorum_secimi(db, urun_id, max_sayi):
-    """
-    Yorumları puanlarına göre oranlayarak seçer.
-    Geriye metinle birlikte puan bilgisini de içeren bir sözlük listesi döner.
-    """
-    sorgu = "SELECT clean_text, predicted_score FROM reviews WHERE product_id = %s AND clean_text IS NOT NULL;"
-    tum_yorumlar = db.fetch_query(sorgu, (urun_id,))
 
-    if not tum_yorumlar:
-        return []
-
-    puan_gruplari = {1: [], 2: [], 3: [], 4: [], 5: [], 0: []}
-    for metin, puan in tum_yorumlar:
-        puan_val = int(puan) if puan is not None else 0
-        if puan_val in puan_gruplari:
-            puan_gruplari[puan_val].append(metin)
-        else:
-            puan_gruplari[0].append(metin)
-
-    for p in puan_gruplari:
-        puan_gruplari[p].sort(key=len, reverse=True)
-
-    toplam_yorum = len(tum_yorumlar)
-    secilen_yorumlar = []
-
-    for p, yorumlar in puan_gruplari.items():
-        if not yorumlar:
-            continue
-        oran = len(yorumlar) / toplam_yorum
-        secilecek_adet = int(round(oran * max_sayi))
-
-        # Sadece metni değil, ait olduğu puanı da paketleyerek ekliyoruz
-        for metin in yorumlar[:secilecek_adet]:
-            secilen_yorumlar.append({"metin": metin, "puan": p})
-
-    if len(secilen_yorumlar) > max_sayi:
-        secilen_yorumlar = secilen_yorumlar[:max_sayi]
-
-    return secilen_yorumlar
 
 
 # --- GEMINI YÖNETİCİSİ (YÜKSEK SADAKATLİ PROMPT) ---
