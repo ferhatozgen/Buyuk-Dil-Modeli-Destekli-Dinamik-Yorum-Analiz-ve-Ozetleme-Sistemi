@@ -119,7 +119,7 @@ def baslat(link_listesi):
 
 
 if __name__ == "__main__":
-    manuel_liste = ["https://www.google.com/maps/place/Ci%C4%9Ferci+Niyazi+Usta+Olin+%C5%9Eubesi/@41.6458206,26.5916007,14.25z/data=!4m6!3m5!1s0x14b32594b036b955:0x1355f5a3e7c4e602!8m2!3d41.6495079!4d26.5933498!16s%2Fg%2F11h5rqt0c4?entry=ttu&g_ep=EgoyMDI2MDYxNi4wIKXMDSoASAFQAw%3D%3D",
+    manuel_liste = ["https://www.yemeksepeti.com/restaurant/jel7/lavas-center-jel7",
     ]
     txt_dosya_yolu = "linkler.txt"
 
