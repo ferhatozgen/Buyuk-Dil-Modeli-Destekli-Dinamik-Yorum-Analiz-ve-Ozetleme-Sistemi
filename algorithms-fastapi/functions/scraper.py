@@ -1077,6 +1077,31 @@ def yemeksepeti_veri_cek(restoran_linki, max_sayfa) -> str:
                 viewport={'width': 1600, 'height': 900}
             )
 
+            import json
+            # scraper.py'nin bulunduğu yerden bir üst klasöre (algorithms-fastapi) çıkıyoruz
+            BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+            cerez_dosyasi = os.path.join(BASE_DIR, "cookies_ys.json")
+
+            if os.path.exists(cerez_dosyasi):
+                try:
+                    with open(cerez_dosyasi, 'r', encoding='utf-8') as f:
+                        cookies = json.load(f)
+                        temiz_cookies = []
+                        for cookie in cookies:
+                            temiz_cookies.append({
+                                "name": cookie["name"],
+                                "value": cookie["value"],
+                                "domain": cookie["domain"],
+                                "path": cookie["path"]
+                            })
+                        context.add_cookies(temiz_cookies)
+                        logger.info("🍪 Yemeksepeti çerezleri başarıyla enjekte edildi!")
+                except Exception as e:
+                    logger.warning(f"⚠️ Yemeksepeti çerez enjeksiyonu başarısız: {e}")
+            else:
+                logger.warning(f"⚠️ {cerez_dosyasi} bulunamadı, anonim giriliyor.")
+            # ==========================================
+
             page = context.pages[0] if context.pages else context.new_page()
 
             try:
@@ -1304,6 +1329,29 @@ def google_maps_veri_cek(mekan_linki, max_kaydirma) -> str:
                 ignore_default_args=["--enable-automation"],
                 args=["--disable-blink-features=AutomationControlled"]
             )
+            import json
+            BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+            cerez_dosyasi = os.path.join(BASE_DIR, "cookies_maps.json")
+
+            if os.path.exists(cerez_dosyasi):
+                try:
+                    with open(cerez_dosyasi, 'r', encoding='utf-8') as f:
+                        cookies = json.load(f)
+                        temiz_cookies = []
+                        for cookie in cookies:
+                            temiz_cookies.append({
+                                "name": cookie["name"],
+                                "value": cookie["value"],
+                                "domain": cookie["domain"],
+                                "path": cookie["path"]
+                            })
+                        context.add_cookies(temiz_cookies)
+                        logger.info("🍪 Google Maps çerezleri başarıyla enjekte edildi!")
+                except Exception as e:
+                    logger.warning(f"⚠️ Maps çerez enjeksiyonu başarısız: {e}")
+            else:
+                logger.warning(f"⚠️ {cerez_dosyasi} bulunamadı, anonim giriliyor.")
+            # ==========================================
 
             page = context.pages[0] if context.pages else context.new_page()
             page.goto(mekan_linki, timeout=60000)
