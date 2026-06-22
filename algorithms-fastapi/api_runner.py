@@ -10,7 +10,8 @@ from functions.scraper import linkten_veri_cek
 from functions.Transformer import donustur_ve_kaydet
 from functions.db_manager import DatabaseManager
 from functions.utils import url_cleaning, url_hashing, url_cozumle, yorumlara_puan_ver, vllm_ile_toplu_isleme, oransal_yorum_secimi, llama_ile_toplu_ozet
-
+import requests
+from fastapi.middleware.cors import CORSMiddleware
 
 class ExtractRequest(BaseModel):
     url: str
@@ -44,6 +45,13 @@ async def lifespan(app: FastAPI):
 
 
 app = FastAPI(title="LLM Destekli Yorum Analiz API", lifespan=lifespan)
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Geliştirme aşamasında tüm kökenlere izin veriyoruz
+    allow_credentials=True,
+    allow_methods=["*"],  # POST, GET, OPTIONS vb. tüm isteklere izin ver
+    allow_headers=["*"],
+)
 
 
 @app.post("/api/v1/extract")
@@ -329,6 +337,69 @@ async def summarize_reviews(request: ProductIdRequest):
         }
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Özetleme hatası: {str(e)}")
+
+#Aşama 5: Chatbot
+#chati hafızada tutan sözlük
+chat_histories = {}
+@app.post("/api/v1/chat")
+async def chat_with_vivid_bot(request: ChatRequest):
+    try:
+        db = DatabaseManager()
+
+        # 1. Adım: Veritabanından zengin bağlamı getir (Retrieval)
+        context_bilgisi = get_product_rag_context(request.productId, db)
+
+        # 2. Adım: Hafıza (Session) Yönetimi
+        if request.productId not in chat_histories:
+            chat_histories[request.productId] = []
+
+        chat_histories[request.productId].append({"role": "user", "content": request.user_message})
+        aktif_gecmis = chat_histories[request.productId][-6:]
+
+        # 3. Adım: Kurallı ve Doğal Türkçe Sağlayan Sistem Promptu
+        system_prompt = f"""
+        Sen VividAI platformunun resmi, zeki, kurallı ve akıcı Türkçe konuşan müşteri asistanısın.
+        
+        [GÖREV KAPSAMI VE SOHBET]
+        Kullanıcıyla doğal, kibar ve akıcı bir etkileşim kur. Kullanıcının önceki mesajlarda verdiği bilgileri (isim vb.) hatırla ve sohbet bağlamını koru. 
+        
+        [KATI VERİ KURALLARI]
+        1. Ürün, restoran veya analizlerle ilgili bir soru sorulduğunda SADECE aşağıdaki [VİVİDAİ BİLGİ HAVUZU] alanında yer alan verilere sadık kal.
+        2. Havuzda olmayan bir bilgi istenirse kafandan uydurma (halüsinasyon görme); "Bu konuda sistemimizde yeterli veri bulunmuyor" diyerek kibarca reddet.
+        3. Çelişki Oranı sorulursa: Bunun kelime zıtlığı olmadığını, memnuniyet puanlarındaki varyans/kutuplaşma olduğunu profesyonelce açıkla (Örn: "Toplumun bir kısmı 5 yıldız verirken diğer kısmının 1 yıldız vererek fikir ayrılığına düşmesi").
+        4. Asla devrik veya yarım cümle kurma, Türkçe dilbilgisi kurallarına kusursuz uy.
+        
+        [VİVİDAİ BİLGİ HAVUZU]:
+        {context_bilgisi}
+        """
+        tam_prompt = f"<|im_start|>system\n{system_prompt}<|im_end|>\n"
+        for mesaj in aktif_gecmis:
+            tam_prompt += f"<|im_start|>{mesaj['role']}\n{mesaj['content']}<|im_end|>\n"
+        tam_prompt += "<|im_start|>assistant\n"
+
+
+        ollama_url = "http://localhost:11434/api/generate"
+        istek_ayarlari = {
+            "model": "qwen2.5:14b",
+            "prompt": tam_prompt,
+            "stream": False,
+            "options": {
+                "temperature": 0.1,
+                "stop": ["<|im_end|>", "<|im_start|>"]
+            }
+        }
+
+        response = requests.post(ollama_url, json=istek_ayarlari, timeout=90)
+        bot_cevap = response.json().get("response", "").strip()
+
+        chat_histories[request.productId].append({"role": "assistant", "content": bot_cevap})
+
+        return {"status": "success", "response": bot_cevap}
+
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Sistemsel Chatbot Hatası: {str(e)}")
+
+
 
 # Uygulamayı Ayağa Kaldırma
 if __name__ == "__main__":
