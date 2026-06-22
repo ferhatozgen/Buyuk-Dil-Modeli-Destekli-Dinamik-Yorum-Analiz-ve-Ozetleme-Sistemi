@@ -50,6 +50,7 @@ const CustomTooltip = ({ active, payload, label, activeTheme }) => {
 
 // YENİ EKLENEN FAVORİLER PARAMETRESİ BURADA (favorites = [])
 export default function ProductPage({ product, onFav, onClose, userRating, onRate, allProducts = [], openProduct, ratings = {}, favorites = [] }) {
+
     // ── API VERİ STATE'LERİ ──
     const [productDetail, setProductDetail] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
@@ -237,15 +238,21 @@ export default function ProductPage({ product, onFav, onClose, userRating, onRat
         );
     }
 
+
     if (!productDetail) {
         return (
-            <div className="tc-page-wrapper" style={{ padding: '40px', textAlign: 'center' }}>
-                <h2>Ürün detayları bulunamadı.</h2>
-                <button className="tc-btn-primary" onClick={onClose} style={{ marginTop: '20px' }}>Geri Dön</button>
+            <div className="pp-error-container">
+                <div className="pp-error-card">
+
+                    <h2>Ürün detayları bulunamadı.</h2>
+                    <p>Aradığınız ürün sistemde mevcut değil veya bağlantı hatalı. Lütfen ana sayfaya geri dönün.</p>
+                    <button className="pp-back-btn" onClick={onClose}>
+                        <ArrowLeft size={18} /> Geri Dön
+                    </button>
+                </div>
             </div>
         );
     }
-
     const {
         productName, platform, imageUrl, originalUrl,
         avgOrjScore, avgModelScore, celiskiScore,
