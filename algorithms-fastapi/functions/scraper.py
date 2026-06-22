@@ -1057,31 +1057,30 @@ def yemeksepeti_veri_cek(restoran_linki, max_sayfa) -> str:
     # ==========================================
     # SİHİR 1: CURL-CFFI İLE GÖRSEL ÇEKME (Playwright İptal)
     # ==========================================
-    logger.info("🔍 Cloudflare atlatılarak restoran görseli aranıyor...")
+    logger.info("🛡️ ScraperAPI üzerinden Cloudflare aşılarak restoran görseli aranıyor...")
     try:
         from bs4 import BeautifulSoup
 
-        headers = {
-            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36",
-            "Accept-Language": "tr-TR,tr;q=0.9",
-            "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8",
-            "Origin": "https://www.yemeksepeti.com",
-            "Referer": restoran_linki
-        }
+        # 1. ADIM: ScraperAPI panelinden aldığın API anahtarını buraya yapıştır
+        SCRAPER_API_KEY = "d0cc1d27bea9d4088810fafebef28724"
 
-        # curl_cffi'nin impersonate yeteneği sayesinde Cloudflare TLS korumasını doğrudan geçiyoruz
-        res = curl_requests.get(restoran_linki, headers=headers, impersonate="chrome124", timeout=15, verify=False)
+        # 2. ADIM: Hedef linki ScraperAPI'nin anlayacağı formata sokuyoruz
+        # render=true parametresi, Yemeksepeti'ndeki JavaScript'lerin sunucuda açılmasını sağlar
+        scraper_url = f"http://api.scraperapi.com?api_key={SCRAPER_API_KEY}&url={urllib.parse.quote(restoran_linki)}&render=true"
+
+        # Artık doğrudan Yemeksepeti'ne değil, ScraperAPI'ye istek atıyoruz
+        res = curl_requests.get(scraper_url, impersonate="chrome124", timeout=30, verify=False)
 
         if res.status_code == 200:
             soup = BeautifulSoup(res.text, "html.parser")
 
-            # 1. PLAN: Sitenin Meta (Sosyal Medya) Görselini Çal (En Hızlı ve Garantili Yol)
+            # 1. PLAN: Meta (og:image) etiketini ara
             og_image = soup.find("meta", property="og:image")
 
             if og_image and og_image.get("content") and 'deliveryhero' in og_image.get("content"):
                 gorsel_url = og_image.get("content")
             else:
-                # 2. PLAN: Meta bulunamazsa, HTML içindeki img etiketlerini CDN kalıbına göre tara
+                # 2. PLAN: HTML içindeki img etiketlerini CDN yapısına göre tara
                 img_tag = soup.find("img", src=lambda x: x and ('deliveryhero' in x.lower() or 'logo' in x.lower() or 'vendor' in x.lower()))
                 if img_tag:
                     gorsel_url = img_tag.get("src") or img_tag.get("data-src") or img_tag.get("content")
@@ -1090,11 +1089,11 @@ def yemeksepeti_veri_cek(restoran_linki, max_sayfa) -> str:
                 if gorsel_url.startswith("//"):
                     gorsel_url = "https:" + gorsel_url
                 gorsel_url = gorsel_url.replace('\\u002F', '/')
-                logger.info(f" ✅ Görsel Cloudflare aşılarak başarıyla bulundu: {gorsel_url}")
+                logger.info(f" ✅ Görsel ScraperAPI ile başarıyla yakalandı: {gorsel_url}")
             else:
-                logger.warning("   ⚠️ Güvenlik duvarı aşıldı ancak HTML içinde uygun görsel kaynağı tespit edilemedi.")
+                logger.warning("   ⚠️ Güvenlik duvarı geçildi ancak HTML içinde logo görseli bulunamadı.")
         else:
-            logger.warning(f"   ⚠️ Sayfaya erişilemedi (Status Code: {res.status_code})")
+            logger.warning(f"   ⚠️ ScraperAPI sayfayı çekemedi (Status Code: {res.status_code})")
 
     except Exception as img_err:
         logger.warning(f"   [Uyarı] Görsel aranırken sorun oluştu: {img_err}")
