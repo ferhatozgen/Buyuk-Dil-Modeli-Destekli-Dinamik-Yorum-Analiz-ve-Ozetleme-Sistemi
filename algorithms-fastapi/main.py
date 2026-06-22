@@ -119,7 +119,7 @@ def baslat(link_listesi):
 
 
 if __name__ == "__main__":
-    manuel_liste = ["https://www.yemeksepeti.com/restaurant/ht8g/donas-doner-ht8g",
+    manuel_liste = ["https://www.yemeksepeti.com/restaurant/jk9n/kofteci-cumali-usta-jk9n",
     ]
     txt_dosya_yolu = "linkler.txt"
 
