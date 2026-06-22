@@ -1144,6 +1144,10 @@ def yemeksepeti_veri_cek(restoran_linki, max_sayfa) -> str:
 
             page.mouse.wheel(0, 800) # Biraz daha derine inelim
             time.sleep(2) # Tembel görsellerin (lazy load) yüklenmesi için yarım saniye daha ekledik
+            # --- DEBUG: BOTUN GÖZÜNDEN EKRAN FOTOĞRAFI ÇEK ---
+            page.screenshot(path=f"debug_{vendor_id}.png", full_page=True)
+            logger.info(f"📸 Sunucu ekran görüntüsü alındı: debug_{vendor_id}.png")
+            # ------------------------------------------------
 
             try:
                 # SİHİR: En sağlam görsel bulma algoritması (Meta Tag + Gelişmiş DOM)
