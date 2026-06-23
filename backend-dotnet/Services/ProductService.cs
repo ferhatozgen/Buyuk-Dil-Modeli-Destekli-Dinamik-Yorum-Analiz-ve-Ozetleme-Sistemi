@@ -75,26 +75,30 @@ namespace LLM_Destekli_Ozetleme.Services
 
         public async Task<ProductDetailDto?> GetProductDetailsByIdAsync(Guid productId, Guid? userId = null)
         {
+
             var product = await _productRepository.GetProductWithDetailsAsync(productId);
             if (product == null)
                 return null;
 
-            var latestHistory = product.SummaryHistories?.FirstOrDefault();
-            List<SourceReviewDto> sourceReviews = new();
 
-            if (latestHistory != null && latestHistory.SourceReviewIds != null && latestHistory.SourceReviewIds.Any())
+            var generalSummary = product.ProductSummaries?.FirstOrDefault(s => s.SummaryType == "GENERAL");
+
+            List<SourceReviewDto> sourceReviews = new();
+            if (generalSummary != null)
             {
-                var reviews = await _productRepository.GetReviewsByIdsAsync(latestHistory.SourceReviewIds);
+                // Eski JSON mantığı yerine yeni köprü tablosu üzerinden yorumları getiren Repository metodunu çağırıyoruz.
+                var reviews = await _productRepository.GetSourceReviewsBySummaryIdAsync(generalSummary.Id);
                 sourceReviews = reviews.Select(r => new SourceReviewDto { Text = r.CleanText ?? r.RawText ?? string.Empty }).ToList();
             }
 
+            // 3. Kullanıcı Favori Kontrolü
             bool isFavorited = false;
-
             if (userId.HasValue && userId != Guid.Empty)
             {
                 isFavorited = await _productRepository.IsProductFavoritedByUserAsync(productId, userId.Value);
             }
 
+            // 4. DTO Eşlemesi
             var dto = new ProductDetailDto
             {
                 Id = product.Id,
@@ -106,14 +110,19 @@ namespace LLM_Destekli_Ozetleme.Services
                 AvgOrjScore = product.AvgOrjScore,
                 AvgModelScore = product.AvgModelScore,
                 CeliskiScore = product.CeliskiScore, 
-                GuncelOzet = product.GuncelOzet,
+
+                // GuncelOzet alanına doğrudan Genel Özetin metnini veriyoruz
+                GuncelOzet = generalSummary?.SummaryText,
                 
-                CategoricalStats = product.CategoryStats?.Select(cs => new CategoricalStatDto
-                {
-                    CategoryName = cs.CategoryName ?? "Genel",
-                    CategoryModelAvgScore = cs.CategoryModelAvgScore,
-                    CategorySummary = cs.CategorySummary
-                }).ToList() ?? new List<CategoricalStatDto>(),
+                // Kategori Özetlerini Filtrele (SummaryType == "CATEGORY" olanlar)
+                CategoricalStats = product.ProductSummaries?
+                    .Where(s => s.SummaryType == "CATEGORY")
+                    .Select(cs => new CategoricalStatDto
+                    {
+                        CategoryName = cs.CategoryName ?? "Bilinmeyen Kategori",
+                        CategoryModelAvgScore = cs.AvgScore, // Yeni sınıftaki ismi
+                        CategorySummary = cs.SummaryText     // Yeni sınıftaki ismi
+                    }).ToList() ?? new List<CategoricalStatDto>(),
                 
                 SourceReviews = sourceReviews,
                 IsFavorited = isFavorited
@@ -133,9 +142,8 @@ namespace LLM_Destekli_Ozetleme.Services
                     return (true, "Bu URL zaten veritabanında mevcut. Scrape işlemine gerek yok.", existingProduct.Id);
                 }
 
-                var client = _httpClientFactory.CreateClient();
-                var pythonApiUrl = _configuration["PythonSettings:ApiBaseUrl"] ?? "http://localhost:8000";
-                var requestUrl = $"{pythonApiUrl}/api/v1/extract";
+                var client = _httpClientFactory.CreateClient("FastApiClient"); 
+                var requestUrl = "/api/v1/extract";
 
                 var response = await client.PostAsJsonAsync(requestUrl, new { url = url });
 
@@ -164,9 +172,8 @@ namespace LLM_Destekli_Ozetleme.Services
         {
             try
             {
-                var client = _httpClientFactory.CreateClient();
-                var pythonApiUrl = _configuration["PythonSettings:ApiBaseUrl"] ?? "http://localhost:8000";
-                var requestUrl = $"{pythonApiUrl}/api/v1/score";
+                var client = _httpClientFactory.CreateClient("FastApiClient"); 
+                var requestUrl = "/api/v1/score";
 
                 var response = await client.PostAsJsonAsync(requestUrl, new { productId = productId });
 
@@ -195,9 +202,8 @@ namespace LLM_Destekli_Ozetleme.Services
         {
             try
             {
-                var client = _httpClientFactory.CreateClient();
-                var pythonApiUrl = _configuration["PythonSettings:ApiBaseUrl"] ?? "http://localhost:8000";
-                var requestUrl = $"{pythonApiUrl}/api/v1/categorize";
+                var client = _httpClientFactory.CreateClient("FastApiClient"); 
+                var requestUrl = "/api/v1/categorize";
 
                 var response = await client.PostAsJsonAsync(requestUrl, new { productId = productId });
 
@@ -226,9 +232,8 @@ namespace LLM_Destekli_Ozetleme.Services
         {
             try
             {
-                var client = _httpClientFactory.CreateClient();
-                var pythonApiUrl = _configuration["PythonSettings:ApiBaseUrl"] ?? "http://localhost:8000";
-                var requestUrl = $"{pythonApiUrl}/api/v1/summarize";
+                var client = _httpClientFactory.CreateClient("FastApiClient"); 
+                var requestUrl = "/api/v1/summarize";
 
                 var response = await client.PostAsJsonAsync(requestUrl, new { productId = productId });
 

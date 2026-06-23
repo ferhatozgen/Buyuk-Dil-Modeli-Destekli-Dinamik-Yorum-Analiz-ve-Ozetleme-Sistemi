@@ -1,59 +1,23 @@
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import api from '../api';
+import { Link } from 'react-router-dom';
 
 function Register() {
-    const navigate = useNavigate();
-
     const [formData, setFormData] = useState({
         username: '',
         email: '',
         password: ''
     });
     const [error, setError] = useState('');
-    const [isLoading, setIsLoading] = useState(false);
 
-    const handleRegister = async (e) => {
-        e.preventDefault();
-        setError('');
+    // Input'a tıklandığında veya harf yazılmaya çalışıldığında tetiklenecek fonksiyon
+    const handleInteraction = () => {
+        setError('⚠️ Kayıt işlemleri şu an için kapalıdır. Sistem sadece yetkili kullanıcılara açıktır.');
+    };
 
-        // 1. E-POSTA FORMAT KONTROLÜ (Regex ile)
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!emailRegex.test(formData.email)) {
-            setError('Lütfen geçerli bir e-posta adresi girin (örn: isim@sirket.com).');
-            return; // Hata varsa işlemi durdur ve backend'e gitme
-        }
-
-        // 2. ŞİFRE GÜVENLİK KONTROLLERİ
-        if (formData.password.length < 6) {
-            setError('Şifreniz en az 6 karakter uzunluğunda olmalıdır.');
-            return;
-        }
-        if (!/[A-Z]/.test(formData.password)) {
-            setError('Şifreniz en az bir büyük harf içermelidir.');
-            return;
-        }
-        if (!/[0-9]/.test(formData.password)) {
-            setError('Şifreniz en az bir rakam içermelidir.');
-            return;
-        }
-        // İstersen özel karakter zorunluluğu da ekleyebilirsin:
-        // if (!/[!@#$%^&*]/.test(formData.password)) {
-        //     setError('Şifreniz en az bir özel karakter (!@#$%) içermelidir.');
-        //     return;
-        // }
-
-        setIsLoading(true);
-
-        try {
-            await api.post('/Auth/register', formData);
-            navigate('/login', { state: { message: "Kayıt başarıyla tamamlandı! Şimdi giriş yapabilirsiniz." } });
-        } catch (err) {
-            console.error("Kayıt hatası:", err);
-            setError(err.response?.data?.message || 'Kayıt başarısız. Lütfen bilgileri kontrol edin.');
-        } finally {
-            setIsLoading(false);
-        }
+    // Form gönderilmeye (butona basılmaya) çalışıldığında tetiklenecek fonksiyon
+    const handleRegister = (e) => {
+        e.preventDefault(); // Sayfanın yenilenmesini engeller
+        handleInteraction(); // Hata mesajını gösterir
     };
 
     return (
@@ -64,83 +28,94 @@ function Register() {
             <div className="ambient-light light-purple"></div>
             <div className="ambient-light light-blue"></div>
 
-            <div className="auth-container">
+            <div className="auth-container" style={{ height: 'auto', minHeight: '550px' }}>
                 <div className="auth-visual-side">
                     <div className="visual-content">
                         <div className="abstract-shape" style={{ background: 'linear-gradient(45deg, #3b82f6, #60a5fa)' }}></div>
-                        <h3 style={{ color: 'white', fontSize: '24px', fontWeight: '800' }}>Aramıza Katılın</h3>
+                        <h3 style={{ color: 'white', fontSize: '24px', fontWeight: '800' }}>Aramıza Katıl</h3>
                         <p style={{ color: 'rgba(255,255,255,0.6)', marginTop: '10px' }}>
-                            Verinin gücünü keşfetmek için ilk adımı atın.
+                            Verinin gücünü keşfetmek için ilk adımı at.
                         </p>
                     </div>
                 </div>
 
                 <div className="auth-form-side">
-                    <div className="form-content">
-                        <header>
+                    <div className="form-content" style={{ paddingBottom: '20px' }}>
+                        <header style={{ marginBottom: '20px' }}>
                             <Link to="/" className="back-button">
                                 <span>←</span> Ana Sayfaya Dön
                             </Link>
-
-                            <h2>Hesap Oluşturun</h2>
-                            <p>VividAI deneyimine başlamak için kayıt olun.</p>
+                            <h2>Hesap Oluştur</h2>
+                            <p>YorumAnaliz deneyimine başlamak için kayıt ol.</p>
                         </header>
 
                         <form onSubmit={handleRegister} className="auth-form">
-                            <div className="input-field">
+                            <div className="input-field" style={{ marginBottom: '14px' }}>
                                 <label>Kullanıcı Adı</label>
                                 <input
                                     type="text"
                                     placeholder="Kullanıcı adınız"
-                                    required
                                     value={formData.username}
-                                    onChange={(e) => setFormData({ ...formData, username: e.target.value })}
+                                    onFocus={handleInteraction}
+                                    onChange={(e) => {
+                                        setFormData({ ...formData, username: e.target.value });
+                                        handleInteraction();
+                                    }}
                                 />
                             </div>
 
-                            <div className="input-field">
+                            <div className="input-field" style={{ marginBottom: '14px' }}>
                                 <label>E-posta Adresi</label>
                                 <input
-                                    type="text" // 'email' yerine 'text' yaptık ki tarayıcı varsayılanı yerine bizim hatamız görünsün
+                                    type="text"
                                     placeholder="isim@sirket.com"
-                                    required
                                     value={formData.email}
-                                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                                    onFocus={handleInteraction}
+                                    onChange={(e) => {
+                                        setFormData({ ...formData, email: e.target.value });
+                                        handleInteraction();
+                                    }}
                                 />
                             </div>
 
-                            <div className="input-field">
+                            <div className="input-field" style={{ marginBottom: '14px' }}>
                                 <label>Şifre</label>
                                 <input
                                     type="password"
                                     placeholder="••••••••"
-                                    required
                                     value={formData.password}
-                                    onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+                                    onFocus={handleInteraction}
+                                    onChange={(e) => {
+                                        setFormData({ ...formData, password: e.target.value });
+                                        handleInteraction();
+                                    }}
                                 />
                             </div>
 
-                            {/* HATA MESAJI BURADA GÖSTERİLİYOR */}
-                            {error && (
-                                <div style={{
-                                    backgroundColor: '#fee2e2',
-                                    color: '#ef4444',
-                                    padding: '10px',
-                                    borderRadius: '6px',
-                                    fontSize: '13px',
-                                    marginBottom: '15px',
-                                    border: '1px solid #f87171'
-                                }}>
-                                    {error}
-                                </div>
-                            )}
+                            {/* UYARI / HATA MESAJI (Daha kompakt hale getirildi) */}
+                            <div style={{ minHeight: '48px', marginBottom: '8px' }}>
+                                {error && (
+                                    <div style={{
+                                        backgroundColor: '#fef2f2',
+                                        color: '#dc2626',
+                                        padding: '8px 12px',
+                                        borderRadius: '8px',
+                                        fontSize: '12.5px',
+                                        fontWeight: '500',
+                                        border: '1px solid #fca5a5',
+                                        lineHeight: '1.4'
+                                    }}>
+                                        {error}
+                                    </div>
+                                )}
+                            </div>
 
-                            <button type="submit" className="auth-submit-btn" disabled={isLoading}>
-                                {isLoading ? 'Kaydediliyor...' : 'Kaydol'}
+                            <button type="submit" className="auth-submit-btn" style={{ marginTop: '0' }}>
+                                Kaydol
                             </button>
                         </form>
 
-                        <footer>
+                        <footer style={{ marginTop: '20px' }}>
                             <span>Zaten hesabınız var mı?</span>
                             <Link to="/login" className="signup-link">Giriş Yap</Link>
                         </footer>

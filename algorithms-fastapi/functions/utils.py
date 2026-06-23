@@ -15,6 +15,8 @@ from datetime import datetime, timedelta
 import dateparser
 import asyncio
 import aiohttp
+from pydantic import BaseModel
+from functions.db_manager import DatabaseManager
 
 logger = logging.getLogger(__name__)
 
@@ -251,14 +253,14 @@ def parse_review_date(date_str: str) -> datetime:
     # Hiçbirine uymazsa anlık zamanı dön
     return datetime.now()
 
-VLLM_SERVER_URL = os.getenv("VLLM_SERVER_URL", "http://0.0.0.0:8000")
-VLLM_MODEL_NAME = "Halitbkts/qwen-categorier"
+VLLM_QWEN_SERVER_URL = os.getenv("VLLM_QWEN_SERVER_URL", "http://0.0.0.0:8000")
+VLLM_QWEN_MODEL_NAME = "Halitbkts/qwen-categorier"
 
 async def _tekil_vllm_istegi(session: aiohttp.ClientSession, semaphore: asyncio.Semaphore, system_prompt:str, yorum_metni:str) -> dict:
-    url = f"{VLLM_SERVER_URL}/v1/chat/completions"
+    url = f"{VLLM_QWEN_SERVER_URL}/v1/chat/completions"
 
     payload = {
-        "model" : VLLM_MODEL_NAME,
+        "model" : VLLM_QWEN_MODEL_NAME,
         "messages": [
             {"role": "system", "content": system_prompt},
             {"role": "user", "content": yorum_metni}
@@ -319,3 +321,193 @@ async def vllm_ile_toplu_isleme(yorum_listesi: list[str], urun_grubu: str, max_c
         results = await asyncio.gather(*tasks)
 
     return results
+
+
+def oransal_yorum_secimi(db, urun_id, max_sayi):
+    """
+    Yorumları puanlarına göre oranlayarak seçer.
+    Geriye metinle birlikte puan bilgisini de içeren bir sözlük listesi döner.
+    """
+    sorgu = "SELECT id, clean_text, predicted_score FROM reviews WHERE product_id = %s AND clean_text IS NOT NULL;"
+    tum_yorumlar = db.fetch_query(sorgu, (urun_id,))
+
+    if not tum_yorumlar:
+        return []
+
+    puan_gruplari = {1: [], 2: [], 3: [], 4: [], 5: [], 0: []}
+    for r_id, metin, puan in tum_yorumlar:
+        puan_val = int(puan) if puan is not None else 0
+        yorum_paketi = {"id": r_id, "clean_text": metin, "puan": puan_val}
+
+        if puan_val in puan_gruplari:
+            puan_gruplari[puan_val].append(yorum_paketi)
+        else:
+            puan_gruplari[0].append(yorum_paketi)
+
+    for p in puan_gruplari:
+        puan_gruplari[p].sort(key=lambda x: len(x["clean_text"]), reverse=True)
+
+    toplam_yorum = len(tum_yorumlar)
+    secilen_yorumlar = []
+
+    for p, yorum_paketleri in puan_gruplari.items():
+        if not yorum_paketleri:
+            continue
+        oran = len(yorum_paketleri) / toplam_yorum
+        secilecek_adet = int(round(oran * max_sayi))
+
+        # 2. GÜNCELLEME: endpoint'e uyumlu 'clean_text' ve 'id' ile paketleyerek ekliyoruz
+        for paket in yorum_paketleri[:secilecek_adet]:
+            secilen_yorumlar.append({
+                "id": str(paket["id"]),  # UUID ise string'e güvenli cast
+                "clean_text": paket["clean_text"],
+                "puan": paket["puan"]
+            })
+
+    if len(secilen_yorumlar) > max_sayi:
+        secilen_yorumlar = secilen_yorumlar[:max_sayi]
+
+    return secilen_yorumlar
+
+VLLM_LLAMA_SERVER_URL = os.getenv("VLLM_LLAMA_SERVER_URL", "http://0.0.0.0:8000")
+VLLM_LLAMA_MODEL_NAME = "ecommerce-adapter"
+
+
+async def _tekil_llama_istegi(session: aiohttp.ClientSession, semaphore: asyncio.Semaphore, system_prompt: str,
+                              user_content: str, meta_data: dict) -> dict:
+    url = f"{VLLM_LLAMA_SERVER_URL}/v1/chat/completions"
+
+    payload = {
+        "model": VLLM_LLAMA_MODEL_NAME,
+        "messages": [
+            {"role": "system", "content": system_prompt},
+            {"role": "user", "content": user_content}
+        ],
+        "temperature": 0.2,
+        "top_p": 0.9,
+        "max_tokens": 512,
+        "presence_penalty": 0.1,
+        "frequency_penalty": 0.1
+    }
+
+    print("\n" + "=" * 60)
+    print(f"🚀 [GENEL ÖZET] MODELE GİDEN USER CONTENT:\n{user_content}")
+    print("=" * 60 + "\n")
+
+    async with semaphore:
+        try:
+            async with session.post(url, json=payload, timeout=aiohttp.ClientTimeout(total=180)) as response:
+                if response.status != 200:
+                    hata_metni = await response.text()
+                    logger.error(f"LLAMA isteği başarısız oldu. Status: {response.status}, Hata: {hata_metni}")
+                    return {"meta": meta_data, "ozet": None}
+
+                sonuc_json = await response.json()
+                ozet_metni = sonuc_json["choices"][0]["message"]["content"].strip()
+
+                print("\n" + "*" * 60)
+                print(f"📥 [GENEL ÖZET] MODELDEN GELEN YANIT:\n{ozet_metni}")
+                print("*" * 60 + "\n")
+
+                return {"meta": meta_data, "ozet": ozet_metni}
+
+        except asyncio.TimeoutError:
+            logger.warning(f"LLAMA İsteği zaman aşımına uğradı. Meta: {meta_data}")
+            return {"meta": meta_data, "ozet": None}
+        except Exception as e:
+            logger.error(f"LLAMA isteği sırasında hata: {e}. Meta: {meta_data}")
+            return {"meta": meta_data, "ozet": None}
+
+async def llama_ile_toplu_ozet(istek_listesi: list[dict], max_concurrency: int = 4) -> list:
+    if not istek_listesi:
+        logger.warning("LLAMA ile özetlenecek veri bulunamadı, boş liste döndürülüyor.")
+        return []
+
+    semaphore = asyncio.Semaphore(max_concurrency)
+
+    async with aiohttp.ClientSession() as session:
+        tasks = [
+            _tekil_llama_istegi(session, semaphore, req["system_prompt"], req["user_content"], req["meta"])
+            for req in istek_listesi
+        ]
+        logger.info(f"LLAMA ile {len(istek_listesi)} özetleme isteği oluşturuldu, işleniyor...")
+        results = await asyncio.gather(*tasks)
+
+    return results
+class ChatRequest(BaseModel):
+    productId: str
+    user_message: str
+
+
+def get_product_rag_context(product_id: str, db_manager: DatabaseManager) -> str:
+    """
+    Veritabanı tablolarından ürün genel özetini, kategorik özetleri (aspects),
+    çelişki skorunu ve ham yorumları eksiksiz çeken güncel RAG sorgusu.
+    """
+    # 1. Ürünün Temel Bilgilerini Çek
+    prod_query = """
+                 SELECT product_name, platform, avg_orj_score, avg_model_score, celiski_score
+                 FROM products
+                 WHERE id = %s; \
+                 """
+    product_data = db_manager.fetch_query(prod_query, (product_id,))
+    if not product_data:
+        return "Ürün analitik verileri veritabanında bulunamadı."
+
+    p_name, platform, avg_orj, avg_model, celiski = product_data[0]
+    temiz_celiski = int(float(celiski) * 100) if celiski is not None else 0
+
+    # 2. Ürüne Ait Llama Tarafından Üretilmiş Özetleri Çek (Yeni Tablo)
+    sum_query = """
+                SELECT summary_type, category_name, summary_text, average_score
+                FROM product_summaries
+                WHERE product_id = %s; \
+                """
+    summaries_data = db_manager.fetch_query(sum_query, (product_id,))
+
+    genel_ozet = "Genel özet henüz oluşturulmadı."
+    kategori_ozetleri = []
+
+    for row in summaries_data:
+        s_type, cat_name, s_text, avg_score = row
+        # Eğer Llama'dan gelen özet tipi veya kategorisi "genel" ise ana özet kabul et
+        if str(s_type).lower() == "genel" or str(cat_name).lower() == "genel":
+            genel_ozet = s_text
+        else:
+            # Diğer spesifik kategorileri (Örn: Lezzet, Kargo, Kullanım) listeye ekle
+            score_str = f"{avg_score}/5" if avg_score else "N/A"
+            kategori_ozetleri.append(f"- {cat_name} (Puan: {score_str}): {s_text}")
+
+    kategori_ozetleri_str = "\n".join(
+        kategori_ozetleri) if kategori_ozetleri else "Kategorik analiz henüz mevcut değil."
+
+    # 3. Modele kanıt niteliğinde sunulacak en güncel gerçek ham kullanıcı yorumları
+    review_query = """
+                   SELECT original_rating, raw_text
+                   FROM reviews
+                   WHERE product_id = %s
+                     AND raw_text IS NOT NULL
+                     AND raw_text != '' 
+        LIMIT 4; \
+                   """
+    yorumlar = db_manager.fetch_query(review_query, (product_id,))
+    yorum_metinleri = "".join([f"- [{r[0]} Yıldız]: {r[1].strip()}\n" for r in yorumlar])
+
+    # 4. RAG Bağlamını (Context) Chatbot İçin Birleştir
+    context = f"""
+    [ÜRÜN KİMLİĞİ VE SKORLAR]
+    Ürün Adı: {p_name} | Platform: {platform}
+    Müşteri Puan Ortalaması: {avg_orj}/5 | Yapay Zeka Memnuniyet Skoru: {avg_model}/5
+    Müşteri Fikir Ayrılığı (Çelişki) Oranı: %{temiz_celiski}
+
+    [VİVİDAİ GENEL ÖZETİ]
+    {genel_ozet}
+
+    [KATEGORİK YAPAY ZEKA ANALİZLERİ (ASPECTS)]
+    {kategori_ozetleri_str}
+
+    [SİSTEMDEKİ GERÇEK KULLANICI YORUMLARI (Örneklem)]
+    {yorum_metinleri if yorum_metinleri else 'Henüz ham yorum metni yüklenmemiş.'}
+    """
+
+    return context

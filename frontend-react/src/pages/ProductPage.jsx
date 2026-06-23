@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useRef, useEffect, useCallback } from 'react';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
 import {
     ArrowLeft, Heart, Star, ChevronDown, ChevronUp, ShieldCheck, CheckCircle2,
     Clock, ThumbsUp, Sparkles, CheckCircle, Info, TrendingUp,
@@ -7,7 +7,7 @@ import {
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import './ProductPage.css';
 import ProductCard from './ProductCard';
-import api from '../api';
+import api, { sendChatMessageToVividBot } from '../api';
 
 // ── DİNAMİK GERÇEK PLATFORM RENK HARİTASI ──
 const PLATFORM_THEMES = {
@@ -110,7 +110,7 @@ export default function ProductPage({ product, onFav, onClose, userRating, onRat
         } catch (error) {
             console.error("Tıklama sayısı güncellenemedi:", error);
         }
-    }, [product?.id]);
+    }, [product]);
 
     const handleToggleSave = async () => {
         try {
@@ -143,44 +143,47 @@ export default function ProductPage({ product, onFav, onClose, userRating, onRat
         }
     };
 
-    const fetchProductDetails = useCallback(async () => {
-        if (!product?.id) return;
-        setIsLoading(true);
-        try {
-            const token = localStorage.getItem('token');
-            const response = await api.get(`/Product/${product.id}`, {
-                headers: token ? { 'Authorization': `Bearer ${token}` } : {}
-            });
-            setProductDetail(response.data);
-
-            setChatMessages([
-                { sender: 'ai', text: `Merhaba! Ben VividAI Asistan. 👋 ${response.data.productName} hakkında merak ettiklerini bana sorabilirsin.` }
-            ]);
-        } catch (error) {
-            console.error("Ürün detayları yüklenirken hata oluştu:", error);
-        } finally {
-            setIsLoading(false);
-        }
-    }, [product]);
-
-    // ── TREND VERİSİNİ ÇEKME ──
-    const fetchTrendData = useCallback(async () => {
-        if (!product?.id) return;
-        setTrendLoading(true);
-        try {
-            const response = await api.get(`/Product/${product.id}/trend`);
-            setTrendData(response.data);
-        } catch (error) {
-            console.error("Trend verisi alınamadı:", error);
-        } finally {
-            setTrendLoading(false);
-        }
-    }, [product]);
-
+    // ── API VE TREND VERİSİNİ ÇEKME ──
     useEffect(() => {
+        // Fonksiyonları Effect'in İÇİNDE tanımlıyoruz (React'in en sevdiği yöntem)
+        const fetchProductDetails = async () => {
+            if (!product?.id) return;
+            setIsLoading(true);
+            try {
+                const token = localStorage.getItem('token');
+                const response = await api.get(`/Product/${product.id}`, {
+                    headers: token ? { 'Authorization': `Bearer ${token}` } : {}
+                });
+                setProductDetail(response.data);
+
+                setChatMessages([
+                    { sender: 'ai', text: `Merhaba! Ben VividAI Asistan. 👋 ${response.data.productName} hakkında merak ettiklerini bana sorabilirsin.` }
+                ]);
+            } catch (error) {
+                console.error("Ürün detayları yüklenirken hata oluştu:", error);
+            } finally {
+                setIsLoading(false);
+            }
+        };
+
+        const fetchTrendData = async () => {
+            if (!product?.id) return;
+            setTrendLoading(true);
+            try {
+                const response = await api.get(`/Product/${product.id}/trend`);
+                setTrendData(response.data);
+            } catch (error) {
+                console.error("Trend verisi alınamadı:", error);
+            } finally {
+                setTrendLoading(false);
+            }
+        };
+
+        // Ve tanımladığımız fonksiyonları çağırıyoruz
         fetchProductDetails();
         fetchTrendData();
-    }, [fetchProductDetails, fetchTrendData]);
+        
+    }, [product?.id]); // Sadece product.id değiştiğinde tetiklenecek
 
     useEffect(() => {
         handleIncrementClick();
@@ -199,7 +202,7 @@ export default function ProductPage({ product, onFav, onClose, userRating, onRat
         return match ? PLATFORM_THEMES[match] : PLATFORM_THEMES['default'];
     };
 
-    const cleanToken = (word) => word.toLowerCase().replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, "").trim();
+    const cleanToken = (word) => word.toLowerCase().replace(/[.,/#!$%^&*;:{}=\-_`~()]/g, "").trim();
     const isStopWord = (word) => ['ve', 'veya', 'da', 'de', 'bir', 'bu', 'için', 'en', 'ile', 'o', 'ise', 'içinde', 'çok', 'daha', 'gibi'].includes(cleanToken(word));
 
     const handleWordClick = (word) => {
@@ -208,22 +211,44 @@ export default function ProductPage({ product, onFav, onClose, userRating, onRat
         setSelectedWord(selectedWord === clean ? null : clean);
     };
 
-    const handleSendMessage = (e) => {
+    const handleSendMessage = async (e) => {
         e.preventDefault();
-        if (!chatInput.trim()) return;
+        
+        // Koruma kalkanı: Mesaj boşsa veya ürün yüklenemediyse isteği durdur
+        if (!chatInput.trim() || !productDetail?.id) return;
 
-        const newUserMsg = { sender: 'user', text: chatInput };
+        const userQuestion = chatInput.trim();
+
+        // 1. Kullanıcının yazdığı soruyu arayüz baloncuğuna anında ekliyoruz
+        const newUserMsg = { sender: 'user', text: userQuestion };
         setChatMessages(prev => [...prev, newUserMsg]);
+        
+        // Input kutusunu temizliyoruz
         setChatInput('');
+        
+        // 2. Üç nokta yanıp sönen "Yazıyor..." animasyonunu aktif ediyoruz
         setIsTyping(true);
 
-        setTimeout(() => {
-            setIsTyping(false);
+        try {
+            // 3. Bizim api.js içerisindeki asıl RAG bağlantı fonksiyonumuzu ateşliyoruz
+            const botResponse = await sendChatMessageToVividBot(productDetail.id, userQuestion);
+            
+            // 4. FastAPI'den gelen o kurallı Türkçe cevabı ekrandaki bot baloncuğuna basıyoruz
             setChatMessages(prev => [...prev, {
                 sender: 'ai',
-                text: `Analizlerimize göre "${newUserMsg.text}" konusunda kullanıcılar genel olarak veritabanımızdaki yorumlara paralel bir eğilim gösteriyor.`
+                text: botResponse
             }]);
-        }, 1500);
+            
+        } catch (error) {
+            console.error("Chatbot akışında hata:", error);
+            setChatMessages(prev => [...prev, {
+                sender: 'ai',
+                text: "Şu anda teknik bir aksaklık nedeniyle yanıt üretemiyorum. Lütfen biraz sonra tekrar deneyin."
+            }]);
+        } finally {
+            // 5. İşlem başarılı da olsa hata da alsa "Yazıyor..." animasyonunu kapatıyoruz
+            setIsTyping(false);
+        }
     };
 
     if (!product) return null;

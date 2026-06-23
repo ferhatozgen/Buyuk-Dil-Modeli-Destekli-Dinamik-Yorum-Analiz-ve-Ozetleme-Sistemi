@@ -93,7 +93,16 @@ builder.Services.AddSwaggerGen(c =>
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-builder.Services.AddHttpClient();
+// --- HTTP CLIENT YAPILANDIRMASI (Python FastAPI İçin) ---
+builder.Services.AddHttpClient("FastApiClient", client =>
+{
+
+    var pythonApiUrl = builder.Configuration["PythonSettings:ApiBaseUrl"] ?? "http://localhost:8000";
+    client.BaseAddress = new Uri(pythonApiUrl);
+    
+    // İŞTE HAYAT KURTARAN AYAR: Timeout süresini 10 dakikaya çıkarıyoruz
+    client.Timeout = TimeSpan.FromMinutes(10);
+});
 
 var app = builder.Build();
 
@@ -104,7 +113,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
+//app.UseHttpsRedirection();
 
 // CORS burada devreye giriyor
 app.UseCors("AllowAll");
