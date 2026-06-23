@@ -225,9 +225,23 @@ def yorumlara_puan_ver(classifier, yorum_paketleri):
     return yorum_paketleri
 
 
-def parse_review_date(date_str: str) -> datetime:
+def parse_review_date(date_str) -> datetime:
     if not date_str:
         return datetime.now()
+
+    # --- YENİ EKLENEN KISIM: Unix Timestamp Kontrolü ---
+    # Gelen değer int, float veya sadece rakamlardan oluşan bir string ise:
+    if isinstance(date_str, (int, float)) or (isinstance(date_str, str) and date_str.isdigit()):
+        try:
+            timestamp = float(date_str)
+            # Eğer 13 haneli (milisaniye) bir değerse saniyeye çevir (Örn: Trendyol)
+            if timestamp > 1e11:
+                timestamp /= 1000.0
+            return datetime.fromtimestamp(timestamp)
+        except Exception as e:
+            logger.warning(f"Timestamp dönüştürülemedi: {date_str} - Hata: {e}")
+            pass # Hata olursa normal metin bazlı tarih mantığına devam etsin
+    # ----------------------------------------------------
 
     date_str = str(date_str).lower().strip()
 
