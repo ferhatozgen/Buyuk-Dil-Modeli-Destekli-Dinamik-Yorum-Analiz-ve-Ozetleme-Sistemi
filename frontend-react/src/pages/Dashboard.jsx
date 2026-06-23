@@ -74,19 +74,17 @@ const DB_CATEGORY_MAP = {
 export default function Dashboard() {
     const navigate = useNavigate();
     const currentToken = localStorage.getItem('token');
-
-    if (!currentToken) return <Navigate to="/" replace />;
     const username = localStorage.getItem('username') || 'Misafir';
 
     const userFavKey = `${STORAGE_KEYS.favorites}_${username}`;
     const userRateKey = `${STORAGE_KEYS.ratings}_${username}`;
     const userHistKey = `${STORAGE_KEYS.history}_${username}`;
 
+    // --- 1. ADIM: TÜM HOOK'LAR EN TEPEDE ---
     const [tab, setTab] = useState('kesfet');
     const [category, setCategory] = useState('Hepsi');
     const [searchQ, setSearchQ] = useState('');
 
-    // Link ve Hata Kontrol State'leri
     const [linkQ, setLinkQ] = useState('');
     const [linkError, setLinkError] = useState('');
     const [analyzeError, setAnalyzeError] = useState(null);
@@ -100,6 +98,10 @@ export default function Dashboard() {
     const [profileView, setProfileView] = useState(null);
     const [isAnalyzing, setIsAnalyzing] = useState(false);
     const [loadingStep, setLoadingStep] = useState(0);
+
+    const { ref: observerRef, inView } = useInView();
+
+    // ... (formatCategory ve analyzeSteps değişkenlerin burada kalabilir) ...
 
     const analyzeSteps = [
         "Hedef sayfa kaynağına erişiliyor...",
@@ -138,8 +140,6 @@ export default function Dashboard() {
 
         return 'Diğer';
     };
-
-    const { ref: observerRef, inView } = useInView();
 
     const fetchProductsPage = async ({ pageParam = 1 }) => {
         const params = {
@@ -196,7 +196,8 @@ export default function Dashboard() {
             const backendFavorites = data.pages
                 .flatMap(page => page)
                 .filter(p => p.isFavorited);
-
+            
+            // eslint-disable-next-line react-hooks/set-state-in-effect
             setFavorites(prevFavs => {
                 const newFavs = [...prevFavs];
                 let changed = false;
@@ -270,15 +271,15 @@ export default function Dashboard() {
         });
     }, [userHistKey]);
 
-    const handleLinkAnalyze = () => {
+    const handleLinkAnalyze = async () => {
         const query = linkQ.trim();
         if (!query) return;
 
         setLinkError('');
         setAnalyzeError(null);
 
-        // --- Geliştirilmiş Link Format Kontrolü ---
-        const urlPattern = /^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/;
+        // --- Link Format Kontrolü ---
+        const urlPattern = /^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})([/\w .-]*)*\/?$/;
         if (!urlPattern.test(query)) {
             setLinkError('Lütfen analiz etmek istediğiniz ürünün tam bağlantısını (URL) yapıştırın.');
             return;
@@ -286,44 +287,62 @@ export default function Dashboard() {
 
         recordSearch(query);
         setIsAnalyzing(true);
-        setLoadingStep(0);
+        setLoadingStep(0); // 0: "Hedef sayfa kaynağına erişiliyor..."
 
-        let stepIndex = 0;
-        const stepInterval = setInterval(() => {
-            stepIndex++;
-            if (stepIndex < analyzeSteps.length) {
-                setLoadingStep(stepIndex);
-            }
-        }, 850);
+        try {
+            const config = {
+                headers: { 'Authorization': `Bearer ${currentToken}` }
+            };
 
-        // API İstek Simülasyonu
-        setTimeout(async () => {
-            clearInterval(stepInterval);
+            // --- ADIM 1: KAZIMA (SCRAPE) ---
+            // Backend'e linki gönderiyoruz ve veritabanında oluşan Product Id'yi alıyoruz
+            const step1Res = await api.post('/Product/step1-scrape', { url: query }, config);
+            const currentProductId = step1Res.data.productId;
+            
+            if (!currentProductId) throw new Error("Ürün ID alınamadı");
+
+            // --- ADIM 2: PUANLAMA (SCORE) ---
+            setLoadingStep(1); // 1: "Kullanıcı yorumları ve meta veriler çekiliyor..."
+            await api.post('/Product/step2-score', { productId: currentProductId }, config);
+
+            // --- ADIM 3: KATEGORİZASYON (CATEGORIZE) ---
+            setLoadingStep(2); // 2: "LLM üzerinden duygu analizi gerçekleştiriyor..."
+            await api.post('/Product/step3-categorize', { productId: currentProductId }, config);
+
+            // --- ADIM 4: ÖZETLEME (SUMMARIZE) ---
+            setLoadingStep(3); // 3: "Genel trend ve sentez raporu oluşturuluyor..."
+            await api.post('/Product/step4-summarize', { productId: currentProductId }, config);
+
+            // --- İŞLEM BİTTİ: ÜRÜN BİLGİSİNİ ÇEK VE YÖNLENDİR ---
+            const finalProductRes = await api.get(`/Product/${currentProductId}`, config);
+            
+            const newAnalysis = {
+                id: finalProductRes.data.id,
+                name: finalProductRes.data.productName,
+                category: formatCategory(finalProductRes.data.category),
+                plat: finalProductRes.data.platform,
+                avgScore: finalProductRes.data.avgModelScore ? finalProductRes.data.avgModelScore.toFixed(1) : "0.0",
+                img: finalProductRes.data.imageUrl || 'https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=400',
+                clickCount: finalProductRes.data.clickCount || 0,
+            };
+
             setIsAnalyzing(false);
+            setLinkQ('');
+            
+            // Kullanıcıyı detay sayfasına atıyoruz!
+            openProduct(newAnalysis);
 
-            try {
-                // Test için catch bloğuna düşürme kuralı:
-                if (query.includes('hata') || query.includes('bulunamadi')) {
-                    throw new Error("NOT_FOUND");
-                }
-
-                const newAnalysis = {
-                    id: Date.now(),
-                    name: 'Yeni URL Analizi Sonucu',
-                    category: 'Diğer',
-                    plat: 'Harici Bağlantı',
-                    avgScore: (Math.random() * (4.9 - 3.8) + 3.8).toFixed(1),
-                    img: 'https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=400',
-                    productUrl: query,
-                    sum: 'LLM algoritması girilen bağlantıyı taradı ve kullanıcı yorumlarını ayrıştırdı. Genel duygu analizi oluşturuldu.'
-                };
-                openProduct(newAnalysis);
-                setLinkQ('');
-            } catch (error) {
-                // --- Ürün Bulunamazsa Gösterilecek Hata ---
-                setAnalyzeError('Bağlantıdaki ürün analiz edilemedi. Sayfa bulunamıyor olabilir veya sistemin yorumları okuma yetkisi kısıtlanmış olabilir.');
+        } catch (error) {
+            console.error("Analiz Akışı Hatası:", error);
+            setIsAnalyzing(false);
+            
+            // Hatanın tipine göre kullanıcıya mesaj gösterebiliriz
+            if (error.response?.status === 404) {
+                 setAnalyzeError('Bağlantıdaki ürün veya yorumları bulunamadı. Lütfen geçerli bir e-ticaret linki girin.');
+            } else {
+                 setAnalyzeError('Modeller arası veri iletişiminde bir sorun oluştu. Sunucunun yanıt vermesi uzun sürmüş olabilir, lütfen tekrar deneyin.');
             }
-        }, 3600);
+        }
     };
 
     const handleSystemSearch = () => {
@@ -359,6 +378,8 @@ export default function Dashboard() {
             navigate('/', { replace: true });
         }
     };
+    
+    if (!currentToken) return <Navigate to="/" replace />;
 
     if (selected) {
         return (

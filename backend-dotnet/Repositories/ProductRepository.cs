@@ -67,9 +67,16 @@ namespace LLM_Destekli_Ozetleme.Repositories
         public async Task<Product?> GetProductWithDetailsAsync(Guid productId)
         {
             return await _context.Products
-                .Include(p => p.CategoryStats)
-                .Include(p => p.SummaryHistories.OrderByDescending(sh => sh.Id).Take(1))
+                .Include(p => p.ProductSummaries) // Yeni tabloyu dahil ediyoruz
                 .FirstOrDefaultAsync(p => p.Id == productId);
+        }
+
+        public async Task<List<Review>> GetSourceReviewsBySummaryIdAsync(Guid summaryId)
+        {
+            return await _context.SummarySourceReviews
+                .Where(ssr => ssr.SummaryId == summaryId && ssr.Review != null) 
+                .Select(ssr => ssr.Review!) 
+                .ToListAsync();
         }
 
         public async Task<List<Review>> GetReviewsByIdsAsync(List<int> reviewIds)

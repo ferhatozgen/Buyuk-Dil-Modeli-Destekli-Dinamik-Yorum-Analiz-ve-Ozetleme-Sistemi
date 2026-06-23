@@ -28,3 +28,4 @@ one-off/
 /results/
 /Llama_Dataset/islenen_urunler.json
 /Llama_Dataset/train.jsonl
+/Llama_Dataset/test.jsonl

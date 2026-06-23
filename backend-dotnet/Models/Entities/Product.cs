@@ -43,17 +43,13 @@ namespace LLM_Destekli_Ozetleme.Models.Entities
         [Column("avg_model_score")]
         public decimal? AvgModelScore { get; set; }
 
-        [Column("guncel_ozet")]
-        public string? GuncelOzet { get; set; }
-
         [Column("created_at")]
         public DateTime? CreatedAt { get; set; }
 
         [Column("last_updated_at")]
         public DateTime? LastUpdatedAt { get; set; }
 
-        public ICollection<ProductCategoryStat> CategoryStats { get; set; } = new List<ProductCategoryStat>();
-        public ICollection<ProductSummaryHistory> SummaryHistories { get; set; } = new List<ProductSummaryHistory>();
+        public ICollection<ProductSummaries> ProductSummaries { get; set; } = new List<ProductSummaries>();
         public ICollection<Review> Reviews { get; set; } = new List<Review>();
         [Column("celiski_score")]
         public decimal CeliskiScore { get; set; } = 0.00m;
