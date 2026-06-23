@@ -126,4 +126,4 @@ websockets
 wheel
 wrapt
 yarl
-guvicorn
+
