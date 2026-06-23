@@ -412,7 +412,7 @@ export default function Dashboard() {
                                 <Sparkles size={28} color="#ffffff" />
                             </div>
                         </div>
-                        <h2 className="loader-title">VividAİ Analize Başladı</h2>
+                        <h2 className="loader-title">VividAI Analize Başladı</h2>
                         <div className="loader-step-text">{analyzeSteps[loadingStep]}</div>
                         <div className="loader-progress-wrap">
                             <div
@@ -489,7 +489,7 @@ export default function Dashboard() {
                             </div>
                         </div>
                         <div className="project-title-group">
-                            <div className="brand-primary">Vivid<span className="brand-accent">Aİ</span></div>
+                            <div className="brand-primary">Vivid<span className="brand-accent">AI</span></div>
                             <div className="brand-slogan">Yapay Zeka Analiz Motoru</div>
                         </div>
                     </div>
