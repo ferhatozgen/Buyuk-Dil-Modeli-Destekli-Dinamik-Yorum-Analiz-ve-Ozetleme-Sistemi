@@ -13,6 +13,9 @@ from functions.utils import url_cleaning, url_hashing, url_cozumle, yorumlara_pu
 import requests
 from fastapi.middleware.cors import CORSMiddleware
 
+class ChatRequest(BaseModel):
+    productId: str
+    user_message: str
 class ExtractRequest(BaseModel):
     url: str
 
@@ -405,3 +408,4 @@ async def chat_with_vivid_bot(request: ChatRequest):
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 8000))
     uvicorn.run("api_runner:app", host="0.0.0.0", port=port)
+
