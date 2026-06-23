@@ -1,6 +1,6 @@
 from collections import Counter
 from contextlib import asynccontextmanager
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Depends, Security
 from pydantic import BaseModel
 import uvicorn
 import os
@@ -12,6 +12,9 @@ from functions.db_manager import DatabaseManager
 from functions.utils import url_cleaning, url_hashing, url_cozumle, yorumlara_puan_ver, vllm_ile_toplu_isleme, oransal_yorum_secimi, llama_ile_toplu_ozet, get_product_rag_context
 import requests
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.security.api_key import APIKeyHeader
+import os
+
 
 class ChatRequest(BaseModel):
     productId: str
@@ -23,6 +26,15 @@ class ProductIdRequest(BaseModel):
     productId: str
 
 ml_models = {}
+SECRET_API_KEY = os.getenv("VITE_VIVIDAI_SECRET")
+api_key_header = APIKeyHeader(name="X-API-Key", auto_error=False)
+
+# Güvenlik Kontrol Fonksiyonu
+def get_api_key(api_key_header: str = Security(api_key_header)):
+    if api_key_header == SECRET_API_KEY:
+        return api_key_header
+    raise HTTPException(status_code=401, detail="Erişim Reddedildi: Geçersiz veya Eksik API Anahtarı")
+
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -55,7 +67,6 @@ app.add_middleware(
     allow_methods=["*"],  # POST, GET, OPTIONS vb. tüm isteklere izin ver
     allow_headers=["*"],
 )
-
 
 @app.post("/api/v1/extract")
 def extract_and_save(request: ExtractRequest):
@@ -344,7 +355,7 @@ async def summarize_reviews(request: ProductIdRequest):
 #Aşama 5: Chatbot
 #chati hafızada tutan sözlük
 chat_histories = {}
-@app.post("/api/v1/chat")
+@app.post("/api/v1/chat", dependencies=[Depends(get_api_key)])
 async def chat_with_vivid_bot(request: ChatRequest):
     try:
         db = DatabaseManager()
