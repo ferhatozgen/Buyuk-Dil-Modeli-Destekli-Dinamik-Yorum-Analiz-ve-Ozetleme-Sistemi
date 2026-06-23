@@ -52,7 +52,8 @@ class BaseTransformer:
                 "raw_text": self.get_raw_text(raw_review),
                 "clean_text": raw_review.get("temiz_metin"),
                 "metadata": self.get_metadata(raw_review),
-                "reviewed_at": gercek_tarih.strftime("%Y-%m-%d %H:%M:%S")
+                "reviewed_at": gercek_tarih.strftime("%Y-%m-%d %H:%M:%S"),
+                "is_summarized": False
             })
 
         celiski_score=0.00
@@ -77,8 +78,6 @@ class BaseTransformer:
             "avg_orj_score": self.get_avg_orj_score(),
             "avg_model_score": None,
             "celiski_score": celiski_score,
-            "guncel_ozet": None,
-            # 🌟 Ürünlere sisteme kaydedildiği anki tarihi veriyoruz (Mantık hatası düzeltildi)
             "created_at": datetime.now(),
             "last_updated_at": datetime.now()
         }

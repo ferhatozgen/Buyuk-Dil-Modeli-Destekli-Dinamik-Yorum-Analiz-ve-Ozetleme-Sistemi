@@ -439,61 +439,75 @@ class ChatRequest(BaseModel):
     user_message: str
 
 
-#left join aynı kategorideki diğer ürünlerle kıyaslanabilmesi için eklendi.
-#ve aynı zamanda eğer ürünün kategori tablosu boş olsa bile ürün bilgilerini alıyor ve hata vermiyor.(Inner Join verirdi)
 def get_product_rag_context(product_id: str, db_manager: DatabaseManager) -> str:
     """
-    Veritabanı tablolarından ürün özetini, çelişki skorunu ve
-    sektör analizlerini eksiksiz çeken kurşun geçirmez RAG sorgusu.
+    Veritabanı tablolarından ürün genel özetini, kategorik özetleri (aspects),
+    çelişki skorunu ve ham yorumları eksiksiz çeken güncel RAG sorgusu.
     """
-    query = """
-            SELECT p.product_name, \
-                   p.platform, \
-                   p.avg_orj_score, \
-                   p.avg_model_score, \
-                   p.celiski_score, \
-                   p.guncel_ozet, \
-                   c.category_name, \
-                   c.category_model_avg_score, \
-                   c.category_summary
-            FROM products p
-                     LEFT JOIN product_category_stats c ON p.id = c.product_id
-            WHERE p.id = %s; \
-            """
-    product_data = db_manager.fetch_query(query, (product_id,))
+    # 1. Ürünün Temel Bilgilerini Çek
+    prod_query = """
+                 SELECT product_name, platform, avg_orj_score, avg_model_score, celiski_score
+                 FROM products
+                 WHERE id = %s; \
+                 """
+    product_data = db_manager.fetch_query(prod_query, (product_id,))
     if not product_data:
         return "Ürün analitik verileri veritabanında bulunamadı."
 
-    (p_name, platform, avg_orj, avg_model, celiski, guncel_ozet,
-     cat_name, cat_avg_score, cat_summary) = product_data[0]
-
+    p_name, platform, avg_orj, avg_model, celiski = product_data[0]
     temiz_celiski = int(float(celiski) * 100) if celiski is not None else 0
 
-    # Modele kanıt niteliğinde sunulacak en güncel 5 adet gerçek ham kullanıcı yorumu
-    yorum_query = """
-                  SELECT original_rating, raw_text
-                  FROM reviews
-                  WHERE product_id = %s \
-                    AND raw_text IS NOT NULL \
-                    AND raw_text != '' 
-        LIMIT 5; \
-                  """
-    yorumlar = db_manager.fetch_query(yorum_query, (product_id,))
+    # 2. Ürüne Ait Llama Tarafından Üretilmiş Özetleri Çek (Yeni Tablo)
+    sum_query = """
+                SELECT summary_type, category_name, summary_text, average_score
+                FROM product_summaries
+                WHERE product_id = %s; \
+                """
+    summaries_data = db_manager.fetch_query(sum_query, (product_id,))
+
+    genel_ozet = "Genel özet henüz oluşturulmadı."
+    kategori_ozetleri = []
+
+    for row in summaries_data:
+        s_type, cat_name, s_text, avg_score = row
+        # Eğer Llama'dan gelen özet tipi veya kategorisi "genel" ise ana özet kabul et
+        if str(s_type).lower() == "genel" or str(cat_name).lower() == "genel":
+            genel_ozet = s_text
+        else:
+            # Diğer spesifik kategorileri (Örn: Lezzet, Kargo, Kullanım) listeye ekle
+            score_str = f"{avg_score}/5" if avg_score else "N/A"
+            kategori_ozetleri.append(f"- {cat_name} (Puan: {score_str}): {s_text}")
+
+    kategori_ozetleri_str = "\n".join(
+        kategori_ozetleri) if kategori_ozetleri else "Kategorik analiz henüz mevcut değil."
+
+    # 3. Modele kanıt niteliğinde sunulacak en güncel gerçek ham kullanıcı yorumları
+    review_query = """
+                   SELECT original_rating, raw_text
+                   FROM reviews
+                   WHERE product_id = %s
+                     AND raw_text IS NOT NULL
+                     AND raw_text != '' 
+        LIMIT 4; \
+                   """
+    yorumlar = db_manager.fetch_query(review_query, (product_id,))
     yorum_metinleri = "".join([f"- [{r[0]} Yıldız]: {r[1].strip()}\n" for r in yorumlar])
 
-    # 🎯 DÜZELTME: item_metinleri hatası yorum_metinleri olarak eşitlendi!
+    # 4. RAG Bağlamını (Context) Chatbot İçin Birleştir
     context = f"""
-    [ÜRÜN KILAVUZU]
+    [ÜRÜN KİMLİĞİ VE SKORLAR]
     Ürün Adı: {p_name} | Platform: {platform}
     Müşteri Puan Ortalaması: {avg_orj}/5 | Yapay Zeka Memnuniyet Skoru: {avg_model}/5
     Müşteri Fikir Ayrılığı (Çelişki) Oranı: %{temiz_celiski}
-    Detaylı Yapay Zeka Özeti: {guncel_ozet if guncel_ozet else 'Analiz aşamasında.'}
 
-    [SEKTÖR / RAKİP ANALİZİ]
-    Kategori: {cat_name if cat_name else 'Mevcut değil'} | Rakip Ortalama Puanı: {cat_avg_score if cat_avg_score else '0'}/5
-    Kategori Sektör Durumu: {cat_summary if cat_summary else 'Mevcut değil'}
+    [VİVİDAİ GENEL ÖZETİ]
+    {genel_ozet}
 
-    [SİSTEMDEKİ GERÇEK KULLANICI YORUMLARI]
+    [KATEGORİK YAPAY ZEKA ANALİZLERİ (ASPECTS)]
+    {kategori_ozetleri_str}
+
+    [SİSTEMDEKİ GERÇEK KULLANICI YORUMLARI (Örneklem)]
     {yorum_metinleri if yorum_metinleri else 'Henüz ham yorum metni yüklenmemiş.'}
     """
+
     return context

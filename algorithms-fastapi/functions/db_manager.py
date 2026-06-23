@@ -91,7 +91,7 @@ class DatabaseManager:
                         # 3. Reviews Tablosuna Toplu Kayıt
                         review_query = """
                                 INSERT INTO reviews (
-                                    product_id, original_rating, rating_int, predicted_score, raw_text, clean_text, metadata, reviewed_at
+                                    product_id, original_rating, rating_int, predicted_score, raw_text, clean_text, metadata, reviewed_at, is_summarized
                                 ) VALUES %s
                             """
                         seen_reviews = set()
@@ -113,7 +113,8 @@ class DatabaseManager:
                                     y['raw_text'],
                                     y['clean_text'],
                                     Json(y['metadata']),
-                                    y['reviewed_at']
+                                    y['reviewed_at'],
+                                    y['is_summarized']
                                 ))
 
                         # Sadece tekil olan temiz listeyi tek kalemde veritabanına fırlatıyoruz
