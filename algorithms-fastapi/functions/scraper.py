@@ -1283,7 +1283,7 @@ def google_maps_veri_cek(mekan_linki, max_kaydirma) -> str:
         with sync_playwright() as p:
             context = p.chromium.launch_persistent_context(
                 user_data_dir=profil_klasoru,
-                headless=True,  # Hata ayıklama bitene kadar False kalsın
+                headless=False,  # Hata ayıklama bitene kadar False kalsın
                 user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36",
                 ignore_default_args=["--enable-automation"],
                 args=["--disable-blink-features=AutomationControlled"]
