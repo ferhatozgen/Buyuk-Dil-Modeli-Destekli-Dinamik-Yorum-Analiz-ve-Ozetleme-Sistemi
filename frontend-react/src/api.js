@@ -12,11 +12,12 @@ const api = axios.create({
 //Yapay Zeka (FastAPI) Chatbot Bağlantı Fonksiyonu direkt pcye istek atacak şekilde
 export const sendChatMessageToVividBot = async (productId, userMessage) => {
     try {
-        const response = await axios.post('http://localhost:8000/api/v1/chat', {
-            productId: productId,
+        const response = await axios.post('https://android-briar-corridor.ngrok-free.dev/api/v1/chat', {
+            productId: String(productId),
             user_message: userMessage
         }, {
             headers: {
+                'X-API-Key': import.meta.env.VITE_VIVIDAI_SECRET_KEY,
                 'Content-Type': 'application/json'
             }
         });
