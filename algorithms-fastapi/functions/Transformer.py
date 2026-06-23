@@ -115,7 +115,7 @@ class TrendyolTransformer(BaseTransformer):
         return raw_review.get("metin") or raw_review.get("comment") or ""
 
     def get_review_date(self, raw_review):
-        tarih = raw_review.get("commentDateISOtype") or raw_review.get("tarih") or ""
+        tarih = raw_review.get("createdAt") or raw_review.get("tarih") or ""
         return parse_review_date(tarih)
 
 

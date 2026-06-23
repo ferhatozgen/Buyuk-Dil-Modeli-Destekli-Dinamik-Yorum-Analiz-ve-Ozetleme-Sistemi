@@ -26,7 +26,7 @@ class ProductIdRequest(BaseModel):
     productId: str
 
 ml_models = {}
-SECRET_API_KEY = os.getenv("VITE_VIVIDAI_SECRET")
+SECRET_API_KEY = os.getenv("VIVIDAI_SECRET_KEY", "VividAI-Gizli-Anahtar-999")
 api_key_header = APIKeyHeader(name="X-API-Key", auto_error=False)
 
 # Güvenlik Kontrol Fonksiyonu
@@ -36,17 +36,28 @@ def get_api_key(api_key_header: str = Security(api_key_header)):
     raise HTTPException(status_code=401, detail="Erişim Reddedildi: Geçersiz veya Eksik API Anahtarı")
 
 
+# 1. DEĞİŞİKLİK: Global Veritabanı Değişkeni
+# Havuzu her istekte değil, uygulama başlarken 1 kez kurup her yerde bunu kullanacağız.
+global_db = None
+
 @asynccontextmanager
 async def lifespan(app: FastAPI):
+    global global_db
     print("[INFO] ONNX BerTurk modeli yükleniyor...")
     MODEL_ID = "Halitbkts/berturk-review-score-predicter-model-onnx"
     try:
         model = ORTModelForSequenceClassification.from_pretrained(MODEL_ID)
         tokenizer = AutoTokenizer.from_pretrained(MODEL_ID)
         ml_models["classifier"] = pipeline("text-classification", model=model, tokenizer=tokenizer)
-        print("INFO - [STARTUP] Model başarıyla yüklendi ve FastAPI sunucusu hazır!")
+        print("INFO - [STARTUP] Model başarıyla yüklendi!")
+
+        # 2. DEĞİŞİKLİK: Veritabanı havuzunu burada, sistem başlarken TEK SEFER kuruyoruz.
+        global_db = DatabaseManager()
+        print("INFO - [STARTUP] Veritabanı havuzu (Pool) başarıyla oluşturuldu!")
+
+        print("INFO - [STARTUP] FastAPI sunucusu hazır!")
     except Exception as e:
-        print(f"[ERROR] Model yüklenirken bir hata oluştu: {e}")
+        print(f"[ERROR] Sistem başlatılırken bir hata oluştu: {e}")
 
     yield
 
@@ -54,6 +65,7 @@ async def lifespan(app: FastAPI):
     ml_models.clear()
 
     try:
+        # Havuzu güvenli bir şekilde kapatıyoruz
         DatabaseManager.close_pool()
     except Exception as e:
         print(f"[ERROR] Havuz kapatılırken bir sorun oluştu: {e}")
@@ -68,10 +80,11 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+
 @app.post("/api/v1/extract")
 def extract_and_save(request: ExtractRequest):
     try:
-        db = DatabaseManager()
+        # 3. DEĞİŞİKLİK: Yeni havuz kurmak yerine, var olan global havuzu kullanıyoruz!
         temiz_url = url_cleaning(request.url)
         url_hash = url_hashing(temiz_url)
         platform, platform_id = url_cozumle(temiz_url)
@@ -79,7 +92,7 @@ def extract_and_save(request: ExtractRequest):
         if not platform:
             raise HTTPException(status_code=400, detail="Platform tanımlanamadı.")
 
-        mevcut_urun_id = db.fetch_query("SELECT id FROM products WHERE url_hash = %s", (url_hash,))
+        mevcut_urun_id = global_db.fetch_query("SELECT id FROM products WHERE url_hash = %s", (url_hash,))
         if mevcut_urun_id:
             return {
                 "status": "success",
@@ -104,7 +117,7 @@ def extract_and_save(request: ExtractRequest):
             for yrm in yorum_paketleri:
                 yrm['predicted_score'] = None
 
-        product_id = db.save_product_and_reviews(urun_paketi, yorum_paketleri)
+        product_id = global_db.save_product_and_reviews(urun_paketi, yorum_paketleri)
 
         return {
             "status": "success",
@@ -120,8 +133,8 @@ def extract_and_save(request: ExtractRequest):
 @app.post("/api/v1/score")
 async def score_reviews(request: ProductIdRequest):
     try:
-        db = DatabaseManager()
-        yorum_paketleri = db.get_unscored_data_by_produc_id(request.productId)
+        # 4. DEĞİŞİKLİK: Burada da global havuzu kullanıyoruz!
+        yorum_paketleri = global_db.get_unscored_data_by_produc_id(request.productId)
 
         if not yorum_paketleri:
             raise HTTPException(status_code=404, detail="Bu ürüne ait puanlanacak yorum bulunamadı.")
@@ -137,7 +150,7 @@ async def score_reviews(request: ProductIdRequest):
         if gecerli_puanlar:
             avg_model_score = round(sum(gecerli_puanlar) / len(gecerli_puanlar), 2)
 
-        db.update_scores(request.productId, avg_model_score, yorum_paketleri)
+        global_db.update_scores(request.productId, avg_model_score, yorum_paketleri)
 
         return {
             "status": "success",
@@ -152,15 +165,14 @@ async def score_reviews(request: ProductIdRequest):
 @app.post("/api/v1/categorize")
 async def categorize_aspects(request: ProductIdRequest):
     try:
-        db = DatabaseManager()
         product_id = request.productId
 
-        urun_kategori_verisi = db.fetch_query("Select category FROM products WHERE id = %s", (product_id,))
+        urun_kategori_verisi = global_db.fetch_query("Select category FROM products WHERE id = %s", (product_id,))
         if not urun_kategori_verisi:
             raise HTTPException(status_code=404, detail="Ürün bulunamadı.")
 
         urun_grubu = urun_kategori_verisi[0][0]
-        secilen_yorumlar = oransal_yorum_secimi(db, product_id, 50)
+        secilen_yorumlar = oransal_yorum_secimi(global_db, product_id, 50)
 
         if not secilen_yorumlar or len(secilen_yorumlar) < 5:
             return {
@@ -208,7 +220,7 @@ async def categorize_aspects(request: ProductIdRequest):
                 "snippet_score": pkt.get("predicted_score")
             })
 
-        db.save_review_aspects(final_aspects)
+        global_db.save_review_aspects(final_aspects)
 
         return {
             "status": "success",
@@ -226,11 +238,10 @@ async def categorize_aspects(request: ProductIdRequest):
 async def summarize_reviews(request: ProductIdRequest):
     try:
 
-        db = DatabaseManager()
         product_id = request.productId
 
         aspect_sorgusu = "SELECT review_id, category_name, snippet_text, snippet_score FROM review_aspects WHERE review_id IN (SELECT id FROM reviews WHERE product_id = %s)"
-        ham_parcalar = db.fetch_query(aspect_sorgusu, (product_id,))
+        ham_parcalar = global_db.fetch_query(aspect_sorgusu, (product_id,))
 
         if not ham_parcalar:
             raise HTTPException(status_code=404, detail="Bu ürüne ait özetlenecek nitelik bulunamadı.")
@@ -241,12 +252,12 @@ async def summarize_reviews(request: ProductIdRequest):
         top_3_kategori = [k[0] for k in kategori_sayaclari.most_common(3)]
 
         urun_sorgusu = "SELECT avg_model_score FROM products WHERE id = %s;"
-        urun_verisi = db.fetch_query(urun_sorgusu, (product_id,))
+        urun_verisi = global_db.fetch_query(urun_sorgusu, (product_id,))
         avg_model_score = float(urun_verisi[0][0]) if urun_verisi and urun_verisi[0][0] is not None else 0.0
 
         # Sadece puanlanmış yorumları (dağılımı bulmak ve genel özet metnini oluşturmak için) çekiyoruz
         yorumlar_sorgusu = "SELECT id, clean_text, predicted_score FROM reviews WHERE product_id = %s AND predicted_score IS NOT NULL;"
-        tum_yorumlar = db.fetch_query(yorumlar_sorgusu, (product_id,))
+        tum_yorumlar = global_db.fetch_query(yorumlar_sorgusu, (product_id,))
 
         puanlar = [int(y[2]) for y in tum_yorumlar]
         toplam_yorum_sayisi = len(puanlar)
@@ -328,7 +339,7 @@ async def summarize_reviews(request: ProductIdRequest):
                 genel_ozet_metni_arayuz_icin = ozet_metni
 
             # Tertemiz, tek satırlık Data Access Layer (DAL) çağrısı
-            summary_id = db.save_summary_and_get_id(
+            summary_id = global_db.save_summary_and_get_id(
                 product_id,
                 meta["type"],
                 meta.get("category_name"),
@@ -341,7 +352,7 @@ async def summarize_reviews(request: ProductIdRequest):
 
                 if meta["source_ids"]:
                     iliskiler = [(summary_id, r_id) for r_id in meta["source_ids"]]
-                    db.save_summary_source_reviews(iliskiler)
+                    global_db.save_summary_source_reviews(iliskiler)
 
         return {
             "status": "success",
@@ -358,10 +369,9 @@ chat_histories = {}
 @app.post("/api/v1/chat", dependencies=[Depends(get_api_key)])
 async def chat_with_vivid_bot(request: ChatRequest):
     try:
-        db = DatabaseManager()
 
         # 1. Adım: Veritabanından zengin bağlamı getir (Retrieval)
-        context_bilgisi = get_product_rag_context(request.productId, db)
+        context_bilgisi = get_product_rag_context(request.productId, global_db)
 
         # 2. Adım: Hafıza (Session) Yönetimi
         if request.productId not in chat_histories:
@@ -420,3 +430,4 @@ if __name__ == "__main__":
     port = int(os.environ.get("PORT", 8000))
     uvicorn.run("api_runner:app", host="0.0.0.0", port=port)
 
+#https://buyuk-dil-modeli-destekli-dinamik-yorum-analiz-v-production.up.railway.app

@@ -1,8 +1,8 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import {
-    ArrowLeft, Heart, Star, ChevronDown, ChevronUp, ShieldCheck, CheckCircle2,
-    Clock, ThumbsUp, Sparkles, CheckCircle, Info, TrendingUp,
-    MessageCircle, X, Send, Bot, MoreHorizontal, Loader2, HelpCircle
+    ArrowLeft, Heart, Star, ChevronDown, ChevronUp, CheckCircle2,
+    Sparkles, CheckCircle, Info, TrendingUp,
+    X, Send, Bot, MoreHorizontal, Loader2, HelpCircle
 } from 'lucide-react';
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import './ProductPage.css';
@@ -23,7 +23,7 @@ const PLATFORM_THEMES = {
     'default': { main: '#8b5cf6', light: '#f5f3ff' }
 };
 
-// ── GRAFİK İÇİN ÖZEL TOOLTIP (Dışarıya Alındı - React Performansı İçin) ──
+// ── GRAFİK İÇİN ÖZEL TOOLTIP ──
 const CustomTooltip = ({ active, payload, label, activeTheme }) => {
     if (active && payload && payload.length) {
         const data = payload[0].payload;
@@ -48,7 +48,6 @@ const CustomTooltip = ({ active, payload, label, activeTheme }) => {
     return null;
 };
 
-// YENİ EKLENEN FAVORİLER PARAMETRESİ BURADA (favorites = [])
 export default function ProductPage({ product, onFav, onClose, userRating, onRate, allProducts = [], openProduct, ratings = {}, favorites = [] }) {
     // ── API VERİ STATE'LERİ ──
     const [productDetail, setProductDetail] = useState(null);
@@ -61,8 +60,6 @@ export default function ProductPage({ product, onFav, onClose, userRating, onRat
     // ── UI STATE'LERİ ──
     const [hoveredStar, setHoveredStar] = useState(0);
     const [expandedParam, setExpandedParam] = useState(null);
-    const [selectedWord, setSelectedWord] = useState(null);
-    const [hoveredWord, setHoveredWord] = useState(null);
 
     // ── CHATBOT STATE'LERİ ──
     const [isChatOpen, setIsChatOpen] = useState(false);
@@ -101,7 +98,6 @@ export default function ProductPage({ product, onFav, onClose, userRating, onRat
         return rawCat.charAt(0).toUpperCase() + rawCat.slice(1);
     };
 
-    // ── YENİ API İSTEKLERİ (TIKLAMA & FAVORİ) ──
     const handleIncrementClick = useCallback(async () => {
         try {
             if (product?.id) {
@@ -143,9 +139,7 @@ export default function ProductPage({ product, onFav, onClose, userRating, onRat
         }
     };
 
-    // ── API VE TREND VERİSİNİ ÇEKME ──
     useEffect(() => {
-        // Fonksiyonları Effect'in İÇİNDE tanımlıyoruz (React'in en sevdiği yöntem)
         const fetchProductDetails = async () => {
             if (!product?.id) return;
             setIsLoading(true);
@@ -179,11 +173,10 @@ export default function ProductPage({ product, onFav, onClose, userRating, onRat
             }
         };
 
-        // Ve tanımladığımız fonksiyonları çağırıyoruz
         fetchProductDetails();
         fetchTrendData();
-        
-    }, [product?.id]); // Sadece product.id değiştiğinde tetiklenecek
+
+    }, [product?.id]);
 
     useEffect(() => {
         handleIncrementClick();
@@ -202,43 +195,19 @@ export default function ProductPage({ product, onFav, onClose, userRating, onRat
         return match ? PLATFORM_THEMES[match] : PLATFORM_THEMES['default'];
     };
 
-    const cleanToken = (word) => word.toLowerCase().replace(/[.,/#!$%^&*;:{}=\-_`~()]/g, "").trim();
-    const isStopWord = (word) => ['ve', 'veya', 'da', 'de', 'bir', 'bu', 'için', 'en', 'ile', 'o', 'ise', 'içinde', 'çok', 'daha', 'gibi'].includes(cleanToken(word));
-
-    const handleWordClick = (word) => {
-        const clean = cleanToken(word);
-        if (isStopWord(clean)) return;
-        setSelectedWord(selectedWord === clean ? null : clean);
-    };
-
     const handleSendMessage = async (e) => {
         e.preventDefault();
-        
-        // Koruma kalkanı: Mesaj boşsa veya ürün yüklenemediyse isteği durdur
         if (!chatInput.trim() || !productDetail?.id) return;
 
         const userQuestion = chatInput.trim();
-
-        // 1. Kullanıcının yazdığı soruyu arayüz baloncuğuna anında ekliyoruz
         const newUserMsg = { sender: 'user', text: userQuestion };
         setChatMessages(prev => [...prev, newUserMsg]);
-        
-        // Input kutusunu temizliyoruz
         setChatInput('');
-        
-        // 2. Üç nokta yanıp sönen "Yazıyor..." animasyonunu aktif ediyoruz
         setIsTyping(true);
 
         try {
-            // 3. Bizim api.js içerisindeki asıl RAG bağlantı fonksiyonumuzu ateşliyoruz
             const botResponse = await sendChatMessageToVividBot(productDetail.id, userQuestion);
-            
-            // 4. FastAPI'den gelen o kurallı Türkçe cevabı ekrandaki bot baloncuğuna basıyoruz
-            setChatMessages(prev => [...prev, {
-                sender: 'ai',
-                text: botResponse
-            }]);
-            
+            setChatMessages(prev => [...prev, { sender: 'ai', text: botResponse }]);
         } catch (error) {
             console.error("Chatbot akışında hata:", error);
             setChatMessages(prev => [...prev, {
@@ -246,7 +215,6 @@ export default function ProductPage({ product, onFav, onClose, userRating, onRat
                 text: "Şu anda teknik bir aksaklık nedeniyle yanıt üretemiyorum. Lütfen biraz sonra tekrar deneyin."
             }]);
         } finally {
-            // 5. İşlem başarılı da olsa hata da alsa "Yazıyor..." animasyonunu kapatıyoruz
             setIsTyping(false);
         }
     };
@@ -278,9 +246,6 @@ export default function ProductPage({ product, onFav, onClose, userRating, onRat
     } = productDetail;
 
     const activeTheme = getPlatformTheme(platform);
-    const summaryWords = (guncelOzet || "").split(/\s+/);
-    const activeTargetWord = hoveredWord || selectedWord;
-
     const displayPlatform = platform ? platform.charAt(0).toUpperCase() + platform.slice(1) : '';
 
     const similarProducts = allProducts
@@ -292,42 +257,15 @@ export default function ProductPage({ product, onFav, onClose, userRating, onRat
         })
         .slice(0, 6);
 
-    const renderInteractiveSummary = (textArray) => {
-        return textArray.map((word, idx) => {
-            const clean = cleanToken(word);
-            const stopWord = isStopWord(word);
-            const isGlow = !stopWord && (hoveredWord === clean || selectedWord === clean);
-            const isLocked = !stopWord && selectedWord === clean;
-
-            return (
-                <span
-                    key={idx}
-                    className={`tc-dynamic-word ${isGlow ? 'active' : ''} ${isLocked ? 'locked' : ''} ${stopWord ? 'stop-word' : ''}`}
-                    onMouseEnter={() => { if (!stopWord) setHoveredWord(clean); }}
-                    onMouseLeave={() => { setHoveredWord(null); }}
-                    onClick={() => handleWordClick(word)}
-                >
-                    {word}{' '}
-                </span>
-            );
-        });
-    };
-
-    const renderHighlightedCommentText = (text, targetWord) => {
-        if (!targetWord) return text;
-        const regex = new RegExp(`(${targetWord})`, 'gi');
-        const parts = text.split(regex);
-        return parts.map((part, i) =>
-            part.toLowerCase() === targetWord.toLowerCase() ?
-                <span key={i} className="tc-word-highlight-match">{part}</span> : part
-        );
-    };
-
     return (
         <div className="tc-page-wrapper" style={{ '--theme-main': activeTheme.main, '--theme-light': activeTheme.light }}>
 
             <div className="tc-top-bar">
-                <button className="tc-back-btn" onClick={onClose}>
+                {/* GERİ DÖN BUTONU */}
+                <button className="tc-back-btn" onClick={(e) => {
+                    e.preventDefault();
+                    if (onClose) onClose();
+                }}>
                     <ArrowLeft size={16} /> Keşif Paneline Dön
                 </button>
                 <div className="tc-breadcrumb">
@@ -348,14 +286,12 @@ export default function ProductPage({ product, onFav, onClose, userRating, onRat
                     <div className="tc-ai-summary-box">
                         <div className="tc-ai-summary-header">
                             <Sparkles size={16} color={activeTheme.main} />
-                            <strong>{displayPlatform} Verisi Sentez Raporu</strong>
+                            <strong>{displayPlatform} Genel Özet</strong>
                         </div>
-                        <p className="tc-interactive-text">
-                            {renderInteractiveSummary(summaryWords)}
+                        {/* PARLAMA ÖZELLİĞİ KALDIRILMIŞ DÜZ METİN */}
+                        <p className="tc-interactive-text" style={{ cursor: 'default', color: '#334155', lineHeight: '1.6' }}>
+                            {guncelOzet || "Bu ürün için genel özet henüz oluşturulmadı."}
                         </p>
-                        <div className="tc-summary-hint">
-                            * Özetteki kelimelerin hangi yorumlardan geldiğini görmek için kelimelere tıklayın veya üzerine gelin.
-                        </div>
                     </div>
                 </div>
 
@@ -466,34 +402,21 @@ export default function ProductPage({ product, onFav, onClose, userRating, onRat
                     <div className="tc-reviews-section">
                         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '14px' }}>
                             <h3 className="tc-section-title" style={{ margin: 0 }}>Özeti Oluşturan Kaynak Yorumlar</h3>
-                            {selectedWord && (
-                                <button className="tc-clear-filter" onClick={() => setSelectedWord(null)}>
-                                    Seçimi Temizle
-                                </button>
-                            )}
                         </div>
 
+                        {/* FİLTRE VE VURGU OLMADAN SADE YORUMLAR */}
                         <div className="tc-reviews-scroll-box">
                             {sourceReviews && sourceReviews.length > 0 ? (
-                                sourceReviews.map((review, idx) => {
-                                    const textLower = review.text.toLocaleLowerCase('tr-TR');
-                                    const targetLower = activeTargetWord ? activeTargetWord.toLocaleLowerCase('tr-TR') : '';
-                                    const isMatch = activeTargetWord && textLower.includes(targetLower);
-                                    let cardStateClass = activeTargetWord ? (isMatch ? 'tc-card-highlight' : 'tc-card-dimmed') : '';
-
-                                    return (
-                                        <div key={idx} className={`tc-review-card-mini ${cardStateClass}`}>
-                                            <div className="tc-review-header-mini">
-                                                <span className="tc-review-user-masked">Doğrulanmış Alıcı</span>
-                                            </div>
-                                            <p className="tc-interactive-text-mini">
-                                                {activeTargetWord && isMatch
-                                                    ? renderHighlightedCommentText(review.text, activeTargetWord)
-                                                    : review.text}
-                                            </p>
+                                sourceReviews.map((review, idx) => (
+                                    <div key={idx} className="tc-review-card-mini">
+                                        <div className="tc-review-header-mini">
+                                            <span className="tc-review-user-masked">Doğrulanmış Alıcı</span>
                                         </div>
-                                    )
-                                })
+                                        <p className="tc-interactive-text-mini">
+                                            {review.text}
+                                        </p>
+                                    </div>
+                                ))
                             ) : (
                                 <p className="tc-expanded-text">Gösterilecek kaynak yorum bulunamadı.</p>
                             )}
@@ -635,7 +558,7 @@ export default function ProductPage({ product, onFav, onClose, userRating, onRat
                 </div>
             </div>
 
-            {/* 4. BENZER ÜRÜNLER (YATAY SCROLL / KAYDIRMALI) - FAVORİLER DİNAMİK YAPILDI */}
+            {/* 4. BENZER ÜRÜNLER */}
             <div className="tc-similar-section">
                 <h2 className="tc-similar-title">Kategorideki Benzer Ürünler</h2>
                 <div className="tc-similar-scroll-container">
@@ -644,7 +567,7 @@ export default function ProductPage({ product, onFav, onClose, userRating, onRat
                             <div key={item.id} className="tc-similar-card-wrapper">
                                 <ProductCard
                                     item={item}
-                                    isFav={favorites.some((f) => f.id === item.id)} // BURASI GÜNCELLENDİ
+                                    isFav={favorites.some((f) => f.id === item.id)}
                                     onFav={onFav}
                                     onClick={() => {
                                         window.scrollTo({ top: 0, behavior: 'smooth' });
