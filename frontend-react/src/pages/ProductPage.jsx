@@ -23,7 +23,7 @@ const PLATFORM_THEMES = {
     'default': { main: '#8b5cf6', light: '#f5f3ff' }
 };
 
-// ── GRAFİK İÇİN ÖZEL TOOLTIP ──
+// ── GRAFİK İÇİN ÖZEL TOOLTIP (Dışarıya Alındı - React Performansı İçin) ──
 const CustomTooltip = ({ active, payload, label, activeTheme }) => {
     if (active && payload && payload.length) {
         const data = payload[0].payload;
@@ -48,6 +48,7 @@ const CustomTooltip = ({ active, payload, label, activeTheme }) => {
     return null;
 };
 
+// YENİ EKLENEN FAVORİLER PARAMETRESİ BURADA (favorites = [])
 export default function ProductPage({ product, onFav, onClose, userRating, onRate, allProducts = [], openProduct, ratings = {}, favorites = [] }) {
     // ── API VERİ STATE'LERİ ──
     const [productDetail, setProductDetail] = useState(null);
@@ -62,8 +63,6 @@ export default function ProductPage({ product, onFav, onClose, userRating, onRat
     const [expandedParam, setExpandedParam] = useState(null);
     const [selectedWord, setSelectedWord] = useState(null);
     const [hoveredWord, setHoveredWord] = useState(null);
-    // YENİ: Seçilen kategorik özetin kaynak yorumlarını tutacak state
-    const [activeSummarySources, setActiveSummarySources] = useState([]);
 
     // ── CHATBOT STATE'LERİ ──
     const [isChatOpen, setIsChatOpen] = useState(false);
@@ -102,6 +101,7 @@ export default function ProductPage({ product, onFav, onClose, userRating, onRat
         return rawCat.charAt(0).toUpperCase() + rawCat.slice(1);
     };
 
+    // ── YENİ API İSTEKLERİ (TIKLAMA & FAVORİ) ──
     const handleIncrementClick = useCallback(async () => {
         try {
             if (product?.id) {
@@ -213,19 +213,32 @@ export default function ProductPage({ product, onFav, onClose, userRating, onRat
 
     const handleSendMessage = async (e) => {
         e.preventDefault();
+        
+        // Koruma kalkanı: Mesaj boşsa veya ürün yüklenemediyse isteği durdur
         if (!chatInput.trim() || !productDetail?.id) return;
+
         const userQuestion = chatInput.trim();
+
+        // 1. Kullanıcının yazdığı soruyu arayüz baloncuğuna anında ekliyoruz
         const newUserMsg = { sender: 'user', text: userQuestion };
         setChatMessages(prev => [...prev, newUserMsg]);
+        
+        // Input kutusunu temizliyoruz
         setChatInput('');
+        
+        // 2. Üç nokta yanıp sönen "Yazıyor..." animasyonunu aktif ediyoruz
         setIsTyping(true);
 
         try {
+            // 3. Bizim api.js içerisindeki asıl RAG bağlantı fonksiyonumuzu ateşliyoruz
             const botResponse = await sendChatMessageToVividBot(productDetail.id, userQuestion);
+            
+            // 4. FastAPI'den gelen o kurallı Türkçe cevabı ekrandaki bot baloncuğuna basıyoruz
             setChatMessages(prev => [...prev, {
                 sender: 'ai',
                 text: botResponse
             }]);
+            
         } catch (error) {
             console.error("Chatbot akışında hata:", error);
             setChatMessages(prev => [...prev, {
@@ -233,6 +246,7 @@ export default function ProductPage({ product, onFav, onClose, userRating, onRat
                 text: "Şu anda teknik bir aksaklık nedeniyle yanıt üretemiyorum. Lütfen biraz sonra tekrar deneyin."
             }]);
         } finally {
+            // 5. İşlem başarılı da olsa hata da alsa "Yazıyor..." animasyonunu kapatıyoruz
             setIsTyping(false);
         }
     };
@@ -259,26 +273,22 @@ export default function ProductPage({ product, onFav, onClose, userRating, onRat
 
     const {
         productName, platform, imageUrl, originalUrl,
-        avgOrjScore, avgModelScore, celiskiScore, isFavorited,
-        summaries // 🚨 YENİ EKLENEN VERİ MODELİ (Özetler dizisi)
+        avgOrjScore, avgModelScore, celiskiScore,
+        guncelOzet, categoricalStats, sourceReviews, isFavorited
     } = productDetail;
 
     const activeTheme = getPlatformTheme(platform);
-
-    // YENİ YAPI: Genel özeti summaries dizisinden buluyoruz
-    const generalSummary = summaries?.find(s => s.summaryType === 'genel')?.summaryText || "Bu ürün için genel bir analiz henüz hazırlanmamış.";
-    const summaryWords = generalSummary.split(/\s+/);
-
-    // YENİ YAPI: Kategorik (Kargo, Lezzet vb.) özetleri filtreliyoruz
-    const categoricalSummaries = summaries?.filter(s => s.summaryType !== 'genel') || [];
-
+    const summaryWords = (guncelOzet || "").split(/\s+/);
     const activeTargetWord = hoveredWord || selectedWord;
+
     const displayPlatform = platform ? platform.charAt(0).toUpperCase() + platform.slice(1) : '';
 
     const similarProducts = allProducts
         .filter((p) => {
             if (!p.category || !productDetail?.category) return false;
-            return p.category === formatCategory(productDetail.category) && p.id !== productDetail.id;
+            const dashboardCat = p.category;
+            const currentProductCat = formatCategory(productDetail.category);
+            return dashboardCat === currentProductCat && p.id !== productDetail.id;
         })
         .slice(0, 6);
 
@@ -304,7 +314,7 @@ export default function ProductPage({ product, onFav, onClose, userRating, onRat
     };
 
     const renderHighlightedCommentText = (text, targetWord) => {
-        if (!targetWord || !text) return text;
+        if (!targetWord) return text;
         const regex = new RegExp(`(${targetWord})`, 'gi');
         const parts = text.split(regex);
         return parts.map((part, i) =>
@@ -340,11 +350,7 @@ export default function ProductPage({ product, onFav, onClose, userRating, onRat
                             <Sparkles size={16} color={activeTheme.main} />
                             <strong>{displayPlatform} Verisi Sentez Raporu</strong>
                         </div>
-                        <p className="tc-interactive-text" onClick={() => {
-                            // Genel özete tıklanınca genel kaynağı göster
-                            const gOzet = summaries?.find(s => s.summaryType === 'genel');
-                            if(gOzet) setActiveSummarySources(gOzet.sourceReviews || []);
-                        }}>
+                        <p className="tc-interactive-text">
                             {renderInteractiveSummary(summaryWords)}
                         </p>
                         <div className="tc-summary-hint">
@@ -384,6 +390,12 @@ export default function ProductPage({ product, onFav, onClose, userRating, onRat
                                 <div className="tc-score-labels">
                                     <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
                                         <strong>VividAI Endeksi</strong>
+                                        <div className="tc-tooltip-wrap">
+                                            <HelpCircle size={12} className="tc-help-icon" />
+                                            <div className="tc-tooltip-content">
+                                                <strong>VividAI Endeksi:</strong> LLM motorumuzun yorumları doğal dil işleme ile analiz ederek hesapladığı ağırlıklı, gerçek kullanıcı memnuniyet skorudur. Manipülatif yorumlar filtrelenerek oluşturulur.
+                                            </div>
+                                        </div>
                                     </div>
                                     <span>Anlamsal Model Skoru</span>
                                 </div>
@@ -398,6 +410,12 @@ export default function ProductPage({ product, onFav, onClose, userRating, onRat
                                 <div className="tc-score-labels">
                                     <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
                                         <strong>Çelişki Oranı</strong>
+                                        <div className="tc-tooltip-wrap">
+                                            <HelpCircle size={12} className="tc-help-icon" />
+                                            <div className="tc-tooltip-content">
+                                                <strong>Çelişki Oranı:</strong> Kullanıcı deneyimlerindeki duygu zıtlıklarını ölçer. Oranın yüksek olması, ürünü çok sevenler kadar nefret edenlerin de olduğunu (standart sapmanın yüksek olduğunu) gösterir.
+                                            </div>
+                                        </div>
                                     </div>
                                     <span>Yorum Standart Sapması</span>
                                 </div>
@@ -405,42 +423,35 @@ export default function ProductPage({ product, onFav, onClose, userRating, onRat
                         </div>
                     </div>
 
-                    {/* YENİ YAPIYA GÖRE KATEGORİK PARAMETRELER */}
                     <div className="tc-specs-section">
                         <div className="tc-specs-title-group">
                             <TrendingUp size={16} color={activeTheme.main} />
                             <h3 className="tc-section-title">Kategorik Özet Parametreleri</h3>
                         </div>
                         <div className="tc-params-list">
-                            {categoricalSummaries.length > 0 ? (
-                                categoricalSummaries.map((stat, idx) => {
+                            {categoricalStats && categoricalStats.length > 0 ? (
+                                categoricalStats.map((stat, idx) => {
                                     const isExpanded = expandedParam === idx;
                                     return (
                                         <div key={idx} className={`tc-param-row-wrapper ${isExpanded ? 'active-row' : ''}`}>
-                                            <div className="tc-param-clickable-row" onClick={() => {
-                                                setExpandedParam(isExpanded ? null : idx);
-                                                // Eğer açılırsa, o kategorinin kaynak yorumlarını alt kısma yükle
-                                                if (!isExpanded && stat.sourceReviews) {
-                                                    setActiveSummarySources(stat.sourceReviews);
-                                                }
-                                            }}>
+                                            <div className="tc-param-clickable-row" onClick={() => setExpandedParam(isExpanded ? null : idx)}>
                                                 <div className="tc-param-left">
                                                     <div className="tc-icon-frame"><CheckCircle2 size={14} /></div>
-                                                    <span className="tc-param-label">{stat.categoryName || stat.summaryType}</span>
+                                                    <span className="tc-param-label">{formatCategory(stat.categoryName)}</span>
                                                 </div>
                                                 <div className="tc-param-right">
                                                     <div className="tc-progress-bg">
-                                                        <div className="tc-progress-fill" style={{ width: `${(stat.averageScore / 5) * 100}%` }}></div>
+                                                        <div className="tc-progress-fill" style={{ width: `${(stat.categoryModelAvgScore / 5) * 100}%` }}></div>
                                                     </div>
                                                     <span className="tc-param-score">
-                                                        {stat.averageScore ? (stat.averageScore * 20).toFixed(0) : "0"}%
+                                                        {stat.categoryModelAvgScore ? (stat.categoryModelAvgScore * 20).toFixed(0) : "0"}%
                                                     </span>
                                                     {isExpanded ? <ChevronUp size={16} color={activeTheme.main} /> : <ChevronDown size={16} color="#64748b" />}
                                                 </div>
                                             </div>
                                             {isExpanded && (
                                                 <div className="tc-param-expanded-content">
-                                                    <p className="tc-expanded-text">{stat.summaryText}</p>
+                                                    <p className="tc-expanded-text">{stat.categorySummary}</p>
                                                 </div>
                                             )}
                                         </div>
@@ -452,7 +463,6 @@ export default function ProductPage({ product, onFav, onClose, userRating, onRat
                         </div>
                     </div>
 
-                    {/* YENİ YAPIYA GÖRE KAYNAK YORUMLAR (DİNAMİK) */}
                     <div className="tc-reviews-section">
                         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '14px' }}>
                             <h3 className="tc-section-title" style={{ margin: 0 }}>Özeti Oluşturan Kaynak Yorumlar</h3>
@@ -464,11 +474,9 @@ export default function ProductPage({ product, onFav, onClose, userRating, onRat
                         </div>
 
                         <div className="tc-reviews-scroll-box">
-                            {activeSummarySources && activeSummarySources.length > 0 ? (
-                                activeSummarySources.map((review, idx) => {
-                                    // review.rawText veya review.text (.NET'ten gelen DTO yapısına göre değişir)
-                                    const rText = review.rawText || review.text || "";
-                                    const textLower = rText.toLocaleLowerCase('tr-TR');
+                            {sourceReviews && sourceReviews.length > 0 ? (
+                                sourceReviews.map((review, idx) => {
+                                    const textLower = review.text.toLocaleLowerCase('tr-TR');
                                     const targetLower = activeTargetWord ? activeTargetWord.toLocaleLowerCase('tr-TR') : '';
                                     const isMatch = activeTargetWord && textLower.includes(targetLower);
                                     let cardStateClass = activeTargetWord ? (isMatch ? 'tc-card-highlight' : 'tc-card-dimmed') : '';
@@ -477,18 +485,17 @@ export default function ProductPage({ product, onFav, onClose, userRating, onRat
                                         <div key={idx} className={`tc-review-card-mini ${cardStateClass}`}>
                                             <div className="tc-review-header-mini">
                                                 <span className="tc-review-user-masked">Doğrulanmış Alıcı</span>
-                                                {/* Eğer istersen buraya review.originalRating ekleyebilirsin */}
                                             </div>
                                             <p className="tc-interactive-text-mini">
                                                 {activeTargetWord && isMatch
-                                                    ? renderHighlightedCommentText(rText, activeTargetWord)
-                                                    : rText}
+                                                    ? renderHighlightedCommentText(review.text, activeTargetWord)
+                                                    : review.text}
                                             </p>
                                         </div>
                                     )
                                 })
                             ) : (
-                                <p className="tc-expanded-text">Bu analiz için spesifik bir kaynak yorum bulunamadı.</p>
+                                <p className="tc-expanded-text">Gösterilecek kaynak yorum bulunamadı.</p>
                             )}
                         </div>
                     </div>
@@ -518,7 +525,36 @@ export default function ProductPage({ product, onFav, onClose, userRating, onRat
                         {isFavorited ? 'Koleksiyona Eklendi' : 'Koleksiyona Ekle'}
                     </button>
 
-                    {/* Zaman Bazlı Grafik Bileşeni */}
+                    <div className="tc-rate-box">
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                            <strong>Model Çıktısını Değerlendir</strong>
+                            <div className="tc-tooltip-wrap">
+                                <HelpCircle size={14} className="tc-help-icon" />
+                                <div className="tc-tooltip-content" style={{ right: 0, transform: 'translateX(0)', left: 'auto' }}>
+                                    <strong>Geri Bildirim Sistemi:</strong> AI modelimizin analiz başarısını puanlayarak algoritmamızın öğrenme sürecine ve doğruluğunun artmasına doğrudan katkı sağlayabilirsiniz.
+                                </div>
+                            </div>
+                        </div>
+                        {userRating ? (
+                            <div className="tc-rate-success">Geri Bildirim Alındı ({userRating} Yıldız)</div>
+                        ) : (
+                            <div className="tc-rate-stars">
+                                {[1, 2, 3, 4, 5].map((s) => (
+                                    <Star
+                                        key={s} size={20}
+                                        fill={hoveredStar >= s ? activeTheme.main : 'none'}
+                                        color={hoveredStar >= s ? activeTheme.main : '#cbd5e1'}
+                                        onMouseEnter={() => setHoveredStar(s)}
+                                        onMouseLeave={() => setHoveredStar(0)}
+                                        onClick={() => onRate && onRate(productDetail.id, s)}
+                                        style={{ cursor: 'pointer', transition: 'transform 0.1s' }}
+                                    />
+                                ))}
+                            </div>
+                        )}
+                    </div>
+
+                    {/* ZAMAN BAZLI TREND KARTI / GRAFİĞİ */}
                     {trendLoading ? (
                         <div className="tc-trend-box" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '20px' }}>
                             <Loader2 size={20} color={activeTheme?.main || '#8b5cf6'} className="animate-spin" />
@@ -537,6 +573,8 @@ export default function ProductPage({ product, onFav, onClose, userRating, onRat
                                     </strong>
                                 </div>
                             </div>
+
+                            {/* DİNAMİK RENDER */}
                             {trendData.trends.length === 1 ? (
                                 <div style={{ background: activeTheme?.light || '#f5f3ff', borderRadius: '8px', padding: '16px', textAlign: 'center', marginTop: '10px' }}>
                                     <div style={{ fontSize: '24px', fontWeight: 'bold', color: activeTheme?.main || '#8b5cf6' }}>
@@ -552,7 +590,10 @@ export default function ProductPage({ product, onFav, onClose, userRating, onRat
                             ) : (
                                 <div className="tc-trend-chart-wrapper" style={{ width: '100%', height: '220px', marginTop: '10px' }}>
                                     <ResponsiveContainer width="100%" height="100%">
-                                        <AreaChart data={trendData.trends} margin={{ top: 10, right: 10, left: -25, bottom: 0 }}>
+                                        <AreaChart
+                                            data={trendData.trends}
+                                            margin={{ top: 10, right: 10, left: -25, bottom: 0 }}
+                                        >
                                             <defs>
                                                 <linearGradient id="colorScore" x1="0" y1="0" x2="0" y2="1">
                                                     <stop offset="5%" stopColor={activeTheme?.main || '#8b5cf6'} stopOpacity={0.6} />
@@ -560,20 +601,41 @@ export default function ProductPage({ product, onFav, onClose, userRating, onRat
                                                 </linearGradient>
                                             </defs>
                                             <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9" />
-                                            <XAxis dataKey="periodLabel" axisLine={false} tickLine={false} tick={{ fontSize: 10, fill: '#94a3b8' }} dy={10} />
-                                            <YAxis domain={[1, 5]} axisLine={false} tickLine={false} tick={{ fontSize: 10, fill: '#94a3b8' }} tickCount={5} />
+                                            <XAxis
+                                                dataKey="periodLabel"
+                                                axisLine={false}
+                                                tickLine={false}
+                                                tick={{ fontSize: 10, fill: '#94a3b8' }}
+                                                dy={10}
+                                            />
+                                            <YAxis
+                                                domain={[1, 5]}
+                                                axisLine={false}
+                                                tickLine={false}
+                                                tick={{ fontSize: 10, fill: '#94a3b8' }}
+                                                tickCount={5}
+                                            />
                                             <Tooltip content={(props) => <CustomTooltip {...props} activeTheme={activeTheme} />} />
-                                            <Area type="monotone" dataKey="averageScore" stroke={activeTheme?.main || '#8b5cf6'} strokeWidth={3} fillOpacity={1} fill="url(#colorScore)" activeDot={{ r: 6, strokeWidth: 0, fill: activeTheme?.main || '#8b5cf6' }} />
+                                            <Area
+                                                type="monotone"
+                                                dataKey="averageScore"
+                                                stroke={activeTheme?.main || '#8b5cf6'}
+                                                strokeWidth={3}
+                                                fillOpacity={1}
+                                                fill="url(#colorScore)"
+                                                activeDot={{ r: 6, strokeWidth: 0, fill: activeTheme?.main || '#8b5cf6' }}
+                                            />
                                         </AreaChart>
                                     </ResponsiveContainer>
                                 </div>
                             )}
                         </div>
                     ) : null}
+
                 </div>
             </div>
 
-            {/* 4. BENZER ÜRÜNLER (YATAY SCROLL) */}
+            {/* 4. BENZER ÜRÜNLER (YATAY SCROLL / KAYDIRMALI) - FAVORİLER DİNAMİK YAPILDI */}
             <div className="tc-similar-section">
                 <h2 className="tc-similar-title">Kategorideki Benzer Ürünler</h2>
                 <div className="tc-similar-scroll-container">
@@ -582,7 +644,7 @@ export default function ProductPage({ product, onFav, onClose, userRating, onRat
                             <div key={item.id} className="tc-similar-card-wrapper">
                                 <ProductCard
                                     item={item}
-                                    isFav={favorites.some((f) => f.id === item.id)}
+                                    isFav={favorites.some((f) => f.id === item.id)} // BURASI GÜNCELLENDİ
                                     onFav={onFav}
                                     onClick={() => {
                                         window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -629,11 +691,13 @@ export default function ProductPage({ product, onFav, onClose, userRating, onRat
                             {msg.text}
                         </div>
                     ))}
+
                     {isTyping && (
                         <div className="tc-chat-bubble ai typing">
                             <MoreHorizontal size={20} className="tc-typing-icon" />
                         </div>
                     )}
+
                     <div ref={chatEndRef} />
                 </div>
 
