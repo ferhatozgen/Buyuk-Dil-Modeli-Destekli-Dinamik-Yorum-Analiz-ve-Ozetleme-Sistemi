@@ -9,7 +9,7 @@ from transformers import pipeline, AutoTokenizer
 from functions.scraper import linkten_veri_cek
 from functions.Transformer import donustur_ve_kaydet
 from functions.db_manager import DatabaseManager
-from functions.utils import url_cleaning, url_hashing, url_cozumle, yorumlara_puan_ver, vllm_ile_toplu_isleme, oransal_yorum_secimi, llama_ile_toplu_ozet
+from functions.utils import url_cleaning, url_hashing, url_cozumle, yorumlara_puan_ver, vllm_ile_toplu_isleme, oransal_yorum_secimi, llama_ile_toplu_ozet, get_product_rag_context
 import requests
 from fastapi.middleware.cors import CORSMiddleware
 
