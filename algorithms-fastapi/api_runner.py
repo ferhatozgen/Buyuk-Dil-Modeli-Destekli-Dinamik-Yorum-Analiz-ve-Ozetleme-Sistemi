@@ -26,7 +26,7 @@ class ProductIdRequest(BaseModel):
     productId: str
 
 ml_models = {}
-SECRET_API_KEY = os.getenv("VIVIDAI_SECRET_KEY")
+SECRET_API_KEY = os.getenv("VITE_VIVIDAI_SECRET")
 if not SECRET_API_KEY:
     raise ValueError("KRİTİK HATA: VIVIDAI_SECRET_KEY .env dosyasında bulunamadı! Sunucu güvenli değil.")
 
