@@ -17,6 +17,6 @@
     }
   },
   "deploy": {
-    "startCommand": "xvfb-run -e /dev/stdout -a python -m uvicorn api_runner:app --host 0.0.0.0 --port $PORT --log-level debug"
+    "startCommand": "xvfb-run -a python -m uvicorn api_runner:app --host 0.0.0.0 --port $PORT --log-level trace --access-log"
   }
 }
