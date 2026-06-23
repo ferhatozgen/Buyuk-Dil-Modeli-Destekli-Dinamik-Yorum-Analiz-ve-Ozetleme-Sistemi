@@ -3,11 +3,13 @@ from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 import uvicorn
 import os
+
 from optimum.onnxruntime import ORTModelForSequenceClassification
 from transformers import pipeline, AutoTokenizer
+
 from functions.scraper import linkten_veri_cek
 from functions.Transformer import donustur_ve_kaydet
-from functions.db_manager import DatabaseManager
+from functions.db_manager import DatabaseManager # Veritabanı sınıfımız
 from functions.utils import url_cleaning, url_hashing, url_cozumle, yorumlara_puan_ver
 
 class ExtractRequest(BaseModel):
@@ -18,17 +20,28 @@ class ProductIdRequest(BaseModel):
 
 ml_models = {}
 
+# 1. DEĞİŞİKLİK: Global Veritabanı Değişkeni
+# Havuzu her istekte değil, uygulama başlarken 1 kez kurup her yerde bunu kullanacağız.
+global_db = None
+
 @asynccontextmanager
 async def lifespan(app: FastAPI):
+    global global_db
     print("[INFO] ONNX BerTurk modeli yükleniyor...")
     MODEL_ID = "Halitbkts/berturk-review-score-predicter-model-onnx"
     try:
         model = ORTModelForSequenceClassification.from_pretrained(MODEL_ID)
         tokenizer = AutoTokenizer.from_pretrained(MODEL_ID)
         ml_models["classifier"] = pipeline("text-classification", model=model, tokenizer=tokenizer)
-        print("INFO - [STARTUP] Model başarıyla yüklendi ve FastAPI sunucusu hazır!")
+        print("INFO - [STARTUP] Model başarıyla yüklendi!")
+
+        # 2. DEĞİŞİKLİK: Veritabanı havuzunu burada, sistem başlarken TEK SEFER kuruyoruz.
+        global_db = DatabaseManager()
+        print("INFO - [STARTUP] Veritabanı havuzu (Pool) başarıyla oluşturuldu!")
+
+        print("INFO - [STARTUP] FastAPI sunucusu hazır!")
     except Exception as e:
-        print(f"[ERROR] Model yüklenirken bir hata oluştu: {e}")
+        print(f"[ERROR] Sistem başlatılırken bir hata oluştu: {e}")
 
     yield
 
@@ -36,6 +49,7 @@ async def lifespan(app: FastAPI):
     ml_models.clear()
 
     try:
+        # Havuzu güvenli bir şekilde kapatıyoruz
         DatabaseManager.close_pool()
     except Exception as e:
         print(f"[ERROR] Havuz kapatılırken bir sorun oluştu: {e}")
@@ -47,7 +61,7 @@ app = FastAPI(title="LLM Destekli Yorum Analiz API", lifespan=lifespan)
 @app.post("/api/v1/extract")
 def extract_and_save(request: ExtractRequest):
     try:
-        db = DatabaseManager()
+        # 3. DEĞİŞİKLİK: Yeni havuz kurmak yerine, var olan global havuzu kullanıyoruz!
         temiz_url = url_cleaning(request.url)
         url_hash = url_hashing(temiz_url)
         platform, platform_id = url_cozumle(temiz_url)
@@ -55,7 +69,7 @@ def extract_and_save(request: ExtractRequest):
         if not platform:
             raise HTTPException(status_code=400, detail="Platform tanımlanamadı.")
 
-        mevcut_urun_id = db.fetch_query("SELECT id FROM products WHERE url_hash = %s", (url_hash,))
+        mevcut_urun_id = global_db.fetch_query("SELECT id FROM products WHERE url_hash = %s", (url_hash,))
         if mevcut_urun_id:
             return {
                 "status": "success",
@@ -80,7 +94,7 @@ def extract_and_save(request: ExtractRequest):
             for yrm in yorum_paketleri:
                 yrm['predicted_score'] = None
 
-        product_id = db.save_product_and_reviews(urun_paketi, yorum_paketleri)
+        product_id = global_db.save_product_and_reviews(urun_paketi, yorum_paketleri)
 
         return {
             "status": "success",
@@ -96,8 +110,8 @@ def extract_and_save(request: ExtractRequest):
 @app.post("/api/v1/score")
 async def score_reviews(request: ProductIdRequest):
     try:
-        db = DatabaseManager()
-        yorum_paketleri = db.get_unscored_data_by_produc_id(request.productId)
+        # 4. DEĞİŞİKLİK: Burada da global havuzu kullanıyoruz!
+        yorum_paketleri = global_db.get_unscored_data_by_produc_id(request.productId)
 
         if not yorum_paketleri:
             raise HTTPException(status_code=404, detail="Bu ürüne ait puanlanacak yorum bulunamadı.")
@@ -113,7 +127,7 @@ async def score_reviews(request: ProductIdRequest):
         if gecerli_puanlar:
             avg_model_score = round(sum(gecerli_puanlar) / len(gecerli_puanlar), 2)
 
-        db.update_scores(request.productId, avg_model_score, yorum_paketleri)
+        global_db.update_scores(request.productId, avg_model_score, yorum_paketleri)
 
         return {
             "status": "success",
