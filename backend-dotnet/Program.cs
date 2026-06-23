@@ -96,8 +96,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 // --- HTTP CLIENT YAPILANDIRMASI (Python FastAPI İçin) ---
 builder.Services.AddHttpClient("FastApiClient", client =>
 {
-    // FastAPI'nin adresini burada tanımlıyoruz (Service'teki kodu da temizlemiş oluruz)
-    // Eğer appsettings.json'da yoksa varsayılan olarak localhost:8000 kullanır.
+
     var pythonApiUrl = builder.Configuration["PythonSettings:ApiBaseUrl"] ?? "http://localhost:8000";
     client.BaseAddress = new Uri(pythonApiUrl);
     
@@ -114,7 +113,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-//app.UseHttpsRedirection();
+app.UseHttpsRedirection();
 
 // CORS burada devreye giriyor
 app.UseCors("AllowAll");
