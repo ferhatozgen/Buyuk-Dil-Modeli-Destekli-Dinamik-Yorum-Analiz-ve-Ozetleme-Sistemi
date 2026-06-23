@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useRef, useEffect, useCallback } from 'react';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
 import {
     ArrowLeft, Heart, Star, ChevronDown, ChevronUp, ShieldCheck, CheckCircle2,
     Clock, ThumbsUp, Sparkles, CheckCircle, Info, TrendingUp,
@@ -110,7 +110,7 @@ export default function ProductPage({ product, onFav, onClose, userRating, onRat
         } catch (error) {
             console.error("Tıklama sayısı güncellenemedi:", error);
         }
-    }, [product?.id]);
+    }, [product]);
 
     const handleToggleSave = async () => {
         try {
@@ -143,44 +143,47 @@ export default function ProductPage({ product, onFav, onClose, userRating, onRat
         }
     };
 
-    const fetchProductDetails = useCallback(async () => {
-        if (!product?.id) return;
-        setIsLoading(true);
-        try {
-            const token = localStorage.getItem('token');
-            const response = await api.get(`/Product/${product.id}`, {
-                headers: token ? { 'Authorization': `Bearer ${token}` } : {}
-            });
-            setProductDetail(response.data);
-
-            setChatMessages([
-                { sender: 'ai', text: `Merhaba! Ben VividAI Asistan. 👋 ${response.data.productName} hakkında merak ettiklerini bana sorabilirsin.` }
-            ]);
-        } catch (error) {
-            console.error("Ürün detayları yüklenirken hata oluştu:", error);
-        } finally {
-            setIsLoading(false);
-        }
-    }, [product]);
-
-    // ── TREND VERİSİNİ ÇEKME ──
-    const fetchTrendData = useCallback(async () => {
-        if (!product?.id) return;
-        setTrendLoading(true);
-        try {
-            const response = await api.get(`/Product/${product.id}/trend`);
-            setTrendData(response.data);
-        } catch (error) {
-            console.error("Trend verisi alınamadı:", error);
-        } finally {
-            setTrendLoading(false);
-        }
-    }, [product]);
-
+    // ── API VE TREND VERİSİNİ ÇEKME ──
     useEffect(() => {
+        // Fonksiyonları Effect'in İÇİNDE tanımlıyoruz (React'in en sevdiği yöntem)
+        const fetchProductDetails = async () => {
+            if (!product?.id) return;
+            setIsLoading(true);
+            try {
+                const token = localStorage.getItem('token');
+                const response = await api.get(`/Product/${product.id}`, {
+                    headers: token ? { 'Authorization': `Bearer ${token}` } : {}
+                });
+                setProductDetail(response.data);
+
+                setChatMessages([
+                    { sender: 'ai', text: `Merhaba! Ben VividAI Asistan. 👋 ${response.data.productName} hakkında merak ettiklerini bana sorabilirsin.` }
+                ]);
+            } catch (error) {
+                console.error("Ürün detayları yüklenirken hata oluştu:", error);
+            } finally {
+                setIsLoading(false);
+            }
+        };
+
+        const fetchTrendData = async () => {
+            if (!product?.id) return;
+            setTrendLoading(true);
+            try {
+                const response = await api.get(`/Product/${product.id}/trend`);
+                setTrendData(response.data);
+            } catch (error) {
+                console.error("Trend verisi alınamadı:", error);
+            } finally {
+                setTrendLoading(false);
+            }
+        };
+
+        // Ve tanımladığımız fonksiyonları çağırıyoruz
         fetchProductDetails();
         fetchTrendData();
-    }, [fetchProductDetails, fetchTrendData]);
+        
+    }, [product?.id]); // Sadece product.id değiştiğinde tetiklenecek
 
     useEffect(() => {
         handleIncrementClick();
@@ -199,7 +202,7 @@ export default function ProductPage({ product, onFav, onClose, userRating, onRat
         return match ? PLATFORM_THEMES[match] : PLATFORM_THEMES['default'];
     };
 
-    const cleanToken = (word) => word.toLowerCase().replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, "").trim();
+    const cleanToken = (word) => word.toLowerCase().replace(/[.,/#!$%^&*;:{}=\-_`~()]/g, "").trim();
     const isStopWord = (word) => ['ve', 'veya', 'da', 'de', 'bir', 'bu', 'için', 'en', 'ile', 'o', 'ise', 'içinde', 'çok', 'daha', 'gibi'].includes(cleanToken(word));
 
     const handleWordClick = (word) => {
