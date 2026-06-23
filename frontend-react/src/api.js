@@ -1,9 +1,9 @@
 import axios from 'axios';
 
-// 1. Mevcut .NET Core Ana Backend Bağlantısı
-//  --> Railway icin
+// http://localhost:5009
+//https://bubbly-enthusiasm-production-7c3a.up.railway.app
 const api = axios.create({
-    baseURL: 'https://bubbly-enthusiasm-production-7c3a.up.railway.app/api',
+    baseURL: 'http://localhost:5009/api',
     headers: {
         'Content-Type': 'application/json'
     }

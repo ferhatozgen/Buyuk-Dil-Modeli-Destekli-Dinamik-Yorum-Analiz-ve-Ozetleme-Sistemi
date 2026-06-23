@@ -409,3 +409,4 @@ if __name__ == "__main__":
     port = int(os.environ.get("PORT", 8000))
     uvicorn.run("api_runner:app", host="0.0.0.0", port=port)
 
+#https://buyuk-dil-modeli-destekli-dinamik-yorum-analiz-v-production.up.railway.app
