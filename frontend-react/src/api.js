@@ -3,7 +3,7 @@ import axios from 'axios';
 // http://localhost:5009
 //https://bubbly-enthusiasm-production-7c3a.up.railway.app
 const api = axios.create({
-    baseURL: 'http://localhost:5009/api',
+    baseURL: 'https://bubbly-enthusiasm-production-7c3a.up.railway.app/api',
     headers: {
         'Content-Type': 'application/json'
     }
