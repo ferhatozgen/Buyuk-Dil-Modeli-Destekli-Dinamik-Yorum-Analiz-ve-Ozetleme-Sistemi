@@ -700,23 +700,34 @@ def steam_veri_cek(oyun_linki, max_sayfa) -> str:
     match = re.search(r'/app/(\d+)', oyun_linki)
     if not match: return None
     app_id = match.group(1)
-    isim_match = re.search(r'/app/\d+/([^/?]+)', oyun_linki)
-    urun_adi = isim_match.group(1).replace('_', ' ').title() if isim_match else "Steam Oyunu"
 
-    # --- MUTLAK YOL GÜNCELLEMESİ ---
+    # --- SİHİR 1: İSİMİ API'DEN GARANTİLİ ÇEK ---
+    urun_adi = "Steam Oyunu"
+    try:
+        api_detay_url = f"https://store.steampowered.com/api/appdetails?appids={app_id}&l=turkish"
+        detay_res = curl_requests.get(api_detay_url, impersonate="chrome124", timeout=10, verify=False)
+        if detay_res.status_code == 200:
+            data = detay_res.json()
+            if data.get(str(app_id), {}).get("success"):
+                urun_adi = data[str(app_id)]["data"].get("name", urun_adi)
+    except:
+        pass
+    # -------------------------------------------
+
     BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     hedef_klasor = os.path.join(BASE_DIR, "cekilen_veriler", "steam")
     os.makedirs(hedef_klasor, exist_ok=True)
     dosya_yolu = os.path.join(hedef_klasor, f"steam_{app_id}.json")
-    # -------------------------------
 
-    logger.info(f"🔍 Steam ID Çözümleniyor: {app_id}")
-    gorsel_url = f"https://cdn.akamai.steamstatic.com/steam/apps/{app_id}/header.jpg"
+    logger.info(f"🔍 Steam ID: {app_id} | Başlık: {urun_adi}")
+
+    # Görsel API'den zaten çekiliyor
+    gorsel_url = f"https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/{app_id}/header.jpg"
 
     preprocessor = ReviewPreprocessor()
     tum_yorumlar = []
-    gorulen_yorumlar = set()  # Tekrar kontrolü
-    MAX_YORUM_SINIRI = 200  # Hedef limit
+    gorulen_yorumlar = set()
+    MAX_YORUM_SINIRI = 150
     cursor = "*"
 
     for sayfa in range(max_sayfa):
@@ -726,24 +737,27 @@ def steam_veri_cek(oyun_linki, max_sayfa) -> str:
             break
 
         encoded_cursor = urllib.parse.quote(cursor)
-        api_url = f"https://store.steampowered.com/appreviews/{app_id}?json=1&language=turkish&filter=recent&num_per_page=100&cursor={encoded_cursor}"
+
+        # SİHİR BURADA: language=turkish GERİ EKLENDİ VE filter=updated YAPILDI
+        # Böylece sadece Türkçe yorumlar gelir, preprocessor yorulmaz, veri sayısı tavana çıkar.
+        api_url = f"https://store.steampowered.com/appreviews/{app_id}?json=1&language=turkish&filter=updated&num_per_page=100&cursor={encoded_cursor}"
+
         try:
             res = curl_requests.get(api_url, impersonate="chrome124", timeout=10, verify=False)
             if res.status_code != 200: break
 
             data = res.json()
+            if not data.get("success"): break
+
             yorum_listesi = data.get("reviews", [])
             if not yorum_listesi: break
 
             for yrm in yorum_listesi:
-                # İÇ DÖNGÜ KONTROLÜ
-                if len(tum_yorumlar) >= MAX_YORUM_SINIRI:
-                    break
+                if len(tum_yorumlar) >= MAX_YORUM_SINIRI: break
 
                 ham_metin = yorum_metnini_bul(yrm)
                 temiz_metin = preprocessor.clean_text(ham_metin, "steam")
 
-                # KALİTE KONTROL
                 if kaliteli_yorum_mu(temiz_metin, gorulen_yorumlar):
                     gorulen_yorumlar.add(temiz_metin)
                     yrm["temiz_metin"] = temiz_metin
@@ -752,22 +766,21 @@ def steam_veri_cek(oyun_linki, max_sayfa) -> str:
             yeni_cursor = data.get("cursor")
             if not yeni_cursor or yeni_cursor == cursor: break
             cursor = yeni_cursor
-            time.sleep(0.5)
-        except Exception:
+            # Bekleme süresini biraz kısalttık çünkü artık sadece TR yorumlar geliyor
+            time.sleep(0.2)
+        except Exception as e:
+            logger.error(f"Steam API hatası: {e}")
             break
-
     if tum_yorumlar:
-        veri_seti = {"platform": "steam", "baslik": urun_adi, "link": oyun_linki, "gorsel_url": gorsel_url,
-                     "yorumlar": tum_yorumlar}
-
+        veri_seti = {"platform": "steam", "baslik": urun_adi, "link": oyun_linki, "gorsel_url": gorsel_url, "yorumlar": tum_yorumlar}
         with open(dosya_yolu, "w", encoding="utf-8") as f:
             json.dump(veri_seti, f, ensure_ascii=False, indent=4)
         logger.info(f"🎉 Kaydedildi: {dosya_yolu} ({len(tum_yorumlar)} yorum)")
         return dosya_yolu
     else:
-        logger.warning(f"⚠️ Bu üründe çekilecek yorum bulunamadı: {urun_adi}")
+        # Hata mesajını daha açıklayıcı yaptık
+        logger.warning(f"⚠️ Yorum bulunamadı (Oyun yeni olabilir veya kısıtlıdır): {urun_adi}")
         return None
-
 
 def etstur_veri_cek(otel_linki, max_sayfa) -> str:
     logger.info(f"🔍 Etstur ID'leri Çözümleniyor: {otel_linki}")
@@ -1048,68 +1061,89 @@ def yemeksepeti_veri_cek(restoran_linki, max_sayfa) -> str:
     else:
         urun_adi = "Yemeksepeti Restoranı"
 
-    # Dosya yolunu orijinal formatına geri çektik
-    dosya_yolu = f"cekilen_veriler/yemeksepeti/yemeksepeti_{vendor_id}.json"
+    # Dinamik dosya yolları (Lokal bilgisayarın için en güvenli yöntem)
+    BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    hedef_klasor_json = os.path.join(BASE_DIR, "cekilen_veriler", "yemeksepeti")
+    os.makedirs(hedef_klasor_json, exist_ok=True)
+    dosya_yolu = os.path.join(hedef_klasor_json, f"yemeksepeti_{vendor_id}.json")
 
     logger.info(f"🔍 Yemeksepeti Vendor ID Çözümleniyor: {vendor_id}")
     gorsel_url = "Görsel Bulunamadı"
 
     # ==========================================
-    # SİHİR 1: SCRAPERAPI + CURL-CFFI İLE GÖRSEL ÇEKME
+    # SİHİR 1: PLAYWRIGHT İLE GÖRSEL ÇEKME (KALICI PROFİL)
     # ==========================================
-    logger.info("🛡️ ScraperAPI üzerinden Cloudflare aşılarak restoran görseli aranıyor...")
+    logger.info("🔍 Restoran sayfasına lokal profil ile erişiliyor...")
     try:
-        from bs4 import BeautifulSoup
-        import urllib.parse
+        from playwright.sync_api import sync_playwright
+        from playwright_stealth import Stealth
 
-        SCRAPER_API_KEY = os.getenv("SCRAPER_API_KEY")
-        # render=true kaldırıldı, böylece zaman aşımı (timeout) riski tamamen bitti!
-        scraper_url = f"http://api.scraperapi.com?api_key={SCRAPER_API_KEY}&url={urllib.parse.quote(restoran_linki)}"
+        # Sadece lokal dizine odaklanan kalıcı profil ayarı
+        profil_klasoru = os.path.join(BASE_DIR, "saved_ys_profile")
+        os.makedirs(profil_klasoru, exist_ok=True)
 
-        # İstek süresini güvenli bölgede tutmak için timeout'u 30 saniye yaptık
-        res = curl_requests.get(scraper_url, impersonate="chrome124", timeout=30, verify=False)
+        with Stealth().use_sync(sync_playwright()) as p:
+            context = p.chromium.launch_persistent_context(
+                user_data_dir=profil_klasoru,
+                headless=False, # Lokalde Cloudflare'i elle geçebilmek için tarayıcıyı görünür yapıyoruz
+                user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36",
+                locale="tr-TR",
+                ignore_default_args=["--enable-automation"],
+                args=["--disable-blink-features=AutomationControlled", "--no-sandbox", "--disable-gpu"],
+                viewport={'width': 1600, 'height': 900}
+            )
 
-        if res.status_code == 200:
-            soup = BeautifulSoup(res.text, "html.parser")
-            bulunan_url = None
+            page = context.pages[0] if context.pages else context.new_page()
 
-            # 1. PLAN: Meta (og:image) etiketini güvenli bir şekilde kontrol et
-            og_image = soup.find("meta", property="og:image")
-            if og_image and og_image.get("content"):
-                gorsel_icerik = og_image.get("content")
-                if 'deliveryhero' in gorsel_icerik.lower():
-                    bulunan_url = gorsel_icerik
+            try:
+                page.goto(restoran_linki, wait_until="domcontentloaded", timeout=60000)
+                logger.info("   ⏳ Sayfa yüklendi, görsel aranıyor...")
 
-            # 2. PLAN: Meta bulunamadıysa veya deliveryhero içermiyorsa img etiketlerini tara
-            if not bulunan_url:
-                img_tag = soup.find("img", src=lambda x: x and ('deliveryhero' in x.lower() or 'logo' in x.lower() or 'vendor' in x.lower()))
-                if img_tag:
-                    bulunan_url = img_tag.get("src") or img_tag.get("data-src") or img_tag.get("content")
+                # Cloudflare veya Popup engellerine karşı ufak bekleme ve kapatma
+                kapat_btn = page.locator('button:has-text("Kabul Et"), button:has-text("Anladım"), button:has-text("Kapat")')
+                if kapat_btn.count() > 0:
+                    kapat_btn.first.click(timeout=3000)
+            except Exception as e:
+                logger.warning(f"   [Uyarı] Sayfa yüklenirken zaman aşımı: {e}")
 
-            # 3. PLAN: Üsttekiler de boşa çıktıysa geniş kapsamlı bir img taraması yap
-            if not bulunan_url:
-                for img in soup.find_all("img"):
-                    src_val = img.get("src") or img.get("data-src") or ""
-                    if "deliveryhero" in src_val.lower() or "vendor" in src_val.lower():
-                        bulunan_url = src_val
-                        break
+            page.mouse.wheel(0, 500)
+            time.sleep(1.5)
 
-            # Bulunan URL'i temizleme ve biçimlendirme
-            if bulunan_url and bulunan_url != "Görsel Bulunamadı":
-                if bulunan_url.startswith("//"):
-                    bulunan_url = "https:" + bulunan_url
-                gorsel_url = bulunan_url.replace('\\u002F', '/')
-                logger.info(f" ✅ Görsel ScraperAPI ile başarıyla yakalandı: {gorsel_url}")
-            else:
-                logger.warning("   ⚠️ Güvenlik duvarı geçildi ancak HTML içinde logo görseli bulunamadı.")
-        else:
-            logger.warning(f"   ⚠️ ScraperAPI sayfayı çekemedi (Status Code: {res.status_code})")
+            try:
+                # DOM içindeki tüm resimleri tarayan ve sahte (placeholder) logoları çöpe atan güncel script
+                bulunan_resim = page.evaluate('''() => {
+                    const images = Array.from(document.querySelectorAll('img'));
+                    const logo = images.find(img => {
+                        const src = (img.src || img.dataset?.src || "").toLowerCase();
+                        const alt = (img.alt || "").toLowerCase();
+                        if (src.includes('placeholder') || src.startsWith('data:image/svg')) return false;
+                        return src.includes('deliveryhero') || src.includes('logo') || alt.includes('logo');
+                    });
+                    return logo ? (logo.src || logo.dataset.src) : null;
+                }''')
 
-    except Exception as img_err:
-        logger.warning(f"   [Uyarı] Görsel aranırken sorun oluştu: {img_err}")
+                if bulunan_resim:
+                    if bulunan_resim.startswith("//"):
+                        bulunan_resim = "https:" + bulunan_resim
+                    gorsel_url = bulunan_resim.replace('\\u002F', '/')
+                    logger.info(f" ✅ Görsel Playwright ile Yakalandı: {gorsel_url}")
+                else:
+                    element = page.locator("img[data-testid='vendor-logo'], img.vendor-logo__image").first
+                    if element.count() > 0:
+                        gorsel_url = element.get_attribute("src") or element.get_attribute("data-src")
+                        logger.info(f" ✅ Görsel (B Planı) Playwright ile Yakalandı: {gorsel_url}")
+
+            except Exception as img_err:
+                logger.warning(f"   [Uyarı] Görsel çekilirken sorun oluştu: {img_err}")
+
+            page.close()
+            context.close()
+
+    except Exception as py_err:
+        logger.warning(f"   [Uyarı] Playwright ana işleminde sorun oluştu: {py_err}")
+
     # ==========================================
-    # ==========================================
-    # SİHİR 2: YORUMLARI API'DEN ÇEKME
+    # SİHİR 2: YORUMLARI API'DEN ÇEKME (CURL-CFFI)
     # ==========================================
     preprocessor = ReviewPreprocessor()
     tum_yorumlar = []
@@ -1159,10 +1193,6 @@ def yemeksepeti_veri_cek(restoran_linki, max_sayfa) -> str:
     # ==========================================
     if tum_yorumlar:
         veri_seti = {"platform": "yemeksepeti", "baslik": urun_adi, "link": restoran_linki, "gorsel_url": gorsel_url, "yorumlar": tum_yorumlar}
-
-        hedef_klasor = "cekilen_veriler/yemeksepeti"
-        os.makedirs(hedef_klasor, exist_ok=True)
-
         with open(dosya_yolu, "w", encoding="utf-8") as f:
             json.dump(veri_seti, f, ensure_ascii=False, indent=4)
         logger.info(f"🎉 Kaydedildi: {dosya_yolu} ({len(tum_yorumlar)} yorum)")
